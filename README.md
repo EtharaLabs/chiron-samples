@@ -60,15 +60,21 @@ Each bundle directory is a complete Harbor task: `task.toml` is the runner manif
 ## Cite
 
 ```bibtex
-@misc{chironsamples,
-  title = {chiron: samples}
+@misc{chiron2026,
+  title        = {chiron: Whole-repository migration tasks where an unmigrated repository scores zero},
+  author       = {{Ethara.AI}},
+  year         = {2026},
+  howpublished = {\url{https://github.com/EtharaOrion/chiron}},
+  note         = {Harbor-format terminal tasks for whole-repository migration}
 }
 ```
 
 ## License
 
-See the license of the repository that publishes this lane.
+chiron is released under the MIT License; see [LICENSE](LICENSE).
 
 ## Contact
 
-[Ethara AI on GitHub](https://github.com/Ethara-Ai), [SECURITY.md](SECURITY.md) for a private report, and [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution route.
+- Ethara.AI: [github.com/Ethara-Ai](https://github.com/Ethara-Ai)
+- Security and benchmark-integrity reports: [SECURITY.md](SECURITY.md)
+- Contributions: [CONTRIBUTING.md](CONTRIBUTING.md)
