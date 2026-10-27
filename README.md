@@ -73,14 +73,10 @@ Each bundle directory is a complete Harbor task: `task.toml` is the runner manif
 
 chiron is released under the MIT License; see [LICENSE](LICENSE).
 
+Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
+
 ## Contact
 
 - Ethara.AI: [github.com/Ethara-Ai](https://github.com/Ethara-Ai)
 - Security and benchmark-integrity reports: [SECURITY.md](SECURITY.md)
 - Contributions: [CONTRIBUTING.md](CONTRIBUTING.md)
-
----
-
-## Copyright
-
-Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
