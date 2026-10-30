@@ -1,0 +1,356 @@
+{
+  "reward": {
+    "kind": "group",
+    "score": 0.817,
+    "aggregation": "weighted-mean",
+    "components": [
+      {
+        "name": "judge",
+        "weight": 46.0,
+        "detail": {
+          "score": 0.3913,
+          "criteria": [
+            {
+              "id": "J-01",
+              "name": "J-01",
+              "value": 0.0,
+              "raw": 0,
+              "weight": 5.0,
+              "description": "The note gives a Rust layout for yyjson_val, yyjson_mut_val, yyjson_doc and yyjson_mut_doc whose field order, sizes and alignment are the ones the reference states keep every inline function in the unchanged yyjson.h valid.",
+              "reasoning": "Section 2 gives the correct value-field order and 16/24-byte value sizes, but its document declarations list only field names, without types. Thus it does not establish that alc and the mutable pools are embedded by value rather than pointers, nor give the required 64-byte yyjson_doc and 120-byte yyjson_mut_doc layouts. The general claim that repr(C) preserves C size and alignment cannot establish those layouts without specifying their member types. The reference explicitly supplies these types, offsets, sizes and alignment guarantees."
+            },
+            {
+              "id": "J-02",
+              "name": "J-02",
+              "value": 0.0,
+              "raw": "no",
+              "weight": 3.0,
+              "description": "The note states how the 64-bit tag packs a value's type, subtype and length, as the reference states it.",
+              "reasoning": "Section 3 identifies a u64 tag with a low 8-bit tag byte and an upper 56-bit length, and names types helpers for extraction. However, it does not specify the reference's packing within the tag byte: type in bits 0\u20132 (0x07), subtype in bits 3\u20134 (0x18), and reserved bits 5\u20137 (0xE0). It also omits most type-dependent length meanings. Thus it gives only a partial account of the required encoding."
+            },
+            {
+              "id": "J-03",
+              "name": "J-03",
+              "value": 1.0,
+              "raw": "yes",
+              "weight": 3.0,
+              "description": "The note states how an immutable document stores its values in one contiguous arena and how a container's offset skips its children, as the reference states it.",
+              "reasoning": "Section 3 explicitly states that one allocation contains the yyjson_doc header followed by a depth-first value array, with read::HDR_LEN locating the root and the document pointer equal to the allocation base. It also explains that scalars advance one value slot, whereas a container's uni.ofs stores the forward byte distance to its next sibling, skipping its descendants. The note places the temporary backward-parent offset and its replacement on container close in read::read_root_ctn's named state arms, matching the reference's arena and traversal scheme."
+            },
+            {
+              "id": "J-04",
+              "name": "J-04",
+              "value": 1.0,
+              "raw": "yes",
+              "weight": 3.0,
+              "description": "The note states how mutable containers keep their children in a circular list reached through the last child, as the reference states it.",
+              "reasoning": "Section 3 explicitly states that a mutable container\u2019s uni.ptr points to its last child and that children form a singly linked circular list through next. It also explains that object keys and values occupy consecutive ring nodes, with the first key reached via last->next->next, and ties this traversal to named Rust functions such as doc::mut_val_mut_copy and write::mut_write_root_ctn."
+            },
+            {
+              "id": "J-05",
+              "name": "J-05",
+              "value": 1.0,
+              "raw": "yes",
+              "weight": 3.0,
+              "description": "The note states the yyjson_alc contract the port honours, namely the three callbacks, the context pointer, the old size passed to realloc and the order of requests, as the reference states it.",
+              "reasoning": "Section 4 states the three callback signatures with ctx first, identifies old_size as the size previously requested, and explicitly commits to preserving the sequence and sizes of allocator calls. It names yyjson_alc::malloc/realloc/free and alc::alc_or_default, explains NULL-allocator fallback and unchecked callback invocation, and describes the null, default, pool and dynamic allocators. Section 12 additionally identifies exact allocator-call traces used for differential comparison."
+            },
+            {
+              "id": "J-06",
+              "name": "J-06",
+              "value": 0.0,
+              "raw": "no",
+              "weight": 5.0,
+              "description": "For every category of unsafe operation the reference lists, the note gives the invariant that makes the port's use of it sound.",
+              "reasoning": "The note covers several categories, including caller-pointer dereferences, padded input reads, output reservations, union access, allocator callbacks, and table bounds, but does not supply soundness invariants for every category in J-06. Missing or insufficiently addressed categories include unaligned loads/stores, non-overlapping copies, allocator-header casts and alignment, float bit reinterpretation and narrowing, libc-call preconditions, all-zero POD initialization, and provenance-preserving alignment arithmetic. Moreover, its union argument explicitly permits reading a genuinely uninitialized payload because the result is unused; an uninitialized u64 read is undefined behavior in Rust even if its value is subsequently unused, contradicting the reference's initialization invariant."
+            },
+            {
+              "id": "J-07",
+              "name": "J-07",
+              "value": 0.0,
+              "raw": "no",
+              "weight": 3.0,
+              "description": "The note states how an allocation failure at any request returns State A's error result instead of aborting, as the reference states it.",
+              "reasoning": "Section 4 explains non-aborting allocation-failure propagation and names reader, writer, mutable-value, pointer, and patch failure paths. However, it contradicts the reference on observable error results: it gives the reader message as \"failed to allocate memory\" instead of \"memory allocation failed\", and says patch_set_err clears the nested pointer error, whereas the reference requires preserving/filling that sub-error for failures inside pointer operations. Thus its account does not correctly establish State A's allocation-failure results."
+            },
+            {
+              "id": "J-08",
+              "name": "J-08",
+              "value": 0.0,
+              "raw": "no",
+              "weight": 5.0,
+              "description": "Every State A behaviour the reference lists as easy to mistake for a defect is named in the note as kept on purpose.",
+              "reasoning": "The note explicitly preserves some reference-listed quirks, including duplicate-key equality inaccuracies, yyjson_read_number ignoring its allocator, the value-pool cursor arithmetic, and lowercase-hex replacement escapes. However, it omits many required behaviours: zero-length input versus empty-content errors, forced-zero error positions, truncation overriding specific diagnostics, unvalidated comment bytes, embedded NUL strings, integer versus real negative zero, exponent formatting without a plus sign, integral reals retaining .0, NOESC output bypassing validation, output buffers never shrinking, duplicate-key insertion/removal semantics, JSON Pointer escape-decoding order, and JSON Patch treating 1 and 1.0 as unequal. Its dedicated quirks section therefore does not name every behaviour required by J-08 as deliberately retained."
+            },
+            {
+              "id": "J-09",
+              "name": "J-09",
+              "value": 1.0,
+              "raw": "yes",
+              "weight": 3.0,
+              "description": "The note states how numbers are read and written so that output matches State A digit for digit, as the reference states it.",
+              "reasoning": "Section 7 explains number reading in read::read_num: digit accumulation and integer overflow cutoffs, the exact-power-of-ten fast path, cached 128-bit conversion, and the diy_fp/BigInt exact fallback. It also explains Schubfach number writing in write::write_f64_raw, write_f32_raw, and write_f64_raw_fixed, including digit tables, rounding, trailing-zero trimming, and the -6 < dot_ofs <= 21 fixed/scientific cutoff. These are concrete mechanisms for preserving State A's numeric results and output digits rather than delegating to a standard formatter. Section 12 additionally describes byte-for-byte numeric serialization comparisons and raw-bit read-back checks."
+            },
+            {
+              "id": "J-10",
+              "name": "J-10",
+              "value": 0.0,
+              "raw": "no",
+              "weight": 3.0,
+              "description": "The note states how the incremental reader resumes across arbitrary chunk boundaries, as the reference states it.",
+              "reasoning": "Section 9 explains saved resume labels, parser cursors, string continuations, and re-reading incomplete numbers in named Rust items. However, the note explicitly says the temporary end-of-prefix NUL is restored only on MORE and remains clobbered on success or hard error, contradicting the reference\u2019s statement that every exit restores the displaced byte. It also does not explain how boundary-truncated literals and comments become MORE, or explicitly cover continuation through split escapes. Thus its account does not fully and correctly establish resumption across arbitrary byte boundaries as the reference states it."
+            },
+            {
+              "id": "J-11",
+              "name": "J-11",
+              "value": 0.0,
+              "raw": 0,
+              "weight": 3.0,
+              "description": "The note states how the unchanged CMake invocation drives cargo and installs State A's tree, SONAME and export set while hiding Rust runtime symbols, as the reference states it.",
+              "reasoning": "Section 10 explains LANGUAGES NONE, cargo integration, the installed paths and symlinks, package-config templates, and the shared library's 52-symbol export set. However, it does not give the reference's account of hiding Rust runtime symbols in the static archive: compiler_builtins symbols are HIDDEN while exactly the 52 public symbols have DEFAULT visibility. Instead, it describes a default-on rust_eh_personality definition without explaining its visibility at final link. It also places SONAME handling in rust/build.rs rather than the reference's .cargo/config.toml and omits the source-working-directory requirement that makes cargo discover that configuration. Thus the complete build and symbol-visibility account requested by J-11 is not stated as the reference specifies."
+            },
+            {
+              "id": "J-12",
+              "name": "J-12",
+              "value": 1.0,
+              "raw": 1,
+              "weight": 3.0,
+              "description": "The note states how the port was checked against State A, naming the comparisons that were run.",
+              "reasoning": "Yes. Section 12 explicitly describes differential checks against the original gcc-built C implementation using the unchanged header and the same driver sources. It names six drivers\u2014dump, rw, api, num, extra, and io\u2014and details their comparisons, including parsed values and floating-point bits, serialized bytes, error codes/messages/positions, allocator call traces, incremental results, and file I/O. It reports zero differences and additionally names installed-tree, exported-symbol, and consumer-linking comparisons."
+            },
+            {
+              "id": "J-13",
+              "name": "J-13",
+              "value": 0.0,
+              "raw": 0,
+              "weight": 1.0,
+              "description": "Each design decision the note states names the Rust module, type or function that implements it.",
+              "reasoning": "The note names implementation items extensively, but many are not valid locations under the supplied reference: for example, read::read_num rather than read_num::read_num, doc::mut_val and doc::unsafe_yyjson_equals rather than items in value.rs, and alc::pool_malloc rather than alloc::pool_malloc. The reference explicitly says names outside its listed files or their modules, types and functions do not place a decision. Thus the note does not ground each stated design decision in a credited implementing Rust item."
+            },
+            {
+              "id": "J-14",
+              "name": "J-14",
+              "value": 1.0,
+              "raw": 1,
+              "weight": 3.0,
+              "description": "The note states how the port keeps a Rust panic from unwinding into a C caller at every exported entry point, as the reference states it.",
+              "reasoning": "Section 11 explicitly explains that rust/Cargo.toml sets panic = \"abort\" in both development and release profiles and that rust/src/lib.rs supplies a #[panic_handler] calling libc abort(). This crate-wide mechanism prevents unwinding at every exported extern \"C\" entry point, rather than relying on individual wrappers. The note also describes panic avoidance through wrapping arithmetic and structurally bounded table indexing, treating the aborting handler as a backstop."
+            }
+          ],
+          "kind": "llm",
+          "judge": {
+            "model": "openai/gpt-6.1-sol",
+            "reasoning_effort": "high",
+            "timeout": 600,
+            "files": [
+              "/logs/verifier/staged-note.md"
+            ],
+            "atif_trajectory": null,
+            "reference": "/tests/reference.md",
+            "mode": "individual"
+          },
+          "judge_output": "--- J-01 ---\n{\n  \"score\": 0,\n  \"reasoning\": \"Section 2 gives the correct value-field order and 16/24-byte value sizes, but its document declarations list only field names, without types. Thus it does not establish that alc and the mutable pools are embedded by value rather than pointers, nor give the required 64-byte yyjson_doc and 120-byte yyjson_mut_doc layouts. The general claim that repr(C) preserves C size and alignment cannot establish those layouts without specifying their member types. The reference explicitly supplies these types, offsets, sizes and alignment guarantees.\"\n}\n\n--- J-02 ---\n{\n  \"score\": \"no\",\n  \"reasoning\": \"Section 3 identifies a u64 tag with a low 8-bit tag byte and an upper 56-bit length, and names types helpers for extraction. However, it does not specify the reference's packing within the tag byte: type in bits 0\u20132 (0x07), subtype in bits 3\u20134 (0x18), and reserved bits 5\u20137 (0xE0). It also omits most type-dependent length meanings. Thus it gives only a partial account of the required encoding.\"\n}\n\n--- J-03 ---\n{\n  \"score\": \"yes\",\n  \"reasoning\": \"Section 3 explicitly states that one allocation contains the yyjson_doc header followed by a depth-first value array, with read::HDR_LEN locating the root and the document pointer equal to the allocation base. It also explains that scalars advance one value slot, whereas a container's uni.ofs stores the forward byte distance to its next sibling, skipping its descendants. The note places the temporary backward-parent offset and its replacement on container close in read::read_root_ctn's named state arms, matching the reference's arena and traversal scheme.\"\n}\n\n--- J-04 ---\n{\n  \"score\": \"yes\",\n  \"reasoning\": \"Section 3 explicitly states that a mutable container\u2019s uni.ptr points to its last child and that children form a singly linked circular list through next. It also explains that object keys and values occupy consecutive ring nodes, with the first key reached via last->next->next, and ties this traversal to named Rust functions such as doc::mut_val_mut_copy and write::mut_write_root_ctn.\"\n}\n\n--- J-05 ---\n{\n  \"score\": \"yes\",\n  \"reasoning\": \"Section 4 states the three callback signatures with ctx first, identifies old_size as the size previously requested, and explicitly commits to preserving the sequence and sizes of allocator calls. It names yyjson_alc::malloc/realloc/free and alc::alc_or_default, explains NULL-allocator fallback and unchecked callback invocation, and describes the null, default, pool and dynamic allocators. Section 12 additionally identifies exact allocator-call traces used for differential comparison.\"\n}\n\n--- J-06 ---\n{\n  \"score\": \"no\",\n  \"reasoning\": \"The note covers several categories, including caller-pointer dereferences, padded input reads, output reservations, union access, allocator callbacks, and table bounds, but does not supply soundness invariants for every category in J-06. Missing or insufficiently addressed categories include unaligned loads/stores, non-overlapping copies, allocator-header casts and alignment, float bit reinterpretation and narrowing, libc-call preconditions, all-zero POD initialization, and provenance-preserving alignment arithmetic. Moreover, its union argument explicitly permits reading a genuinely uninitialized payload because the result is unused; an uninitialized u64 read is undefined behavior in Rust even if its value is subsequently unused, contradicting the reference's initialization invariant.\"\n}\n\n--- J-07 ---\n{\n  \"score\": \"no\",\n  \"reasoning\": \"Section 4 explains non-aborting allocation-failure propagation and names reader, writer, mutable-value, pointer, and patch failure paths. However, it contradicts the reference on observable error results: it gives the reader message as \\\"failed to allocate memory\\\" instead of \\\"memory allocation failed\\\", and says patch_set_err clears the nested pointer error, whereas the reference requires preserving/filling that sub-error for failures inside pointer operations. Thus its account does not correctly establish State A's allocation-failure results.\"\n}\n\n--- J-08 ---\n{\n  \"score\": \"no\",\n  \"reasoning\": \"The note explicitly preserves some reference-listed quirks, including duplicate-key equality inaccuracies, yyjson_read_number ignoring its allocator, the value-pool cursor arithmetic, and lowercase-hex replacement escapes. However, it omits many required behaviours: zero-length input versus empty-content errors, forced-zero error positions, truncation overriding specific diagnostics, unvalidated comment bytes, embedded NUL strings, integer versus real negative zero, exponent formatting without a plus sign, integral reals retaining .0, NOESC output bypassing validation, output buffers never shrinking, duplicate-key insertion/removal semantics, JSON Pointer escape-decoding order, and JSON Patch treating 1 and 1.0 as unequal. Its dedicated quirks section therefore does not name every behaviour required by J-08 as deliberately retained.\"\n}\n\n--- J-09 ---\n{\n  \"score\": \"yes\",\n  \"reasoning\": \"Section 7 explains number reading in read::read_num: digit accumulation and integer overflow cutoffs, the exact-power-of-ten fast path, cached 128-bit conversion, and the diy_fp/BigInt exact fallback. It also explains Schubfach number writing in write::write_f64_raw, write_f32_raw, and write_f64_raw_fixed, including digit tables, rounding, trailing-zero trimming, and the -6 < dot_ofs <= 21 fixed/scientific cutoff. These are concrete mechanisms for preserving State A's numeric results and output digits rather than delegating to a standard formatter. Section 12 additionally describes byte-for-byte numeric serialization comparisons and raw-bit read-back checks.\"\n}\n\n--- J-10 ---\n{\n  \"score\": \"no\",\n  \"reasoning\": \"Section 9 explains saved resume labels, parser cursors, string continuations, and re-reading incomplete numbers in named Rust items. However, the note explicitly says the temporary end-of-prefix NUL is restored only on MORE and remains clobbered on success or hard error, contradicting the reference\u2019s statement that every exit restores the displaced byte. It also does not explain how boundary-truncated literals and comments become MORE, or explicitly cover continuation through split escapes. Thus its account does not fully and correctly establish resumption across arbitrary byte boundaries as the reference states it.\"\n}\n\n--- J-11 ---\n{\n  \"score\": 0,\n  \"reasoning\": \"Section 10 explains LANGUAGES NONE, cargo integration, the installed paths and symlinks, package-config templates, and the shared library's 52-symbol export set. However, it does not give the reference's account of hiding Rust runtime symbols in the static archive: compiler_builtins symbols are HIDDEN while exactly the 52 public symbols have DEFAULT visibility. Instead, it describes a default-on rust_eh_personality definition without explaining its visibility at final link. It also places SONAME handling in rust/build.rs rather than the reference's .cargo/config.toml and omits the source-working-directory requirement that makes cargo discover that configuration. Thus the complete build and symbol-visibility account requested by J-11 is not stated as the reference specifies.\"\n}\n\n--- J-12 ---\n{\n  \"score\": 1,\n  \"reasoning\": \"Yes. Section 12 explicitly describes differential checks against the original gcc-built C implementation using the unchanged header and the same driver sources. It names six drivers\u2014dump, rw, api, num, extra, and io\u2014and details their comparisons, including parsed values and floating-point bits, serialized bytes, error codes/messages/positions, allocator call traces, incremental results, and file I/O. It reports zero differences and additionally names installed-tree, exported-symbol, and consumer-linking comparisons.\"\n}\n\n--- J-13 ---\n{\n  \"score\": 0,\n  \"reasoning\": \"The note names implementation items extensively, but many are not valid locations under the supplied reference: for example, read::read_num rather than read_num::read_num, doc::mut_val and doc::unsafe_yyjson_equals rather than items in value.rs, and alc::pool_malloc rather than alloc::pool_malloc. The reference explicitly says names outside its listed files or their modules, types and functions do not place a decision. Thus the note does not ground each stated design decision in a credited implementing Rust item.\"\n}\n\n--- J-14 ---\n{\n  \"score\": 1,\n  \"reasoning\": \"Section 11 explicitly explains that rust/Cargo.toml sets panic = \\\"abort\\\" in both development and release profiles and that rust/src/lib.rs supplies a #[panic_handler] calling libc abort(). This crate-wide mechanism prevents unwinding at every exported extern \\\"C\\\" entry point, rather than relying on individual wrappers. The note also describes panic avoidance through wrapping arithmetic and structurally bounded table indexing, treating the aborting handler as a backstop.\"\n}"
+        }
+      },
+      {
+        "name": "test_output",
+        "weight": 107.0,
+        "detail": {
+          "score": 1.0,
+          "criteria": [
+            {
+              "name": "T-02",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-02"
+            },
+            {
+              "name": "T-03",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-03"
+            },
+            {
+              "name": "T-04",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-04"
+            },
+            {
+              "name": "T-05",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-05"
+            },
+            {
+              "name": "T-06",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-06"
+            },
+            {
+              "name": "T-07",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-07"
+            },
+            {
+              "name": "T-08",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-08"
+            },
+            {
+              "name": "T-09",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-09"
+            },
+            {
+              "name": "T-10",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-10"
+            },
+            {
+              "name": "T-11",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-11"
+            },
+            {
+              "name": "T-12",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-12"
+            },
+            {
+              "name": "T-13",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-13"
+            },
+            {
+              "name": "T-14",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "T-14"
+            },
+            {
+              "name": "T-15",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-15"
+            },
+            {
+              "name": "T-16",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-16"
+            },
+            {
+              "name": "T-17",
+              "value": 1.0,
+              "raw": true,
+              "weight": 1.0,
+              "description": "T-17"
+            },
+            {
+              "name": "T-18",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-18"
+            },
+            {
+              "name": "T-19",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-19"
+            },
+            {
+              "name": "T-20",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-20"
+            },
+            {
+              "name": "T-21",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-21"
+            },
+            {
+              "name": "T-22",
+              "value": 1.0,
+              "raw": true,
+              "weight": 3.0,
+              "description": "T-22"
+            },
+            {
+              "name": "P-01",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "P-01"
+            },
+            {
+              "name": "P-02",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "P-02"
+            },
+            {
+              "name": "P-03",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "P-03"
+            },
+            {
+              "name": "P-04",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "P-04"
+            },
+            {
+              "name": "P-05",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "P-05"
+            },
+            {
+              "name": "P-06",
+              "value": 1.0,
+              "raw": true,
+              "weight": 5.0,
+              "description": "P-06"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      }
+    ]
+  }
+}

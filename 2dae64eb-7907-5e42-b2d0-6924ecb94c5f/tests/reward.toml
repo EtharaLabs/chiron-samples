@@ -1,0 +1,16 @@
+# GENERATED SECTION. DO NOT HAND-EDIT.
+# Derived from solution/grounding.yaml by solution/recompute.py.
+#
+# The reward is the weighted mean over the graded rubric items, whose weights sum to 153.
+# `test_output` carries the 107 compiled weight and `judge` the 46 judged weight.
+
+[[reward]]
+name = "reward"
+aggregation = "weighted-mean"
+
+[reward.weights]
+test_output = 107
+judge = 46
+
+[scoring.test_output]
+aggregation = "weighted-mean"

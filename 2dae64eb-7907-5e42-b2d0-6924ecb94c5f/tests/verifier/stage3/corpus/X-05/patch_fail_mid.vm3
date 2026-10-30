@@ -1,0 +1,4 @@
+iparse 0 {%22a%22:1,%22b%22:2}
+mutcopy 0
+patch 0 [{%22op%22:%22add%22,%22path%22:%22/c%22,%22value%22:%22xxxxxxxxxxxxxxxx%22},{%22op%22:%22remove%22,%22path%22:%22/nope%22}]
+write

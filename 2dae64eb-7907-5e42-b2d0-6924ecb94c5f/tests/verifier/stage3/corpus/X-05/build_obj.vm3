@@ -1,0 +1,11 @@
+new
+obj r1
+root r1
+strcpy r2 key_aaaaaaaa
+uint r3 1
+oadd r1 r2 r3
+strcpy r2 key_bbbbbbbb
+oadd r1 r2 r3
+strcpy r2 key_cccccccc
+oadd r1 r2 r3
+write

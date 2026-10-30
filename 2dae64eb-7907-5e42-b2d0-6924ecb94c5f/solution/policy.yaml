@@ -1,0 +1,32 @@
+# GENERATED SECTION. DO NOT HAND-EDIT.
+# Derived from solution/grounding.yaml by solution/recompute.py.
+#
+# Intent only. This manifest never states that a control was enforced: that claim belongs
+# to the ronin attestation. It carries no detector rule, threshold, fixture, canary
+# material, watched location or audit outcome.
+# FORGE-CANARY-BEGIN
+# FORGE-CANARY-SLOT-1: 60ae0f0c079c366733615a2e6551dc4e64c530f1c56ffed9db295862b101ddc8
+# FORGE-CANARY-SLOT-2: 87ab65e4ae3bd13b9cfb24e8b811c4ab101c8552a8b3d1f0d91c32bbd429958a
+# FORGE-CANARY-SLOT-3: 76135f235d13f30c4446a51ada3f9a19b6fba2e250fa6b2ffc5a14d1b3f55ffb
+# FORGE-CANARY-SLOT-4: e415e80ce167e9922758ef5d43162679b0fe51046883994e0fc30102c1e183f5
+# FORGE-CANARY-END
+schema: forge.policy/v1
+run_id: forge-elhaan-daud-ethara-ai-20261026t024155z-000dec
+task_name: ethara/yyjson-c-to-rust
+
+channels:
+  - {"channel": "network_egress", "intent": "the workspace is offline in the environment and agent phases", "state": "denied"}
+  - {"channel": "network_ingress", "intent": "nothing listens in the workspace", "state": "denied"}
+  - {"channel": "filesystem_read_outside_workspace", "intent": "the pinned toolchain and the graded compiler policy shim are readable; nothing else is read", "state": "restricted"}
+  - {"channel": "filesystem_write_outside_workspace", "intent": "only /workspace is writable by uid 1000", "state": "denied"}
+  - {"channel": "process_execution", "intent": "the task is a build: cmake, cargo, make, the linker and the agent's own tests all run", "state": "allowed"}
+  - {"channel": "privilege_escalation", "intent": "uid 1000 with no sudo and no setuid binary", "state": "denied"}
+  - {"channel": "package_installation", "intent": "offline, with no registry and no package manager credential", "state": "denied"}
+  - {"channel": "dynamic_library_loading", "intent": "red line R-03: the library must parse and write in its own code", "state": "denied"}
+  - {"channel": "interprocess_communication", "intent": "pipes between the agent's own build processes only", "state": "restricted"}
+  - {"channel": "device_access", "intent": "no device node is needed to build a library", "state": "denied"}
+  - {"channel": "kernel_interface", "intent": "no ptrace, no seccomp installation, no module loading", "state": "denied"}
+  - {"channel": "credential_access", "intent": "the agent image carries no credential, and the judge credential never enters it", "state": "denied"}
+  - {"channel": "clock_and_randomness", "intent": "readable, but no graded value may depend on either", "state": "restricted"}
+  - {"channel": "container_runtime_access", "intent": "no container socket is mounted into the workspace or the verifier", "state": "denied"}
+  - {"channel": "model_api_access", "intent": "the solver's harness reaches its own gateway outside the workspace; the workspace itself reaches nothing", "state": "restricted"}

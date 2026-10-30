@@ -1,0 +1,22 @@
+# FORGE-CANARY-BEGIN
+# FORGE-CANARY-SLOT-1: 60ae0f0c079c366733615a2e6551dc4e64c530f1c56ffed9db295862b101ddc8
+# FORGE-CANARY-SLOT-2: 87ab65e4ae3bd13b9cfb24e8b811c4ab101c8552a8b3d1f0d91c32bbd429958a
+# FORGE-CANARY-SLOT-3: 76135f235d13f30c4446a51ada3f9a19b6fba2e250fa6b2ffc5a14d1b3f55ffb
+# FORGE-CANARY-SLOT-4: e415e80ce167e9922758ef5d43162679b0fe51046883994e0fc30102c1e183f5
+# FORGE-CANARY-END
+#----------------------------------------------------------------
+# Import file for configuration "Release".
+#----------------------------------------------------------------
+
+set(CMAKE_IMPORT_FILE_VERSION 1)
+
+set_property(TARGET yyjson::yyjson APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(yyjson::yyjson PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/@YYJSON_INSTALL_LIBDIR@/@YYJSON_LIBRARY_FILE@"
+@YYJSON_IMPORTED_EXTRA_PROPERTY@
+  )
+
+list(APPEND _cmake_import_check_targets yyjson::yyjson )
+list(APPEND _cmake_import_check_files_for_yyjson::yyjson "${_IMPORT_PREFIX}/@YYJSON_INSTALL_LIBDIR@/@YYJSON_LIBRARY_FILE@" )
+
+set(CMAKE_IMPORT_FILE_VERSION)

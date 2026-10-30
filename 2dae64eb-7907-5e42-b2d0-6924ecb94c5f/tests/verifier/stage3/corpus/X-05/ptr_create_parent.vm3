@@ -1,0 +1,7 @@
+new
+obj r1
+root r1
+uint r2 1
+padd /aaaa/bbbb/cccc r2 1
+padd /dddd/0/eeee r2 1
+write

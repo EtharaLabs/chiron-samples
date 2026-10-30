@@ -1,0 +1,16 @@
+new
+iparse 0 {%22a%22:[1,2,3],%22b%22:{%22c%22:4}}
+mutcopy 0
+pget r1 /a
+arem r2 r1 1
+write
+pget r3 /a/1
+pget r3 /a/2
+uint r4 9
+padd /a/- r4 0
+write
+prep r5 /b/c r4
+write
+pdel r6 /b
+write
+pget r7 /b/c

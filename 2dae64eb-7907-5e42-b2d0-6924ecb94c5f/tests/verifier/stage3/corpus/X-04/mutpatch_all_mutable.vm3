@@ -1,0 +1,13 @@
+new
+iparse 0 {%22a%22:[1,2],%22b%22:3}
+mutcopy 0
+mutpatch [{%22op%22:%22add%22,%22path%22:%22/c%22,%22value%22:[4,5]}]
+write
+mutpatch [{%22op%22:%22move%22,%22from%22:%22/a%22,%22path%22:%22/d%22}]
+write
+mutpatch [{%22op%22:%22copy%22,%22from%22:%22/d%22,%22path%22:%22/e%22}]
+write
+mutpatch [{%22op%22:%22test%22,%22path%22:%22/b%22,%22value%22:3}]
+write
+mutmpatch {%22b%22:null,%22f%22:{%22g%22:1}}
+write

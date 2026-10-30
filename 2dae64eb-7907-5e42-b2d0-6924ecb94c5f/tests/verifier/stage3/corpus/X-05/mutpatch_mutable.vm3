@@ -1,0 +1,4 @@
+iparse 0 {%22a%22:[1,2],%22b%22:3}
+mutcopy 0
+mutpatch [{%22op%22:%22add%22,%22path%22:%22/c%22,%22value%22:[4,5,%22ffffffffffffffff%22]}]
+write

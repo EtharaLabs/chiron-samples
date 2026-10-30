@@ -1,0 +1,20 @@
+new
+obj r1
+root r1
+uint r2 1
+oadd r1 r9 r2
+strcpy r9 a -
+oadd r1 r9 r2
+arr r3
+oadd r1 r8 r3
+strcpy r8 b -
+uint r4 2
+aapp r3 r4
+imutcopy 0
+iwrite 0
+patch 0 [{%22op%22:%22add%22,%22path%22:%22/c%22,%22value%22:3}]
+write
+patch 0 [{%22op%22:%22remove%22,%22path%22:%22/zz%22}]
+write
+imutcopy 1
+ieq 0 1
