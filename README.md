@@ -2,9 +2,9 @@
 
 # chiron: samples
 
-<p align="center"><b>The samples lane: 1 of 5 Harbor task bundles.</b></p>
+<p align="center"><b>The samples lane: 0 of 5 Harbor task bundles.</b></p>
 
-<p align="center"><a href="#summary"><img src="https://img.shields.io/badge/bundles-1_of_5-845EF7" alt="bundles: 1 of 5"></a> <a href="#evidence-status"><img src="https://img.shields.io/badge/sealed-0-845EF7" alt="sealed: 0"></a> <a href="#difficulty-tiers"><img src="https://img.shields.io/badge/difficulty-measured-845EF7" alt="difficulty: measured"></a></p>
+<p align="center"><a href="#summary"><img src="https://img.shields.io/badge/bundles-0_of_5-845EF7" alt="bundles: 0 of 5"></a> <a href="#evidence-status"><img src="https://img.shields.io/badge/sealed-0-845EF7" alt="sealed: 0"></a> <a href="#difficulty-tiers"><img src="https://img.shields.io/badge/difficulty-measured-845EF7" alt="difficulty: measured"></a></p>
 
 <p align="center"><sub><a href="#abstract">Abstract</a> | <a href="#summary">Summary</a> | <a href="#difficulty-tiers">Difficulty tiers</a> | <a href="#evidence-status">Evidence status</a> | <a href="#coverage">Coverage</a> | <a href="#dataset-structure">Dataset structure</a> | <a href="#verification-and-quality-assurance">Verification and quality assurance</a> | <a href="#reproduction">Reproduction</a> | <a href="#cite">Cite</a> | <a href="#license">License</a> | <a href="#contact">Contact</a></sub></p>
 
@@ -18,11 +18,11 @@ Each bundle is one Harbor task in a directory named by its content-derived uuid5
 
 | Property | Value |
 | --- | --- |
-| Bundles | 1 of 5 |
-| Sealed | 0 of 1 |
-| Registrations | unregistered (1) |
-| Audit verdicts | none (1) |
-| Harbor schema | 1.4 (1) |
+| Bundles | 0 of 5 |
+| Sealed | 0 of 0 |
+| Registrations | none |
+| Audit verdicts | none |
+| Harbor schema | none |
 
 ## Difficulty tiers
 
@@ -32,45 +32,19 @@ Difficulty is measured by the signed pilot alone and never declared in a bundle,
 
 The verdict is the audit outcome recorded at the sealed digest, and `none` means no verdict has landed for that digest yet. Only an authoring run removes a bundle from this lane, so removal waits for the next one.
 
-| uuid | Verdict | Sealed digest | Stream |
-| --- | --- | --- | --- |
-| 2dae64eb-7907-5e42-b2d0-6924ecb94c5f | none | absent | none |
-
 ## Coverage
 
-| Keyword | Bundles |
-| --- | --- |
-| abi | 1 |
-| c | 1 |
-| cmake | 1 |
-| json | 1 |
-| language-rewrite | 1 |
-| migration | 1 |
-| rust | 1 |
+No resident bundle declares a keyword.
 
 ## Dataset structure
 
-| Bundle | Task | Keywords | Registration | Sealed at | Tier |
-| --- | --- | --- | --- | --- | --- |
-| [`2dae64eb-7907-5e42-b2d0-6924ecb94c5f`](2dae64eb-7907-5e42-b2d0-6924ecb94c5f/) | `ethara/yyjson-c-to-rust` | abi, c, cmake, json, language-rewrite, migration, rust | unregistered | unsealed | - |
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{"primaryColor":"#131a33","primaryTextColor":"#e8ecff","primaryBorderColor":"#845EF7","lineColor":"#22d3ee","fontFamily":"monospace"}}}%%
-flowchart LR
-    bundle["&lt;uuid&gt;/"]
-    bundle --> n0["task.toml<br/>runner manifest"]
-    bundle --> n1["instruction.md<br/>objective the agent reads"]
-    bundle --> n2["environment/<br/>agent sandbox image"]
-    bundle --> n3["tests/<br/>verifier, hidden from the agent"]
-    bundle --> n4["solution/<br/>private oracle"]
-    bundle --> n5["trajectories/"]
-```
+No bundle is resident under `samples/`.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"primaryColor":"#131a33","primaryTextColor":"#e8ecff","primaryBorderColor":"#845EF7","lineColor":"#22d3ee","fontFamily":"monospace"}}}%%
 flowchart LR
     staging["staging/"]
-    staging --> samples["samples/<br/>1 of 5"]
+    staging --> samples["samples/<br/>0 of 5"]
     samples --> delivery["delivery/<br/>0 of 10000"]
     delivery --> stock["stock/<br/>0 of 10000"]
 ```
