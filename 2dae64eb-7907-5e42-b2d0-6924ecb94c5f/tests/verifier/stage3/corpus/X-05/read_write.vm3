@@ -1,4 +1,0 @@
-iparse 0 {%22a%22:[1,2,3],%22b%22:%22cccccccccccccccc%22}
-iwrite 0
-mutcopy 0
-write

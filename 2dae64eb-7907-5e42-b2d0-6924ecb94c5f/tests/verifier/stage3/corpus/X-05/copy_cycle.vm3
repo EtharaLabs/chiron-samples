@@ -1,6 +1,0 @@
-iparse 0 {%22a%22:[1,{%22b%22:[true,false,null,%22s%22]}],%22c%22:{}}
-mutcopy 0
-mmutcopy
-imutcopy 1
-ieq 0 1
-write

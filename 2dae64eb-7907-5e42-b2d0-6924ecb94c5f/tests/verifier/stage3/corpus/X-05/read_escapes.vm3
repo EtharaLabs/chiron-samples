@@ -1,5 +1,0 @@
-iparse 0 [%22%5Cu00e9%5Cu4e2d%5Cn%5Ct%5C%5C%5C%22%5Cud83d%5Cude00%22]
-iwrite 0
-mutcopy 0
-imutcopy 1
-ieq 0 1

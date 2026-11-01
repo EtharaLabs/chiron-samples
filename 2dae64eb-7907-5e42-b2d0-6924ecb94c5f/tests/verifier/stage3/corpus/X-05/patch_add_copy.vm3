@@ -1,4 +1,0 @@
-iparse 0 {%22a%22:1}
-mutcopy 0
-patch 0 [{%22op%22:%22add%22,%22path%22:%22/arr%22,%22value%22:[%22aaaaaaaaaaaaaaaa%22,%22bbbbbbbbbbbbbbbb%22,{%22k%22:[1,2,3]}]},{%22op%22:%22copy%22,%22from%22:%22/arr%22,%22path%22:%22/arr2%22},{%22op%22:%22add%22,%22path%22:%22/s%22,%22value%22:%22tttttttttttttttt%22}]
-write

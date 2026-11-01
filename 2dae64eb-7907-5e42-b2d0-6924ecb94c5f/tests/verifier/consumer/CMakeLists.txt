@@ -1,5 +1,0 @@
-cmake_minimum_required(VERSION 3.16)
-project(use_yyjson LANGUAGES C)
-find_package(yyjson REQUIRED)
-add_executable(use_yyjson use_yyjson.c)
-target_link_libraries(use_yyjson PRIVATE yyjson::yyjson)

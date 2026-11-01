@@ -1,6 +1,0 @@
-iparse 0 [%22aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%22,%22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb%22,%22cccccccccccccccccccccccccccccccc%22,%22dddddddddddddddddddddddddddddddd%22]
-iwrite 0
-mutcopy 0
-write
-imutcopy 1
-iwrite 1

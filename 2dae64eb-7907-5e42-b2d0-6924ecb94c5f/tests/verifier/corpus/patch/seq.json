@@ -1,1 +1,0 @@
-[{"op":"add","path":"/s","value":[1,2,3]},{"op":"replace","path":"/s/1","value":9},{"op":"remove","path":"/s/0"},{"op":"copy","from":"/s","path":"/s2"},{"op":"move","from":"/s2","path":"/s3"},{"op":"test","path":"/s3/0","value":9}]

@@ -1,2 +1,0 @@
-stage_note: staged=True swept=0 attempts=0 survivors=[] late=[] snapshot=5 snapshot_alive=5 path=/logs/verifier/staged-note.md reason=the graded build shipped the library and every prohibition item holds
-reward: 0.817

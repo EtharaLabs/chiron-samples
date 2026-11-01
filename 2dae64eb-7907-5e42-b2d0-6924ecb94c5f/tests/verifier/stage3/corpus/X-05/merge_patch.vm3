@@ -1,3 +1,0 @@
-iparse 0 {%22a%22:%22b%22,%22c%22:{%22d%22:%22e%22,%22f%22:%22g%22}}
-mpatch 0 {%22a%22:%22zzzzzzzzzzzzzzzz%22,%22c%22:{%22f%22:null}}
-write
