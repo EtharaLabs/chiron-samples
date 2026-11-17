@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="hero-title hero-desc">
-  <title id="hero-title">chiron</title>
+  <title id="hero-title">Chiron</title>
   <desc id="hero-desc">A centaur archer gallops left out of a field of dotted legacy code toward a city of crisp new code blocks, bow drawn. Its foreparts are built from code blocks and its hindquarters dissolve into dots. An archive of scrolls under a lamp, an anvil throwing sparks, and a glowing vessel over a flame attend the scene, lit from the upper left by a low moon.</desc>
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -297,7 +297,7 @@
   <rect width="1280" height="640" fill="url(#vignette)"/>
 
   <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
-    <text x="1210" y="122" text-anchor="end" font-size="88" font-weight="700" fill="#e8ecff" letter-spacing="4" filter="url(#glow)">chiron</text>
+    <text x="1210" y="122" text-anchor="end" font-size="88" font-weight="700" fill="#e8ecff" letter-spacing="4" filter="url(#glow)">Chiron</text>
     <rect x="900" y="140" width="310" height="3" fill="#845EF7"/>
     <rect x="900" y="140" width="60" height="3" fill="#22d3ee"/>
     <rect x="0" y="610" width="1280" height="30" fill="#05081a" opacity="0.6"/>

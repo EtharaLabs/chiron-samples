@@ -1,8 +1,8 @@
-<p align="center"><img src="images/hero.svg" alt="chiron" width="720"></p>
+<p align="center"><img src="images/hero.svg" alt="Chiron" width="720"></p>
 
-# chiron: samples
+# Chiron SWE Refactor Bench: samples
 
-<p align="center"><b>Five sample tasks from chiron, a Harbor benchmark of whole-repository migrations where an unmigrated repository scores zero.</b></p>
+<p align="center"><b>Five sample tasks from Chiron SWE Refactor Bench, a Harbor benchmark of whole-repository migrations where an unmigrated repository scores zero.</b></p>
 
 <p align="center"><a href="#summary"><img src="https://img.shields.io/badge/tasks-5-845EF7" alt="tasks: 5"></a> <a href="#summary"><img src="https://img.shields.io/badge/harbor_schema-1.4-845EF7" alt="harbor schema: 1.4"></a> <a href="#rollouts"><img src="https://img.shields.io/badge/gpt--6.1--sol_mean_reward-0.0000-845EF7" alt="gpt-6.1-sol mean reward: 0.0000"></a></p>
 
@@ -10,7 +10,7 @@
 
 ## Abstract
 
-chiron is a benchmark of whole-repository migration tasks in [Harbor](https://github.com/harbor-framework/harbor) format. Each task hands an autonomous agent a real upstream open source repository and asks it to move the whole repository onto a new framework, build system, dependency version, or language while every observable behaviour of the original stays the same. A repository left unmigrated scores zero.
+Chiron SWE Refactor Bench is a benchmark of whole-repository migration tasks in [Harbor](https://github.com/harbor-framework/harbor) format. Each task hands an autonomous agent a real upstream open source repository and asks it to move the whole repository onto a new framework, build system, dependency version, or language while every observable behaviour of the original stays the same. A repository left unmigrated scores zero.
 
 Every task runs its agent offline and carries a reference solution, a grader that builds and runs the migrated repository and compares it with recordings of the original, an LLM-judged rubric, and a continuous reward from 0 to 1. Veto checks guard the core of each migration, such as the old stack being gone and the main recorded behaviours being unchanged; one failed veto sets the reward to 0.
 
@@ -154,7 +154,7 @@ The verifier's LLM-judged rubric uses `ANTHROPIC_API_KEY` (Claude Opus 5.5, `ant
 
 ```bibtex
 @misc{chiron2026,
-  title        = {chiron: Whole-repository migration tasks where an unmigrated repository scores zero},
+  title        = {Chiron: Whole-repository migration tasks where an unmigrated repository scores zero},
   author       = {{Ethara.AI}},
   year         = {2026}
 }
@@ -162,6 +162,6 @@ The verifier's LLM-judged rubric uses `ANTHROPIC_API_KEY` (Claude Opus 5.5, `ant
 
 ## Contact
 
-chiron is built by [Ethara.AI](https://github.com/Ethara-Ai).
+Chiron SWE Refactor Bench is built by [Ethara.AI](https://github.com/Ethara-Ai).
 
 Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
