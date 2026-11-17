@@ -35,11 +35,13 @@ This repository holds the five-task sample, each a different migration: a web fr
 
 | Task | Project | Language | Objective | Reference migration |
 | --- | --- | --- | --- | --- |
-| [`12b08204`](12b08204-4fec-591c-a697-d4d9922da167/) | Argus (`scylladb/argus`) | Python | Move the Argus web backend from Flask and uWSGI to FastAPI on Starlette, served by Gunicorn with Uvicorn workers, keeping every observable behaviour of the original application. | 122 files (+5,738 -5,315 lines) |
-| [`235c695a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/) | Yosys 0.66 | C++ | Move the Yosys build, its CI workflows, and its Python wheel packaging from GNU Make to CMake, keeping every observable behaviour of the original build. | 223 files (+5,506 -2,233 lines) |
+| [`12b08204`](12b08204-4fec-591c-a697-d4d9922da167/) | Argus (`scylladb/argus`) | Python | Move the Argus web backend from Flask and uWSGI to FastAPI on Starlette, served by Gunicorn with Uvicorn workers, keeping every observable behaviour of the original application. | 122 files (+6,195 -5,447 lines) |
+| [`235c695a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/) | Yosys 0.66 | C++ | Move the Yosys build, its CI workflows, and its Python wheel packaging from GNU Make to CMake, keeping every observable behaviour of the original build. | 223 files (+5,837 -2,625 lines) |
 | [`50b177e0`](50b177e0-3b23-5823-bb2b-f689f6de5909/) | yyjson 0.13.0 | C to Rust | Move the library's implementation from C to Rust (std, core, and alloc only, no crates) while keeping the public header, the C ABI, the CMake build, the installed tree, and every observable behaviour unchanged. | 11,480 lines of C removed, 52 exported entry points kept |
-| [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/) | datalab (`datalab-org/datalab`) | Python | Upgrade the datalab research data management server, built on Flask and MongoDB, from Pydantic 1 to Pydantic 2 with every served behaviour unchanged, offline against a fixed wheel set. | 63 files (+7,027 -3,955 lines) |
-| [`cc04c7df`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/) | folding-stats (`zodac-personal/folding-stats`) | Java | Move the multi-module Maven service from Java EE 8 inside WildFly 24 (JAX-RS, EJB singletons and timers, CDI) onto Spring Boot, so that it builds from clean as one executable jar on JDK 17 and keeps the recorded HTTP behaviour against the same PostgreSQL schema. | 258 files (+4,019 -5,701 lines) |
+| [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/) | datalab (`datalab-org/datalab`) | Python | Upgrade the datalab research data management server, built on Flask and MongoDB, from Pydantic 1 to Pydantic 2 with every served behaviour unchanged, offline against a fixed wheel set. | 63 files (+7,232 -4,032 lines) |
+| [`cc04c7df`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/) | folding-stats (`zodac-personal/folding-stats`) | Java | Move the multi-module Maven service from Java EE 8 inside WildFly 24 (JAX-RS, EJB singletons and timers, CDI) onto Spring Boot, so that it builds from clean as one executable jar on JDK 17 and keeps the recorded HTTP behaviour against the same PostgreSQL schema. | 258 files (+4,330 -6,171 lines) |
+
+Reference migration sizes are the `git apply --numstat` totals of each task's `solution/reference.patch`, blank lines included. yyjson's reference is a Rust port in `solution/port/` that replaces the 11,480-line `src/yyjson.c`.
 
 ## Trials
 
