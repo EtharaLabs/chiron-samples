@@ -166,6 +166,6 @@ The verifier's LLM-judged rubric uses `ANTHROPIC_API_KEY` (Claude Opus 5.5, `ant
 
 ## Contact
 
-Chiron SWE Refactor Bench is built by [Ethara.AI](https://github.com/Ethara-Ai).
+Chiron SWE Refactor Bench is built by [Ethara.AI](https://github.com/Ethara-Ai). For questions about the benchmark or dataset, contact [research@ethara.ai](mailto:research@ethara.ai).
 
 Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
