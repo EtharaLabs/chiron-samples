@@ -1,0 +1,43 @@
+#!/bin/bash
+# argus-db start|stop|status|cql [cql statement]
+# One local ScyllaDB node on 127.0.0.1:9042 for the application, run as the calling user.
+# Credentials: cassandra / cassandra (PasswordAuthenticator). Data lives under ~/.argus-db.
+set -euo pipefail
+home="${ARGUS_DB_HOME:-$HOME/.argus-db}"
+pidfile="$home/scylla.pid"
+log="$home/scylla.log"
+running() { [[ -f "$pidfile" ]] && kill -0 "$(cat "$pidfile")" 2>/dev/null; }
+ready() { /opt/python/bin/python3 - <<'PY' 2>/dev/null
+import socket, sys
+s = socket.socket(); s.settimeout(1)
+sys.exit(0 if s.connect_ex(("127.0.0.1", 9042)) == 0 else 1)
+PY
+}
+case "${1:-status}" in
+  start)
+    if running; then echo "argus-db: already running (pid $(cat "$pidfile"))"; exit 0; fi
+    mkdir -p "$home"/{data,commitlog,hints,view_hints,saved_caches}
+    nohup /usr/bin/scylla --options-file /etc/scylla/scylla.yaml --workdir "$home" \
+      --developer-mode=1 --smp=1 --memory=1G --reserve-memory=256M --overprovisioned \
+      --listen-address=127.0.0.1 --rpc-address=127.0.0.1 --api-address=127.0.0.1 \
+      --prometheus-address=127.0.0.1 --seed-provider-parameters=seeds=127.0.0.1 \
+      --rf-rack-valid-keyspaces=1 --endpoint-snitch=SimpleSnitch \
+      --authenticator=PasswordAuthenticator --reactor-backend=epoll >"$log" 2>&1 &
+    echo $! > "$pidfile"
+    for _ in $(seq 1 240); do
+      if ready && /usr/bin/cqlsh -u cassandra -p cassandra -e "SELECT release_version FROM system.local" >/dev/null 2>&1; then
+        echo "argus-db: ready on 127.0.0.1:9042"; exit 0
+      fi
+      running || { echo "argus-db: scylla exited; see $log" >&2; exit 1; }
+      sleep 1
+    done
+    echo "argus-db: not ready after 240 s; see $log" >&2; exit 1 ;;
+  stop)
+    if running; then kill "$(cat "$pidfile")"; for _ in $(seq 1 60); do running || break; sleep 1; done; fi
+    rm -f "$pidfile"; echo "argus-db: stopped" ;;
+  status)
+    if running && ready; then echo "argus-db: running (pid $(cat "$pidfile"))"; else echo "argus-db: not running"; exit 1; fi ;;
+  cql)
+    shift; exec /usr/bin/cqlsh -u cassandra -p cassandra "$@" ;;
+  *) echo "usage: argus-db start|stop|status|cql [cqlsh arguments]" >&2; exit 2 ;;
+esac

@@ -1,0 +1,43 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/util/RestUtilConstants.java (changed against State A) ===
+@@
+30  | import java.time.Duration;
+31  | import java.time.LocalDateTime;
+32  | 
+   -| /**
+   -|  * Simple utility class holding some constants.
+   -|  */
+33 +| 
+34  | public final class RestUtilConstants {
+35  | 
+   -|     /**
+   -|      * Instance of {@link Gson} with:
+   -|      * <ul>
+   -|      *     <li>Pretty-printing enabled</li>
+   -|      *     <li>HTML escaping disabled</li>
+   -|      *     <li>Custom {@link LocalDateTimeGsonTypeAdapter} for {@link LocalDateTime}</li>
+   -|      * </ul>
+   -|      */
+36 +|     
+37  |     public static final Gson GSON = new GsonBuilder()
+38 +|         .registerTypeHierarchyAdapter(java.util.Collection.class,
+39 +|             (com.google.gson.JsonSerializer<java.util.Collection<?>>) (values, type, context) -> {
+40 +|                 com.google.gson.JsonArray array = new com.google.gson.JsonArray();
+41 +|                 for (Object value : values) array.add(context.serialize(value));
+42 +|                 return array;
+43 +|             })
+44  |         .registerTypeAdapter(LocalDateTime.class, LocalDateTimeGsonTypeAdapter.getInstance())
+45  |         .setPrettyPrinting()
+46  |         .disableHtmlEscaping()
+47  |         .create();
+48  | 
+   -|     /**
+   -|      * Instance of {@link HttpClient} with:
+   -|      * <ul>
+   -|      *     <li>HTTP protocol of {@link HttpClient.Version#HTTP_2}</li>
+   -|      *     <li>A connection timeout of <b>10</b> {@link java.util.concurrent.TimeUnit#SECONDS}</li>
+   -|      * </ul>
+   -|      */
+49 +|     
+50  |     public static final HttpClient HTTP_CLIENT = HttpClient.newBuilder()
+51  |         .version(HttpClient.Version.HTTP_2)
+52  |         .connectTimeout(Duration.ofSeconds(10))

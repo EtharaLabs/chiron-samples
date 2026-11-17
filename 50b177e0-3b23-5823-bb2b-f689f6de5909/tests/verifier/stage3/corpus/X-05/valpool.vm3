@@ -1,0 +1,40 @@
+new
+arr r1
+root r1
+uint r2 1
+aapp r1 r2
+uint r2 2
+aapp r1 r2
+uint r2 3
+aapp r1 r2
+uint r2 4
+aapp r1 r2
+uint r2 5
+aapp r1 r2
+uint r2 6
+aapp r1 r2
+uint r2 7
+aapp r1 r2
+uint r2 8
+aapp r1 r2
+uint r2 9
+aapp r1 r2
+uint r2 10
+aapp r1 r2
+uint r2 11
+aapp r1 r2
+uint r2 12
+aapp r1 r2
+uint r2 13
+aapp r1 r2
+uint r2 14
+aapp r1 r2
+uint r2 15
+aapp r1 r2
+uint r2 16
+aapp r1 r2
+uint r2 17
+aapp r1 r2
+uint r2 18
+aapp r1 r2
+write

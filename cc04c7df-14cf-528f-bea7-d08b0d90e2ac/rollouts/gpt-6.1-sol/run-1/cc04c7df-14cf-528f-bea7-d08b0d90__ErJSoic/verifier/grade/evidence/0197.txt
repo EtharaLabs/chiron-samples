@@ -1,0 +1,123 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/api/FoldingStatsCore.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.api;
+26 +| 
+27 +| import java.time.Month;
+28 +| import java.time.Year;
+29 +| import java.util.Collection;
+30 +| import java.util.Optional;
+31 +| import me.zodac.folding.api.UserAuthenticationResult;
+32 +| import me.zodac.folding.api.tc.Hardware;
+33 +| import me.zodac.folding.api.tc.Team;
+34 +| import me.zodac.folding.api.tc.User;
+35 +| import me.zodac.folding.api.tc.result.MonthlyResult;
+36 +| import me.zodac.folding.api.tc.stats.OffsetTcStats;
+37 +| import me.zodac.folding.api.tc.stats.RetiredUserTcStats;
+38 +| import me.zodac.folding.api.tc.stats.UserStats;
+39 +| import me.zodac.folding.api.tc.stats.UserTcStats;
+40 +| import me.zodac.folding.rest.api.tc.CompetitionSummary;
+41 +| import me.zodac.folding.rest.api.tc.historic.HistoricStats;
+42 +| 
+43 +| public interface FoldingStatsCore {
+44 +| 
+45 +|     Hardware createHardware(final Hardware hardware);
+46 +| 
+47 +|     Optional<Hardware> getHardware(final int hardwareId);
+48 +| 
+49 +|     Collection<Hardware> getAllHardware();
+50 +| 
+51 +|     Hardware updateHardware(final Hardware hardwareToUpdate, final Hardware existingHardware);
+52 +| 
+53 +|     void deleteHardware(final Hardware hardware);
+54 +| 
+55 +|     Team createTeam(final Team team);
+56 +| 
+57 +|     Optional<Team> getTeam(final int teamId);
+58 +| 
+59 +|     Collection<Team> getAllTeams();
+60 +| 
+61 +|     Team updateTeam(final Team teamToUpdate);
+62 +| 
+63 +|     void deleteTeam(final Team team);
+64 +| 
+65 +|     User createUser(final User user);
+66 +| 
+67 +|     Optional<User> getUserWithPasskey(final int userId);
+68 +| 
+69 +|     Optional<User> getUserWithoutPasskey(final int userId);
+70 +| 
+71 +|     Collection<User> getAllUsersWithPasskeys();
+72 +| 
+73 +|     Collection<User> getAllUsersWithoutPasskeys();
+74 +| 
+75 +|     User updateUser(final User userToUpdate, final User existingUser);
+76 +| 
+77 +|     void deleteUser(final User user);
+78 +| 
+79 +|     Collection<User> getUsersOnTeam(final Team team);
+80 +| 
+81 +|     Collection<User> getUsersOnTeamWithPasskeys(final Team team);
+82 +| 
+83 +|     MonthlyResult createMonthlyResult(final MonthlyResult monthlyResult);
+84 +| 
+85 +|     Optional<MonthlyResult> getMonthlyResult(final Month month, final Year year);
+86 +| 
+87 +|     UserAuthenticationResult authenticateSystemUser(final String userName, final String password);
+88 +| 
+89 +|     Collection<HistoricStats> getHistoricStats(final User user, final Year year, final Month month, final int day);
+90 +| 
+91 +|     Collection<HistoricStats> getHistoricStats(final User user, final Year year, final Month month);
+92 +| 
+93 +|     Collection<HistoricStats> getHistoricStats(final User user, final Year year);
+94 +| 
+95 +|     UserStats createTotalStats(final UserStats userStats);
+96 +| 
+97 +|     UserStats getTotalStats(final User user);
+98 +| 
+99 +|     OffsetTcStats createOffsetStats(final User user, final OffsetTcStats offsetTcStats);
+100 +| 
+101 +|     OffsetTcStats createOrUpdateOffsetStats(final User user, final OffsetTcStats offsetTcStats);
+102 +| 
+103 +|     OffsetTcStats getOffsetStats(final User user);
+104 +| 
+105 +|     UserTcStats createHourlyTcStats(final UserTcStats userTcStats);
+106 +| 
+107 +|     UserTcStats getHourlyTcStats(final User user);
+108 +| 
+109 +|     boolean isAnyHourlyTcStatsExist();
+110 +| 
+111 +|     UserStats createInitialStats(final UserStats userStats);
+112 +| 
+113 +|     UserStats getInitialStats(final User user);
+114 +| 
+115 +|     RetiredUserTcStats createRetiredUserStats(final RetiredUserTcStats retiredUserTcStats);
+116 +| 
+117 +|     void resetAllTeamCompetitionUserStats();
+118 +| 
+119 +|     CompetitionSummary getCompetitionSummary();
+120 +| 
+121 +|     void printCacheContents();
+122 +| }

@@ -1,0 +1,821 @@
+==> docs/source/code_examples/extensions/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| .PHONY: all dots examples
+    6| all: dots examples
+    7| dots: test1.dot my_cmd.so
+    8| examples: test0.log test1.log test2.log my_cmd.so
+    9| 
+   10| CXXFLAGS=$(shell $(YOSYS)-config --cxxflags)
+   11| DATDIR=$(shell $(YOSYS)-config --datdir)
+   12| 
+   13| my_cmd.so: my_cmd.cc
+   14| 	$(YOSYS)-config --exec --cxx $(subst $(DATDIR),../../../../share,$(CXXFLAGS)) --ldflags -o my_cmd.so -shared my_cmd.cc --ldlibs
+   15| 
+   16| test0.log: my_cmd.so
+   17| 	$(YOSYS) -QTl test0.log_new -m ./my_cmd.so -p 'my_cmd foo bar' -f verilog absval_ref.v
+   18| 	mv test0.log_new test0.log
+   19| 
+   20| test1.log: my_cmd.so
+   21| 	$(YOSYS) -QTl test1.log_new -m ./my_cmd.so -p 'clean; test1; dump' -f verilog absval_ref.v
+   22| 	mv test1.log_new test1.log
+   23| 
+   24| test1.dot: my_cmd.so
+   25| 	$(YOSYS) -m ./my_cmd.so -p 'test1; show -format dot -prefix test1'
+   26| 
+   27| test2.log: my_cmd.so
+   28| 	$(YOSYS) -QTl test2.log_new -m ./my_cmd.so -p 'hierarchy -top test; test2' -f verilog sigmap_test.v
+   29| 	mv test2.log_new test2.log
+   30| 
+   31| .PHONY: clean
+   32| clean:
+   33| 	rm -f *.d *.so *.dot
+
+==> docs/source/code_examples/fifo/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| DOT_NAMES = addr_gen_hier addr_gen_proc addr_gen_clean
+    6| DOT_NAMES += rdata_proc rdata_flat rdata_adffe rdata_memrdv2 rdata_alumacc rdata_coarse
+    7| MAPDOT_NAMES = rdata_map_ram rdata_map_ffram rdata_map_gates 
+    8| MAPDOT_NAMES += rdata_map_ffs rdata_map_luts rdata_map_cells
+    9| 
+   10| DOTS := $(addsuffix .dot,$(DOT_NAMES))
+   11| MAPDOTS := $(addsuffix .dot,$(MAPDOT_NAMES))
+   12| 
+   13| .PHONY: all dots examples
+   14| all: dots examples
+   15| dots: $(DOTS) $(MAPDOTS)
+   16| examples: fifo.out fifo.stat
+   17| 
+   18| $(DOTS) fifo.out: fifo.v fifo.ys
+   19| 	$(YOSYS) fifo.ys -l fifo.out -Q -T
+   20| 
+   21| $(MAPDOTS) fifo.stat: fifo.v fifo_map.ys
+   22| 	$(YOSYS) fifo_map.ys
+   23| 
+   24| .PHONY: clean
+   25| clean:
+   26| 	rm -f *.dot
+   27| 	rm -f fifo.out fifo.stat
+
+==> docs/source/code_examples/intro/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| DOTS = counter_00.dot counter_01.dot counter_02.dot counter_03.dot
+    6| 
+    7| .PHONY: all dots examples
+    8| all: dots examples
+    9| dots: $(DOTS)
+   10| examples:
+   11| 
+   12| $(DOTS): counter.v counter.ys mycells.lib
+   13| 	$(YOSYS) counter.ys
+   14| 
+   15| .PHONY: clean
+   16| clean:
+   17| 	rm -f *.dot
+
+==> docs/source/code_examples/macc/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| DOTS = macc_simple_xmap.dot macc_xilinx_xmap.dot
+    6| 
+    7| .PHONY: all dots examples
+    8| all: dots examples
+    9| dots: $(DOTS)
+   10| examples:
+   11| 
+   12| macc_simple_xmap.dot: macc_simple_*.v macc_simple_test.ys
+   13| 	$(YOSYS) macc_simple_test.ys
+   14| 
+   15| macc_xilinx_xmap.dot: macc_xilinx_*.v macc_xilinx_test.ys
+   16| 	$(YOSYS) macc_xilinx_test.ys
+   17| 
+   18| .PHONY: clean
+   19| clean:
+   20| 	rm -f *.dot
+   21| 
+
+==> docs/source/code_examples/opt/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| DOT_NAMES = opt_share opt_muxtree opt_merge opt_expr
+    6| 
+    7| DOTS := $(addsuffix .dot,$(DOT_NAMES))
+    8| 
+    9| .PHONY: all dots examples
+   10| all: dots examples
+   11| dots: $(DOTS)
+   12| examples:
+   13| 
+   14| %.dot: %.ys
+   15| 	$(YOSYS) $<
+   16| 	gvpack -u -o $@ $*_full.dot
+   17| 
+   18| .PHONY: clean
+   19| clean:
+   20| 	rm -f *.dot
+
+==> docs/source/code_examples/scrambler/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| .PHONY: all dots examples
+    6| all: dots examples
+    7| dots: scrambler_p01.dot scrambler_p02.dot
+    8| examples:
+    9| 
+   10| scrambler_p01.dot scrambler_p02.dot: scrambler.ys scrambler.v
+   11| 	$(YOSYS) scrambler.ys
+   12| 
+   13| .PHONY: clean
+   14| clean:
+   15| 	rm -f *.dot
+
+==> docs/source/code_examples/selections/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| SUMPROD = sumprod_00 sumprod_01 sumprod_02 sumprod_03 sumprod_04 sumprod_05
+    6| SUMPROD_DOTS := $(addsuffix .dot,$(SUMPROD))
+    7| 
+    8| MEMDEMO = memdemo_00 memdemo_01
+    9| MEMDEMO_DOTS := $(addsuffix .dot,$(MEMDEMO))
+   10| 
+   11| SUBMOD = submod_00 submod_01 submod_02 submod_03
+   12| SUBMOD_DOTS := $(addsuffix .dot,$(SUBMOD))
+   13| 
+   14| .PHONY: all dots examples
+   15| all: dots examples
+   16| dots: select.dot $(SUMPROD_DOTS) $(MEMDEMO_DOTS) $(SUBMOD_DOTS)
+   17| examples: sumprod.out
+   18| 
+   19| select.dot: select.v select.ys
+   20| 	$(YOSYS) select.ys
+   21| 
+   22| $(SUMPROD_DOTS) sumprod.out: sumprod.v sumprod.ys
+   23| 	$(YOSYS) sumprod.ys
+   24| 
+   25| $(MEMDEMO_DOTS): memdemo.v memdemo.ys
+   26| 	$(YOSYS) memdemo.ys
+   27| 
+   28| $(SUBMOD_DOTS): memdemo.v submod.ys
+   29| 	$(YOSYS) submod.ys
+   30| 
+   31| .PHONY: clean
+   32| clean:
+   33| 	rm -rf *.dot
+   34| 	rm -f sumprod.out
+
+==> docs/source/code_examples/show/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| EXAMPLE = example_first example_second example_third
+    6| EXAMPLE_DOTS := $(addsuffix .dot,$(EXAMPLE))
+    7| 
+    8| CMOS = cmos_00 cmos_01
+    9| CMOS_DOTS := $(addsuffix .dot,$(CMOS))
+   10| 
+   11| .PHONY: all dots examples
+   12| all: dots examples
+   13| dots: splice.dot $(EXAMPLE_DOTS) $(CMOS_DOTS)
+   14| examples: example.out
+   15| 
+   16| splice.dot: splice.v
+   17| 	$(YOSYS) -p 'prep -top splice_demo; show -format dot -prefix splice' splice.v
+   18| 
+   19| $(EXAMPLE_DOTS): example.v example.ys
+   20| 	$(YOSYS) example.ys
+   21| 
+   22| example.out: example_lscd.ys example.v
+   23| 	$(YOSYS) $< -l $@ -Q -T
+   24| 
+   25| $(CMOS_DOTS): cmos.v cmos.ys
+   26| 	$(YOSYS) cmos.ys
+   27| 
+   28| .PHONY: clean
+   29| clean:
+   30| 	rm -rf *.dot
+   31| 	rm -f example.out
+
+==> docs/source/code_examples/synth_flow/Makefile <==
+    1| 
+    2| DOT_TARGETS += proc_01 proc_02 proc_03
+    3| DOT_TARGETS += memory_01 memory_02
+    4| DOT_TARGETS += techmap_01
+    5| 
+    6| PROGRAM_PREFIX :=
+    7| 
+    8| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    9| 
+   10| DOTS = $(addsuffix .dot,$(DOT_TARGETS))
+   11| 
+   12| .PHONY: all dots examples
+   13| all: dots examples
+   14| dots: $(DOTS)
+   15| examples:
+   16| 
+   17| %.dot: %.v %.ys
+   18| 	$(YOSYS) -p 'script $*.ys; show -notitle -prefix $* -format dot'
+   19| 
+   20| .PHONY: clean
+   21| clean:
+   22| 	rm -f *.dot
+   23| 
+
+==> docs/source/code_examples/techmap/Makefile <==
+    1| PROGRAM_PREFIX :=
+    2| 
+    3| YOSYS ?= ../../../../$(PROGRAM_PREFIX)yosys
+    4| 
+    5| .PHONY: all dots examples
+    6| all: dots examples
+    7| dots: red_or3x1.dot sym_mul.dot mymul.dot mulshift.dot addshift.dot
+    8| examples:
+    9| 
+   10| red_or3x1.dot: red_or3x1_*
+   11| 	$(YOSYS) red_or3x1_test.ys
+   12| 
+   13| sym_mul.dot: sym_mul_*
+   14| 	$(YOSYS) sym_mul_test.ys
+   15| 
+   16| mymul.dot: mymul_*
+   17| 	$(YOSYS) mymul_test.ys
+   18| 
+   19| mulshift.dot: mulshift_*
+   20| 	$(YOSYS) mulshift_test.ys
+   21| 
+   22| addshift.dot: addshift_*
+   23| 	$(YOSYS) addshift_test.ys
+   24| 
+   25| .PHONY: clean
+   26| clean:
+   27| 	rm -f *.dot
+
+==> docs/tests/macro_commands.py <==
+    1| #!/usr/bin/env python3
+    2| 
+    3| import logging
+    4| from pathlib import Path
+    5| import re
+    6| import subprocess
+    7| import sys
+    8| 
+    9| # basic logging setup
+   10| logging.basicConfig(level=logging.INFO)
+   11| 
+   12| # expects __file__ = yosys/docs/tests/macro_commands.py
+   13| TESTS_DIR = Path(__file__).parent.absolute()
+   14| ROOT_DIR = TESTS_DIR.parent.parent
+   15| logging.log(logging.INFO, f"Using {ROOT_DIR} as root directory")
+   16| THIS_FILE = (TESTS_DIR / "macro_commands.py").relative_to(ROOT_DIR)
+   17| MACRO_SOURCE = TESTS_DIR.parent / "source" / "code_examples" / "macro_commands"
+   18| assert MACRO_SOURCE.exists(), f"can't find macro_commands in {MACRO_SOURCE}"
+   19| 
+   20| YOSYS = ROOT_DIR / "yosys"
+   21| assert YOSYS.exists(), f"can't find yosys executable in {YOSYS}"
+   22| 
+   23| raise_error = False
+   24| # get all macro commands being used
+   25| for macro in MACRO_SOURCE.glob("*.ys"):
+   26|     # log current test
+   27|     relative_path = macro.relative_to(ROOT_DIR)
+   28|     logging.log(logging.INFO, f"Checking {relative_path}")
+   29|     # files in macros_commands should be named {command}.ys
+   30|     command = macro.stem
+   31|     # run `yosys -h {command}` to capture current sub-commands
+   32|     proc = subprocess.run([YOSYS, "-QTh", command], capture_output=True, text=True)
+   33|     with open(macro) as f:
+   34|         # {command.ys} starts with two commented lines, the first is the text
+   35|         # immediately prior to the macro body.  The second is the text
+   36|         # immediately after.
+   37|         start = f.readline()
+   38|         end = f.readline()
+   39|         file_content = f.readlines()
+   40|     expected_content = []
+   41|     for line in file_content:
+   42|         line = line.split("#")[0].strip()
+   43|         if line:
+   44|             expected_content.append(line)
+   45|     # parse {command.ys}
+   46|     if "#start:" not in start or "#end:" not in end:
+   47|         logging.error(f"Missing start and/or end string in {relative_path}, see {THIS_FILE}")
+   48|         raise_error = True
+   49|         continue
+   50|     start = start.replace("#start:", "").strip()
+   51|     end = end.replace("#end:", "").strip()
+   52|     # attempt to find macro body in help output
+   53|     match = re.fullmatch(f".*{start}(.*){end}.*", proc.stdout, re.DOTALL)
+   54|     if not match:
+   55|         logging.error(f"Couldn't find {start!r} and/or {end!r} in `yosys -h {command}` output")
+   56|         raise_error = True
+   57|         continue
+   58|     match_content = match.group(1).strip().splitlines()
+   59|     actual_content = []
+   60|     for line in match_content:
+   61|         if line:
+   62|             actual_content.append(line)
+   63|     # iterate over and compare expected v actual
+   64|     for (expected, actual) in zip(expected_content, actual_content):
+   65|         expected = expected.strip()
+   66|         actual = actual.strip()
+   67|         # raw match
+   68|         if expected == actual:
+   69|             continue
+   70| 
+   71|         # rip apart formatting to match line parts
+   72|         pattern = r"(?P<cmd>\S+)(?P<pass> \[.*\])?(?P<opt>.*?)(?P<cond>\s+\(.*\))?"
+   73|         try:
+   74|             expected_dict = re.fullmatch(pattern, expected).groupdict()
+   75|         except AttributeError:
+   76|             logging.error(f"Bad formatting in {relative_path}: {expected!r}")
+   77|             raise_error = True
+   78|             continue
+   79| 
+   80|         try:
+   81|             actual_dict = re.fullmatch(pattern, actual).groupdict()
+   82|         except AttributeError:
+   83|             logging.error(f"Unexpected formatting in `yosys -h {command}` output, {actual!r}")
+   84|             raise_error = True
+   85|             continue
+   86| 
+   87|         does_match = expected_dict["cmd"] == actual_dict["cmd"]
+   88| 
+   89|         #todo: check expected_dict["pass"] is a subset of actual_dict["pass"]
+   90|         # only check opt and cond match if they're in {command}.ys
+   91|         match_keys = ["opt", "cond"]
+   92|         for key in match_keys:
+   93|             if expected_dict[key] and expected_dict[key] != actual_dict[key]:
+   94|                 does_match = False
+   95| 
+   96|         # raise error on mismatch        
+   97|         if not does_match:
+   98|             logging.error(f"Expected {expected!r}, got {actual!r}")
+   99|             raise_error = True
+  100| 
+  101| sys.exit(raise_error)
+
+==> tests/Makefile <==
+    1| ifneq ($(wildcard ../Makefile.conf),)
+    2| include ../Makefile.conf
+    3| endif
+    4| 
+    5| OVERRIDE_MAIN=1
+    6| include ./common.mk
+    7| 
+    8| # Directories with tests not run:
+    9| #  errors
+   10| #  lut
+   11| #  pyosys
+   12| #  smv
+   13| #  sva
+   14| #  tools
+   15| #  unit
+   16| #  vloghtb
+   17| 
+   18| # Tests that generate Makefile with gen_tests_makefile.py
+   19| MK_TEST_DIRS =
+   20| MK_TEST_DIRS += ./arch/analogdevices
+   21| MK_TEST_DIRS += ./arch/anlogic
+   22| MK_TEST_DIRS += ./arch/ecp5
+   23| MK_TEST_DIRS += ./arch/efinix
+   24| MK_TEST_DIRS += ./arch/fabulous
+   25| MK_TEST_DIRS += ./arch/gatemate
+   26| MK_TEST_DIRS += ./arch/gowin
+   27| MK_TEST_DIRS += ./arch/ice40
+   28| MK_TEST_DIRS += ./arch/intel_alm
+   29| MK_TEST_DIRS += ./arch/machxo2
+   30| MK_TEST_DIRS += ./arch/microchip
+   31| MK_TEST_DIRS += ./arch/nanoxplore
+   32| MK_TEST_DIRS += ./arch/nexus
+   33| MK_TEST_DIRS += ./arch/quicklogic/pp3
+   34| MK_TEST_DIRS += ./arch/quicklogic/qlf_k6n10f
+   35| MK_TEST_DIRS += ./arch/xilinx
+   36| MK_TEST_DIRS += ./bind
+   37| MK_TEST_DIRS += ./bugpoint
+   38| MK_TEST_DIRS += ./opt
+   39| MK_TEST_DIRS += ./sat
+   40| MK_TEST_DIRS += ./sdc
+   41| MK_TEST_DIRS += ./sim
+   42| MK_TEST_DIRS += ./svtypes
+   43| MK_TEST_DIRS += ./techmap
+   44| MK_TEST_DIRS += ./various
+   45| MK_TEST_DIRS += ./rtlil
+   46| ifeq ($(ENABLE_VERIFIC),1)
+   47| ifneq ($(YOSYS_NOVERIFIC),1)
+   48| MK_TEST_DIRS += ./verific
+   49| endif
+   50| endif
+   51| MK_TEST_DIRS += ./verilog
+   52| MK_TEST_DIRS += ./arith_tree
+   53| MK_TEST_DIRS += ./simple
+   54| MK_TEST_DIRS += ./simple_abc9
+   55| MK_TEST_DIRS += ./hana
+   56| MK_TEST_DIRS += ./asicworld
+   57| MK_TEST_DIRS += ./realmath
+   58| MK_TEST_DIRS += ./share
+   59| MK_TEST_DIRS += ./opt_share
+   60| MK_TEST_DIRS += ./fsm
+   61| MK_TEST_DIRS += ./memlib
+   62| MK_TEST_DIRS += ./bram
+   63| MK_TEST_DIRS += ./svinterfaces
+   64| MK_TEST_DIRS += ./xprop
+   65| MK_TEST_DIRS += ./select
+   66| MK_TEST_DIRS += ./peepopt
+   67| MK_TEST_DIRS += ./proc
+   68| MK_TEST_DIRS += ./blif
+   69| MK_TEST_DIRS += ./arch
+   70| MK_TEST_DIRS += ./rpc
+   71| MK_TEST_DIRS += ./memfile
+   72| MK_TEST_DIRS += ./fmt
+   73| MK_TEST_DIRS += ./cxxrtl
+   74| MK_TEST_DIRS += ./liberty
+   75| #ifeq ($(ENABLE_FUNCTIONAL_TESTS),1)
+   76| #MK_TEST_DIRS += ./functional
+   77| #endif
+   78| MK_TEST_DIRS += ./memories
+   79| MK_TEST_DIRS += ./aiger
+   80| MK_TEST_DIRS += ./alumacc
+   81| 
+   82| all: vanilla-test
+   83| 
+   84| # makefile-./ is a dummy string, not a directory
+   85| .PHONY: makefile-tests
+   86| .SILENT: $(MK_TEST_DIRS:%=%/Makefile)
+   87| makefile-tests: $(MK_TEST_DIRS:%=makefile-./%)
+   88| prep: $(MK_TEST_DIRS:%=%/Makefile)
+   89| 	@echo "All Makefiles generated."
+   90| 
+   91| .PHONY: force-create
+   92| # this target actually emits Makefile files
+   93| %/Makefile: force-create
+   94| 	+@cd $* && python3 generate_mk.py
+   95| 
+   96| makefile-./%: %/Makefile
+   97| 	@$(MAKE) -C $*
+   98| 	@echo "...passed tests in $*"
+   99| 
+  100| .PHONY: functional
+  101| functional:
+  102| ifeq ($(ENABLE_FUNCTIONAL_TESTS),1)
+  103| 	-@cd functional && ./run-test.sh
+  104| endif
+  105| 
+  106| vanilla-test: prep makefile-tests functional
+  107| 	@echo ""
+  108| 	@echo "  Passed \"make vanilla-test\"."
+  109| ifeq ($(ENABLE_VERIFIC),1)
+  110| ifeq ($(YOSYS_NOVERIFIC),1)
+  111| 	@echo "  Ran tests without verific support due to YOSYS_NOVERIFIC=1."
+  112| endif
+  113| endif
+  114| 	@echo ""
+  115| 	@$(MAKE) --no-print-directory summary
+  116| 
+  117| clean:
+  118| 	@rm -rf ./asicworld/*.out ./asicworld/*.log
+  119| 	@rm -rf ./hana/*.out ./hana/*.log
+  120| 	@rm -rf ./simple/*.out ./simple/*.log
+  121| 	@rm -rf ./memories/*.out ./memories/*.log ./memories/*.dmp
+  122| 	@rm -rf ./sat/*.log ./techmap/*.log ./various/*.log
+  123| 	@rm -rf ./bram/temp ./fsm/temp ./realmath/temp ./share/temp ./smv/temp ./various/temp
+  124| 	@rm -f ./svinterfaces/*.log_stdout ./svinterfaces/*.log_stderr ./svinterfaces/dut_result.txt ./svinterfaces/reference_result.txt ./svinterfaces/a.out ./svinterfaces/*_syn.v ./svinterfaces/*.diff
+  125| 	@rm -f  ./tools/cmp_tbdata
+  126| 	@rm -f $(addsuffix /Makefile,$(MK_TEST_DIRS))
+  127| 	@find . -name '*.result' -type f -exec rm -f {} +
+
+==> tests/common.mk <==
+    1| ROOT_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+    2| BUILD_DIR ?= $(ROOT_DIR)/..
+    3| ifneq ($(wildcard $(ROOT_DIR)/../Makefile.conf),)
+    4| include $(ROOT_DIR)/../Makefile.conf
+    5| endif
+    6| 
+    7| SBY   ?= sby
+    8| YOSYS ?= $(BUILD_DIR)/yosys
+    9| ifneq ($(ABCEXTERNAL),)
+   10| ABC	  ?= $(ABCEXTERNAL)
+   11| else
+   12| ABC   ?= $(BUILD_DIR)/yosys-abc
+   13| endif
+   14| YOSYS_FILTERLIB ?= $(BUILD_DIR)/yosys-filterlib
+   15| YOSYS_CONFIG ?= $(BUILD_DIR)/yosys-config
+   16| YOSYS_SMTBMC ?= $(BUILD_DIR)/yosys-smtbmc
+   17| YOSYS_MAX_THREADS ?= 4
+   18| 
+   19| export YOSYS
+   20| export YOSYS_CONFIG
+   21| export YOSYS_SMTBMC
+   22| export ABC
+   23| export SBY
+   24| export YOSYS_MAX_THREADS
+   25| 
+   26| all:
+   27| 
+   28| ifndef OVERRIDE_MAIN
+   29| clean:
+   30| 	@rm -f *.log *.result
+   31| endif
+   32| 
+   33| define run_test
+   34| 	@set -e; \
+   35| 	rc=0; \
+   36| 	( set -e; $(2) ) >/dev/null 2>&1 || rc=$$?; \
+   37| 	if [ $$rc -eq 0 ]; then \
+   38| 		echo "PASS $1"; \
+   39| 		echo PASS > $1.result; \
+   40| 	else \
+   41| 		echo "FAIL $1"; \
+   42| 		echo FAIL > $1.result; \
+   43| 	fi
+   44| endef
+   45| 
+   46| .PHONY: summary
+   47| summary:
+   48| 	@pass=$$(find . -type f -name '*.result' -exec grep '^PASS$$' {} + | wc -l); \
+   49| 	fail=$$(find . -type f -name '*.result' -exec grep '^FAIL$$' {} + | wc -l); \
+   50| 	total=$$((pass + fail)); \
+   51| 	echo "=========================="; \
+   52| 	echo "Tests: $$total"; \
+   53| 	echo "Passed: $$pass"; \
+   54| 	echo "Failed: $$fail"; \
+   55| 	echo "=========================="; \
+   56| 	if [ $$fail -ne 0 ]; then \
+   57| 		echo; \
+   58| 		$(MAKE) --no-print-directory report; \
+   59| 	fi; \
+   60| 	test $$fail -eq 0
+   61| 
+   62| .PHONY: report
+   63| report:
+   64| 	@echo "=========================="
+   65| 	@echo "Failing tests:"
+   66| 	@find . -name '*.result' -type f -exec grep -H '^FAIL$$' {} + \
+   67| 	  | cut -d: -f1 \
+   68| 	  | sed 's|^\./||; s|\.result$$||'
+   69| 	@echo "=========================="
+
+==> tests/tools/autotest.sh <==
+    1| #!/usr/bin/env bash
+    2| 
+    3| libs=()
+    4| genvcd=false
+    5| use_xsim=false
+    6| use_modelsim=false
+    7| verbose=false
+    8| keeprunning=false
+    9| makejmode=false
+   10| frontend="verilog -noblackbox"
+   11| backend_opts="-noattr -noexpr -siminit"
+   12| autotb_opts=""
+   13| include_opts=""
+   14| xinclude_opts=""
+   15| minclude_opts=""
+   16| scriptfiles=""
+   17| scriptopt=""
+   18| toolsdir="$(cd "$(dirname "$0")"; pwd)"
+   19| warn_iverilog_git=false
+   20| # The following are used in verilog to firrtl regression tests.
+   21| # Typically these will be passed as environment variables:
+   22| #EXTRA_FLAGS="--firrtl2verilog 'java -cp /.../firrtl/utils/bin/firrtl.jar firrtl.Driver'"
+   23| # The tests are skipped if firrtl2verilog is the empty string (the default).
+   24| firrtl2verilog=""
+   25| xfirrtl="../xfirrtl"
+   26| abcprog="$toolsdir/../../yosys-abc"
+   27| yosysprog="$toolsdir/../../yosys"
+   28| 
+   29| exec {lock}<"$toolsdir"; flock "$lock" 1>&2
+   30| if [ ! -f "$toolsdir/cmp_tbdata" -o "$toolsdir/cmp_tbdata.c" -nt "$toolsdir/cmp_tbdata" ]; then
+   31| 	( set -ex; ${CXX:-g++} -Wall ${CPPFLAGS} ${CXXFLAGS:-} -o "$toolsdir/cmp_tbdata" "$toolsdir/cmp_tbdata.c"; ) || exit 1
+   32| fi
+   33| flock -u "$lock"; exec {lock}>&-
+   34| 
+   35| while getopts xmGl:wkjvref:s:p:n:S:I:A:Y:-: opt; do
+   36| 	case "$opt" in
+   37| 		x)
+   38| 			use_xsim=true ;;
+   39| 		m)
+   40| 			use_modelsim=true ;;
+   41| 		G)
+   42| 			warn_iverilog_git=true ;;
+   43| 		l)
+   44| 			libs+=("$(cd "$(dirname "$OPTARG")"; pwd)/$(basename "$OPTARG")");;
+   45| 		w)
+   46| 			genvcd=true ;;
+   47| 		k)
+   48| 			keeprunning=true ;;
+   49| 		j)
+   50| 			makejmode=true ;;
+   51| 		v)
+   52| 			verbose=true ;;
+   53| 		r)
+   54| 			backend_opts="$backend_opts -norename" ;;
+   55| 		e)
+   56| 			backend_opts="$( echo " $backend_opts " | sed 's, -noexpr , ,; s,^ ,,; s, $,,;'; )" ;;
+   57| 		f)
+   58| 			frontend="$OPTARG" ;;
+   59| 		s)
+   60| 			[[ "$OPTARG" == /* ]] || OPTARG="$PWD/$OPTARG"
+   61| 			scriptfiles="$scriptfiles $OPTARG" ;;
+   62| 		p)
+   63| 			scriptopt="$OPTARG" ;;
+   64| 		n)
+   65| 			autotb_opts="$autotb_opts -n $OPTARG" ;;
+   66| 		S)
+   67| 			autotb_opts="$autotb_opts -seed $OPTARG" ;;
+   68| 		I)
+   69| 			include_opts="$include_opts -I $OPTARG"
+   70| 			xinclude_opts="$xinclude_opts -i $OPTARG"
+   71| 			minclude_opts="$minclude_opts +incdir+$OPTARG" ;;
+   72| 		A)
+   73| 			abcprog="$OPTARG" ;;
+   74| 		Y)
+   75| 			yosysprog="$OPTARG" ;;
+   76| 		-)
+   77| 			case "${OPTARG}" in
+   78| 			    xfirrtl)
+   79| 			    	xfirrtl="${!OPTIND}"
+   80| 				OPTIND=$(( $OPTIND + 1 ))
+   81| 				;;
+   82| 			    firrtl2verilog)
+   83| 			    	firrtl2verilog="${!OPTIND}"
+   84| 				OPTIND=$(( $OPTIND + 1 ))
+   85| 				;;
+   86| 			    *)
+   87| 			    	if [ "$OPTERR" == 1 ] && [ "${optspec:0:1}" != ":" ]; then
+   88| 				    echo "Unknown option --${OPTARG}" >&2
+   89| 				fi
+   90| 				;;
+   91| 			esac;;
+   92| 		*)
+   93| 			echo "Usage: $0 [-x|-m] [-G] [-w] [-k] [-j] [-v] [-r] [-e] [-l libs] [-f frontend] [-s script] [-p cmdstring] [-n iters] [-S seed] [-I incdir] [--xfirrtl FIRRTL test exclude file] [--firrtl2verilog command to generate verilog from firrtl] verilog-files\n" >&2
+   94| 			exit 1
+   95| 	esac
+   96| done
+   97| 
+   98| compile_and_run() {
+   99| 	exe="$1"; output="$2"; shift 2
+  100| 	if [ "${2##*.}" == "sv" ]; then
+  101| 		language_gen="-g2012"
+  102| 	else
+  103| 		language_gen="-g2005"
+  104| 	fi
+  105| 
+  106| 	if $use_modelsim; then
+  107| 		altver=$( ls -v /opt/altera/ | grep '^[0-9]' | tail -n1; )
+  108| 		/opt/altera/$altver/modelsim_ase/bin/vlib work
+  109| 		/opt/altera/$altver/modelsim_ase/bin/vlog $minclude_opts +define+outfile=\"$output\" "$@"
+  110| 		/opt/altera/$altver/modelsim_ase/bin/vsim -c -do 'run -all; exit;' testbench
+  111| 	elif $use_xsim; then
+  112| 		xilver=$( ls -v /opt/Xilinx/Vivado/ | grep '^[0-9]' | tail -n1; )
+  113| 		/opt/Xilinx/Vivado/$xilver/bin/xvlog $xinclude_opts -d outfile=\"$output\" "$@"
+  114| 		/opt/Xilinx/Vivado/$xilver/bin/xelab -R work.testbench
+  115| 	else
+  116| 		iverilog $language_gen $include_opts -Doutfile=\"$output\" -s testbench -o "$exe" "$@"
+  117| 		vvp -n "$exe"
+  118| 	fi
+  119| }
+  120| 
+  121| shift $((OPTIND - 1))
+  122| 
+  123| for fn
+  124| do
+  125| 	bn=${fn%.*}
+  126| 	ext=${fn##*.}
+  127| 	if [[ "$ext" != "v" ]] && [[ "$ext" != "sv" ]] && [[ "$ext" != "aag" ]] && [[ "$ext" != "aig" ]]; then
+  128| 		echo "Invalid argument: $fn" >&2
+  129| 		exit 1
+  130| 	fi
+  131| 	[[ "$bn" == *_tb ]] && continue
+  132| 
+  133| 	if $makejmode; then
+  134| 		status_prefix="Test: $bn "
+  135| 	else
+  136| 		status_prefix=""
+  137| 		echo -n "Test: $bn "
+  138| 	fi
+  139| 
+  140| 	if [ "$ext" == sv ]; then
+  141| 		frontend="$frontend -sv"
+  142| 	fi
+  143| 
+  144| 	rm -f ${bn}.{err,log,skip}
+  145| 	mkdir -p ${bn}.out
+  146| 	rm -rf ${bn}.out/*
+  147| 
+  148| 	body() {
+  149| 		cd ${bn}.out
+  150| 		fn=$(basename $fn)
+  151| 		bn=$(basename $bn)
+  152| 		refext=v
+  153| 
+  154| 		rm -f ${bn}_ref.fir
+  155| 		if [[ "$ext" == "v" ]]; then
+  156| 			grep -Ev '^\s*`timescale' ../$fn > ${bn}_ref.${ext}
+  157| 		elif [[ "$ext" == "aig" ]] || [[ "$ext" == "aag" ]]; then
+  158| 			$abcprog -c "read_aiger ../${fn}; write ${bn}_ref.${refext}"
+  159| 		else
+  160| 			refext=$ext
+  161| 			cp ../${fn} ${bn}_ref.${refext}
+  162| 		fi
+  163| 
+  164| 		if [ ! -f ../${bn}_tb.v ]; then
+  165| 			$yosysprog -f "$frontend $include_opts -D_AUTOTB" -b "test_autotb $autotb_opts" -o ${bn}_tb.v ${bn}_ref.${refext}
+  166| 		else
+  167| 			cp ../${bn}_tb.v ${bn}_tb.v
+  168| 		fi
+  169| 		if $genvcd; then sed -i 's,// \$dump,$dump,g' ${bn}_tb.v; fi
+  170| 		touch ${bn}.iverilog
+  171| 		compile_and_run ${bn}_tb_ref ${bn}_out_ref ${bn}_tb.v ${bn}_ref.${refext} "${libs[@]}" \
+  172| 					"$toolsdir"/../../techlibs/common/simlib.v \
+  173| 					"$toolsdir"/../../techlibs/common/simcells.v
+  174| 		rm ${bn}.iverilog
+  175| 		if $genvcd; then mv testbench.vcd ${bn}_ref.vcd; fi
+  176| 
+  177| 		test_count=0
+  178| 		test_passes() {
+  179| 			$yosysprog -b "verilog $backend_opts" -o ${bn}_syn${test_count}.v "$@"
+  180| 			touch ${bn}.iverilog
+  181| 			compile_and_run ${bn}_tb_syn${test_count} ${bn}_out_syn${test_count} \
+  182| 					${bn}_tb.v ${bn}_syn${test_count}.v "${libs[@]}" \
+  183| 					"$toolsdir"/../../techlibs/common/simlib.v \
+  184| 					"$toolsdir"/../../techlibs/common/simcells.v
+  185| 			if $genvcd; then mv testbench.vcd ${bn}_syn${test_count}.vcd; fi
+  186| 			"$toolsdir/cmp_tbdata" ${bn}_out_ref ${bn}_out_syn${test_count}
+  187| 			rm ${bn}.iverilog
+  188| 			test_count=$(( test_count + 1 ))
+  189| 		}
+  190| 
+  191| 		if [ "$frontend" = "verific" -o "$frontend" = "verific_gates" ] && grep -q VERIFIC-SKIP ${bn}_ref.${refext}; then
+  192| 			touch ../${bn}.skip
+  193| 			return
+  194| 		fi
+  195| 
+  196| 		if [ -n "$scriptfiles" ]; then
+  197| 			test_passes -f "$frontend $include_opts" ${bn}_ref.${refext} $scriptfiles
+  198| 		elif [ -n "$scriptopt" ]; then
+  199| 			test_passes -f "$frontend $include_opts" -p "$scriptopt" ${bn}_ref.${refext}
+  200| 		elif [ "$frontend" = "verific" ]; then
+  201| 			test_passes -p "verific -vlog2k ${bn}_ref.${refext}; verific -import -all; opt; memory;;"
+  202| 		elif [ "$frontend" = "verific_gates" ]; then
+  203| 			test_passes -p "verific -vlog2k ${bn}_ref.${refext}; verific -import -gates -all; opt; memory;;"
+  204| 		else
+  205| 			test_passes -f "$frontend $include_opts" -p "hierarchy; proc; opt -nodffe -nosdff; fsm; opt; memory; opt -full -fine" ${bn}_ref.${refext}
+  206| 			test_passes -f "$frontend $include_opts" -p "hierarchy; synth -run coarse; techmap; opt; abc -dff" ${bn}_ref.${refext}
+  207| 			if [ -n "$firrtl2verilog" ]; then
+  208| 			    if test -z "$xfirrtl" || ! grep "$fn" "$xfirrtl" ; then
+  209| 				$yosysprog -b "firrtl" -o ${bn}_ref.fir -f "$frontend $include_opts" -p "prep; proc; opt -nodffe -nosdff; fsm; opt; memory; opt -full -fine; pmuxtree" ${bn}_ref.${refext}
+  210| 				$firrtl2verilog -i ${bn}_ref.fir -o ${bn}_ref.fir.v
+  211| 				test_passes -f "$frontend $include_opts" -p "hierarchy; proc; opt -nodffe -nosdff; fsm; opt; memory; opt -full -fine" ${bn}_ref.fir.v
+  212| 			    fi
+  213| 			fi
+  214| 		fi
+  215| 		touch ../${bn}.log
+  216| 	}
+  217| 
+  218| 	if $verbose; then
+  219| 		echo ".."
+  220| 		echo "Output written to console." > ${bn}.err
+  221| 		( set -ex; body; )
+  222| 	else
+  223| 		( set -ex; body; ) > ${bn}.err 2>&1
+  224| 	fi
+  225| 
+  226| 	did_firrtl=""
+  227| 	if [ -f ${bn}.out/${bn}_ref.fir ]; then
+  228| 	    did_firrtl="+FIRRTL "
+  229| 	fi
+  230| 	if [ -f ${bn}.log ]; then
+  231| 		mv ${bn}.err ${bn}.log
+  232| 		echo "${status_prefix}${did_firrtl}-> ok"
+  233| 	elif [ -f ${bn}.skip ]; then
+  234| 		mv ${bn}.err ${bn}.skip
+  235| 		echo "${status_prefix}-> skip"
+  236| 	else
+  237| 		echo "${status_prefix}${did_firrtl}-> ERROR!"
+  238| 		if $warn_iverilog_git; then
+  239| 			if [ -f ${bn}.out/${bn}.iverilog ]; then
+  240| 				echo "Note: Make sure that 'iverilog' is an up-to-date git checkout of Icarus Verilog."
+  241| 			fi
+  242| 		fi
+  243| 		sed -e "s,^,${bn}: ," ${bn}.err
+  244| 		$keeprunning || exit 1
+  245| 	fi
+  246| done
+  247| 
+  248| exit 0
+

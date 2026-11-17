@@ -1,0 +1,146 @@
+{
+ "id": "s3_family_12",
+ "cases": [
+  {
+   "case": "head_competition_stats",
+   "request": {
+    "method": "HEAD",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "86",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.4738553,
+    1773572407.490944
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "head_team_leaderboard",
+   "request": {
+    "method": "HEAD",
+    "path": "/stats/leaderboard"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.4909902,
+    1773572407.4965227
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "head_category_leaderboard",
+   "request": {
+    "method": "HEAD",
+    "path": "/stats/category"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "57",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.4965518,
+    1773572407.5024774
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "head_monthly_result",
+   "request": {
+    "method": "HEAD",
+    "path": "/results/result/2026/3"
+   },
+   "compare": "status",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "323",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.5025003,
+    1773572407.5334682
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "head_historic_unknown_user",
+   "request": {
+    "method": "HEAD",
+    "path": "/historic/users/1/2026"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.5334876,
+    1773572407.544604
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

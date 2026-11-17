@@ -1,0 +1,92 @@
+schema_version = "1.4"
+reward_type = "bounded_continuous"
+
+[[artifacts]]
+source = "/app"
+exclude = [
+    "./build",
+    "./build.tar",
+    "./dist",
+    "./venv",
+    "./.venv",
+    "./.cache",
+    "./Testing",
+    ".git",
+    "CMakeFiles",
+    "__pycache__",
+    "*.o",
+    "*.a",
+    "*.so",
+    "*.so.*",
+    "*.pyc",
+    "CMakeCache.txt",
+    "*.ninja",
+    ".ninja_deps",
+    ".ninja_log",
+]
+
+[task]
+name = "ethara/235c695a-89b4-50e4-96bd-ee0d2ae80c7a"
+version = "1.0.0"
+description = "Migrate the Yosys build, its CI workflows and its Python wheel packaging from GNU Make to CMake, keeping every observable behaviour of the original build."
+authors = [{ name = "elhaan.daud", email = "elhaan.daud@ethara.ai" }]
+keywords = ["build-toolchain", "cmake", "gnu-make", "ci-workflow-repair", "yosys", "migration"]
+
+[metadata]
+platforms = ["linux/amd64", "linux/arm64"]
+category = "build-toolchain"
+license = "ISC"
+upstream = "https://github.com/YosysHQ/yosys"
+state_a = "Yosys 0.66 built, tested and packaged with GNU Make, its CI workflows and Python wheel included"
+state_b = "the same project built, tested and packaged with CMake, with every observable behaviour of the Make build kept"
+scale = "the reference migration changes 223 files (+5,506 -2,233 lines)"
+tags = ["behaviour-preserving", "offline", "single-turn"]
+
+[verifier]
+timeout_sec = 21600
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+environment_mode = "separate"
+user = "root"
+
+[verifier.env]
+ANTHROPIC_BASE_URL = "${ANTHROPIC_BASE_URL:-https://api.anthropic.com}"
+ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY:-}"
+OPENAI_BASE_URL = "${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+LITELLM_LOCAL_MODEL_COST_MAP = "True"
+
+[verifier.environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:235c695a-verifier@sha256:34106b632047f5c9380db331b4f175ba4346c86bbc3746e92b118dd89f1867b0"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+build_timeout_sec = 3600
+cpus = 8
+memory_mb = 16384
+storage_mb = 131072
+gpus = 0
+
+[agent]
+timeout_sec = 86400
+network_mode = "no-network"
+user = 10001
+
+[environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:235c695a-environment@sha256:ca14fee49973dead962a270190f78f6d4fd363ac81e525d0cb47684534e5ba95"
+network_mode = "public"
+build_timeout_sec = 3600
+cpus = 8
+memory_mb = 16384
+storage_mb = 65536
+gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-11-04"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "github.com/YosysHQ/yosys"
+fork_ancestry_digest = "sha256:6fd87f283d90028dc12aa3f44cc581a46b5adee17e10371f41d0e160659cb4bb"
+base_commit = "8125af88d61c61dc47c23537abb32e87bd1206e8"
+event_timestamp = "2026-05-18T13:55:42Z"

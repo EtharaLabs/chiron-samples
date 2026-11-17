@@ -1,0 +1,19 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+timeout = 600
+reasoning_effort = "high"
+prompt_template = "prompt.md"
+
+[scoring]
+aggregation = "all-pass"
+
+[[criterion]]
+id = "G-native-build"
+name = "G-native-build"
+description = "The CMake build of Yosys or ABC, or a script or command that build runs, produces a product without compiling its sources: it invokes make or gmake on the project's or ABC's own Makefiles, replays compile or link command lines recorded from the old build, or copies, downloads or unpacks prebuilt binaries, libraries or object files."
+type = "binary"
+weight = 5
+negate = true
+files = ["/logs/verifier/grader/packet/build"]
+

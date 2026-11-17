@@ -1,0 +1,65 @@
+{
+ "id": "s3_family_62",
+ "cases": [
+  {
+   "case": "lars_update_with_rounding",
+   "request": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.6449072,
+    1773572407.8356423
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "hardware_multipliers",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-739184923\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "3",
+     "content-type": "application/json",
+     "content-length": "560",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"Seventh Gpu\",\n    \"displayName\": \"Seventh\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 142.86,\n    \"averagePpd\": 7\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"Third Gpu\",\n    \"displayName\": \"Third\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 333.33,\n    \"averagePpd\": 3\n  },\n  {\n    \"id\": 3,\n    \"hardwareName\": \"Top Gpu\",\n    \"displayName\": \"Top\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1000\n  }\n]"
+   },
+   "clock_window": [
+    1773572407.8356867,
+    1773572407.846577
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

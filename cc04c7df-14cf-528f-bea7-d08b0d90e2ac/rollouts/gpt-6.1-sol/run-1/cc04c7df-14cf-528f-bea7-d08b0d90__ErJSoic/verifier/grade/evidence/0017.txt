@@ -1,0 +1,74 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/state/SystemState.java (changed against State A) ===
+@@
+30  | import java.util.EnumSet;
+31  | import java.util.List;
+32  | 
+   -| /**
+   -|  * The various states that the system can be in at a given time.
+   -|  */
+33 +| 
+34  | public enum SystemState {
+35  | 
+   -|     /**
+   -|      * System is online and available for {@link OperationType#READ} and {@link OperationType#WRITE} operations.
+   -|      */
+36 +|     
+37  |     AVAILABLE(READ, WRITE),
+38  | 
+   -|     /**
+   -|      * System is in the process of resetting stats. Since not all caches may have been wiped yet, system is not ready for {@link OperationType#READ}
+   -|      * or {@link OperationType#WRITE} operations.
+   -|      */
+39 +|     
+40  |     RESETTING_STATS,
+41  | 
+   -|     /**
+   -|      * System is coming online, not yet ready for {@link OperationType#READ} or {@link OperationType#WRITE} operations.
+   -|      */
+42 +|     
+43  |     STARTING,
+44  | 
+   -|     /**
+   -|      * System is in the process of updating stats (for a single {@link me.zodac.folding.api.tc.User}, or all {@link me.zodac.folding.api.tc.User}s),
+   -|      * system is ready for {@link OperationType#READ} operations, but not {@link OperationType#WRITE} operations.
+   -|      */
+45 +|     
+46  |     UPDATING_STATS(READ),
+47  | 
+   -|     /**
+   -|      * System is in state similar to {@link #AVAILABLE}, but a {@link OperationType#WRITE} operation has been executed, possibly invalidating caches.
+   -|      */
+48 +|     
+49  |     WRITE_EXECUTED(READ, WRITE);
+50  | 
+51  |     private final EnumSet<OperationType> permittedOperationTypes;
+52  | 
+   -|     /**
+   -|      * Constructs the {@link SystemState}.
+   -|      *
+   -|      * @param operationTypes the {@link OperationType}s permitted for the {@link SystemState}
+   -|      */
+53 +|     
+54  |     SystemState(final OperationType... operationTypes) {
+55  |         permittedOperationTypes = operationTypes.length == 0 ? EnumSet.noneOf(OperationType.class) : EnumSet.copyOf(List.of(operationTypes));
+56  |     }
+57  | 
+   -|     /**
+   -|      * Checks if a {@link OperationType#READ} operation is blocked by the {@link SystemState}.
+   -|      *
+   -|      * @return <code>true</code> if {@link OperationType#READ} operations are blocked
+   -|      */
+58 +|     
+59  |     public boolean isReadBlocked() {
+60  |         return !permittedOperationTypes.contains(READ);
+61  |     }
+62  | 
+   -|     /**
+   -|      * Checks if a {@link OperationType#WRITE} operation is blocked by the {@link SystemState}.
+   -|      *
+   -|      * @return <code>true</code> if {@link OperationType#WRITE} operations are blocked
+   -|      */
+63 +|     
+64  |     public boolean isWriteBlocked() {
+65  |         return !permittedOperationTypes.contains(WRITE);
+66  |     }

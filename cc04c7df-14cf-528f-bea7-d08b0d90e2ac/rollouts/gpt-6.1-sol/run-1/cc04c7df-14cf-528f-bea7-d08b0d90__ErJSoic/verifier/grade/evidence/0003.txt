@@ -1,0 +1,34 @@
+=== submission file: docker-compose-dev.yml (changed against State A) ===
+@@
+30  |   backend_dev:
+31  |     build:
+32  |       context: .
+   -|       dockerfile: docker/wildfly/Dockerfile
+   -|       args:
+   -|         ADMIN_USERNAME: "root"
+   -|         ADMIN_PASSWORD: "shroot"
+   -|         DEPLOYMENT_TYPE: "test"
+   -|         NEXUS_URL: "${NEXUS_URL}"
+33 +|       dockerfile: docker/spring/Dockerfile
+34  |     container_name: backend_dev
+35  |     hostname: backend-dev # Using a dash as Java's URI builder will fail with an underscore
+36  |     environment:
+37  |       # Container configuration
+   -|       JAVA_OPTS: -Xms512m -Xmx2g -Djava.net.preferIPv4Stack=true
+38 +|       JAVA_TOOL_OPTIONS: -Xms512m -Xmx2g -Djava.net.preferIPv4Stack=true
+39  |       # External URL configuration
+   -|       LARS_URL_ROOT: "http://backend-dev:8080"
+   -|       STATS_URL_ROOT: "http://backend-dev:8080"
+40 +|       LARS_URL_ROOT: "${LARS_URL_ROOT}"
+41 +|       STATS_URL_ROOT: "${STATS_URL_ROOT}"
+42  |       REDIRECT_URL: "http://frontend_dev"
+43  |       # NOTE: The monthly reset, result storage and LARS update will always occur at 23:57 on the last day of the month
+44  |       ENABLE_LARS_HARDWARE_UPDATE: "false"
+@@
+66  |     ports:
+67  |       # For test env, we expose the HTTP endpoint, not HTTPS
+68  |       - "8081:8080"
+   -|       - "9991:9990"
+69  | 
+70  |   database_dev:
+71  |     build:

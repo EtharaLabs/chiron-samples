@@ -1,0 +1,1586 @@
+{
+ "id": "g03_user_lifecycle",
+ "cases": [
+  {
+   "case": "hw_create_nvidia_gpu",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "GpuNvidia1",
+     "displayName": "GPU NVIDIA 1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "171",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"GpuNvidia1\",\n  \"displayName\": \"GPU NVIDIA 1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572408.0411725,
+    1773572408.1536775
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "hw_create_amd_gpu",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "GpuAmd1",
+     "displayName": "GPU AMD 1",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/2",
+     "content-type": "application/json",
+     "content-length": "162",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"GpuAmd1\",\n  \"displayName\": \"GPU AMD 1\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572408.1537447,
+    1773572408.1654067
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "hw_create_amd_cpu",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "CpuAmd1",
+     "displayName": "CPU AMD 1",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/3",
+     "content-type": "application/json",
+     "content-length": "162",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"hardwareName\": \"CpuAmd1\",\n  \"displayName\": \"CPU AMD 1\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572408.165468,
+    1773572408.1763234
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_create_alpha",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "TeamAlpha"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/1",
+     "content-type": "application/json",
+     "content-length": "40",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"TeamAlpha\"\n}"
+   },
+   "clock_window": [
+    1773572408.1763716,
+    1773572408.1930237
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_create_beta",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "TeamBeta"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/2",
+     "content-type": "application/json",
+     "content-length": "39",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"TeamBeta\"\n}"
+   },
+   "clock_window": [
+    1773572408.193074,
+    1773572408.232509
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_create_gamma",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "TeamGamma"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/3",
+     "content-type": "application/json",
+     "content-length": "40",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"teamName\": \"TeamGamma\"\n}"
+   },
+   "clock_window": [
+    1773572408.2325664,
+    1773572408.2474189
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_valid",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyOne1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/1",
+     "content-type": "application/json",
+     "content-length": "438",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"UserOne\",\n  \"displayName\": \"User One\",\n  \"passkey\": \"PasskeyOne1234567890123456789012\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"TeamAlpha\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572408.2481518,
+    1773572408.643932
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_duplicate_conflict",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyOne1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 409,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "891",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"UserOne\",\n    \"displayName\": \"User One\",\n    \"passkey\": \"PasskeyOne1234567890123456789012\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"foldingUserName\": \"UserOne\",\n      \"displayName\": \"User One\",\n      \"passkey\": \"PasskeyOne1234567890123456789012\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardware\": {\n        \"id\": 1,\n        \"hardwareName\": \"GpuNvidia1\",\n        \"displayName\": \"GPU NVIDIA 1\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 1.0,\n        \"averagePpd\": 1\n      },\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"TeamAlpha\"\n      },\n      \"userIsCaptain\": false\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [foldingUserName, passkey]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572410.644091,
+    1773572410.6601815
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_by_id_masks_passkey",
+   "request": {
+    "method": "GET",
+    "path": "/users/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"323085439\"",
+     "cache-control": "no-transform, max-age=1429189",
+     "content-type": "application/json",
+     "content-length": "438",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"UserOne\",\n  \"displayName\": \"User One\",\n  \"passkey\": \"PasskeyO************************\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"TeamAlpha\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572410.6602328,
+    1773572410.6659763
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_by_id_conditional_not_modified",
+   "request": {
+    "method": "GET",
+    "path": "/users/1",
+    "headers": {
+     "If-None-Match": "\"323085439\""
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 304,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "cache-control": "no-transform, max-age=1429189",
+     "etag": "\"323085439\"",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572410.6660357,
+    1773572410.6685615
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_all",
+   "request": {
+    "method": "GET",
+    "path": "/users"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"323085439\"",
+     "cache-control": "no-transform, max-age=1429189",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "484",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"foldingUserName\": \"UserOne\",\n    \"displayName\": \"User One\",\n    \"passkey\": \"PasskeyO************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"GpuNvidia1\",\n      \"displayName\": \"GPU NVIDIA 1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"TeamAlpha\"\n    },\n    \"userIsCaptain\": false\n  }\n]"
+   },
+   "clock_window": [
+    1773572410.6686003,
+    1773572410.6713538
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_passkey_as_admin",
+   "request": {
+    "method": "GET",
+    "path": "/users/1/passkey",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1892255335\"",
+     "cache-control": "no-transform, max-age=1429189",
+     "content-type": "application/json",
+     "content-length": "438",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"UserOne\",\n  \"displayName\": \"User One\",\n  \"passkey\": \"PasskeyOne1234567890123456789012\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"TeamAlpha\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572410.6713946,
+    1773572410.6805916
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_passkey_without_auth",
+   "request": {
+    "method": "GET",
+    "path": "/users/1/passkey"
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572410.6806366,
+    1773572410.6827922
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_passkey_as_read_only",
+   "request": {
+    "method": "GET",
+    "path": "/users/1/passkey",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572410.6828194,
+    1773572410.6908844
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_no_change_returns_masked_passkey",
+   "request": {
+    "method": "PUT",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyOne1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "438",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"UserOne\",\n  \"displayName\": \"User One\",\n  \"passkey\": \"PasskeyO************************\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"TeamAlpha\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572410.6909275,
+    1773572410.7055106
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_passkey_returns_full_passkey",
+   "request": {
+    "method": "PUT",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "438",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"UserOne\",\n  \"displayName\": \"User One\",\n  \"passkey\": \"PasskeyTwo1234567890123456789012\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"TeamAlpha\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572410.713359,
+    1773572411.0648153
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_empty_live_stats_link_becomes_null",
+   "request": {
+    "method": "PUT",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "profileLink": "",
+     "liveStatsLink": "",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "438",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"UserOne\",\n  \"displayName\": \"User One\",\n  \"passkey\": \"PasskeyTwo1234567890123456789012\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"TeamAlpha\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572411.0648708,
+    1773572411.0757315
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_invalid_profile_link",
+   "request": {
+    "method": "PUT",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "profileLink": "notAValidLink",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "357",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"UserOne\",\n    \"displayName\": \"User One\",\n    \"passkey\": \"PasskeyTwo1234567890123456789012\",\n    \"category\": \"NVIDIA_GPU\",\n    \"profileLink\": \"notAValidLink\",\n    \"hardwareId\": 1,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'profileLink' is not a valid link: 'notAValidLink'\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.0757737,
+    1773572411.0849385
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_unknown_hardware_id",
+   "request": {
+    "method": "PUT",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 9999,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "342",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"UserOne\",\n    \"displayName\": \"User One\",\n    \"passkey\": \"PasskeyTwo1234567890123456789012\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 9999,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'hardwareId' must be one of: [1: GpuNvidia1, 2: GpuAmd1, 3: CpuAmd1]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.084981,
+    1773572411.093854
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_unknown_team_id",
+   "request": {
+    "method": "PUT",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 9999,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "340",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"UserOne\",\n    \"displayName\": \"User One\",\n    \"passkey\": \"PasskeyTwo1234567890123456789012\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 9999,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'teamId' must be one of: [1: TeamAlpha, 2: TeamBeta, 3: TeamGamma]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.0938876,
+    1773572411.1130269
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_unknown_user_id",
+   "request": {
+    "method": "PUT",
+    "path": "/users/9999",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572411.1130714,
+    1773572411.1364517
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_out_of_range_id",
+   "request": {
+    "method": "PUT",
+    "path": "/users/-1",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572411.1364992,
+    1773572411.1458232
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_update_malformed_id",
+   "request": {
+    "method": "PUT",
+    "path": "/users/id",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UserOne",
+     "displayName": "User One",
+     "passkey": "PasskeyTwo1234567890123456789012",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572411.1458552,
+    1773572411.1540315
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_passkey_too_short",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "ShortPasskeyUser",
+     "displayName": "Short Passkey User",
+     "passkey": "tooshort",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "343",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"ShortPasskeyUser\",\n    \"displayName\": \"Short Passkey User\",\n    \"passkey\": \"tooshort\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'passkey' must be 32 characters long and include only alphanumeric characters\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.1540604,
+    1773572411.1620808
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_folding_user_name_invalid_characters",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "Invalid Name!",
+     "displayName": "Invalid Name",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "380",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"Invalid Name!\",\n    \"displayName\": \"Invalid Name\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'foldingUserName' must have at least one alphanumeric character, or an underscore, period or hyphen\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.1621156,
+    1773572411.1703198
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_blank_display_name",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "BlankDisplayUser",
+     "displayName": "",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "303",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"BlankDisplayUser\",\n    \"displayName\": \"\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'displayName' must not be empty\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.1703515,
+    1773572411.177907
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_unknown_category",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "UnknownCategoryUser",
+     "displayName": "Unknown Category User",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "GPU_NVIDIA",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "354",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"UnknownCategoryUser\",\n    \"displayName\": \"Unknown Category User\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"GPU_NVIDIA\",\n    \"hardwareId\": 1,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'category' must be one of: [AMD_GPU, NVIDIA_GPU, WILDCARD]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.1779335,
+    1773572411.1857176
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_lower_case_category_accepted",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "GammaNvidia",
+     "displayName": "Gamma Nvidia",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "nvidia_gpu",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/2",
+     "content-type": "application/json",
+     "content-length": "446",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"foldingUserName\": \"GammaNvidia\",\n  \"displayName\": \"Gamma Nvidia\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 3,\n    \"teamName\": \"TeamGamma\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572411.1863933,
+    1773572411.4967344
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_category_hardware_make_mismatch",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "MakeMismatchUser",
+     "displayName": "Make Mismatch User",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 2,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "374",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"MakeMismatchUser\",\n    \"displayName\": \"Make Mismatch User\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 2,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Category 'NVIDIA_GPU' cannot be filled by hardware of make 'AMD', must be one of: [NVIDIA]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572413.4968884,
+    1773572413.521381
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_zero_work_units",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "NoUnitsUser",
+     "displayName": "No Units User",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 2,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "425",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"NoUnitsUser\",\n    \"displayName\": \"No Units User\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"AMD_GPU\",\n    \"hardwareId\": 2,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"User 'NoUnitsUser' has 0 Work Units with passkey 'DummyPasskey12345678901234567890', there must be at least one completed Work Unit before adding the user\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572413.521431,
+    1773572413.624949
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_hardware_id_zero",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "ZeroHardwareUser",
+     "displayName": "Zero Hardware User",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 0,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "358",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"ZeroHardwareUser\",\n    \"displayName\": \"Zero Hardware User\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 0,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'hardwareId' must be one of: [1: GpuNvidia1, 2: GpuAmd1, 3: CpuAmd1]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572413.6250134,
+    1773572413.6372547
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_category_capacity_exceeded",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "AlphaSecondNvidia",
+     "displayName": "Alpha Second Nvidia",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "365",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"AlphaSecondNvidia\",\n    \"displayName\": \"Alpha Second Nvidia\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Team 'TeamAlpha' already has 1 users in category 'NVIDIA_GPU', only 1 permitted\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572413.6380477,
+    1773572413.7315466
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_captain",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "BetaCaptainOne",
+     "displayName": "Beta Captain One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 2,
+     "userIsCaptain": true
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/3",
+     "content-type": "application/json",
+     "content-length": "451",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"foldingUserName\": \"BetaCaptainOne\",\n  \"displayName\": \"Beta Captain One\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"GpuNvidia1\",\n    \"displayName\": \"GPU NVIDIA 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"TeamBeta\"\n  },\n  \"userIsCaptain\": true\n}"
+   },
+   "clock_window": [
+    1773572413.7323458,
+    1773572414.0770304
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_delete_captain_refused",
+   "request": {
+    "method": "DELETE",
+    "path": "/users/3",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "605",
+     "date": "Sun, 15 Mar 2026 11:00:16 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"id\": 3,\n    \"foldingUserName\": \"BetaCaptainOne\",\n    \"displayName\": \"Beta Captain One\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"GpuNvidia1\",\n      \"displayName\": \"GPU NVIDIA 1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 2,\n      \"teamName\": \"TeamBeta\"\n    },\n    \"userIsCaptain\": true\n  },\n  \"errors\": [\n    \"Cannot delete user 'Beta Captain One' since they are team captain\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572416.0771968,
+    1773572416.0872195
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_second_captain",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "BetaCaptainTwo",
+     "displayName": "Beta Captain Two",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 2,
+     "teamId": 2,
+     "userIsCaptain": true
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/4",
+     "content-type": "application/json",
+     "content-length": "439",
+     "date": "Sun, 15 Mar 2026 11:00:16 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 4,\n  \"foldingUserName\": \"BetaCaptainTwo\",\n  \"displayName\": \"Beta Captain Two\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 2,\n    \"hardwareName\": \"GpuAmd1\",\n    \"displayName\": \"GPU AMD 1\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"TeamBeta\"\n  },\n  \"userIsCaptain\": true\n}"
+   },
+   "clock_window": [
+    1773572416.0879395,
+    1773572416.3877428
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_delete_former_captain_allowed",
+   "request": {
+    "method": "DELETE",
+    "path": "/users/3",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:18 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572418.387906,
+    1773572418.3991048
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_delete_current_captain_refused",
+   "request": {
+    "method": "DELETE",
+    "path": "/users/4",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "593",
+     "date": "Sun, 15 Mar 2026 11:00:18 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"id\": 4,\n    \"foldingUserName\": \"BetaCaptainTwo\",\n    \"displayName\": \"Beta Captain Two\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"AMD_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"GpuAmd1\",\n      \"displayName\": \"GPU AMD 1\",\n      \"hardwareMake\": \"AMD\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 2,\n      \"teamName\": \"TeamBeta\"\n    },\n    \"userIsCaptain\": true\n  },\n  \"errors\": [\n    \"Cannot delete user 'Beta Captain Two' since they are team captain\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572418.3991547,
+    1773572418.423475
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_batch_create_all_valid",
+   "request": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "foldingUserName": "GammaAmd",
+      "displayName": "Gamma Amd",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "AMD_GPU",
+      "hardwareId": 2,
+      "teamId": 3,
+      "userIsCaptain": false
+     },
+     {
+      "foldingUserName": "GammaWildcard",
+      "displayName": "Gamma Wildcard",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "WILDCARD",
+      "hardwareId": 3,
+      "teamId": 3,
+      "userIsCaptain": false
+     }
+    ]
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "957",
+     "date": "Sun, 15 Mar 2026 11:00:18 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 5,\n    \"foldingUserName\": \"GammaAmd\",\n    \"displayName\": \"Gamma Amd\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"AMD_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"GpuAmd1\",\n      \"displayName\": \"GPU AMD 1\",\n      \"hardwareMake\": \"AMD\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 3,\n      \"teamName\": \"TeamGamma\"\n    },\n    \"userIsCaptain\": false\n  },\n  {\n    \"id\": 6,\n    \"foldingUserName\": \"GammaWildcard\",\n    \"displayName\": \"Gamma Wildcard\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"WILDCARD\",\n    \"hardware\": {\n      \"id\": 3,\n      \"hardwareName\": \"CpuAmd1\",\n      \"displayName\": \"CPU AMD 1\",\n      \"hardwareMake\": \"AMD\",\n      \"hardwareType\": \"CPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 3,\n      \"teamName\": \"TeamGamma\"\n    },\n    \"userIsCaptain\": false\n  }\n]"
+   },
+   "clock_window": [
+    1773572418.4334786,
+    1773572419.097458
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_without_auth",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "json": {
+     "foldingUserName": "NoAuthUser",
+     "displayName": "No Auth User",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572421.0976102,
+    1773572421.1051233
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_create_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "readonly",
+    "json": {
+     "foldingUserName": "ReadOnlyUser",
+     "displayName": "Read Only User",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572421.1051779,
+    1773572421.1190822
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_delete_ok",
+   "request": {
+    "method": "DELETE",
+    "path": "/users/1",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572421.1191313,
+    1773572421.1302073
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_after_delete_not_found",
+   "request": {
+    "method": "GET",
+    "path": "/users/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572421.1302564,
+    1773572421.1352296
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_unknown_id",
+   "request": {
+    "method": "GET",
+    "path": "/users/9999"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572421.1352706,
+    1773572421.1398137
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_out_of_range_id",
+   "request": {
+    "method": "GET",
+    "path": "/users/-1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572421.139858,
+    1773572421.1424189
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_get_malformed_id",
+   "request": {
+    "method": "GET",
+    "path": "/users/id"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:21 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572421.1424434,
+    1773572421.145062
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

@@ -1,0 +1,13 @@
+*
+!Dockerfile
+!manifests.tar
+!grader/
+!test.sh
+!test_output.py
+!judge.toml
+!judge-prompt.md
+!reward.toml
+!.gate/
+!.veto/
+**/__pycache__
+**/*.pyc

@@ -1,0 +1,14 @@
+*
+!Dockerfile
+!locks.json
+!retired-sources.py
+!grader/
+!test.sh
+!test_output.py
+!judge.toml
+!prompt.md
+!reward.toml
+!.gate/judge.toml
+!.gate/zero.toml
+!.gate/prompt.md
+!rpms/

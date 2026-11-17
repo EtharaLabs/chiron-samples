@@ -1,0 +1,37 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/cache/CompetitionSummaryCache.java (changed against State A) ===
+@@
+26  | 
+27  | import me.zodac.folding.rest.api.tc.CompetitionSummary;
+28  | 
+   -| /**
+   -|  * Cache for the {@link CompetitionSummary}.
+   -|  *
+   -|  * <p>
+   -|  * <b>key:</b> {@link #COMPETITION_SUMMARY_ID}
+   -|  *
+   -|  * <p>
+   -|  * <b>value:</b> {@link CompetitionSummary}
+   -|  */
+29 +| 
+30  | public final class CompetitionSummaryCache extends BaseCache<CompetitionSummary> {
+31  | 
+   -|     /**
+   -|      * While we extend {@link BaseCache}, we don't actually have multiple {@link CompetitionSummary}s, so we reuse the same ID.
+   -|      */
+32 +|     
+33  |     public static final int COMPETITION_SUMMARY_ID = 1;
+34  | 
+35  |     private static final CompetitionSummaryCache INSTANCE = new CompetitionSummaryCache();
+@@
+38  |         super();
+39  |     }
+40  | 
+   -|     /**
+   -|      * Returns a singleton instance of {@link CompetitionSummaryCache}.
+   -|      *
+   -|      * @return the {@link CompetitionSummaryCache}
+   -|      */
+41 +|     
+42  |     public static CompetitionSummaryCache getInstance() {
+43  |         return INSTANCE;
+44  |     }

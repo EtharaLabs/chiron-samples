@@ -1,0 +1,76 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/endpoint/DebugEndpoint.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.rest.endpoint;
+26 +| 
+27 +| import org.springframework.web.bind.annotation.*;
+28 +| import org.springframework.http.ResponseEntity;
+29 +| import org.springframework.http.MediaType;
+30 +| import org.springframework.beans.factory.annotation.Autowired;
+31 +| import org.springframework.context.annotation.Lazy;
+32 +| import me.zodac.folding.rest.RequiredRoles;
+33 +| 
+34 +| import static me.zodac.folding.rest.response.Responses.ok;
+35 +| import static me.zodac.folding.rest.response.Responses.serverError;
+36 +| 
+37 +| import me.zodac.folding.service.api.FoldingStatsCore;
+38 +| import me.zodac.folding.service.tc.lars.LarsHardwareUpdater;
+39 +| import org.apache.logging.log4j.LogManager;
+40 +| import org.apache.logging.log4j.Logger;
+41 +| 
+42 +| @RestController
+43 +| @RequestMapping("/debug")
+44 +| public class DebugEndpoint {
+45 +| 
+46 +|     private static final Logger LOGGER = LogManager.getLogger();
+47 +| 
+48 +|     @Autowired
+49 +|     @Lazy
+50 +|     private FoldingStatsCore foldingStatsCore;
+51 +| 
+52 +|     @Autowired
+53 +|     @Lazy
+54 +|     private LarsHardwareUpdater larsHardwareUpdater;
+55 +| 
+56 +|     @PostMapping(value = "/lars", produces = MediaType.APPLICATION_JSON_VALUE)
+57 +|     @RequiredRoles("admin")
+58 +|     public ResponseEntity<String> startLarsUpdate() {
+59 +|         LOGGER.info("GET request received to manually update hardware from LARS DB");
+60 +|         try {
+61 +|             larsHardwareUpdater.retrieveHardwareAndPersist();
+62 +|             return ok();
+63 +|         } catch (final Exception e) {
+64 +|             LOGGER.error("Unexpected error updating hardware from LARS", e);
+65 +|             return serverError();
+66 +|         }
+67 +|     }
+68 +|     @PostMapping(value = "/caches", produces = MediaType.APPLICATION_JSON_VALUE)
+69 +|     @RequiredRoles("admin")
+70 +|     public ResponseEntity<String> printCaches() {
+71 +|         LOGGER.info("Printing cache contents");
+72 +|         foldingStatsCore.printCacheContents();
+73 +|         return ok();
+74 +|     }
+75 +| }

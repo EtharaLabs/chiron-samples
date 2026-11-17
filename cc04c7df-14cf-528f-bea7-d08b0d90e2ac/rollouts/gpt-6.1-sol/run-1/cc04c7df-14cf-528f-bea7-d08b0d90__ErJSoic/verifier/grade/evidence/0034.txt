@@ -1,0 +1,88 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/validation/HardwareValidator.java (changed against State A) ===
+@@
+39  | import me.zodac.folding.api.tc.User;
+40  | import me.zodac.folding.rest.api.tc.request.HardwareRequest;
+41  | 
+   -| /**
+   -|  * Validator class to validate a {@link Hardware} or {@link HardwareRequest}.
+   -|  */
+42 +| 
+43  | public final class HardwareValidator {
+44  | 
+45  |     // The hardware with the highest PPD will have a multiplier of <b>1.00</b>, and all others will be based on that
+@@
+50  | 
+51  |     }
+52  | 
+   -|     /**
+   -|      * Validates a {@link HardwareRequest} for a {@link Hardware} to be created on the system.
+   -|      *
+   -|      * <p>
+   -|      * Validation checks include:
+   -|      * <ul>
+   -|      *     <li>Input {@code hardwareRequest} must not be <b>null</b></li>
+   -|      *     <li>Field 'hardwareName' must not be empty</li>
+   -|      *     <li>If field 'hardwareName' is valid, it must not be used by another {@link Hardware}</li>
+   -|      *     <li>Field 'displayName' must not be empty</li>
+   -|      *     <li>Field 'hardwareMake' must be a valid {@link HardwareMake}</li>
+   -|      *     <li>Field 'hardwareType' must be a valid {@link HardwareType}</li>
+   -|      *     <li>Field 'multiplier' must be over <b>0.00</b></li>
+   -|      *     <li>Field 'averagePpd' must be over <b>1</b></li>
+   -|      * </ul>
+   -|      *
+   -|      * @param hardwareRequest the {@link HardwareRequest} to validate
+   -|      *                        @param allHardware      all existing {@link Hardware}s in the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+53 +|     
+54  |     public static ValidationResult<Hardware> validateCreate(final HardwareRequest hardwareRequest, final Collection<Hardware> allHardware) {
+55  |         if (hardwareRequest == null) {
+56  |             return ValidationResult.nullObject();
+@@
+81  |         return ValidationResult.successful(convertedHardware);
+82  |     }
+83  | 
+   -|     /**
+   -|      * Validates a {@link HardwareRequest} to update an existing {@link Hardware} on the system.
+   -|      *
+   -|      * <p>
+   -|      * Validation checks include:
+   -|      * <ul>
+   -|      *     <li>Input {@code hardwareRequest} and {@code existingHardware} must not be <b>null</b></li>
+   -|      *     <li>Field 'hardwareName' must not be empty</li>
+   -|      *     <li>If field 'hardwareName' is valid, it must not be used by another {@link Hardware}, unless it is the {@link Hardware} to be
+   -|      *     updated</li>
+   -|      *     <li>Field 'displayName' must not be empty</li>
+   -|      *     <li>Field 'hardwareMake' must be a valid {@link HardwareMake}</li>
+   -|      *     <li>Field 'hardwareType' must be a valid {@link HardwareType}</li>
+   -|      *     <li>Field 'multiplier' must be over <b>0.00</b></li>
+   -|      *     <li>Field 'averagePpd' must be over <b>1</b></li>
+   -|      * </ul>
+   -|      *
+   -|      * @param hardwareRequest  the {@link HardwareRequest} to validate
+   -|      * @param existingHardware the already existing {@link Hardware} in the system to be updated
+   -|      * @param allHardware      all existing {@link Hardware}s in the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+84 +|     
+85  |     public static ValidationResult<Hardware> validateUpdate(final HardwareRequest hardwareRequest,
+86  |                                                             final Hardware existingHardware,
+87  |                                                             final Collection<Hardware> allHardware) {
+@@
+114  |         return ValidationResult.successful(convertedHardware);
+115  |     }
+116  | 
+   -|     /**
+   -|      * Validates a {@link Hardware} to be deleted from the system.
+   -|      *
+   -|      * <p>
+   -|      * If the {@link Hardware} is in use by a {@link User}, it cannot be deleted.
+   -|      *
+   -|      * @param hardware the {@link Hardware} to validate
+   -|      * @param allUsers all existing {@link User}s in the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+117 +|     
+118  |     public static ValidationResult<Hardware> validateDelete(final Hardware hardware, final Collection<User> allUsers) {
+119  |         final Collection<User> usersWithMatchingHardware = getUsersWithHardware(hardware.getId(), allUsers);
+120  | 

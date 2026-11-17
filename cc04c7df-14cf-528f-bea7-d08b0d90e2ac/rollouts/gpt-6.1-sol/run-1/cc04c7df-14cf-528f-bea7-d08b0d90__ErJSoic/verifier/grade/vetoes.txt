@@ -1,0 +1,4 @@
+g06_system_state_gating: 2 case(s) disagree: ['manual_update_async_invalid_value', 'manual_update_async_empty_value']
+g10_competition_user_stats: 1 case(s) disagree: ['offset_missing_body']
+g15_external_stats_parsing: 2 case(s) disagree: ['manual_update_async_non_boolean', 'manual_update_async_empty_value']
+g18_request_error_representation: 1 case(s) disagree: ['missing_body_without_content_type']

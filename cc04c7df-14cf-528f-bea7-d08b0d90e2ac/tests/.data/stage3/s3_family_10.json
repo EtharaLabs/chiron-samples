@@ -1,0 +1,149 @@
+{
+ "id": "s3_family_10",
+ "source": "f018_semicolons_in_query_and_segment",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "semicolon_inside_query_value",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=ProbeHw;x=1"
+   }
+  },
+  {
+   "case": "matrix_param_on_fields_with_query",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields;x=1?hardwareName=ProbeHw"
+   }
+  },
+  {
+   "case": "empty_matrix_on_id",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1;?x=1"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "semicolon_inside_query_value",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=ProbeHw;x=1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "matrix_param_on_fields_with_query",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields;x=1?hardwareName=ProbeHw"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"401895958\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "empty_matrix_on_id",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1;?x=1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"401895958\""
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "A ';' inside a query value stays part of the value, while a ';' on the /fields segment is a matrix parameter and is stripped - so one request fails to match the name and the other succeeds."
+}

@@ -1,0 +1,1444 @@
+{
+ "id": "g04_batch_create",
+ "source": "g04_batch_create",
+ "steps": [
+  {
+   "case": "teams_batch_without_auth",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "json": [
+     {
+      "teamName": "NoAuthBatchTeam"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_with_readonly_user",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "readonly",
+    "json": [
+     {
+      "teamName": "ReadOnlyBatchTeam"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_empty_list",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": []
+   }
+  },
+  {
+   "case": "teams_batch_all_valid",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam1"
+     },
+     {
+      "teamName": "BatchTeam2",
+      "teamDescription": "Second"
+     },
+     {
+      "teamName": "BatchTeam3",
+      "forumLink": "http://google.com"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_partly_valid",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam4"
+     },
+     {
+      "teamName": "BatchTeam5Invalid",
+      "forumLink": "invalidLink"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_all_invalid",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeamBad1",
+      "forumLink": "invalidLink"
+     },
+     {
+      "teamName": "",
+      "forumLink": "alsoInvalid"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_single_valid",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam6"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_conflict_with_existing",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam1"
+     }
+    ]
+   }
+  },
+  {
+   "case": "teams_batch_mixed_conflict_and_valid",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "batchteam1"
+     },
+     {
+      "teamName": "BatchTeam7"
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_without_auth",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "json": [
+     {
+      "hardwareName": "NoAuthBatchHardware",
+      "displayName": "NoAuthBatchHardware",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_with_readonly_user",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "readonly",
+    "json": [
+     {
+      "hardwareName": "ReadOnlyBatchHardware",
+      "displayName": "ReadOnlyBatchHardware",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_empty_list",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": []
+   }
+  },
+  {
+   "case": "hardware_batch_all_valid",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "hardwareName": "BatchHardware1",
+      "displayName": "BatchHardware1",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     },
+     {
+      "hardwareName": "BatchHardware2",
+      "displayName": "BatchHardware2",
+      "hardwareMake": "AMD",
+      "hardwareType": "GPU",
+      "multiplier": 1.5,
+      "averagePpd": 2000
+     },
+     {
+      "hardwareName": "BatchHardware3",
+      "displayName": "BatchHardware3",
+      "hardwareMake": "INTEL",
+      "hardwareType": "CPU",
+      "multiplier": 10.0,
+      "averagePpd": 50
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_partly_valid",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "hardwareName": "BatchHardware4",
+      "displayName": "BatchHardware4",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 2.0,
+      "averagePpd": 100
+     },
+     {
+      "hardwareName": "BatchHardware5Invalid",
+      "displayName": "BatchHardware5Invalid",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": -1.0,
+      "averagePpd": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_all_invalid",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "hardwareName": "BatchHardwareBad1",
+      "displayName": "BatchHardwareBad1",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": -1.0,
+      "averagePpd": 1
+     },
+     {
+      "hardwareName": "BatchHardwareBad2",
+      "displayName": "",
+      "hardwareMake": "ATI",
+      "hardwareType": "APU",
+      "multiplier": 0.0,
+      "averagePpd": 0
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_lowercase_enums",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "hardwareName": "BatchHardware6",
+      "displayName": "BatchHardware6",
+      "hardwareMake": "amd",
+      "hardwareType": "cpu",
+      "multiplier": 4.0,
+      "averagePpd": 25
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_conflict_with_existing",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "hardwareName": "BatchHardware1",
+      "displayName": "BatchHardware1",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     }
+    ]
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=BatchUser1&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=BatchUser2&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=BatchUser3&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=BatchUser4&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=BatchUser5&passkey=DummyPasskey12345678901234567890&units=0"
+   }
+  },
+  {
+   "case": "users_batch_without_auth",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "json": [
+     {
+      "foldingUserName": "BatchUser1",
+      "displayName": "BatchUser1",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "users_batch_with_readonly_user",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "readonly",
+    "json": [
+     {
+      "foldingUserName": "BatchUser1",
+      "displayName": "BatchUser1",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "users_batch_empty_list",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": []
+   }
+  },
+  {
+   "case": "users_batch_all_valid",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "foldingUserName": "BatchUser1",
+      "displayName": "BatchUser1",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 1
+     },
+     {
+      "foldingUserName": "BatchUser2",
+      "displayName": "BatchUser2",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "AMD_GPU",
+      "hardwareId": 2,
+      "teamId": 1
+     },
+     {
+      "foldingUserName": "BatchUser3",
+      "displayName": "BatchUser3",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "WILDCARD",
+      "hardwareId": 3,
+      "teamId": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "users_batch_partly_valid",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "foldingUserName": "BatchUser4",
+      "displayName": "BatchUser4",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 2
+     },
+     {
+      "foldingUserName": "BatchUserBad1",
+      "displayName": "BatchUserBad1",
+      "passkey": "tooShort",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 2
+     }
+    ]
+   }
+  },
+  {
+   "case": "users_batch_all_invalid",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "foldingUserName": "BatchUserBad2",
+      "displayName": "BatchUserBad2",
+      "passkey": "tooShort",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 3
+     },
+     {
+      "foldingUserName": "!!!",
+      "displayName": "",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "NOT_A_CATEGORY",
+      "hardwareId": 1,
+      "teamId": 3
+     }
+    ]
+   }
+  },
+  {
+   "case": "users_batch_no_completed_work_units",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "foldingUserName": "BatchUser5",
+      "displayName": "BatchUser5",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 3
+     }
+    ]
+   }
+  },
+  {
+   "case": "users_batch_category_not_supported_by_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "foldingUserName": "BatchUser6",
+      "displayName": "BatchUser6",
+      "passkey": "DummyPasskey12345678901234567890",
+      "category": "AMD_GPU",
+      "hardwareId": 1,
+      "teamId": 3
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_internal_duplicate_name",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {
+      "hardwareName": "BatchDuplicate",
+      "displayName": "BatchDuplicate",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     },
+     {
+      "hardwareName": "BatchDuplicate",
+      "displayName": "BatchDuplicate",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     }
+    ]
+   }
+  },
+  {
+   "case": "hardware_batch_null_payload",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "null"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "teams_batch_without_auth",
+   "compare": "full",
+   "request": {
+    "json": [
+     {
+      "teamName": "NoAuthBatchTeam"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "teams_batch_with_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": [
+     {
+      "teamName": "ReadOnlyBatchTeam"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "teams_batch_empty_list",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "teams_batch_all_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam1"
+     },
+     {
+      "teamDescription": "Second",
+      "teamName": "BatchTeam2"
+     },
+     {
+      "forumLink": "http://google.com",
+      "teamName": "BatchTeam3"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"teamName\": \"BatchTeam1\"\n  },\n  {\n    \"id\": 2,\n    \"teamName\": \"BatchTeam2\",\n    \"teamDescription\": \"Second\"\n  },\n  {\n    \"id\": 3,\n    \"teamName\": \"BatchTeam3\",\n    \"forumLink\": \"http://google.com\"\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "226",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "x-total-count": "3"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "teams_batch_partly_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam4"
+     },
+     {
+      "forumLink": "invalidLink",
+      "teamName": "BatchTeam5Invalid"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "{\n  \"successful\": [\n    {\n      \"id\": 4,\n      \"teamName\": \"BatchTeam4\"\n    }\n  ],\n  \"unsuccessful\": [\n    {\n      \"invalidObject\": {\n        \"teamName\": \"BatchTeam5Invalid\",\n        \"forumLink\": \"invalidLink\"\n      },\n      \"errors\": [\n        \"Field 'forumLink' is not a valid link: 'invalidLink'\"\n      ]\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "319",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "teams_batch_all_invalid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "forumLink": "invalidLink",
+      "teamName": "BatchTeamBad1"
+     },
+     {
+      "forumLink": "alsoInvalid",
+      "teamName": ""
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"teamName\": \"BatchTeamBad1\",\n      \"forumLink\": \"invalidLink\"\n    },\n    \"errors\": [\n      \"Field 'forumLink' is not a valid link: 'invalidLink'\"\n    ]\n  },\n  {\n    \"invalidObject\": {\n      \"teamName\": \"\",\n      \"forumLink\": \"alsoInvalid\"\n    },\n    \"errors\": [\n      \"Field 'teamName' must not be empty\",\n      \"Field 'forumLink' is not a valid link: 'alsoInvalid'\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "413",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "teams_batch_single_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam6"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 5,\n    \"teamName\": \"BatchTeam6\"\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "53",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "teams_batch_conflict_with_existing",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "BatchTeam1"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"teamName\": \"BatchTeam1\"\n    },\n    \"conflictingObjects\": [\n      {\n        \"id\": 1,\n        \"teamName\": \"BatchTeam1\"\n      }\n    ],\n    \"errors\": [\n      \"Payload conflicts with an existing object on: [teamName]\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "260",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "teams_batch_mixed_conflict_and_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "teamName": "batchteam1"
+     },
+     {
+      "teamName": "BatchTeam7"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "{\n  \"successful\": [\n    {\n      \"id\": 6,\n      \"teamName\": \"BatchTeam7\"\n    }\n  ],\n  \"unsuccessful\": [\n    {\n      \"invalidObject\": {\n        \"teamName\": \"batchteam1\"\n      },\n      \"conflictingObjects\": [\n        {\n          \"id\": 1,\n          \"teamName\": \"BatchTeam1\"\n        }\n      ],\n      \"errors\": [\n        \"Payload conflicts with an existing object on: [teamName]\"\n      ]\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "393",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_batch_without_auth",
+   "compare": "full",
+   "request": {
+    "json": [
+     {
+      "averagePpd": 1,
+      "displayName": "NoAuthBatchHardware",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "NoAuthBatchHardware",
+      "hardwareType": "GPU",
+      "multiplier": 1.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "hardware_batch_with_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": [
+     {
+      "averagePpd": 1,
+      "displayName": "ReadOnlyBatchHardware",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "ReadOnlyBatchHardware",
+      "hardwareType": "GPU",
+      "multiplier": 1.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "hardware_batch_empty_list",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "hardware_batch_all_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "averagePpd": 1,
+      "displayName": "BatchHardware1",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchHardware1",
+      "hardwareType": "GPU",
+      "multiplier": 1.0
+     },
+     {
+      "averagePpd": 2000,
+      "displayName": "BatchHardware2",
+      "hardwareMake": "AMD",
+      "hardwareName": "BatchHardware2",
+      "hardwareType": "GPU",
+      "multiplier": 1.5
+     },
+     {
+      "averagePpd": 50,
+      "displayName": "BatchHardware3",
+      "hardwareMake": "INTEL",
+      "hardwareName": "BatchHardware3",
+      "hardwareType": "CPU",
+      "multiplier": 10.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"BatchHardware1\",\n    \"displayName\": \"BatchHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"BatchHardware2\",\n    \"displayName\": \"BatchHardware2\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.5,\n    \"averagePpd\": 2000\n  },\n  {\n    \"id\": 3,\n    \"hardwareName\": \"BatchHardware3\",\n    \"displayName\": \"BatchHardware3\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 10.0,\n    \"averagePpd\": 50\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "594",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "x-total-count": "3"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_batch_partly_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "averagePpd": 100,
+      "displayName": "BatchHardware4",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchHardware4",
+      "hardwareType": "GPU",
+      "multiplier": 2.0
+     },
+     {
+      "averagePpd": 1,
+      "displayName": "BatchHardware5Invalid",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchHardware5Invalid",
+      "hardwareType": "GPU",
+      "multiplier": -1.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "{\n  \"successful\": [\n    {\n      \"id\": 4,\n      \"hardwareName\": \"BatchHardware4\",\n      \"displayName\": \"BatchHardware4\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 100\n    }\n  ],\n  \"unsuccessful\": [\n    {\n      \"invalidObject\": {\n        \"hardwareName\": \"BatchHardware5Invalid\",\n        \"displayName\": \"BatchHardware5Invalid\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": -1.0,\n        \"averagePpd\": 1\n      },\n      \"errors\": [\n        \"Field 'multiplier' must be 1.00 or higher\"\n      ]\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "604",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_batch_all_invalid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "averagePpd": 1,
+      "displayName": "BatchHardwareBad1",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchHardwareBad1",
+      "hardwareType": "GPU",
+      "multiplier": -1.0
+     },
+     {
+      "averagePpd": 0,
+      "displayName": "",
+      "hardwareMake": "ATI",
+      "hardwareName": "BatchHardwareBad2",
+      "hardwareType": "APU",
+      "multiplier": 0.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"hardwareName\": \"BatchHardwareBad1\",\n      \"displayName\": \"BatchHardwareBad1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": -1.0,\n      \"averagePpd\": 1\n    },\n    \"errors\": [\n      \"Field 'multiplier' must be 1.00 or higher\"\n    ]\n  },\n  {\n    \"invalidObject\": {\n      \"hardwareName\": \"BatchHardwareBad2\",\n      \"displayName\": \"\",\n      \"hardwareMake\": \"ATI\",\n      \"hardwareType\": \"APU\",\n      \"multiplier\": 0.0,\n      \"averagePpd\": 0\n    },\n    \"errors\": [\n      \"Field 'displayName' must not be empty\",\n      \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n      \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n      \"Field 'multiplier' must be 1.00 or higher\",\n      \"Field 'averagePpd' must be 1 or higher\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "810",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "hardware_batch_lowercase_enums",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "averagePpd": 25,
+      "displayName": "BatchHardware6",
+      "hardwareMake": "amd",
+      "hardwareName": "BatchHardware6",
+      "hardwareType": "cpu",
+      "multiplier": 4.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 5,\n    \"hardwareName\": \"BatchHardware6\",\n    \"displayName\": \"BatchHardware6\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 4.0,\n    \"averagePpd\": 25\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "197",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_batch_conflict_with_existing",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "averagePpd": 1,
+      "displayName": "BatchHardware1",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchHardware1",
+      "hardwareType": "GPU",
+      "multiplier": 1.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"hardwareName\": \"BatchHardware1\",\n      \"displayName\": \"BatchHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"conflictingObjects\": [\n      {\n        \"id\": 1,\n        \"hardwareName\": \"BatchHardware1\",\n        \"displayName\": \"BatchHardware1\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 1.0,\n        \"averagePpd\": 1\n      }\n    ],\n    \"errors\": [\n      \"Payload conflicts with an existing object on: [hardwareName]\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "586",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "users_batch_without_auth",
+   "compare": "full",
+   "request": {
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUser1",
+      "foldingUserName": "BatchUser1",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 1
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "users_batch_with_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUser1",
+      "foldingUserName": "BatchUser1",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 1
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "users_batch_empty_list",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "users_batch_all_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUser1",
+      "foldingUserName": "BatchUser1",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 1
+     },
+     {
+      "category": "AMD_GPU",
+      "displayName": "BatchUser2",
+      "foldingUserName": "BatchUser2",
+      "hardwareId": 2,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 1
+     },
+     {
+      "category": "WILDCARD",
+      "displayName": "BatchUser3",
+      "foldingUserName": "BatchUser3",
+      "hardwareId": 3,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 1
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"foldingUserName\": \"BatchUser1\",\n    \"displayName\": \"BatchUser1\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"BatchHardware1\",\n      \"displayName\": \"BatchHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"BatchTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  {\n    \"id\": 2,\n    \"foldingUserName\": \"BatchUser2\",\n    \"displayName\": \"BatchUser2\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"AMD_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"BatchHardware2\",\n      \"displayName\": \"BatchHardware2\",\n      \"hardwareMake\": \"AMD\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.5,\n      \"averagePpd\": 2000\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"BatchTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  {\n    \"id\": 3,\n    \"foldingUserName\": \"BatchUser3\",\n    \"displayName\": \"BatchUser3\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"WILDCARD\",\n    \"hardware\": {\n      \"id\": 3,\n      \"hardwareName\": \"BatchHardware3\",\n      \"displayName\": \"BatchHardware3\",\n      \"hardwareMake\": \"INTEL\",\n      \"hardwareType\": \"CPU\",\n      \"multiplier\": 10.0,\n      \"averagePpd\": 50\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"BatchTeam1\"\n    },\n    \"userIsCaptain\": false\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1480",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "x-total-count": "3"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "users_batch_partly_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUser4",
+      "foldingUserName": "BatchUser4",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 2
+     },
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUserBad1",
+      "foldingUserName": "BatchUserBad1",
+      "hardwareId": 1,
+      "passkey": "tooShort",
+      "teamId": 2
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "{\n  \"successful\": [\n    {\n      \"id\": 4,\n      \"foldingUserName\": \"BatchUser4\",\n      \"displayName\": \"BatchUser4\",\n      \"passkey\": \"DummyPasskey12345678901234567890\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardware\": {\n        \"id\": 1,\n        \"hardwareName\": \"BatchHardware1\",\n        \"displayName\": \"BatchHardware1\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 1.0,\n        \"averagePpd\": 1\n      },\n      \"team\": {\n        \"id\": 2,\n        \"teamName\": \"BatchTeam2\",\n        \"teamDescription\": \"Second\"\n      },\n      \"userIsCaptain\": false\n    }\n  ],\n  \"unsuccessful\": [\n    {\n      \"invalidObject\": {\n        \"foldingUserName\": \"BatchUserBad1\",\n        \"displayName\": \"BatchUserBad1\",\n        \"passkey\": \"tooShort\",\n        \"category\": \"NVIDIA_GPU\",\n        \"hardwareId\": 1,\n        \"teamId\": 2,\n        \"userIsCaptain\": false\n      },\n      \"errors\": [\n        \"Field 'passkey' must be 32 characters long and include only alphanumeric characters\"\n      ]\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1014",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:12 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "users_batch_all_invalid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUserBad2",
+      "foldingUserName": "BatchUserBad2",
+      "hardwareId": 1,
+      "passkey": "tooShort",
+      "teamId": 3
+     },
+     {
+      "category": "NOT_A_CATEGORY",
+      "displayName": "",
+      "foldingUserName": "!!!",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 3
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"foldingUserName\": \"BatchUserBad2\",\n      \"displayName\": \"BatchUserBad2\",\n      \"passkey\": \"tooShort\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardwareId\": 1,\n      \"teamId\": 3,\n      \"userIsCaptain\": false\n    },\n    \"errors\": [\n      \"Field 'passkey' must be 32 characters long and include only alphanumeric characters\"\n    ]\n  },\n  {\n    \"invalidObject\": {\n      \"foldingUserName\": \"!!!\",\n      \"displayName\": \"\",\n      \"passkey\": \"DummyPasskey12345678901234567890\",\n      \"category\": \"NOT_A_CATEGORY\",\n      \"hardwareId\": 1,\n      \"teamId\": 3,\n      \"userIsCaptain\": false\n    },\n    \"errors\": [\n      \"Field 'foldingUserName' must have at least one alphanumeric character, or an underscore, period or hyphen\",\n      \"Field 'displayName' must not be empty\",\n      \"Field 'category' must be one of: [AMD_GPU, NVIDIA_GPU, WILDCARD]\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "880",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "users_batch_no_completed_work_units",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "BatchUser5",
+      "foldingUserName": "BatchUser5",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 3
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"foldingUserName\": \"BatchUser5\",\n      \"displayName\": \"BatchUser5\",\n      \"passkey\": \"DummyPasskey12345678901234567890\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardwareId\": 1,\n      \"teamId\": 3,\n      \"userIsCaptain\": false\n    },\n    \"errors\": [\n      \"User 'BatchUser5' has 0 Work Units with passkey 'DummyPasskey12345678901234567890', there must be at least one completed Work Unit before adding the user\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "455",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "users_batch_category_not_supported_by_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "category": "AMD_GPU",
+      "displayName": "BatchUser6",
+      "foldingUserName": "BatchUser6",
+      "hardwareId": 1,
+      "passkey": "DummyPasskey12345678901234567890",
+      "teamId": 3
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"foldingUserName\": \"BatchUser6\",\n      \"displayName\": \"BatchUser6\",\n      \"passkey\": \"DummyPasskey12345678901234567890\",\n      \"category\": \"AMD_GPU\",\n      \"hardwareId\": 1,\n      \"teamId\": 3,\n      \"userIsCaptain\": false\n    },\n    \"errors\": [\n      \"Category 'AMD_GPU' cannot be filled by hardware of make 'NVIDIA', must be one of: [AMD]\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "386",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "hardware_batch_internal_duplicate_name",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {
+      "averagePpd": 1,
+      "displayName": "BatchDuplicate",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchDuplicate",
+      "hardwareType": "GPU",
+      "multiplier": 1.0
+     },
+     {
+      "averagePpd": 1,
+      "displayName": "BatchDuplicate",
+      "hardwareMake": "NVIDIA",
+      "hardwareName": "BatchDuplicate",
+      "hardwareType": "GPU",
+      "multiplier": 1.0
+     }
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "{\n  \"successful\": [\n    {\n      \"id\": 6,\n      \"hardwareName\": \"BatchDuplicate\",\n      \"displayName\": \"BatchDuplicate\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    }\n  ],\n  \"unsuccessful\": [\n    {\n      \"id\": 0,\n      \"hardwareName\": \"BatchDuplicate\",\n      \"displayName\": \"BatchDuplicate\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "478",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_batch_null_payload",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "null",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "<html><head><title>ERROR</title><style>\nbody {\n    font-family: \"Lucida Grande\", \"Lucida Sans Unicode\", \"Trebuchet MS\", Helvetica, Arial, Verdana, sans-serif;\n    margin: 5px;\n}\n\n.header {\n    background-image: linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);\n    background-image: -o-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);\n    background-image: -moz-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);\n    background-image: -webkit-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);\n    background-image: -ms-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);\n    \n    background-image: -webkit-gradient(\n        linear,\n        left bottom,\n        left top,\n        color-stop(0.08, rgb(153,151,153)),\n        color-stop(0.54, rgb(199,199,199))\n    );\n    color: black;\n    padding: 2px;\n    font-weight: normal;\n    border: solid 1px;\n    font-size: 170%;\n    text-align: left;\n    vertical-align: middle; \n    height: 32px; \n    margin-bottom: 10px;\n}\n.error-div {\n    display: inline-block;\n    width: 32px;\n    height: 32px;\n    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAgAAAAIACH+pydAAAGGElEQVRYw8WXW2wcVxnHf+fM7NXrdXbdtZ3ipGqCEzvQKmlFoUggwkvvGBoaqVVV5Y0nkCoQPPCAhMQbQlzUh/IWHoh6QUVKZVLxUCGogKZRW9uJkyg0iVzZ2dhre9c7u7M7c87hYWc2M7t2bBASI306O/85+v7/7zLn24H/8yV2u/EcFNvwVNK2X0DKw1qpYaX1gCWlY0m5arRe8JQ6I2DmaVj/nwk4CxO2Zf1aw9dKo6N67+eOZHN7x0gViiSHBmlXa7hrazjLt1i+eKmxUi5bwpg/e8a8PA3X/msBr0MyJ+WvgFOffehY8v7HH5OW78HqGjgOtNrge2AnIJWAgQEYLqBsm3/NvKM/mZ1rYczpRa2/9x3w/iMBM1BCiHfuGRmZevClF9NJ5cP1m9B0+/aa3t/ZDNw3TtuSfPy737trK6sXtTGPPwOruxLwNhSEEHMHpqZGDz93wubKFdio3ZXUGNOHs2cIDh/g6pt/9G8uXLnlGPP5k1Dt5bN60m6lhXj34OTkxKET37SZm4d6oz/KgFRH7yOrBozbwlTWGf7ql6RZrWTcytrxaTj9Ro9OGb3JS/mz0nDxgYnnvmWbuUsdJ6FTY2JmImShqZA83N90UbOXOXDiG4nCcPFoTsqfbluCP8DenJQLx1/+7pBcXILaZl9qo2svFmalb48xkM9hxkf5+29+u9HSenIayn0ZyEr5i0NHpnKy7aGrtW6UehsLozRBRlRQEh3BwzLpWh3h++yfPJRLSvnzvhK8DkPamOl7n3nCUjcXtyXuK0X0WViaAFc9QtSNJe594uu2MubZGcjHBGTgqeFiQQml0K12nDgSpd4iyi4uRMci6Q8xJSWq7SGEZCg/qD14LCYgIcTzoxMHc6qygYk40aETKTFSdh2aANOWhbEsjJSYCK6C/V0LcH+9xvCB/TlbiBdCAXbQMJPZ/fvQjUbXEULAa6/1deyuh0dwNU+e7DSzEOhmi8xn9iI+ujgVE6ChlBwpYcqVjuIgA3IXBMYYtNbd30IIpJQI0ZEa+gPQnk9ieA8GSrESaGNyiWIBrVQntUHqdrq01iiluo0WilBK4fs+WutOr4S9YAyJoRzamMGYAClEve046ETyTr13EKCU6kZ+N4GNCxfwKpVOryQSuOUVhBCbsRIIuN1cWRkaSCfRrdaOTncijgltNPDn5xHZLIn7x3GNh4CVmADgcv3a9YmBY0cxm06nAQH31KlOao3BL5fxbtzAOE73hAt7JXb6RU7PGO44WK5Do1ZHw6WYAN+YM+X5S8dLXziWizVNvY5aWcFfWuq8Idsctb1Yr8DwmRwrUr1yfVMbcyYmwIWZ2mbdai9+gvfBAsaAbrUwrrtllLuJPibIGGQ2hUlIHLdlA+diTXgSqkKIt5b/OevL+8bwqlWU63anW3jyhaa4c9T2Hs0hrsL5EOCJQ/sov7/gS8Mb07AZEwDgav2D5aVy3eSziEL+Dllk0PSRcmcMqx6BUeGykINsksrttboPP4w2aVfACVhGiFevvft+I/XwJCad3DF6tc2MiD4zmRSZhyZY/OusI4V4JTqKYwIA6lr/2Gm6s5/+7UMv/egDmEyqL7VbRR/LViR6sikGvniYpffm2m6r/VFd65/0vqZ9R/tbsMeG+WKpMDL+lWMJ58Jl/NVqvOG26PAoDmCXhhg4epDl9+a9zUp1uQkPbvWfcMvZchbuEXAuk0kf2X/84YxpuDQv3kA5zW1fw9CswSyZyXFEJsmnf/m46bntuTY8+SxUtuLadri9CokxeEUK8WJhtJgaeeSIxG3RurWGv+Gg3RbaU5CwkOkU1lCWxFgBmbS4ff6qX7297rXh9Gn4/llobMcjtsFywACQ+zZMTsOP8vBIOpNS+bFiJj2cxx7MYg+k8ZwmrWqD9lqNjVvrTc9tWRtw/k345dtwFagDTmTdUUA2EDAYXffB2JPw6FH4ch7GUpCzIemD50J9A1Y+hH/8Cc4vdTq9Tud9D9dNOt+MajclyNL53xZmIhusmcBSQJLOd4UJnHqACzTppDy0kHizl/yuPRB5nggIM0A6IE4GuA34EQFtoBUQuwGm7kbwb+eaEEXmuV5dAAAAJXRFWHRjcmVhdGUtZGF0ZQAyMDA5LTExLTEwVDE5OjM4OjI0LTA3OjAwdDKp4gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxMC0wMi0yMFQyMzoyNjoyNC0wNzowMC7DUNYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTAtMDEtMTFUMDg6NTc6MzUtMDc6MDCruapPAAAAMnRFWHRMaWNlbnNlAGh0dHA6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUHVibGljX2RvbWFpbj/96s8AAAAldEVYdG1vZGlmeS1kYXRlADIwMDktMTEtMTBUMTk6Mzg6MjQtMDc6MDArg9/WAAAAGXRFWHRTb3VyY2UAVGFuZ28gSWNvbiBMaWJyYXJ5VM/tggAAADp0RVh0U291cmNlX1VSTABodHRwOi8vdGFuZ28uZnJlZWRlc2t0b3Aub3JnL1RhbmdvX0ljb25fTGlicmFyebzIrdYAAAAASUVORK5CYII=') left center no-repeat;\n}\n.error-text-div {\n    display: inline-block;\n    vertical-align: top;\n    height: 32px;\n}\n.label {\n    font-weight:bold;\n    display: inline-block;\n}\n.value {\n    display: inline-block;\n    margin-left: 5px;\n}\npre {\n    font-size: 110%;\n    margin-left: 1.5em;\n    white-space: pre-wrap;\n    white-space: -moz-pre-wrap;\n    white-space: -pre-wrap;\n    white-space: -o-pre-wrap;\n    word-wrap: break-word;\n}\n</style></head><body><div class=\"header\"><div class=\"error-div\"></div><div class=\"error-text-div\">Error processing request</div></div><div class=\"label\">Context Path:</div><div class=\"value\">/folding</div><br/><div class=\"label\">Servlet Path:</div><div class=\"value\"></div><br/><div class=\"label\">Path Info:</div><div class=\"value\">/hardware/batch</div><br/><div class=\"label\">Query String:</div><div class=\"value\">null</div><br/><div class=\"label\">Stack Trace:</div><div class=\"value\"></div><br/><pre>org.jboss.resteasy.spi.UnhandledException: java.lang.NullPointerException\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ExceptionHandler.handleApplicationException(ExceptionHandler.java:82)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ExceptionHandler.handleException(ExceptionHandler.java:346)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.writeException(SynchronousDispatcher.java:193)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:457)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.lambda$invoke$4(SynchronousDispatcher.java:229)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.lambda$preprocess$0(SynchronousDispatcher.java:135)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.interception.PreMatchContainerRequestContext.filter(PreMatchContainerRequestContext.java:358)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.preprocess(SynchronousDispatcher.java:138)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:215)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.service(ServletContainerDispatcher.java:245)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.service(HttpServletDispatcher.java:61)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.service(HttpServletDispatcher.java:56)\n\tat javax.servlet.api@2.0.0.Final//javax.servlet.http.HttpServlet.service(HttpServlet.java:590)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:117)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)\n\tat io.undertow.core@2.2.8.Final//io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)\n\tat io.undertow.core@2.2.8.Final//io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)\n\tat io.undertow.core@2.2.8.Final//io.undertow.security.handlers.NotificationReceiverHandler.handleRequest(NotificationReceiverHandler.java:50)\n\tat io.undertow.core@2.2.8.Final//io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler.handleRequest(GlobalRequestControllerHandler.java:68)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.SendErrorPageHandler.handleRequest(SendErrorPageHandler.java:52)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.security.SecurityContextThreadSetupAction.lambda$create$0(SecurityContextThreadSetupAction.java:105)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1535)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1535)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1535)\n\tat org.wildfly.extension.undertow@24.0.0.Final//org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction.lambda$create$0(UndertowDeploymentInfoService.java:1535)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)\n\tat io.undertow.servlet@2.2.8.Final//io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.Connectors.executeRootHandler(Connectors.java:387)\n\tat io.undertow.core@2.2.8.Final//io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:841)\n\tat org.jboss.threads@2.4.0.Final//org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)\n\tat org.jboss.threads@2.4.0.Final//org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1990)\n\tat org.jboss.threads@2.4.0.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1486)\n\tat org.jboss.threads@2.4.0.Final//org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1377)\n\tat org.jboss.xnio@3.8.4.Final//org.xnio.XnioWorker$WorkerThreadFactory$1$1.run(XnioWorker.java:1280)\n\tat java.base/java.lang.Thread.run(Thread.java:829)\nCaused by: java.lang.NullPointerException\n\tat java.base/java.util.Objects.requireNonNull(Objects.java:222)\n\tat deployment.folding-stats-war.war//me.zodac.folding.rest.endpoint.HardwareEndpoint.createBatchOf(HardwareEndpoint.java:147)\n\tat deployment.folding-stats-war.war//me.zodac.folding.rest.endpoint.HardwareEndpoint$Proxy$_$$_WeldClientProxy.createBatchOf(Unknown Source)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:566)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.MethodInjectorImpl.invoke(MethodInjectorImpl.java:138)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ResourceMethodInvoker.internalInvokeOnTarget(ResourceMethodInvoker.java:546)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ResourceMethodInvoker.invokeOnTargetAfterFilter(ResourceMethodInvoker.java:435)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ResourceMethodInvoker.lambda$invokeOnTarget$0(ResourceMethodInvoker.java:396)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.interception.PreMatchContainerRequestContext.filter(PreMatchContainerRequestContext.java:358)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ResourceMethodInvoker.invokeOnTarget(ResourceMethodInvoker.java:398)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:365)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:338)\n\tat org.jboss.resteasy.resteasy-jaxrs@3.15.1.Final//org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:440)\n\t... 53 more\n</pre></body></html>",
+    "headers": {
+     "connection": "close",
+     "content-length": "15137",
+     "content-type": "text/html;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 500
+   }
+  }
+ ],
+ "capability": "Shape and status of the three batch creation endpoints (/hardware/batch, /teams/batch, /users/batch): a bare array plus X-Total-Count when every element succeeds, a BatchCreateResponse wrapper when only some succeed, a bare array of ValidationFailures with 400 when none succeed, and 400 with an empty array for an empty list."
+}

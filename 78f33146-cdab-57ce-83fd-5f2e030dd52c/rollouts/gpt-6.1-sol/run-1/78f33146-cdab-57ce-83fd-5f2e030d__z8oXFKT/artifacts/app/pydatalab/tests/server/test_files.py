@@ -1,0 +1,318 @@
+import shutil
+
+import pytest
+
+from pydatalab.config import CONFIG
+
+
+def test_too_large_upload(client, tmpdir, insert_default_sample, default_sample):  # pylint: disable=unused-argument
+    """Test that an artificially large file upload is rejected (413)
+    when it exceeds the test file size (currently 10 MB).
+
+    """
+    fname = "file_larger_than_10MB"
+    path = tmpdir / fname
+    path.write("0" * 11_000_000)
+    with open(path, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_sample.item_id,
+                "file": [(f, fname)],
+                "type": "application/octet-stream",
+                "replace_file": "null",
+                "relativePath": "null",
+            },
+        )
+    assert response.status_code == 413
+    assert response.json["status"] == "error"
+    assert response.json["title"] == "RequestEntityTooLarge"
+    assert (
+        response.json["message"]
+        == "Uploaded file is too large.\nThe maximum file size is 0.01 GB.\nContact your datalab administrator if you need to upload larger files."
+    )
+
+
+@pytest.mark.dependency()
+def test_upload(client, default_filepath, insert_default_sample, default_sample):  # pylint: disable=unused-argument
+
+    item_before = client.get(f"/get-item-data/{default_sample.item_id}").json["item_data"]
+
+    with open(default_filepath, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_sample.item_id,
+                "file": [(f, default_filepath.name)],
+                "type": "application/octet-stream",
+                "replace_file": "null",
+                "relativePath": "null",
+            },
+        )
+
+    item_after = client.get(f"/get-item-data/{default_sample.item_id}").json["item_data"]
+    assert isinstance(response.json["file_id"], str)
+    assert response.json["file_information"]
+    assert response.json["status"] == "success"
+    assert response.status_code == 201
+    assert item_before["last_modified"] != item_after["last_modified"]
+
+
+@pytest.mark.dependency(depends=["test_upload"])
+def test_get_file_and_delete(client, default_filepath, default_sample):
+    response = client.get(f"/get-item-data/{default_sample.item_id}")
+    assert response.json["status"] == "success"
+    assert response.status_code == 200
+
+    assert "files" in response.json["item_data"]
+    assert len(response.json["item_data"]["files"]) == 1
+    file_id = [f["immutable_id"] for f in response.json["item_data"]["files"]][0]
+
+    assert "item_data" in response.json
+    assert file_id in response.json["item_data"]["file_ObjectIds"]
+
+    assert (
+        response.json["item_data"]["files"][0]["location"]
+        == f"{CONFIG.FILE_DIRECTORY}/{file_id}/{default_filepath.name}"
+    )
+    assert response.json["item_data"]["files"][0]["name"] == default_filepath.name
+    assert response.json["item_data"]["files"][0]["size"] == 2465718
+
+    checksums = response.json["item_data"]["files"][0]["checksums"]
+    assert checksums is not None
+    assert len(checksums["md5"]) == 32
+    assert len(checksums["sha256"]) == 64
+
+    file_response = client.get(f"/files/{file_id}/{default_filepath.name}")
+    assert file_response.json is None
+    assert file_response.status_code == 200
+    assert len(file_response.data) == 2465718
+    file_response.close()
+
+    delete_response = client.post(
+        "/delete-file-from-sample/",
+        json={
+            "item_id": default_sample.item_id,
+            "file_id": file_id,
+        },
+    )
+    assert delete_response.json["status"] == "success"
+    assert delete_response.status_code == 200
+
+    response = client.get(f"/get-item-data/{default_sample.item_id}")
+    assert response.json["status"] == "success"
+    assert response.status_code == 200
+    assert not response.json["item_data"]["file_ObjectIds"]
+    assert not response.json["item_data"]["files"]
+
+
+@pytest.mark.dependency(depends=["test_get_file_and_delete"])
+def test_upload_new_version(
+    client, default_filepath, insert_default_sample, default_sample, tmpdir
+):  # pylint: disable=unused-argument
+    """Upload a file, then upload a new version of the same file.
+
+    Updating the file should also bump the `last_modified` timestamp of any
+    item the file is attached to.
+    """
+    with open(default_filepath, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_sample.item_id,
+                "file": [(f, default_filepath.name)],
+                "type": "application/octet-stream",
+                "replace_file": "null",
+                "relativePath": "null",
+            },
+        )
+
+    file_id = response.json["file_id"]
+    assert file_id
+    assert response.json["file_information"]
+    assert response.json["status"] == "success"
+    assert response.status_code == 201
+
+    # Record the attached item's last_modified before the file is updated
+    item_response = client.get(f"/get-item-data/{default_sample.item_id}")
+    assert item_response.status_code == 200
+    last_modified_before = item_response.json["item_data"]["last_modified"]
+
+    # Copy the file and modify it so the re-upload is a genuinely new version
+    # (identical content would be deduplicated and rejected as unmodified)
+    tmp_filepath = tmpdir / default_filepath.name
+    shutil.copy(default_filepath, tmp_filepath)
+    with open(tmp_filepath, "ab") as f:
+        f.write(b"\nnew version content")
+
+    with open(tmp_filepath, "rb") as f:
+        response_reup = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_sample.item_id,
+                "file": [(f, default_filepath.name)],
+                "type": "application/octet-stream",
+                "replace_file": file_id,
+                "relativePath": "null",
+            },
+        )
+    assert isinstance(response_reup.json["file_id"], str)
+    assert response_reup.json["file_information"]
+    assert response_reup.json["status"] == "success"
+    assert response_reup.status_code == 201
+    assert (
+        response_reup.json["file_information"]["location"]
+        == response.json["file_information"]["location"]
+    )
+    assert response_reup.json["file_id"] == response.json["file_id"]
+
+    # Updating the file should have bumped the attached item's last_modified
+    item_response = client.get(f"/get-item-data/{default_sample.item_id}")
+    assert item_response.status_code == 200
+    last_modified_after = item_response.json["item_data"]["last_modified"]
+    assert last_modified_after is not None
+    assert last_modified_after != last_modified_before
+
+
+@pytest.mark.dependency(depends=["test_upload_new_version"])
+def test_file_permissions(
+    client,
+    another_client,
+    another_user_id,
+    group_id,
+    default_filepath,
+    insert_default_cell,
+    default_cell,
+    tmpdir,
+):  # pylint: disable=unused-argument
+    """Upload a file as one user, then test access as two different users."""
+    filename = "my_secret_file.txt"
+    with open(default_filepath, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_cell.item_id,
+                "file": [(f, filename)],
+                "type": "application/octet-stream",
+                "replace_file": "null",
+                "relativePath": "null",
+            },
+        )
+
+    assert response.status_code == 201
+    resp_json = response.json
+    assert resp_json["status"] == "success"
+    file_id = resp_json["file_id"]
+
+    # Test that a random user cannot access the file directly
+    response = another_client.get(f"/files/{file_id}/{filename}")
+    assert response.status_code == 401
+    assert response.json["status"] == "error"
+
+    # Give the user access to the item, then check again
+    # First get refcode for item ID
+    response = client.get(f"/get-item-data/{default_cell.item_id}")
+    refcode = response.json["item_data"]["refcode"]
+
+    # Add normal user to the item
+    response = client.patch(
+        f"/items/{refcode}/permissions", json={"creators": [{"immutable_id": str(another_user_id)}]}
+    )
+
+    # Now check they have access to the file
+    response = another_client.get(f"/files/{file_id}/{filename}")
+    assert response.status_code == 200
+
+    # Now remove them, but add their group
+    response = client.patch(
+        f"/items/{refcode}/permissions",
+        json={"creators": [], "groups": [{"immutable_id": group_id}]},
+    )
+
+    # Now check they still have access to the file
+    response = another_client.get(f"/files/{file_id}/{filename}")
+    assert response.status_code == 200
+
+
+def test_file_download_sudo_mode(
+    client,
+    admin_client,
+    default_filepath,
+):
+    """Test that admins need ?sudo=1 to access files owned by other users."""
+    # Create a sample as normal user and upload a file
+    response = client.post("/new-sample/", json={"type": "samples", "item_id": "user-file-sample"})
+    assert response.status_code == 201
+    item_id = response.json["sample_list_entry"]["item_id"]
+
+    filename = "user_owned_file.txt"
+    with open(default_filepath, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": item_id,
+                "file": [(f, filename)],
+                "type": "application/octet-stream",
+                "replace_file": "null",
+                "relativePath": "null",
+            },
+        )
+
+    assert response.status_code == 201
+    file_id = response.json["file_id"]
+
+    # Admin without ?sudo=1 cannot access the file
+    response = admin_client.get(f"/files/{file_id}/{filename}")
+    assert response.status_code == 401
+
+    # Admin with ?sudo=1 can access the file
+    response = admin_client.get(f"/files/{file_id}/{filename}?sudo=1")
+    assert response.status_code == 200
+    assert len(response.data) == 2465718
+    response.close()
+
+
+def test_upload_identical_file(client, default_filepath, insert_default_sample, default_sample):  # pylint: disable=unused-argument
+    """Test that re-uploading the same file (same content and filename) returns 304 no-op."""
+    with open(default_filepath, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_sample.item_id,
+                "file": [(f, default_filepath.name)],
+                "type": "application/octet-stream",
+                "replace_file": "null",
+                "relativePath": "null",
+            },
+        )
+    assert response.status_code == 201
+    file_id_1 = response.json["file_id"]
+
+    with open(default_filepath, "rb") as f:
+        response = client.post(
+            "/upload-file/",
+            buffered=True,
+            content_type="multipart/form-data",
+            data={
+                "item_id": default_sample.item_id,
+                "file": [(f, default_filepath.name)],
+                "type": "application/octet-stream",
+                "replace_file": file_id_1,
+                "relativePath": "null",
+            },
+        )
+    assert response.status_code == 304

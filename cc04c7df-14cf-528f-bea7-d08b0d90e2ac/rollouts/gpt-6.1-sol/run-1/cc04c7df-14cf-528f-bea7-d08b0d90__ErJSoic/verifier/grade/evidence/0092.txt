@@ -1,0 +1,25 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/PostgresDataSource.java (changed against State A) ===
+@@
+29  | import javax.sql.DataSource;
+30  | import me.zodac.folding.api.util.EnvironmentVariableUtils;
+31  | 
+   -| /**
+   -|  * <b>PostgreSQL</b> implementation of {@link HikariDataSource}.
+   -|  */
+32 +| 
+33  | public final class PostgresDataSource extends HikariDataSource {
+34  | 
+35  |     private static final HikariConfig DATA_SOURCE_CONFIG = new HikariConfig();
+@@
+49  |         super(DATA_SOURCE_CONFIG);
+50  |     }
+51  | 
+   -|     /**
+   -|      * Creates an instance of {@link PostgresDataSource}.
+   -|      *
+   -|      * @return the created {@link PostgresDataSource}
+   -|      */
+52 +|     
+53  |     public static DataSource create() {
+54  |         return new PostgresDataSource();
+55  |     }

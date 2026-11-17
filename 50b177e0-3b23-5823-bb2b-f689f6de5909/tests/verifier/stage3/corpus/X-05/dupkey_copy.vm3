@@ -1,0 +1,5 @@
+iparse 0 {%22k%22:1,%22k%22:2,%22k%22:3}
+mutcopy 0
+imutcopy 1
+ieq 0 1
+write

@@ -1,0 +1,204 @@
+{
+ "id": "s3_family_04",
+ "source": "f008_signed_and_overflowing_ids",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "plus_signed_id",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/+1"
+   }
+  },
+  {
+   "case": "id_at_int_max_plus_one",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/2147483648"
+   }
+  },
+  {
+   "case": "id_at_int_min",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/-2147483648"
+   }
+  },
+  {
+   "case": "id_below_int_min",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/-2147483649"
+   }
+  },
+  {
+   "case": "id_zero",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/0"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "plus_signed_id",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/+1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"1514055421\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "id_at_int_max_plus_one",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/2147483648"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '2147483648' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "58",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "id_at_int_min",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/-2147483648"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-2147483648' is out of range\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "53",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "id_below_int_min",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/-2147483649"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-2147483649' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "59",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "id_zero",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/0"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "Signed and out-of-int-range ids: '+1' parses to 1, -2147483648 is in range for parseInt and reports the parsed value in the 'out of range' message, -2147483649 and 2147483648 overflow and report the raw text instead."
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+# Serve State A (datalab on pydantic 1.10.26) at http://127.0.0.1:${ORACLE_PORT:-5001}
+# against its own MongoDB on port ${ORACLE_MONGO_PORT:-27018}.
+set -euo pipefail
+mongo_port=${ORACLE_MONGO_PORT:-27018}
+if ! /opt/oracle/bin/python -c "import pymongo,sys; pymongo.MongoClient('mongodb://127.0.0.1:$mongo_port', serverSelectionTimeoutMS=300).admin.command('ping')" 2>/dev/null; then
+  /usr/local/bin/start-mongodb "$mongo_port" /tmp/oracle-mongodb >/dev/null
+fi
+exec /opt/oracle/bin/python /opt/oracle/oracle_server.py "$@"

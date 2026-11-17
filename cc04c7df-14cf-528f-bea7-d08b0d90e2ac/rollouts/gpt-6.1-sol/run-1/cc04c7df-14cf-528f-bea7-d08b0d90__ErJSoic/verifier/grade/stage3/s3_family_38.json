@@ -1,0 +1,154 @@
+{
+ "id": "s3_family_38",
+ "cases": [
+  {
+   "case": "missing_padding",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.1557112,
+    1773572407.203032
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "extra_padding",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q=="
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.203079,
+    1773572407.2068179
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "embedded_space",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpz aHJvb3Q="
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2068458,
+    1773572407.210197
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "base64url_alphabet",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q="
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2102191,
+    1773572407.2196205
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "correctly_padded_control",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2196405,
+    1773572407.228808
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

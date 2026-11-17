@@ -1,0 +1,292 @@
+==> setup.py <==
+    1| #!/usr/bin/env python3
+    2| # Copyright (C) 2024 Efabless Corporation
+    3| #
+    4| # Permission to use, copy, modify, and/or distribute this software for any
+    5| # purpose with or without fee is hereby granted, provided that the above
+    6| # copyright notice and this permission notice appear in all copies.
+    7| #
+    8| # THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+    9| # WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+   10| # MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+   11| # ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+   12| # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+   13| # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+   14| # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+   15| import os
+   16| import re
+   17| import shlex
+   18| import shutil
+   19| from pathlib import Path
+   20| from setuptools import setup, Extension
+   21| 
+   22| import pybind11
+   23| from pybind11.setup_helpers import build_ext
+   24| 
+   25| __yosys_root__ = Path(__file__).parent
+   26| 
+   27| yosys_version_rx = re.compile(r"YOSYS_VER\s*:=\s*([\w\-\+\.]+)")
+   28| 
+   29| with open(__yosys_root__ / "Makefile", encoding="utf8") as f:
+   30|     # Extract and convert + to patch version
+   31|     version = yosys_version_rx.search(f.read())[1].replace("+", ".")
+   32| 
+   33| 
+   34| class libyosys_so_ext(Extension):
+   35|     def __init__(
+   36|         self,
+   37|     ) -> None:
+   38|         super().__init__(
+   39|             "libyosys.so",
+   40|             [],
+   41|         )
+   42| 
+   43|         # when iterating locally, you probably want to set this variable
+   44|         # to avoid mass rebuilds bec of pybind11's include path changing
+   45|         pybind_include = os.getenv("_FORCE_PYBIND_INCLUDE", pybind11.get_include())
+   46| 
+   47|         self.args = [
+   48|             f"PYBIND11_INCLUDE={pybind_include}",
+   49|             "ENABLE_PYOSYS=1",
+   50|             # Would need to be installed separately by the user
+   51|             "ENABLE_TCL=0",
+   52|             "ENABLE_READLINE=0",
+   53|             "ENABLE_EDITLINE=0",
+   54|             "PYOSYS_USE_UV=0", # + install requires takes its role when building wheels
+   55|             # Always compile and include ABC in wheel
+   56|             "ABCEXTERNAL=",
+   57|             # Show compile commands
+   58|             "PRETTY=0",
+   59|         ]
+   60| 
+   61|     def custom_build(self, bext: build_ext):
+   62|         make_flags_split = shlex.split(os.getenv("makeFlags", ""))
+   63|         # abc linking takes a lot of memory, best get it out of the way first
+   64|         bext.spawn(
+   65|             [
+   66|                 "make",
+   67|                 f"-j{os.cpu_count() or 1}",
+   68|                 "yosys-abc",
+   69|                 *make_flags_split,
+   70|                 *self.args,
+   71|             ]
+   72|         )
+   73|         # build libyosys and share with abc out of the way
+   74|         bext.spawn(
+   75|             [
+   76|                 "make",
+   77|                 f"-j{os.cpu_count() or 1}",
+   78|                 self.name,
+   79|                 "share",
+   80|                 *make_flags_split,
+   81|                 *self.args,
+   82|             ]
+   83|         )
+   84|         ext_fullpath = Path(bext.get_ext_fullpath(self.name))
+   85|         build_path = ext_fullpath.parents[1]
+   86|         pyosys_path = build_path / "pyosys"
+   87|         os.makedirs(pyosys_path, exist_ok=True)
+   88| 
+   89|         # libyosys.so
+   90|         target = pyosys_path / self.name
+   91|         shutil.copy(self.name, target)
+   92|         bext.spawn(["strip", "-S", str(target)])
+   93| 
+   94|         # yosys-abc
+   95|         yosys_abc_target = pyosys_path / "yosys-abc"
+   96|         shutil.copy("yosys-abc", yosys_abc_target)
+   97|         bext.spawn(["strip", "-S", str(yosys_abc_target)])
+   98| 
+   99|         # share directory
+  100|         share_target = pyosys_path / "share"
+  101|         try:
+  102|             shutil.rmtree(share_target)
+  103|         except FileNotFoundError:
+  104|             pass
+  105| 
+  106|         shutil.copytree("share", share_target)
+  107| 
+  108| 
+  109| class custom_build_ext(build_ext):
+  110|     def build_extension(self, ext) -> None:
+  111|         if not hasattr(ext, "custom_build"):
+  112|             return super().build_extension(ext)
+  113|         return ext.custom_build(self)
+  114| 
+  115| 
+  116| with open(__yosys_root__ / "README.md", encoding="utf8") as f:
+  117|     long_description = f.read()
+  118| 
+  119| setup(
+  120|     name="pyosys",
+  121|     packages=["pyosys"],
+  122|     version=version,
+  123|     description="Python access to libyosys",
+  124|     long_description=long_description,
+  125|     long_description_content_type="text/markdown",
+  126|     license="MIT",
+  127|     classifiers=[
+  128|         "Programming Language :: Python :: 3",
+  129|         "Intended Audience :: Developers",
+  130|         "Operating System :: POSIX :: Linux",
+  131|         "Operating System :: MacOS :: MacOS X",
+  132|     ],
+  133|     python_requires=">=3.8",
+  134|     ext_modules=[libyosys_so_ext()],
+  135|     cmdclass={
+  136|         "build_ext": custom_build_ext,
+  137|     },
+  138| )
+
+==> pyproject.toml <==
+    1| [build-system]
+    2| requires = [
+    3| 	"setuptools>=42",
+    4| 	"pybind11>=3,<4",
+    5| 	"cxxheaderparser"
+    6| ]
+    7| build-backend = "setuptools.build_meta"
+    8| 
+    9| [tool.ruff]
+   10| target-version = "py38"
+   11| lint.ignore = ["F541"]
+
+==> .github/workflows/wheels.yml <==
+    1| name: Build Wheels for PyPI
+    2| 
+    3| # run every Sunday at 10 AM
+    4| on:
+    5|   workflow_dispatch:
+    6|   schedule:
+    7|     - cron: "0 10 * * 0"
+    8| 
+    9| jobs:
+   10|   build_wheels:
+   11|     strategy:
+   12|       fail-fast: false
+   13|       matrix:
+   14|         os: [
+   15|             {
+   16|               name: "Ubuntu 22.04",
+   17|               family: "linux",
+   18|               runner: "ubuntu-22.04",
+   19|               archs: "x86_64",
+   20|             },
+   21|             {
+   22|               name: "Ubuntu 22.04",
+   23|               family: "linux",
+   24|               runner: "ubuntu-22.04-arm",
+   25|               archs: "aarch64",
+   26|             },
+   27|             {
+   28|               name: "macOS 15 x64",
+   29|               family: "macos",
+   30|               runner: "macos-15-intel",
+   31|               archs: "x86_64",
+   32|             },
+   33|             {
+   34|               name: "macOS 15 arm64",
+   35|               family: "macos",
+   36|               runner: "macos-15",
+   37|               archs: "arm64",
+   38|             },
+   39|             ## Windows is disabled because of an issue with compiling FFI as
+   40|             ## under MinGW in the GitHub Actions environment (SHELL variable has
+   41|             ## whitespace.)
+   42|             # {
+   43|             #   name: "Windows Server 2019",
+   44|             #   family: "windows",
+   45|             #   runner: "windows-2019",
+   46|             #   archs: "AMD64",
+   47|             # },
+   48|           ]
+   49|     name: Build Wheels | ${{ matrix.os.name }} | ${{ matrix.os.archs }}
+   50|     runs-on: ${{ matrix.os.runner }}
+   51|     steps:
+   52|       - uses: actions/checkout@v5
+   53|         with:
+   54|           fetch-depth: 0
+   55|           submodules: true
+   56|           persist-credentials: false
+   57|       - uses: actions/setup-python@v5
+   58|       - name: Get FFI
+   59|         shell: bash
+   60|         run: |
+   61|           mkdir -p ffi
+   62|           curl -L https://github.com/libffi/libffi/releases/download/v3.4.8/libffi-3.4.8.tar.gz | tar --strip-components=1 -xzC ffi
+   63|       - if: ${{ matrix.os.family == 'linux' }}
+   64|         name: "[Linux] Bison 3.8.2"
+   65|         shell: bash
+   66|         run: |
+   67|           mkdir -p bison
+   68|           curl -L https://ftpmirror.gnu.org/gnu/bison/bison-3.8.2.tar.gz | tar --strip-components=1 -xzC bison
+   69|           sed -i 's/-Werror=unused//g' Makefile
+   70|       ## Software installed by default in GitHub Action Runner VMs:
+   71|       ##  https://github.com/actions/runner-images
+   72|       - if: ${{ matrix.os.family == 'macos' }}
+   73|         name: "[macOS] Flex/Bison"
+   74|         run: |
+   75|           brew install flex bison
+   76|           echo "PATH=$(brew --prefix flex)/bin:$(brew --prefix bison)/bin:$PATH" >> $GITHUB_ENV
+   77|       - if: ${{ matrix.os.family == 'windows' }}
+   78|         name: "[Windows] Flex/Bison"
+   79|         run: |
+   80|           choco install winflexbison3
+   81|       - if: ${{ matrix.os.family == 'macos' && matrix.os.archs == 'arm64' }}
+   82|         name: "[macOS/arm64] Install Python 3.8 (see: https://cibuildwheel.pypa.io/en/stable/faq/#macos-building-cpython-38-wheels-on-arm64)"
+   83|         uses: actions/setup-python@v5
+   84|         with:
+   85|           python-version: 3.8
+   86|       - name: Build wheels
+   87|         uses: pypa/cibuildwheel@v2.21.1
+   88|         env:
+   89|           # * APIs not supported by PyPy
+   90|           # * Musllinux disabled because it increases build time from 48m to ~3h
+   91|           CIBW_SKIP: >
+   92|             pp*
+   93|             *musllinux*
+   94|           CIBW_ARCHS: ${{ matrix.os.archs }}
+   95|           CIBW_BUILD_VERBOSITY: "1"
+   96|           # manylinux2014 (default) does not have a modern enough C++ compiler for Yosys
+   97|           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+   98|           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+   99|           CIBW_BEFORE_ALL: bash ./.github/workflows/wheels/cibw_before_all.sh
+  100|           CIBW_ENVIRONMENT: >
+  101|             OPTFLAGS=-O3
+  102|             PKG_CONFIG_PATH=./ffi/pfx/lib/pkgconfig
+  103|             PATH="$PWD/bison/src:$PATH"
+  104|           CIBW_ENVIRONMENT_MACOS: >
+  105|             OPTFLAGS=-O3
+  106|             PKG_CONFIG_PATH=./ffi/pfx/lib/pkgconfig
+  107|             MACOSX_DEPLOYMENT_TARGET=11
+  108|             makeFlags='CONFIG=clang'
+  109|             PATH="$PWD/bison/src:$PATH"
+  110|           CIBW_BEFORE_BUILD: bash ./.github/workflows/wheels/cibw_before_build.sh
+  111|           CIBW_TEST_COMMAND: python3 {project}/tests/pyosys/run_tests.py
+  112|       - uses: actions/upload-artifact@v7
+  113|         with:
+  114|           name: python-wheels-${{ matrix.os.runner }}
+  115|           path: ./wheelhouse/*.whl
+  116|   upload_wheels:
+  117|     name: Upload Wheels
+  118|     if: (github.repository == 'YosysHQ/yosys') && (github.event_name == 'workflow_dispatch')
+  119|     runs-on: ubuntu-latest
+  120|     # Specifying a GitHub environment is optional, but strongly encouraged
+  121|     environment: pypi
+  122|     permissions:
+  123|       # IMPORTANT: this permission is mandatory for Trusted Publishing
+  124|       id-token: write
+  125|     needs: build_wheels
+  126|     steps:
+  127|       - uses: actions/download-artifact@v8
+  128|         with:
+  129|           path: "."
+  130|           pattern: python-wheels-*
+  131|           merge-multiple: true
+  132|       - run: |
+  133|           ls
+  134|           mkdir -p ./dist
+  135|           mv *.whl ./dist
+  136|       - name: Publish
+  137|         uses: pypa/gh-action-pypi-publish@release/v1
+

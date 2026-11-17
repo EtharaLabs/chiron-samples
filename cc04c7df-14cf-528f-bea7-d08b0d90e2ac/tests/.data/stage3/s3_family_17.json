@@ -1,0 +1,189 @@
+{
+ "id": "s3_family_17",
+ "source": "f025_patch_and_put_where_not_declared",
+ "steps": [
+  {
+   "case": "patch_team_by_id",
+   "http": {
+    "method": "PATCH",
+    "path": "/teams/1",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "status"
+  },
+  {
+   "case": "patch_user_by_id",
+   "http": {
+    "method": "PATCH",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "status"
+  },
+  {
+   "case": "put_user_stats",
+   "http": {
+    "method": "PUT",
+    "path": "/stats/users/1",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 1,
+     "multipliedPointsOffset": 1,
+     "unitsOffset": 1
+    }
+   },
+   "compare": "status"
+  },
+  {
+   "case": "patch_hardware_collection",
+   "http": {
+    "method": "PATCH",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": []
+   },
+   "compare": "status"
+  },
+  {
+   "case": "put_login_admin",
+   "http": {
+    "method": "PUT",
+    "path": "/login/admin",
+    "json": {
+     "encodedUserNameAndPassword": "Basic cm9vdDpzaHJvb3Q="
+    }
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "patch_team_by_id",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": {},
+    "method": "PATCH",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, DELETE, GET, OPTIONS, PUT",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "patch_user_by_id",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": {},
+    "method": "PATCH",
+    "path": "/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, DELETE, GET, OPTIONS, PUT",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "put_user_stats",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 1,
+     "pointsOffset": 1,
+     "unitsOffset": 1
+    },
+    "method": "PUT",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, GET, OPTIONS, PATCH",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "patch_hardware_collection",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": [],
+    "method": "PATCH",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, DELETE, POST, GET, OPTIONS, PUT",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "put_login_admin",
+   "compare": "status",
+   "request": {
+    "json": {
+     "encodedUserNameAndPassword": "Basic cm9vdDpzaHJvb3Q="
+    },
+    "method": "PUT",
+    "path": "/login/admin"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 405
+   }
+  }
+ ],
+ "probe": "PATCH and PUT on resources that do not declare them: PATCH exists only on /stats/users/{userId}, PUT only on the three by-id update methods, so the container must answer 405 for the rest."
+}

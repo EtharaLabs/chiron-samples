@@ -1,0 +1,12 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/ResponsePojo.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api;
+26  | 
+   -| /**
+   -|  * Simple marker interface for POJOs are returned from the service.
+   -|  */
+27 +| 
+28  | public interface ResponsePojo {
+29  | 
+30  | }

@@ -1,0 +1,32 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/lars/LarsGpu.java (changed against State A) ===
+@@
+32  | import lombok.Setter;
+33  | import lombok.ToString;
+34  | 
+   -| /**
+   -|  * Representation of a GPU entry from the LARS DB.
+   -|  *
+   -|  * @see <a href="https://folding.lar.systems/gpu_ppd/overall_ranks">LARS GPU PPD database</a>
+   -|  */
+35 +| 
+36  | @NoArgsConstructor
+37  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+38  | @Getter
+@@
+47  |     private int rank;
+48  |     private long averagePpd;
+49  | 
+   -|     /**
+   -|      * Create a {@link LarsGpu}.
+   -|      *
+   -|      * @param displayName  the name
+   -|      * @param manufacturer the manufacturer
+   -|      * @param modelInfo    the model information
+   -|      * @param rank         the {@link LarsGpu}'s PPD rank compared to all other {@link LarsGpu}s
+   -|      * @param averagePpd   the average PPD for all operating systems
+   -|      * @return the created {@link LarsGpu}
+   -|      */
+50 +|     
+51  |     public static LarsGpu create(final String displayName, final String manufacturer, final String modelInfo, final int rank, final long averagePpd) {
+52  |         return new LarsGpu(displayName, manufacturer, modelInfo, rank, averagePpd);
+53  |     }

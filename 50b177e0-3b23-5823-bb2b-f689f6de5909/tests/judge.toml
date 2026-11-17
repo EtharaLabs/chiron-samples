@@ -1,0 +1,113 @@
+# 10 prohibited acts, read over the staged judge packet in one batched call. `name` is the
+# item identifier because Reward Kit's default name is the first forty characters of the
+# description, which collides across these items.
+#
+# Every item is negated: the judge is asked whether the act is present, so a yes scores the
+# item zero and a no pays its weight. No criterion names a `files` entry of its own, which
+# is what batched mode requires and what makes one call serve all of them: the packet is
+# about 830 kB of inlined source for the reference port and ten individual calls would send
+# it ten times.
+#
+# `files` names the 3 staged packet parts rather than the submitted tree, in the order
+# they are filled. Batched mode reads the whole list in its one call, and each entry is read
+# against Reward Kit's 1 MiB input limit on its own, which is the whole reason the packet is
+# 3 files: one would cap the inlined evidence near 1 MB, and a fault that sat only past
+# the cap could be cited by nobody. Together the parts carry 2400000 bytes of source.
+#
+# Those paths are written only by tests/verifier/stage_note.py, after the graded build and
+# after its process sweep, and only for a submission that built the shipped library and
+# broke no prohibition, and then all of them or none. An unstaged run never reaches this
+# table at all: tests/test.sh sends it to the zero route, because a judge handed
+# `[not found]` could cite nothing and would answer no to every act, which on a negated
+# item is full credit.
+
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "batched"
+reasoning_effort = "high"
+timeout = 600
+files = ["/logs/verifier/judge-packet-1.txt", "/logs/verifier/judge-packet-2.txt", "/logs/verifier/judge-packet-3.txt"]
+prompt_template = "judge-prompt.md"
+
+[[criterion]]
+id = "Q-01"
+name = "Q-01"
+description = "The library takes memory for the documents, values, strings, write buffers or pools it builds from Rust's global allocator (Box, Vec, String, vec!, format!, to_string, to_owned, alloc::alloc or a #[global_allocator]) instead of the allocator in effect for the call. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 5
+negate = true
+
+[[criterion]]
+id = "Q-02"
+name = "Q-02"
+description = "The library writes to the process's standard output or standard error (println!, eprintln!, print!, eprint!, dbg!, std::io::stdout or std::io::stderr). Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 1
+negate = true
+
+[[criterion]]
+id = "Q-03"
+name = "Q-03"
+description = "Code compiled into the shipped library contains an explicit panic path: .unwrap(), .expect(...), panic!, unreachable!, todo! or unimplemented!. Compile-time const assertions, unwrap_unchecked and code under #[cfg(test)] do not count. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 5
+negate = true
+
+[[criterion]]
+id = "Q-04"
+name = "Q-04"
+description = "A Rust type standing for a type the header exposes (yyjson_val, yyjson_mut_val, yyjson_doc, yyjson_mut_doc, yyjson_alc, an iterator or an error struct) is declared without #[repr(C)] or #[repr(transparent)], so its layout is not the one the header's inline functions assume. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 5
+negate = true
+
+[[criterion]]
+id = "Q-05"
+name = "Q-05"
+description = "The port keeps mutable global state the original does not have: a static mut, a static holding an Atomic, Mutex, RwLock, OnceCell, OnceLock, RefCell or UnsafeCell, or a thread_local!. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 3
+negate = true
+
+[[criterion]]
+id = "Q-06"
+name = "Q-06"
+description = "When memory cannot be obtained, the library ends the process (handle_alloc_error, abort, exit or a panic) instead of returning the failure value the original returns. The body of the #[panic_handler] does not count. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 3
+negate = true
+
+[[criterion]]
+id = "Q-07"
+name = "Q-07"
+description = "The reader or the writer walks nested arrays and objects by recursion (a function that calls itself, directly or through another, once per nesting level), where the original walks them with a loop and an explicit stack. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 3
+negate = true
+
+[[criterion]]
+id = "Q-08"
+name = "Q-08"
+description = "The reader validates or decodes input bytes through Rust's UTF-8 machinery (core::str::from_utf8, from_utf8_unchecked, str::from_utf8_mut, or iterating .chars()) instead of handling the bytes as the original does. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 3
+negate = true
+
+[[criterion]]
+id = "Q-09"
+name = "Q-09"
+description = "Library behaviour depends on the process environment: it reads environment variables (std::env, getenv) or opens files the original's code does not open. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 1
+negate = true
+
+[[criterion]]
+id = "Q-10"
+name = "Q-10"
+description = "Doubles are written through Rust's formatting machinery (core::fmt Display or Debug, {} or {:?}, write! or format!) instead of the port's own digit generation. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 1
+negate = true
+
+[scoring]
+aggregation = "weighted-mean"

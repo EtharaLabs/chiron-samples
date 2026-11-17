@@ -1,0 +1,43 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/stats/http/response/StatsResponseParser.java (changed against State A) ===
+@@
+39  | import org.apache.logging.log4j.LogManager;
+40  | import org.apache.logging.log4j.Logger;
+41  | 
+   -| /**
+   -|  * Utility class parsing a {@link PointsApiInstance} or {@link UnitsApiInstance} from the Stanford REST request.
+   -|  */
+42 +| 
+43  | public final class StatsResponseParser {
+44  | 
+45  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+49  | 
+50  |     }
+51  | 
+   -|     /**
+   -|      * Extracts the points from a {@link HttpResponse} that was received by{@link me.zodac.folding.stats.http.request.PointsUrlBuilder} and
+   -|      * {@link StatsRequestSender}. Converts the {@link HttpResponse} to a {@link PointsApiInstance} then extracts the earned points.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the points for a user/passkey
+   -|      */
+52 +|     
+53  |     public static long getPointsFromResponse(final StatsResponse response) {
+54  |         final PointsApiInstance pointsApiInstance = parsePointsResponse(response);
+55  |         return pointsApiInstance.getEarned();
+@@
+68  |         }
+69  |     }
+70  | 
+   -|     /**
+   -|      * Extracts the Work Units from a {@link HttpResponse} that was received by {@link me.zodac.folding.stats.http.request.UnitsUrlBuilder} and
+   -|      * {@link StatsRequestSender}. Converts the {@link HttpResponse} to a {@link UnitsApiInstance} then extracts the finished units.
+   -|      *
+   -|      * @param foldingStatsDetails the Folding@Home username/passkey, used for logging in case of an issue
+   -|      * @param response            the {@link HttpResponse} to parse
+   -|      * @return the Work Units for a user/passkey
+   -|      */
+71 +|     
+72  |     public static int getUnitsFromResponse(final FoldingStatsDetails foldingStatsDetails, final StatsResponse response) {
+73  |         final List<UnitsApiInstance> unitsApiInstances = parseUnitsResponse(response);
+74  | 

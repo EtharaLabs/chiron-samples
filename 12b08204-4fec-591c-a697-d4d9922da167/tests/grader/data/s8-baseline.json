@@ -1,0 +1,34 @@
+[
+ [
+  "tree-identity",
+  "# Build the git log range"
+ ],
+ [
+  "tree-identity",
+  "(\"git_branch\", \"git rev-parse --abbrev-ref HEAD\"),"
+ ],
+ [
+  "tree-identity",
+  "(\"git_commit_full\", \"git log -1 --no-decorate\"),"
+ ],
+ [
+  "tree-identity",
+  "(\"git_commit_oneline\", \"git log --oneline  -1 --no-decorate\"),"
+ ],
+ [
+  "tree-identity",
+  "(\"git_commit_sha\", \"git rev-parse HEAD\"),"
+ ],
+ [
+  "tree-identity",
+  "(\"git_commit_sha_short\", \"git rev-parse --short HEAD\"),"
+ ],
+ [
+  "tree-identity",
+  "git log \\"
+ ],
+ [
+  "tree-identity",
+  "proc = subprocess.run([\"git\", \"rev-parse\", \"HEAD\"], check=True, capture_output=True)"
+ ]
+]

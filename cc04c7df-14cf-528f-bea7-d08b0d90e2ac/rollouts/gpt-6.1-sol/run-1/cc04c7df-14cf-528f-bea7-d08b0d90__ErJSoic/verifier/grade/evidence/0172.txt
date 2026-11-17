@@ -1,0 +1,27 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/stats/http/response/StatsResponse.java (changed against State A) ===
+@@
+29  | import lombok.AllArgsConstructor;
+30  | import lombok.Getter;
+31  | 
+   -| /**
+   -|  * Simple wrapper for a {@link String} to hold the status code and body for the {@link HttpResponse} for a
+   -|  * points or units REST request.
+   -|  */
+32 +| 
+33  | @Getter
+34  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+35  | public class StatsResponse {
+@@
+37  |     private final int statusCode;
+38  |     private final String responseBody;
+39  | 
+   -|     /**
+   -|      * Creates a {@link StatsResponse} based on the provided {@link HttpResponse}.
+   -|      *
+   -|      * @param httpResponse the {@link HttpResponse}
+   -|      * @return the created {@link StatsResponse}
+   -|      */
+40 +|     
+41  |     public static StatsResponse create(final HttpResponse<String> httpResponse) {
+42  |         return new StatsResponse(httpResponse.statusCode(), httpResponse.body());
+43  |     }

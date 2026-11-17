@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Offline Maven settings. The target set is a local repository; every other repository,
+     including any a pom declares, is mirrored to an unreachable address so Maven fails at once
+     instead of waiting on a network that does not exist. The mirror id is central because Maven
+     looks local metadata up by repository id (maven-metadata-central.xml). -->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <interactiveMode>false</interactiveMode>
+  <offline>true</offline>
+  <mirrors>
+    <mirror>
+      <id>central</id>
+      <name>no network: every repository resolves from the local set only</name>
+      <url>http://127.0.0.1:1/offline</url>
+      <mirrorOf>external:*</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>

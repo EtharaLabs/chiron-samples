@@ -1,0 +1,44 @@
+# Configuration of the original application served by argus-original (keyspace argus_original).
+BASE_URL: "http://127.0.0.1:8010"
+SCYLLA_CONTACT_POINTS:
+    - 127.0.0.1
+SCYLLA_USERNAME: cassandra
+SCYLLA_PASSWORD: cassandra
+SCYLLA_KEYSPACE_NAME: argus_original
+SCYLLA_REPLICATION_FACTOR: 1
+LOGIN_METHODS:
+    - password
+APP_LOG_LEVEL: INFO
+SECRET_KEY: argus-original-oracle
+S3_ALLOWED_BUCKETS:
+    - argus-test-bucket
+S3_ALLOWED_MIME:
+    - image/png
+    - application/zstd
+    - application/gzip
+AWS_CLIENT_ID: none
+AWS_CLIENT_SECRET: none
+GITHUB_CLIENT_ID: none
+GITHUB_CLIENT_SECRET: none
+GITHUB_ACCESS_TOKEN: none
+GITHUB_ENABLED: false
+JIRA_SERVER: http://jira.invalid
+JIRA_EMAIL: none@argus.test
+JIRA_TOKEN: none
+JIRA_ENABLED: false
+JENKINS_URL: http://jenkins.invalid
+JENKINS_USER: none
+JENKINS_API_TOKEN_NAME: none
+JENKINS_API_TOKEN: none
+EMAIL_SENDER: "argus@argus.test"
+EMAIL_SENDER_USER: ""
+EMAIL_SENDER_PASS: ""
+EMAIL_SERVER: "smtp.invalid"
+EMAIL_SERVER_PORT: "587"
+EMAIL_ENABLED: false
+JOB_VALIDITY_PERIOD_DAYS: 30
+APP_DOC_LINK:
+ZEUS_SCHEMA: http
+ZEUS_HOST: 127.0.0.1:9
+ZEUS_TOKEN: none
+EVENT_SUMMARIZATION_ENABLED: false

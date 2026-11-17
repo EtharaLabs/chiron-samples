@@ -1,0 +1,17 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+timeout = 600
+reasoning_effort = "high"
+files = ["/logs/verifier/grade/evidence"]
+prompt_template = "prompt.md"
+
+[scoring]
+aggregation = "all-pass"
+[[criterion]]
+id = "gate_native_container"
+name = "gate_native_container"
+description = "One standard, about provenance and shape, not behaviour. Does this application genuinely run on Spring's own container, dependency injection and configuration model? A finding is: the retired framework's programming model reproduced in shape rather than retired (home-grown @Path/@GET/@Stateless/@Schedule-style annotations with a processor or reflection layer that re-creates JAX-RS resource dispatch, EJB lifecycle or CDI resolution); an adapter, bridge or compatibility layer over the State A application; or a request path whose default route is served by something other than the Spring stack. Not a finding: hand-written code that reproduces what the old service did in the submission's own Spring shape; that is the assignment. Framework-neutral code State A already had, carried over unchanged (such as its own environment-variable helper), is not a finding. A mention in prose, comments or a changelog is not a finding. Every fail must cite a path, a line number and a verbatim quote from the submission; a fail whose citation is missing, does not exist, or does not show the claimed shape counts as a pass."
+weight = 5
+negate = false
+type = "binary"

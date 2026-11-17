@@ -1,0 +1,34 @@
+# The compiled veto tests/test.sh's veto route reads. Stage I and Stage II are one set
+# here, as solution/TRUTH.md explains: each of the 24 items is a group of its own and
+# k is 1, so one false item takes the run to the route's zero table. The stage-3 families
+# are not in it: a family costs a share of the score and never the run.
+
+[[veto]]
+name = "stage-i-and-ii"
+k = 1
+groups = [
+  ["T-02"],
+  ["T-03"],
+  ["T-04"],
+  ["T-05"],
+  ["T-06"],
+  ["T-07"],
+  ["T-08"],
+  ["T-09"],
+  ["T-10"],
+  ["T-11"],
+  ["T-12"],
+  ["T-13"],
+  ["T-14"],
+  ["T-15"],
+  ["T-16"],
+  ["T-17"],
+  ["T-23"],
+  ["T-24"],
+  ["P-01"],
+  ["P-02"],
+  ["P-03"],
+  ["P-04"],
+  ["P-05"],
+  ["P-06"],
+]

@@ -1,0 +1,39 @@
+[[veto]]
+name = "stage-i"
+k = 1
+groups = [
+  ["S1-build"],
+  ["S1-manifest"],
+  ["S1-lockfile"],
+  ["S1-installed"],
+  ["S1-v1-namespace"],
+  ["S1-default-path"],
+  ["S1-deprecated-aliases"],
+  ["S1-transplant"],
+  ["S1-shim"],
+  ["S1-verifier-isolation"],
+]
+
+[[veto]]
+name = "stage-ii"
+k = 1
+groups = [
+  ["S2-settings"],
+  ["S2-info"],
+  ["S2-item-create"],
+  ["S2-item-read"],
+  ["S2-item-save"],
+  ["S2-versioning"],
+  ["S2-listing-search"],
+  ["S2-collections"],
+  ["S2-relationships"],
+  ["S2-blocks"],
+  ["S2-files"],
+  ["S2-users-roles"],
+  ["S2-auth-keys"],
+  ["S2-groups-admin"],
+  ["S2-export"],
+  ["S2-equipment-cells"],
+  ["S2-errors"],
+  ["S2-health-remotes"],
+]

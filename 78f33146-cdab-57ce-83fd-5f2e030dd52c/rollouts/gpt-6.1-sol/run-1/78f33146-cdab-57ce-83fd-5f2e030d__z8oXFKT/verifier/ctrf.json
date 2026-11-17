@@ -1,0 +1,622 @@
+{
+ "results": {
+  "tool": {
+   "name": "datalab-pydantic2-grader"
+  },
+  "summary": {
+   "tests": 98,
+   "passed": 94,
+   "failed": 4,
+   "pending": 0,
+   "skipped": 0,
+   "other": 0,
+   "start": 1794630266969,
+   "stop": 1794630266969
+  },
+  "tests": [
+   {
+    "name": "S1-build",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S1-manifest",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S1-lockfile",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S1-installed",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok",
+    "tags": [
+     "cheat-check"
+    ]
+   },
+   {
+    "name": "S1-v1-namespace",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok",
+    "tags": [
+     "cheat-check"
+    ]
+   },
+   {
+    "name": "S1-default-path",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S1-deprecated-aliases",
+    "status": "passed",
+    "duration": 0,
+    "message": "0 deprecated v1-alias sites (limit 5 of State A's 117)"
+   },
+   {
+    "name": "S1-transplant",
+    "status": "passed",
+    "duration": 0,
+    "message": "retired-source share 0.0005 (threshold 0.01)",
+    "tags": [
+     "cheat-check"
+    ]
+   },
+   {
+    "name": "S1-shim",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok",
+    "tags": [
+     "cheat-check"
+    ]
+   },
+   {
+    "name": "S1-verifier-isolation",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok",
+    "tags": [
+     "cheat-check"
+    ]
+   },
+   {
+    "name": "S2-settings",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-info",
+    "status": "failed",
+    "duration": 0,
+    "message": "2 of 70 cases differ: ['harvest:test_blocks#128', 'harvest:test_info_and_health#71']"
+   },
+   {
+    "name": "S2-item-create",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-item-read",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-item-save",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-versioning",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-listing-search",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-collections",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-relationships",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-blocks",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-files",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-users-roles",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-auth-keys",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-groups-admin",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-export",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-equipment-cells",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S2-errors",
+    "status": "failed",
+    "duration": 0,
+    "message": "4 of 225 cases differ: ['harvest:test_info_and_health#76', 'harvest:test_info_and_health#81', 'harvest:test_info_and_health#86', 'harvest:test_item_versions#545']"
+   },
+   {
+    "name": "S2-health-remotes",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a2-cfg-backup-assign-testing",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a2-cfg-backup-defaults-testing",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a2-cfg-cache-min-only-config-file",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a2-collection-synthesis-relationship-order",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a3-datetime-isoformat-offset-response",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a3-info-types-samples-schema-defaults",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a4-settings-cache-age-default-max",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a4-settings-cache-age-int-order",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a4-settings-list-json-from-env",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a5-cache-age-env-inverted",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a5-dotenv-syntax",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a5-testing-backups-from-config-file",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a5-update-testing-then-backups",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a6-compare-versions-objectid-validation",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-a6-legacy-collection-without-collection-id",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-collection-last-modified-utc-offset",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-collection-null-collection-id-accepted",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-item-create-nested-group-display-name-dict",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-legacy-item-null-refcode-read",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-new-sample-underscore-id-null",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-settings-deployment-default-port",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b1-settings-deployment-scheme-case",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-collection-immutable-id-null-create",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-collection-relationship-objectid-json",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-constituent-objectid-json",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-group-immutable-id-null-patch",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-group-members-null-patch",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-relationship-objectid-json",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b2-stored-item-id-null-get-by-refcode",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-cache-age-config-min-env-max",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-deployment-homepage-trailing-slash",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-deployment-issue-tracker-host-case",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-deployment-source-repo-default-port",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-dotenv-null-clears-config-deployment-metadata",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-dotenv-null-email-domain-allow-list",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-dotenv-remote-filesystems-json",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-dotenv-secret-key-only",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-dotenv-smtp-json",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-dotenv-testing-backups-prefix",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-env-null-clears-config-email-domain-list",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b3-update-deployment-metadata-url",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-create-collection-null-collection-id-with-oid",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-new-sample-member-of-collection-without-collection-id",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-patch-collection-string-type-output",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-restore-version-missing-field-errors-body",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-restore-version-restored-data-invalid-output",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-save-item-constituent-none-not-allowed-message",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-save-item-int-parsing-wire-message",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-save-item-stored-collection-without-collection-id",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b4-stored-item-invalid-500-message",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-admin-groups-null-objectid-doc",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-admin-users-legacy-display-name-list",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-group-managers-nested-display-name-list",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-group-members-nested-null-objectid",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-group-patch-display-name-dict",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-nmr-block-metadata-dict-deprecation",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b5-remote-file-xrd-block-dict-deprecation",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-collection-create-string-type-error-text",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-collection-save-int-parsing-error-text",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-collection-save-string-type-error-text",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-restore-version-extra-key-wire",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-restore-version-missing-field-wire",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-restore-version-nonstring-field-wire",
+    "status": "failed",
+    "duration": 0,
+    "message": "differs from State A"
+   },
+   {
+    "name": "S3-b6-restore-version-null-field-wire",
+    "status": "failed",
+    "duration": 0,
+    "message": "differs from State A"
+   },
+   {
+    "name": "S3-b6-restore-version-value-error-wire",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-save-item-aliased-float-error-loc",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-save-item-int-parsing-error-text",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-settings-deployment-metadata-url-exact",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-settings-deployment-metadata-url-from-dotenv",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   },
+   {
+    "name": "S3-b6-settings-testing-false-string-keeps-backups",
+    "status": "passed",
+    "duration": 0,
+    "message": "ok"
+   }
+  ]
+ }
+}

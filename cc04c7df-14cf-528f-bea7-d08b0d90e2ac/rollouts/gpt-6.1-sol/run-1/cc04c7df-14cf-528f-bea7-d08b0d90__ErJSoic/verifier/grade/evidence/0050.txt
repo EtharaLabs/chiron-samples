@@ -1,0 +1,38 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/header/ContentType.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.rest.api.header;
+26  | 
+   -| /**
+   -|  * Values for {@link RestHeader#CONTENT_TYPE} REST headers.
+   -|  */
+27 +| 
+28  | public enum ContentType {
+29  | 
+   -|     /**
+   -|      * The <code>application/json</code> value.
+   -|      */
+30 +|     
+31  |     JSON("application/json");
+32  | 
+33  |     private final String contentTypeValue;
+34  | 
+   -|     /**
+   -|      * Constructs a {@link ContentType} with the header value as a {@link String}.
+   -|      *
+   -|      * @param contentTypeValue the {@link ContentType} value as a {@link String}
+   -|      */
+35 +|     
+36  |     ContentType(final String contentTypeValue) {
+37  |         this.contentTypeValue = contentTypeValue;
+38  |     }
+39  | 
+   -|     /**
+   -|      * The value of the {@link ContentType}.
+   -|      *
+   -|      * @return the {@link ContentType} value
+   -|      */
+40 +|     
+41  |     public String contentType() {
+42  |         return contentTypeValue;
+43  |     }

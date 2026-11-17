@@ -1,0 +1,13 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/gen/Keys.java (changed against State A) ===
+@@
+32  | import org.jooq.impl.Internal;
+33  | 
+34  | 
+   -| /**
+   -|  * A class modelling foreign key relationships and constraints of tables in 
+   -|  * public.
+   -|  */
+35 +| 
+36  | @SuppressWarnings({ "all", "unchecked", "rawtypes" })
+37  | public class Keys {
+38  | 

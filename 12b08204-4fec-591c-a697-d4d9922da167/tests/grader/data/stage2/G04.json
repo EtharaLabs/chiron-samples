@@ -1,0 +1,402 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Test run <id1> not found in any plugin model"
+       ],
+       "exception": "ClientException",
+       "message": "Test run <id1> not found in any plugin model",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "unknown-run-info",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/7e57ab1e-0000-4000-8000-0000000000ff/info"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "No ArgusTest found matching {'id': UUID('<id1>')}"
+       ],
+       "exception": "DocumentNotFound",
+       "message": "No ArgusTest found matching {'id': UUID('<id1>')}",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "unknown-test-details",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/7e57ab1e-0000-4000-8000-0000000000ff/details"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "envelope_status": "error",
+     "exception": "RequestValidationError",
+     "status": 200
+    }
+   ],
+   "id": "bad-uuid-release-details",
+   "profile": "validation",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/not-a-uuid/details"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    }
+   ],
+   "id": "unknown-api-path",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/does/not/exist"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/api/v1/nothing-here"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 405,
+     "text": "<!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowed</h1> <p>The method is not allowed for the requested URL.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 405,
+     "text": "<!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowed</h1> <p>The method is not allowed for the requested URL.</p>"
+    }
+   ],
+   "id": "wrong-method-api",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "POST",
+     "path": "/api/v1/version"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "DELETE",
+     "path": "/api/v1/releases"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": false,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "comment-unknown",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test_run/comment/get",
+     "query": {
+      "commentId": "7e57ab1e-0000-4000-8000-0000000000ff"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "View <id1> does not exist"
+       ],
+       "exception": "UserViewException",
+       "message": "View <id1> does not exist",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-unknown",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/get",
+     "query": {
+      "viewId": "7e57ab1e-0000-4000-8000-0000000000ff"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Team <id1> does not exist",
+        "<id1>"
+       ],
+       "exception": "TeamManagerException",
+       "message": "('Team <id1> does not exist', UUID('<id1>'))",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-unknown",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/7e57ab1e-0000-4000-8000-0000000000ff/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Error from server: code=2200 [Invalid query] message=\"Exception while binding column id: marshaling error: Unsupported UUID version (4)\""
+       ],
+       "exception": "InvalidRequest",
+       "message": "Error from server: code=2200 [Invalid query] message=\"Exception while binding column id: marshaling error: Unsupported UUID version (4)\"",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plan-unknown",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/7e57ab1e-0000-4000-8000-0000000000ff/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {},
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "release-create-empty",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {},
+     "method": "POST",
+     "path": "/api/v1/release/create"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Received an argument of invalid type for column \"run_id\". Expected: <class 'cassandra.cqltypes.UUIDType'>, Got: <class 'str'>; (Got a non-UUID object for a UUID value)"
+       ],
+       "exception": "TypeError",
+       "message": "Received an argument of invalid type for column \"run_id\". Expected: <class 'cassandra.cqltypes.UUIDType'>, Got: <class 'str'>; (Got a non-UUID object for a UUID value)",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "sct-unknown-run-nemesis",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/7e57ab1e-0000-4000-8000-0000000000ff/nemesis/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "No ArgusRelease found matching {'id': UUID('<id1>')}"
+       ],
+       "exception": "DocumentNotFound",
+       "message": "No ArgusRelease found matching {'id': UUID('<id1>')}",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "admin-release-edit-bad",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "description": "",
+      "dormant": false,
+      "enabled": true,
+      "id": "7e57ab1e-0000-4000-8000-0000000000ff",
+      "perpetual": false,
+      "pretty_name": "Nope",
+      "valid_version_regex": null
+     },
+     "method": "POST",
+     "path": "/admin/api/v1/release/edit"
+    }
+   ]
+  }
+ ],
+ "group": "G04",
+ "name": "api-error-contract"
+}

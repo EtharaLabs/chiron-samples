@@ -1,0 +1,119 @@
+version: '2.3'
+
+services:
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/apache/Dockerfile
+      args:
+        FIRST_DAY_OF_MONTH: "${FIRST_DAY_OF_MONTH}"
+        FORUM_LINK: "${FORUM_LINK}"
+        REST_ENDPOINT_URL: "${REST_ENDPOINT_URL}"
+        ROOT_URL: "${ROOT_URL}"
+        TITLE: "${TITLE}"
+        UPDATE_ENABLED: "${STATS_ENABLED}"
+        UPDATE_MINUTE: "${UPDATE_MINUTE}"
+    container_name: frontend
+    hostname: frontend
+    depends_on:
+      - backend
+    links:
+      - backend
+    networks:
+      - production
+    ports:
+      - "${HTTPS_FRONTEND_PORT}:${HTTPS_FRONTEND_PORT}"
+    restart: unless-stopped
+    volumes:
+      - "${SSL_CERT_DIRECTORY}:/usr/local/apache2/conf/certs"
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/spring/Dockerfile
+    container_name: backend
+    hostname: backend
+    environment:
+      # Container configuration
+      JAVA_TOOL_OPTIONS: -Xms${JAVA_XMS} -Xmx${JAVA_XMX} -Djava.net.preferIPv4Stack=true
+      # External URL configuration
+      LARS_URL_ROOT: "${LARS_URL_ROOT}"
+      STATS_URL_ROOT: "${STATS_URL_ROOT}"
+      REDIRECT_URL: "${ROOT_URL}"
+      # NOTE: The monthly reset, result storage and LARS update will always occur at 23:57 on the last day of the month
+      ENABLE_LARS_HARDWARE_UPDATE: "${ENABLE_LARS_HARDWARE_UPDATE}"
+      ENABLE_MONTHLY_RESULT_STORAGE: "${ENABLE_MONTHLY_RESULT_STORAGE}"
+      ENABLE_STATS_MONTHLY_RESET: "${ENABLE_STATS_MONTHLY_RESET}"
+      # Scheduled stats parsing configuration
+      # This value should match the value of 'UPDATE_ENABLED' in the 'frontend' container
+      ENABLE_STATS_SCHEDULED_PARSING: "${STATS_ENABLED}"
+      STATS_PARSING_SCHEDULE_HOUR: "${UPDATE_HOUR}"
+      # This value should match the value of 'UPDATE_MINUTE' in the 'frontend' container
+      STATS_PARSING_SCHEDULE_MINUTE: "${UPDATE_MINUTE}"
+      STATS_PARSING_SCHEDULE_SECOND: "${UPDATE_SECOND}"
+      # This value should match the value of 'FIRST_DAY_OF_MONTH' in the 'frontend' container
+      STATS_PARSING_SCHEDULE_FIRST_DAY_OF_MONTH: "${FIRST_DAY_OF_MONTH}"
+      STATS_PARSING_SCHEDULE_LAST_DAY_OF_MONTH: "${LAST_DAY_OF_MONTH}"
+      # Category configuration
+      USERS_IN_AMD_GPU: "${USERS_IN_AMD_GPU}"
+      USERS_IN_NVIDIA_GPU: "${USERS_IN_NVIDIA_GPU}"
+      USERS_IN_WILDCARD: "${USERS_IN_WILDCARD}"
+      # Database configuration
+      DEPLOYED_DATABASE: "postgresql"
+      JDBC_CONNECTION_URL: "jdbc:postgresql://database:${POSTGRES_PORT}/${POSTGRES_DB_NAME}"
+      JDBC_CONNECTION_USER: "${DB_USER}"
+      JDBC_CONNECTION_PASSWORD: "${DB_PASSWORD}"
+      JDBC_CONNECTION_DRIVER: "org.postgresql.Driver"
+    interval: 15s
+      timeout: 10s
+      retries: 30
+    links:
+      - database
+    networks:
+      - production
+    ports:
+      - "${HTTPS_BACKEND_PORT}:8080"
+    restart: unless-stopped
+
+  database:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+      args:
+        ADMIN_USERNAME: "${ADMIN_USER}"
+        ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+        READ_ONLY_USERNAME: "${READ_ONLY_USER}"
+        READ_ONLY_PASSWORD: "${READ_ONLY_PASSWORD}"
+    container_name: database
+    hostname: database
+    environment:
+      # First 4 variables used to configure DB
+      POSTGRES_DB: "${POSTGRES_DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_PORT: "${POSTGRES_PORT}"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      # Next 3 variables needed to avoid "FATAL role 'root' does not exist" error
+      PGDATABASE: "${POSTGRES_DB_NAME}"
+      PGUSER: "${DB_USER}"
+      PGPASSWORD: "${DB_PASSWORD}"
+    healthcheck:
+      test: pg_isready --host localhost || exit 1
+      interval: 15s
+      timeout: 10s
+      retries: 30
+    networks:
+      - production
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    restart: unless-stopped
+    volumes:
+      - database_content:/var/lib/postgresql/data
+
+networks:
+  production:
+
+volumes:
+  # Volume to save the database contents
+  database_content:

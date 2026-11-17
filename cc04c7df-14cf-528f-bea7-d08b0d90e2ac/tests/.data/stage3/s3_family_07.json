@@ -1,0 +1,184 @@
+{
+ "id": "s3_family_07",
+ "source": "f014_unknown_query_parameters_ignored",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "collection_with_paging_params",
+   "http": {
+    "method": "GET",
+    "path": "/hardware?limit=5&offset=2"
+   }
+  },
+  {
+   "case": "by_id_with_expand_param",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1?expand=all"
+   }
+  },
+  {
+   "case": "users_with_passkey_param",
+   "http": {
+    "method": "GET",
+    "path": "/users?includePasskey=true"
+   }
+  },
+  {
+   "case": "stats_with_team_param",
+   "http": {
+    "method": "GET",
+    "path": "/stats?teamId=1"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "collection_with_paging_params",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware?limit=5&offset=2"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"ProbeHw\",\n    \"displayName\": \"ProbeHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "187",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-951768951\"",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "by_id_with_expand_param",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1?expand=all"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-951768951\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "users_with_passkey_param",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/users?includePasskey=true"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"0\"",
+     "x-total-count": "0"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_with_team_param",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats?teamId=1"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "86",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Unknown query parameters on reads that declare none must be ignored and must not change the response or its headers (a migration that binds the request to a command object could fail or alter paging)."
+}

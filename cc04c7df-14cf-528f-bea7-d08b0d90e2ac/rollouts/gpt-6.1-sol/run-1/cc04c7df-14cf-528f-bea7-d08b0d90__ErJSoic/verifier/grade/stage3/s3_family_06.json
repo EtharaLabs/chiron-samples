@@ -1,0 +1,128 @@
+{
+ "id": "s3_family_06",
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "165",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572406.662534,
+    1773572406.7779999
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "upper_case_param_name",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?HARDWARENAME=ProbeHw"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "63",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}"
+   },
+   "clock_window": [
+    1773572406.7780416,
+    1773572406.784521
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "lower_case_param_name",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwarename=ProbeHw"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "63",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}"
+   },
+   "clock_window": [
+    1773572406.7845464,
+    1773572406.7875075
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "mixed_case_param_name",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?HardwareName=ProbeHw"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "63",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}"
+   },
+   "clock_window": [
+    1773572406.7875283,
+    1773572406.7902868
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

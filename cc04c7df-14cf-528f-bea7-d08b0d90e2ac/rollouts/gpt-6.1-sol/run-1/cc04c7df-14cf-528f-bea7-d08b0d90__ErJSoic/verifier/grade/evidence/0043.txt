@@ -1,0 +1,45 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/EnvironmentVariableUtils.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api.util;
+26  | 
+   -| /**
+   -|  * Utility class used to retrieve environment variables.
+   -|  */
+27 +| 
+28  | public final class EnvironmentVariableUtils {
+29  | 
+30  |     private EnvironmentVariableUtils() {
+31  | 
+32  |     }
+33  | 
+   -|     /**
+   -|      * Returns the {@code variableName} specified if it is set as a {@link System} property or as an environment variable. The order of
+   -|      * the search is property first then environment variable.
+   -|      *
+   -|      * <p>
+   -|      * If neither is set then null is returned.
+   -|      *
+   -|      * @param variableName the property to search for
+   -|      * @return the value of the searched property, otherwise <b>null</b>
+   -|      */
+34 +|     
+35  |     public static String get(final String variableName) {
+36  |         return System.getProperty(variableName, System.getenv(variableName));
+37  |     }
+38  | 
+   -|     /**
+   -|      * Returns the {@code variableName} specified if it is set as a {@link System} property or as an environment variable. The order of
+   -|      * the search is check for an environment variable first, then if none is found, check for a system property.
+   -|      *
+   -|      * <p>
+   -|      * If neither is set then the default value provided is returned.
+   -|      *
+   -|      * @param variableName the property name to search for
+   -|      * @param defaultValue the default value if no property exists
+   -|      * @return The value of the searched name, otherwise the {@code defaultValue}
+   -|      */
+39 +|     
+40  |     public static String getOrDefault(final String variableName, final String defaultValue) {
+41  |         final String environmentVariable = System.getenv(variableName);
+42  |         if (environmentVariable != null) {

@@ -1,0 +1,76 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/validation/TeamValidator.java (changed against State A) ===
+@@
+38  | import me.zodac.folding.api.tc.User;
+39  | import me.zodac.folding.rest.api.tc.request.TeamRequest;
+40  | 
+   -| /**
+   -|  * Validator class to validate a {@link Team} or {@link TeamRequest}.
+   -|  */
+41 +| 
+42  | public final class TeamValidator {
+43  | 
+44  |     private TeamValidator() {
+45  | 
+46  |     }
+47  | 
+   -|     /**
+   -|      * Validates a {@link TeamRequest} for a {@link Team} to be created on the system.
+   -|      *
+   -|      * <p>
+   -|      * Validation checks include:
+   -|      * <ul>
+   -|      *     <li>Field 'teamName' must not be empty</li>
+   -|      *     <li>If field 'teamName' is valid, it must not be used by any other {@link Team}</li>
+   -|      *     <li>If field 'forumLink' is not empty, it must be a valid URL</li>
+   -|      * </ul>
+   -|      *
+   -|      * @param teamRequest the {@link TeamRequest} to validate
+   -|      * @param allTeams    all {@link Team}s on the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+48 +|     
+49  |     public static ValidationResult<Team> validateCreate(final TeamRequest teamRequest, final Collection<Team> allTeams) {
+50  |         if (teamRequest == null) {
+51  |             return ValidationResult.nullObject();
+@@
+72  |         return ValidationResult.successful(convertedTeam);
+73  |     }
+74  | 
+   -|     /**
+   -|      * Validates a {@link TeamRequest} to update an existing {@link Team} on the system.
+   -|      *
+   -|      * <p>
+   -|      * Validation checks include:
+   -|      * <ul>
+   -|      *     <li>Field 'teamName' must not be empty</li>
+   -|      *     <li>If field 'teamName' is valid, it must not be used by another {@link Team}, unless it is the {@link Team} to be updated</li>
+   -|      *     <li>If field 'forumLink' is not empty, it must be a valid URL</li>
+   -|      * </ul>
+   -|      *
+   -|      * @param teamRequest  the {@link TeamRequest} to validate
+   -|      * @param existingTeam the already existing {@link Team} in the system to be updated
+   -|      *                     @param allTeams all {@link Team}s on the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+75 +|     
+76  |     public static ValidationResult<Team> validateUpdate(final TeamRequest teamRequest, final Team existingTeam, final Collection<Team> allTeams) {
+77  |         if (teamRequest == null || existingTeam == null) {
+78  |             return ValidationResult.nullObject();
+@@
+99  |         return ValidationResult.successful(convertedTeam);
+100  |     }
+101  | 
+   -|     /**
+   -|      * Validates a {@link Team} to be deleted from the system.
+   -|      *
+   -|      * <p>
+   -|      * If the {@link Team} is in use by a {@link User}, it cannot be deleted.
+   -|      *
+   -|      * @param team     the {@link Team} to validate
+   -|      * @param allUsers all {@link User}s on the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+102 +|     
+103  |     public static ValidationResult<Team> validateDelete(final Team team, final Collection<User> allUsers) {
+104  |         final Collection<User> usersWithMatchingTeam = getUsersOnTeam(team.getId(), allUsers);
+105  | 

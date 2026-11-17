@@ -1,0 +1,44 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/NumberUtils.java (changed against State A) ===
+@@
+27  | import java.text.NumberFormat;
+28  | import java.util.Locale;
+29  | 
+   -| /**
+   -|  * Utility class used to retrieve environment variables.
+   -|  */
+30 +| 
+31  | public final class NumberUtils {
+32  | 
+33  |     private NumberUtils() {
+34  | 
+35  |     }
+36  | 
+   -|     /**
+   -|      * Formats the input {@code long} with commas, based on {@link Locale#UK}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> This should only be used for logging. Any values making it to the frontend should be formatted there,
+   -|      * otherwise we may end up formatting with the incorrect style.
+   -|      *
+   -|      * @param number the {@code long} to be formatted
+   -|      * @return the formatted {@code long}
+   -|      */
+37 +|     
+38  |     public static String formatWithCommas(final long number) {
+39  |         return getNumberFormat().format(number);
+40  |     }
+41  | 
+   -|     /**
+   -|      * Formats the input {@code int} with commas, based on {@link Locale#UK}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> This should only be used for logging. Any values making it to the frontend should be formatted there,
+   -|      * otherwise we may end up formatting with the incorrect style.
+   -|      *
+   -|      * @param number the {@code int} to be formatted
+   -|      * @return the formatted {@code int}
+   -|      */
+42 +|     
+43  |     public static String formatWithCommas(final int number) {
+44  |         return getNumberFormat().format(number);
+45  |     }

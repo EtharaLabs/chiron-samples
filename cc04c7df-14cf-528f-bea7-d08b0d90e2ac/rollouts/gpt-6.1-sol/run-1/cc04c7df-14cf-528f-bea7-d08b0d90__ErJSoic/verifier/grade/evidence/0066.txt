@@ -1,0 +1,239 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/request/HardwareRequestSender.java (changed against State A) ===
+@@
+41  | import me.zodac.folding.rest.api.tc.request.HardwareRequest;
+42  | import me.zodac.folding.rest.util.RestUtilConstants;
+43  | 
+   -| /**
+   -|  * Convenience class to send HTTP requests to the {@link Hardware} REST endpoint.
+   -|  */
+44 +| 
+45  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+46  | public final class HardwareRequestSender {
+47  | 
+48  |     private final String hardwareUrl;
+49  | 
+   -|     /**
+   -|      * Create an instance of {@link HardwareRequestSender}.
+   -|      *
+   -|      * @param foldingUrl the root URL of the <code>/folding</code> endpoint, i.e:
+   -|      *                   <pre>http://127.0.0.1:8080/folding</pre>
+   -|      * @return the created {@link HardwareRequestSender}
+   -|      */
+50 +|     
+51  |     public static HardwareRequestSender createWithUrl(final String foldingUrl) {
+52  |         final String hardwareUrl = foldingUrl + "/hardware";
+53  |         return new HardwareRequestSender(hardwareUrl);
+54  |     }
+55  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve all {@link Hardware}s in the system.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getAll(String)
+   -|      */
+56 +|     
+57  |     public HttpResponse<String> getAll() throws FoldingRestException {
+58  |         return getAll(null);
+59  |     }
+60  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve all {@link Hardware}s in the system.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link Hardware} based on the <code>ETag</code>, an empty {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve cached {@link Hardware}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getAll()
+   -|      */
+61 +|     
+62  |     public HttpResponse<String> getAll(final String entityTag) throws FoldingRestException {
+63  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+64  |             .GET()
+@@
+81  |         }
+82  |     }
+83  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link Hardware} with the given {@code hardwareId}.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to be retrieved
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(int, String)
+   -|      */
+84 +|     
+85  |     public HttpResponse<String> get(final int hardwareId) throws FoldingRestException {
+86  |         return get(hardwareId, null);
+87  |     }
+88  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link Hardware} with the given {@code hardwareId}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link Hardware} based on the <code>ETag</code>, an empty {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to be retrieved
+   -|      * @param entityTag  the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached {@link Hardware}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(int)
+   -|      */
+89 +|     
+90  |     public HttpResponse<String> get(final int hardwareId, final String entityTag) throws FoldingRestException {
+91  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+92  |             .GET()
+@@
+109  |         }
+110  |     }
+111  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link Hardware} with the given {@code hardwareName}.
+   -|      *
+   -|      * @param hardwareName the {@code hardwareName} of the {@link Hardware} to be retrieved
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(String, String)
+   -|      */
+112 +|     
+113  |     public HttpResponse<String> get(final String hardwareName) throws FoldingRestException {
+114  |         return get(hardwareName, null);
+115  |     }
+116  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link Hardware} with the given {@code hardwareName}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link Hardware} based on the <code>ETag</code>, an empty {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param hardwareName the {@code hardwareName} of the {@link Hardware} to be retrieved
+   -|      * @param entityTag    the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached {@link Hardware}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(String)
+   -|      */
+117 +|     
+118  |     public HttpResponse<String> get(final String hardwareName, final String entityTag) throws FoldingRestException {
+119  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+120  |             .GET()
+@@
+137  |         }
+138  |     }
+139  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link HardwareRequest} in the system.
+   -|      *
+   -|      * @param hardware the {@link HardwareRequest} to create
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+140 +|     
+141  |     public HttpResponse<String> create(final HardwareRequest hardware) throws FoldingRestException {
+142  |         return create(hardware, null, null);
+143  |     }
+144  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link HardwareRequest} in the system, using the supplied {@code userName}
+   -|      * and {@code password} for authentication.
+   -|      *
+   -|      * @param hardware the {@link HardwareRequest} to create
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+145 +|     
+146  |     public HttpResponse<String> create(final HardwareRequest hardware, final String userName, final String password) throws FoldingRestException {
+147  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+148  |             .POST(HttpRequest.BodyPublishers.ofString(RestUtilConstants.GSON.toJson(hardware)))
+@@
+165  |         }
+166  |     }
+167  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link HardwareRequest}s in the system.
+   -|      *
+   -|      * @param batchOfHardware the {@link Collection} of {@link HardwareRequest}s to create
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+168 +|     
+169  |     public HttpResponse<String> createBatchOf(final Collection<HardwareRequest> batchOfHardware) throws FoldingRestException {
+170  |         return createBatchOf(batchOfHardware, null, null);
+171  |     }
+172  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link HardwareRequest}s in the system.
+   -|      *
+   -|      * @param batchOfHardware the {@link Collection} of {@link HardwareRequest}s to create
+   -|      * @param userName        the username
+   -|      * @param password        the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+173 +|     
+174  |     public HttpResponse<String> createBatchOf(final Collection<HardwareRequest> batchOfHardware, final String userName, final String password)
+175  |         throws FoldingRestException {
+176  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+@@
+194  |         }
+195  |     }
+196  | 
+   -|     /**
+   -|      * Send a <b>PUT</b> request to update the given {@link HardwareRequest} in the system.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to update
+   -|      * @param hardware   the {@link HardwareRequest} to update
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+197 +|     
+198  |     public HttpResponse<String> update(final int hardwareId, final HardwareRequest hardware) throws FoldingRestException {
+199  |         return update(hardwareId, hardware, null, null);
+200  |     }
+201  | 
+   -|     /**
+   -|      * Send a <b>PUT</b> request to update the given {@link HardwareRequest} in the system.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to update
+   -|      * @param hardware   the {@link HardwareRequest} to update
+   -|      * @param userName   the username
+   -|      * @param password   the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+202 +|     
+203  |     public HttpResponse<String> update(final int hardwareId, final HardwareRequest hardware, final String userName, final String password)
+204  |         throws FoldingRestException {
+205  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+@@
+223  |         }
+224  |     }
+225  | 
+   -|     /**
+   -|      * Send a <b>DELETE</b> request to remove a {@link Hardware} with the given {@code hardwareId}.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to remove
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+226 +|     
+227  |     public HttpResponse<Void> delete(final int hardwareId) throws FoldingRestException {
+228  |         return delete(hardwareId, null, null);
+229  |     }
+230  | 
+   -|     /**
+   -|      * Send a <b>DELETE</b> request to remove a {@link Hardware} with the given {@code hardwareId}.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to remove
+   -|      * @param userName   the username
+   -|      * @param password   the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+231 +|     
+232  |     public HttpResponse<Void> delete(final int hardwareId, final String userName, final String password) throws FoldingRestException {
+233  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+234  |             .DELETE()

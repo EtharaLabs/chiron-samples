@@ -1,0 +1,61 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/lars/HardwareSplitter.java (changed against State A) ===
+@@
+40  | import org.apache.logging.log4j.LogManager;
+41  | import org.apache.logging.log4j.Logger;
+42  | 
+   -| /**
+   -|  * Utility class used to filter {@link Collection}s of {@link Hardware}.
+   -|  *
+   -|  * <p>
+   -|  * Since we know the {@code hardwareName} of a {@link Hardware} is unique, we can use {@link HardwareNameComparator} to compare.
+   -|  */
+43 +| 
+44  | public final class HardwareSplitter {
+45  | 
+46  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+49  | 
+50  |     }
+51  | 
+   -|     /**
+   -|      * If any of the {@link Hardware} from LARS does <b>not</b> already exist in the DB, it will be returned to be created.
+   -|      *
+   -|      * @param fromLars the {@link Hardware} retrieved from LARS
+   -|      * @param inDb     the {@link Hardware} already existing in the DB
+   -|      * @return a {@link Collection} of the {@link Hardware} to be created, sorted according to {@link HardwareNameComparator}
+   -|      */
+52 +|     
+53  |     public static Collection<Hardware> toCreate(final Collection<Hardware> fromLars, final Collection<Hardware> inDb) {
+54  |         // Hardware name is unique, we can use it as an identifier
+55  |         final Collection<String> fromLarsHardwareNames = getHardwareNames(fromLars);
+@@
+66  |         return toCreate;
+67  |     }
+68  | 
+   -|     /**
+   -|      * If any of the {@link Hardware} in the DB is not also listed in the LARS data, it will be returned to be deleted.
+   -|      *
+   -|      * @param fromLars the {@link Hardware} retrieved from LARS
+   -|      * @param inDb     the {@link Hardware} already existing in the DB
+   -|      * @return a {@link Collection} of the {@link Hardware} to be deleted, sorted according to {@link HardwareNameComparator}
+   -|      */
+69 +|     
+70  |     public static Collection<Hardware> toDelete(final Collection<Hardware> fromLars, final Collection<Hardware> inDb) {
+71  |         // Hardware name is unique, we can use it as an identifier
+72  |         final Collection<String> fromLarsHardwareNames = getHardwareNames(fromLars);
+@@
+89  |             .collect(Collectors.toList());
+90  |     }
+91  | 
+   -|     /**
+   -|      * If any of the {@link Hardware} from LARS <b>does</b> already exist in the DB, and the {@code multiplier} or {@code averagePpd} is not the same,
+   -|      * it will be returned to be updated.
+   -|      *
+   -|      * @param fromLars the {@link Hardware} retrieved from LARS
+   -|      * @param inDb     the {@link Hardware} already existing in the DB
+   -|      * @return a {@link Map} of the {@link Hardware} to be updated, where the key is the LARS {@link Hardware} and value is the DB {@link Hardware}
+   -|      */
+92 +|     
+93  |     public static Map<Hardware, Hardware> toUpdate(final Collection<Hardware> fromLars, final Collection<Hardware> inDb) {
+94  |         final Map<String, Hardware> fromLarsHardware = fromLars
+95  |             .stream()

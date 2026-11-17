@@ -1,0 +1,239 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/endpoint/TeamCompetitionStatsEndpoint.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.rest.endpoint;
+26 +| 
+27 +| import org.springframework.web.bind.annotation.*;
+28 +| import org.springframework.http.ResponseEntity;
+29 +| import org.springframework.http.MediaType;
+30 +| import org.springframework.beans.factory.annotation.Autowired;
+31 +| import org.springframework.context.annotation.Lazy;
+32 +| import me.zodac.folding.rest.RequiredRoles;
+33 +| 
+34 +| import static java.util.stream.Collectors.toList;
+35 +| import static me.zodac.folding.rest.response.Responses.notFound;
+36 +| import static me.zodac.folding.rest.response.Responses.nullRequest;
+37 +| import static me.zodac.folding.rest.response.Responses.ok;
+38 +| import static me.zodac.folding.rest.response.Responses.serverError;
+39 +| 
+40 +| import java.util.Collection;
+41 +| import java.util.List;
+42 +| import java.util.Map;
+43 +| import java.util.Optional;
+44 +| import me.zodac.folding.state.SystemStateManager;
+45 +| import me.zodac.folding.api.state.ReadRequired;
+46 +| import me.zodac.folding.api.state.SystemState;
+47 +| import me.zodac.folding.api.state.WriteRequired;
+48 +| import me.zodac.folding.api.tc.Category;
+49 +| import me.zodac.folding.api.tc.Hardware;
+50 +| import me.zodac.folding.api.tc.User;
+51 +| import me.zodac.folding.api.tc.stats.OffsetTcStats;
+52 +| import me.zodac.folding.api.util.ProcessingType;
+53 +| import me.zodac.folding.service.api.FoldingStatsCore;
+54 +| import me.zodac.folding.service.tc.LeaderboardStatsGenerator;
+55 +| import me.zodac.folding.service.tc.scheduled.StatsScheduler;
+56 +| import me.zodac.folding.service.tc.user.UserStatsParser;
+57 +| import me.zodac.folding.service.tc.user.UserStatsResetter;
+58 +| import me.zodac.folding.rest.api.tc.CompetitionSummary;
+59 +| import me.zodac.folding.rest.api.tc.UserSummary;
+60 +| import me.zodac.folding.rest.api.tc.leaderboard.TeamLeaderboardEntry;
+61 +| import me.zodac.folding.rest.api.tc.leaderboard.UserCategoryLeaderboardEntry;
+62 +| import me.zodac.folding.rest.endpoint.util.IdResult;
+63 +| import me.zodac.folding.rest.endpoint.util.IntegerParser;
+64 +| import org.apache.logging.log4j.LogManager;
+65 +| import org.apache.logging.log4j.Logger;
+66 +| 
+67 +| @RestController
+68 +| @RequestMapping("/stats")
+69 +| public class TeamCompetitionStatsEndpoint {
+70 +| 
+71 +|     private static final Logger LOGGER = LogManager.getLogger();
+72 +| 
+73 +|     @Autowired
+74 +|     @Lazy
+75 +|     private FoldingStatsCore foldingStatsCore;
+76 +| 
+77 +|     @Autowired
+78 +|     @Lazy
+79 +|     private LeaderboardStatsGenerator leaderboardStatsGenerator;
+80 +| 
+81 +|     @Autowired
+82 +|     @Lazy
+83 +|     private StatsScheduler statsScheduler;
+84 +| 
+85 +|     @Autowired
+86 +|     @Lazy
+87 +|     private UserStatsParser userStatsParser;
+88 +| 
+89 +|     @Autowired
+90 +|     @Lazy
+91 +|     private UserStatsResetter userStatsResetter;
+92 +| 
+93 +|     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+94 +|     @ReadRequired
+95 +|     public ResponseEntity<String> getTeamCompetitionStats() {
+96 +|         LOGGER.debug("GET request received to show TC stats");
+97 +| 
+98 +|         try {
+99 +|             final CompetitionSummary competitionSummary = foldingStatsCore.getCompetitionSummary();
+100 +|             return ok(competitionSummary);
+101 +|         } catch (final Exception e) {
+102 +|             LOGGER.error("Unexpected error retrieving full TC stats", e);
+103 +|             return serverError();
+104 +|         }
+105 +|     }
+106 +|     @GetMapping(value = "/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+107 +|     @ReadRequired
+108 +|     public ResponseEntity<String> getTeamCompetitionStatsForUser(@PathVariable("userId") final String userId) {
+109 +| 
+110 +|         try {
+111 +|             final IdResult idResult = IntegerParser.parsePositive(userId);
+112 +|             if (idResult.isFailure()) {
+113 +|                 return idResult.getFailureResponse();
+114 +|             }
+115 +|             final int parsedId = idResult.getId();
+116 +| 
+117 +|             final Optional<User> optionalUser = foldingStatsCore.getUserWithoutPasskey(parsedId);
+118 +|             if (optionalUser.isEmpty()) {
+119 +|                 LOGGER.error("No user found with ID: {}", parsedId);
+120 +|                 return notFound();
+121 +|             }
+122 +|             final User user = optionalUser.get();
+123 +| 
+124 +|             final CompetitionSummary competitionSummary = foldingStatsCore.getCompetitionSummary();
+125 +|             final Collection<UserSummary> userSummaries = competitionSummary.getTeams()
+126 +|                 .stream()
+127 +|                 .flatMap(teamResult -> teamResult.getActiveUsers().stream())
+128 +|                 .collect(toList());
+129 +| 
+130 +|             for (final UserSummary userSummary : userSummaries) {
+131 +|                 if (userSummary.getUser().getId() == user.getId()) {
+132 +|                     return ok(userSummary);
+133 +|                 }
+134 +|             }
+135 +| 
+136 +|             return notFound();
+137 +|         } catch (final Exception e) {
+138 +|             LOGGER.error("Unexpected error retrieving TC stats for users", e);
+139 +|             return serverError();
+140 +|         }
+141 +|     }
+142 +|     @PatchMapping(value = "/users/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+143 +|     @WriteRequired
+144 +|     @RequiredRoles("admin")
+145 +|     public ResponseEntity<String> updateUserWithOffset(@PathVariable("userId") final String userId, @RequestBody(required = false) final OffsetTcStats offsetTcStats) {
+146 +| 
+147 +|         if (offsetTcStats == null || offsetTcStats.isEmpty()) {
+148 +|             LOGGER.error("Payload is null");
+149 +|             return nullRequest();
+150 +|         }
+151 +| 
+152 +|         try {
+153 +|             final IdResult idResult = IntegerParser.parsePositive(userId);
+154 +|             if (idResult.isFailure()) {
+155 +|                 return idResult.getFailureResponse();
+156 +|             }
+157 +|             final int parsedId = idResult.getId();
+158 +| 
+159 +|             final Optional<User> optionalUser = foldingStatsCore.getUserWithPasskey(parsedId);
+160 +|             if (optionalUser.isEmpty()) {
+161 +|                 LOGGER.error("No user found with ID: {}", parsedId);
+162 +|                 return notFound();
+163 +|             }
+164 +| 
+165 +|             final User user = optionalUser.get();
+166 +|             final Hardware hardware = user.getHardware();
+167 +|             final OffsetTcStats offsetTcStatsToPersist = OffsetTcStats.updateWithHardwareMultiplier(offsetTcStats, hardware.getMultiplier());
+168 +|             final OffsetTcStats createdOffsetStats = foldingStatsCore.createOrUpdateOffsetStats(user, offsetTcStatsToPersist);
+169 +| 
+170 +|             SystemStateManager.next(SystemState.UPDATING_STATS);
+171 +|             userStatsParser.parseTcStatsForUserAndWait(user);
+172 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+173 +|             LOGGER.info("Updated user with ID {} with points offset: {}", userId, createdOffsetStats);
+174 +|             return ok();
+175 +|         } catch (final Exception e) {
+176 +|             LOGGER.error("Unexpected error updating user with ID: {}", userId, e);
+177 +|             return serverError();
+178 +|         }
+179 +|     }
+180 +|     @GetMapping(value = "/leaderboard", produces = MediaType.APPLICATION_JSON_VALUE)
+181 +|     @ReadRequired
+182 +|     public ResponseEntity<String> getTeamLeaderboard() {
+183 +|         LOGGER.debug("GET request received to show TC leaderboard");
+184 +| 
+185 +|         try {
+186 +|             final List<TeamLeaderboardEntry> teamSummaries = leaderboardStatsGenerator.generateTeamLeaderboards();
+187 +|             return ok(teamSummaries);
+188 +|         } catch (final Exception e) {
+189 +|             LOGGER.error("Unexpected error retrieving TC leaderboard", e);
+190 +|             return serverError();
+191 +|         }
+192 +|     }
+193 +|     @GetMapping(value = "/category", produces = MediaType.APPLICATION_JSON_VALUE)
+194 +|     @ReadRequired
+195 +|     public ResponseEntity<String> getCategoryLeaderboard() {
+196 +|         LOGGER.debug("GET request received to show TC category leaderboard");
+197 +| 
+198 +|         try {
+199 +|             final Map<Category, List<UserCategoryLeaderboardEntry>> categoryLeaderboard =
+200 +|                 leaderboardStatsGenerator.generateUserCategoryLeaderboards();
+201 +|             return ok(categoryLeaderboard);
+202 +|         } catch (final Exception e) {
+203 +|             LOGGER.error("Unexpected error retrieving TC stats", e);
+204 +|             return serverError();
+205 +|         }
+206 +|     }
+207 +|     @PostMapping(value = "/manual/update")
+208 +|     @WriteRequired
+209 +|     @RequiredRoles("admin")
+210 +|     public ResponseEntity<String> updateStats(@RequestParam(required = false, value = "async") final boolean async) {
+211 +|         LOGGER.info("GET request received to manually update TC stats");
+212 +| 
+213 +|         try {
+214 +|             final ProcessingType processingType = async ? ProcessingType.ASYNCHRONOUS : ProcessingType.SYNCHRONOUS;
+215 +|             statsScheduler.manualTeamCompetitionStatsParsing(processingType);
+216 +|             return ok();
+217 +|         } catch (final Exception e) {
+218 +|             LOGGER.error("Unexpected error manually parsing TC stats", e);
+219 +|             return serverError();
+220 +|         }
+221 +|     }
+222 +|     @PostMapping(value = "/manual/reset")
+223 +|     @WriteRequired
+224 +|     @RequiredRoles("admin")
+225 +|     public ResponseEntity<String> resetStats() {
+226 +|         LOGGER.info("GET request received to manually reset TC stats");
+227 +| 
+228 +|         try {
+229 +|             SystemStateManager.next(SystemState.RESETTING_STATS);
+230 +|             userStatsResetter.resetTeamCompetitionStats();
+231 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+232 +|             return ok();
+233 +|         } catch (final Exception e) {
+234 +|             LOGGER.error("Unexpected error manually resetting TC stats", e);
+235 +|             return serverError();
+236 +|         }
+237 +|     }
+238 +| }

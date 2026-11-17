@@ -1,0 +1,156 @@
+{
+ "id": "s3_family_17",
+ "cases": [
+  {
+   "case": "patch_team_by_id",
+   "request": {
+    "method": "PATCH",
+    "path": "/teams/1",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2117195,
+    1773572407.218166
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "patch_user_by_id",
+   "request": {
+    "method": "PATCH",
+    "path": "/users/1",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2181852,
+    1773572407.2210338
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "put_user_stats",
+   "request": {
+    "method": "PUT",
+    "path": "/stats/users/1",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 1,
+     "multipliedPointsOffset": 1,
+     "unitsOffset": 1
+    }
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2210555,
+    1773572407.2239814
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "patch_hardware_collection",
+   "request": {
+    "method": "PATCH",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": []
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2239964,
+    1773572407.226515
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "put_login_admin",
+   "request": {
+    "method": "PUT",
+    "path": "/login/admin",
+    "json": {
+     "encodedUserNameAndPassword": "Basic cm9vdDpzaHJvb3Q="
+    }
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2265294,
+    1773572407.22879
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

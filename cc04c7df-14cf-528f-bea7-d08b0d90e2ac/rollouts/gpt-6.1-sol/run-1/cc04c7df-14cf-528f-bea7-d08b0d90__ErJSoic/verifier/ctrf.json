@@ -1,0 +1,733 @@
+{
+ "results": {
+  "tool": {
+   "name": "folding-stats-migration-grader"
+  },
+  "summary": {
+   "tests": 102,
+   "passed": 86,
+   "failed": 5,
+   "pending": 11,
+   "skipped": 0,
+   "other": 0,
+   "start": 1794630293937,
+   "stop": 1794631694760
+  },
+  "tests": [
+   {
+    "name": "s1_graded_build",
+    "status": "passed",
+    "message": "started and answered GET /folding/hardware in 7.2 s",
+    "duration": 0,
+    "suite": "I"
+   },
+   {
+    "name": "s1_retired_stack_absent",
+    "status": "passed",
+    "message": "no retired coordinate, package or descriptor found",
+    "duration": 0,
+    "suite": "I"
+   },
+   {
+    "name": "s1_new_stack_serves",
+    "status": "passed",
+    "message": "every replayed request was dispatched through DispatcherServlet",
+    "duration": 0,
+    "suite": "I"
+   },
+   {
+    "name": "s1_no_transplant",
+    "status": "passed",
+    "message": "max_file_containment 0.0344 against threshold 0.5 (largest: resteasy-jaxrs-3.15.1.Final-sources.jar!org/jboss/resteasy/spi/Failure.java)",
+    "duration": 0,
+    "suite": "I"
+   },
+   {
+    "name": "s1_no_forwarding",
+    "status": "passed",
+    "message": "no process, connection or class source reaching the retired stack",
+    "duration": 0,
+    "suite": "I"
+   },
+   {
+    "name": "s1_no_verifier_detection",
+    "status": "passed",
+    "message": "no verifier name in the tree",
+    "duration": 0,
+    "suite": "I"
+   },
+   {
+    "name": "g01_hardware_lifecycle",
+    "status": "passed",
+    "message": "45 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g02_team_lifecycle",
+    "status": "passed",
+    "message": "44 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g03_user_lifecycle",
+    "status": "passed",
+    "message": "45 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g04_batch_create",
+    "status": "passed",
+    "message": "27 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g05_authn_authz",
+    "status": "passed",
+    "message": "37 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g06_system_state_gating",
+    "status": "failed",
+    "message": "2 case(s) disagree: ['manual_update_async_invalid_value', 'manual_update_async_empty_value']",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g07_cache_validation_headers",
+    "status": "passed",
+    "message": "45 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g08_cors",
+    "status": "passed",
+    "message": "26 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g09_invalid_url_redirect",
+    "status": "passed",
+    "message": "29 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g10_competition_user_stats",
+    "status": "failed",
+    "message": "1 case(s) disagree: ['offset_missing_body']",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g11_leaderboards",
+    "status": "passed",
+    "message": "33 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g12_historic_stats",
+    "status": "passed",
+    "message": "42 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g13_monthly_results",
+    "status": "passed",
+    "message": "30 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g14_lars_hardware_sync",
+    "status": "passed",
+    "message": "41 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g15_external_stats_parsing",
+    "status": "failed",
+    "message": "2 case(s) disagree: ['manual_update_async_non_boolean', 'manual_update_async_empty_value']",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g16_reset_and_rollover",
+    "status": "passed",
+    "message": "38 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g17_configuration_binding",
+    "status": "passed",
+    "message": "30 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g18_request_error_representation",
+    "status": "failed",
+    "message": "1 case(s) disagree: ['missing_body_without_content_type']",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g19_persistence_across_restart",
+    "status": "passed",
+    "message": "34 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "g20_scheduled_parsing",
+    "status": "passed",
+    "message": "43 cases agree",
+    "duration": 0,
+    "suite": "II"
+   },
+   {
+    "name": "s3_family_01",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_02",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_03",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_04",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_05",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_06",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_07",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_08",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_09",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_10",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_11",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_12",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_13",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_14",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_15",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_16",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_17",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_18",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_19",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_20",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_21",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_22",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_23",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_24",
+    "status": "failed",
+    "message": "family result differs",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_25",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_26",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_27",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_28",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_29",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_30",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_31",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_32",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_33",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_34",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_35",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_36",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_37",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_38",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_39",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_40",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_41",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_42",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_43",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_44",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_45",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_46",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_47",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_48",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_49",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_50",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_51",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_52",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_53",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_54",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_55",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_56",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_57",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_58",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_59",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_60",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_61",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_62",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_63",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_64",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "s3_family_65",
+    "status": "passed",
+    "message": "survived",
+    "duration": 0,
+    "suite": "III"
+   },
+   {
+    "name": "q_collaborators_injected",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_hand_written_singleton",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_authentication_single_point",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_state_gating_single_point",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_cors_single_point",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_scheduling_support",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_async_execution",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_startup_lifecycle",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_hand_maintained_route_table",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "q_request_state_in_shared_field",
+    "status": "pending",
+    "duration": 0,
+    "suite": "q",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   },
+   {
+    "name": "gate_native_container",
+    "status": "pending",
+    "duration": 0,
+    "suite": "I-gate",
+    "message": "judged by Reward Kit after this report on the clear route; scored 0 with no judge call on the veto route (reward-details.json)"
+   }
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+reasoning_effort = "high"
+timeout = 600
+files = ["/tmp/grade/judge/submission.txt", "/tmp/grade/judge/state-a.txt"]
+prompt_template = "judge-prompt.md"
+
+[[criterion]]
+id = "Q-dump-mode"
+name = "Q-dump-mode"
+type = "binary"
+weight = 3
+negate = false
+description = "where serialized model output feeds a JSON response or a stored document, the dump uses the new major's python or JSON mode so that values such as dates, object identifiers, enums and units come out in the form the original produced"
+
+[[criterion]]
+id = "Q-settings-sources"
+name = "Q-settings-sources"
+type = "binary"
+weight = 3
+negate = false
+description = "the configuration sources and their precedence (explicit arguments, environment, dotenv file, configuration file, secrets) are declared through the settings package's source customisation in the original's order rather than read or merged by hand"
+
+[[criterion]]
+id = "Q-discarded-error"
+name = "Q-discarded-error"
+type = "binary"
+weight = 3
+negate = true
+description = "a handler in the migrated application code catches an error that the original let propagate, logged, or turned into an error response, and discards it: the handler neither re-raises it, logs it, nor produces the response the original produced"
+
+[[criterion]]
+id = "Q-loose-types"
+name = "Q-loose-types"
+type = "binary"
+weight = 5
+negate = true
+description = "a field the original typed precisely is retyped as Any, a bare dict or an arbitrary type, or a model's configuration allows arbitrary types, only so that the new major does not validate it"
+
+[[criterion]]
+id = "Q-version-branch"
+name = "Q-version-branch"
+type = "binary"
+weight = 1
+negate = true
+description = "the code branches on the installed pydantic version, or on whether retired-major attributes exist, to choose between two implementations"
+
+[scoring]
+aggregation = "weighted-mean"

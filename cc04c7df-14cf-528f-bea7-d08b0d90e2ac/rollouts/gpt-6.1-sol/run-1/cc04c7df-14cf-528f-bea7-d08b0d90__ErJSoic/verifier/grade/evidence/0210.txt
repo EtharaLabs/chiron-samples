@@ -1,0 +1,129 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/user/UserStatsParser.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc.user;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| import org.springframework.scheduling.annotation.Async;
+31 +| 
+32 +| import static me.zodac.folding.api.util.NumberUtils.formatWithCommas;
+33 +| 
+34 +| import me.zodac.folding.api.exception.ExternalConnectionException;
+35 +| import me.zodac.folding.api.stats.FoldingStatsRetriever;
+36 +| import me.zodac.folding.api.tc.User;
+37 +| import me.zodac.folding.api.tc.stats.OffsetTcStats;
+38 +| import me.zodac.folding.api.tc.stats.Stats;
+39 +| import me.zodac.folding.api.tc.stats.UserStats;
+40 +| import me.zodac.folding.api.tc.stats.UserTcStats;
+41 +| import me.zodac.folding.api.util.StringUtils;
+42 +| import me.zodac.folding.service.api.FoldingStatsCore;
+43 +| import org.apache.logging.log4j.LogManager;
+44 +| import org.apache.logging.log4j.Logger;
+45 +| 
+46 +| @Service
+47 +| public class UserStatsParser {
+48 +| 
+49 +|     private static final Logger LOGGER = LogManager.getLogger();
+50 +|     @Autowired
+51 +|     private FoldingStatsRetriever foldingStatsRetriever;
+52 +| 
+53 +|     @Autowired
+54 +|     @Lazy
+55 +|     private FoldingStatsCore foldingStatsCore;
+56 +| 
+57 +|     public void parseTcStatsForUserAndWait(final User user) {
+58 +|         parseTcStatsForUser(user);
+59 +|     }
+60 +| 
+61 +|     @Async
+62 +|     public void parseTcStatsForUser(final User user) {
+63 +|         updateTcStatsForUser(user);
+64 +|     }
+65 +| 
+66 +|     private void updateTcStatsForUser(final User user) {
+67 +|         LOGGER.debug("Updating stats for '{}': {}", user.getDisplayName(), user);
+68 +|         if (StringUtils.isBlank(user.getPasskey())) {
+69 +|             LOGGER.warn("Not parsing TC stats for user, missing passkey: {}", user);
+70 +|             return;
+71 +|         }
+72 +| 
+73 +|         final Stats initialStats = foldingStatsCore.getInitialStats(user);
+74 +|         if (initialStats.isEmpty()) {
+75 +|             LOGGER.warn("Retrieved empty initial stats for user: {}", user);
+76 +|             return;
+77 +|         }
+78 +| 
+79 +|         final OffsetTcStats offsetTcStats = foldingStatsCore.getOffsetStats(user);
+80 +|         if (offsetTcStats.isEmpty()) {
+81 +|             LOGGER.trace("Retrieved empty stats offset for user: {}", () -> user);
+82 +|         } else {
+83 +|             LOGGER.debug("{}: {} offset points | {} offset units", user::getDisplayName,
+84 +|                 () -> formatWithCommas(offsetTcStats.getMultipliedPointsOffset()), () -> formatWithCommas(offsetTcStats.getUnitsOffset()));
+85 +|         }
+86 +| 
+87 +|         final UserStats totalStats = getTotalStatsForUserOrEmpty(user);
+88 +|         if (totalStats.isEmpty()) {
+89 +|             LOGGER.warn("Retrieved empty total stats for user: {}", user);
+90 +|             return;
+91 +|         }
+92 +| 
+93 +|         final UserStats createdTotalStats = foldingStatsCore.createTotalStats(totalStats);
+94 +|         calculateAndPersistTcStats(user, initialStats, offsetTcStats, createdTotalStats);
+95 +|     }
+96 +| 
+97 +|     private UserStats getTotalStatsForUserOrEmpty(final User user) {
+98 +|         try {
+99 +|             return foldingStatsRetriever.getTotalStats(user);
+100 +|         } catch (final ExternalConnectionException e) {
+101 +|             LOGGER.warn("Error connecting to Folding@Home API at '{}'", e.getUrl(), e);
+102 +|         }
+103 +| 
+104 +|         return UserStats.empty();
+105 +|     }
+106 +| 
+107 +|     private void calculateAndPersistTcStats(final User user,
+108 +|                                             final Stats initialStats,
+109 +|                                             final OffsetTcStats offsetTcStats,
+110 +|                                             final UserStats totalStats) {
+111 +|         final double hardwareMultiplier = user.getHardware().getMultiplier();
+112 +|         final long points = Math.max(0, totalStats.getPoints() - initialStats.getPoints());
+113 +|         final long multipliedPoints = Math.round(points * hardwareMultiplier);
+114 +|         final int units = Math.max(0, totalStats.getUnits() - initialStats.getUnits());
+115 +| 
+116 +|         final UserTcStats statsBeforeOffset = UserTcStats.create(user.getId(), totalStats.getTimestamp(), points, multipliedPoints, units);
+117 +|         final UserTcStats hourlyUserTcStats = statsBeforeOffset.updateWithOffsets(offsetTcStats);
+118 +| 
+119 +|         LOGGER.debug("{} (ID: {}): {} total points (unmultiplied) | {} total units", user::getDisplayName, user::getId,
+120 +|             () -> formatWithCommas(totalStats.getPoints()), () -> formatWithCommas(totalStats.getUnits()));
+121 +|         LOGGER.debug("{} (ID: {}): {} TC multiplied points (pre-offset) | {} TC units (pre-offset)", user::getDisplayName, user::getId,
+122 +|             () -> formatWithCommas(multipliedPoints), () -> formatWithCommas(units));
+123 +| 
+124 +|         final UserTcStats createdHourlyTcStats = foldingStatsCore.createHourlyTcStats(hourlyUserTcStats);
+125 +|         LOGGER.info("{} (ID: {}): {} TC points | {} TC units", user.getDisplayName(), user.getId(),
+126 +|             formatWithCommas(createdHourlyTcStats.getMultipliedPoints()), formatWithCommas(createdHourlyTcStats.getUnits()));
+127 +|     }
+128 +| }

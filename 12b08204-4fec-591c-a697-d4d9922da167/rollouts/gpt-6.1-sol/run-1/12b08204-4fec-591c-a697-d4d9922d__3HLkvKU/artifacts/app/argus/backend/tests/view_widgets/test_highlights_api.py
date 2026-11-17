@@ -1,0 +1,251 @@
+from argus.backend.util.config import Config
+import json
+import time
+from datetime import datetime, UTC, timedelta
+from unittest.mock import patch
+from uuid import uuid4, UUID
+from argus.backend.models.view_widgets import WidgetHighlights, WidgetComment
+
+@patch('argus.backend.service.views_widgets.highlights.HighlightsService._send_highlight_notifications')
+def test_create_highlight_should_return_created_highlight(notifications, flask_client, *, test_request):
+    view_id = str(uuid4())
+    now = datetime.now(UTC)
+    response = flask_client.post('/api/v1/views/widgets/highlights/create', content=json.dumps({'view_id': view_id, 'index': 0, 'content': 'Highlight content', 'is_task': False}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200, response.text
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['view_id'] == view_id
+    assert response.json()['response']['content'] == 'Highlight content'
+    assert response.json()['response']['archived_at'] == 0
+    assert response.json()['response']['comments_count'] == 0
+    assert response.json()['response']['creator_id'] == str(test_request.state.user.id)
+    assert response.json()['response']['created_at'] > now.timestamp()
+    assert 'completed' not in response.json()['response']
+    assert 'assignee_id' not in response.json()['response']
+    assert response.json()['response']['group'] is None
+
+@patch('argus.backend.service.views_widgets.highlights.HighlightsService._send_highlight_notifications')
+def test_create_action_item_should_return_created_action_item(notifications, flask_client, *, test_request):
+    view_id = str(uuid4())
+    now = datetime.now(UTC)
+    response = flask_client.post('/api/v1/views/widgets/highlights/create', content=json.dumps({'view_id': view_id, 'index': 0, 'content': 'Action item content', 'is_task': True}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200, response.text
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['view_id'] == view_id
+    assert response.json()['response']['content'] == 'Action item content'
+    assert response.json()['response']['completed'] is False
+    assert response.json()['response']['assignee_id'] is None
+    assert response.json()['response']['group'] == 'General'
+    assert response.json()['response']['archived_at'] == 0
+    assert response.json()['response']['comments_count'] == 0
+    assert response.json()['response']['creator_id'] == str(test_request.state.user.id)
+    assert response.json()['response']['created_at'] > now.timestamp()
+
+def test_create_action_group_should_return_created_action_items(flask_client, *, test_request):
+    view_id = str(uuid4())
+    group_name = '2025.3.3'
+    template_items = ['dtest release', 'weekly summary']
+    response = flask_client.post('/api/v1/views/widgets/highlights/create_group', content=json.dumps({'view_id': view_id, 'index': 0, 'name': group_name, 'items': template_items}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200, response.text
+    assert response.json()['status'] == 'ok'
+    assert len(response.json()['response']) == len(template_items)
+    for idx, item in enumerate(template_items):
+        created = response.json()['response'][idx]
+        assert created['view_id'] == view_id
+        assert created['content'] == item
+        assert created['group'] == group_name
+        assert created['assignee_id'] == str(test_request.state.user.id)
+        assert created['completed'] is False
+
+def test_create_action_group_should_skip_empty_items(flask_client):
+    view_id = str(uuid4())
+    response = flask_client.post('/api/v1/views/widgets/highlights/create_group', content=json.dumps({'view_id': view_id, 'index': 0, 'name': '  <b>Milestone</b>  ', 'items': ['First deliverable', '   ', '<script>alert(1)</script>']}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    created_items = response.json()['response']
+    assert len(created_items) == 2
+    assert created_items[0]['content'] == 'First deliverable'
+    assert created_items[0]['group'] == '&lt;b&gt;Milestone&lt;/b&gt;'
+    assert created_items[1]['content'] == '&lt;script&gt;alert(1)&lt;/script&gt;'
+    assert created_items[1]['group'] == '&lt;b&gt;Milestone&lt;/b&gt;'
+
+def test_get_highlights_should_return_highlights_and_action_items(flask_client, *, test_request):
+    view_id = str(uuid4())
+    creator_id = test_request.state.user.id
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=datetime.now(UTC), creator_id=creator_id, content='Test highlight', completed=None, comments_count=0)
+    highlight_entry.save()
+    action_item_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=datetime.now(UTC) + timedelta(milliseconds=1), creator_id=creator_id, content='Test action item', completed=False, comments_count=0)
+    action_item_entry.save()
+    time.sleep(0.05)
+    response = flask_client.get(f'/api/v1/views/widgets/highlights?view_id={view_id}&index=0')
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    highlights = response.json()['response']['highlights']
+    action_items = response.json()['response']['action_items']
+    assert len(highlights) == 1
+    assert len(action_items) == 1
+    assert highlights[0]['content'] == 'Test highlight'
+    assert action_items[0]['content'] == 'Test action item'
+    assert action_items[0]['group'] == 'General'
+
+def test_archive_highlight_should_mark_highlight_as_archived(flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    created_at = created_at - timedelta(seconds=1)
+    creator_id = test_request.state.user.id
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=creator_id, content='Test highlight', completed=None, comments_count=0, archived_at=datetime.fromtimestamp(0, tz=UTC))
+    highlight_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/archive', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp()}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    archived_entry = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=created_at).first()
+    assert archived_entry.archived_at.replace(tzinfo=UTC) > created_at
+
+def test_unarchive_highlight_should_unmark_highlight_from_archived(flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    creator_id = test_request.state.user.id
+    archived_time = datetime.now(UTC)
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=creator_id, content='Test highlight', completed=None, comments_count=0, archived_at=archived_time)
+    highlight_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/unarchive', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp()}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    unarchived_entry = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=created_at).first()
+    assert unarchived_entry.archived_at.replace(tzinfo=UTC) == datetime.fromtimestamp(0, tz=UTC)
+
+@patch('argus.backend.service.views_widgets.highlights.HighlightsService._send_highlight_notifications')
+def test_update_highlight_should_update_content_for_creator(notifications, flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    creator_id = test_request.state.user.id
+    original_content = 'Original content'
+    updated_content = 'Updated content'
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=creator_id, content=original_content, completed=None, comments_count=0, archived_at=datetime.fromtimestamp(0, tz=UTC))
+    highlight_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/update', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'content': updated_content}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['content'] == updated_content
+    updated_entry = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=created_at).first()
+    assert updated_entry.content == updated_content
+
+def test_update_highlight_should_forbid_non_creator(flask_client):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    creator_id = uuid4()
+    original_content = 'Original content'
+    malicious_content = 'Malicious update'
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=creator_id, content=original_content, completed=None, comments_count=0, archived_at=datetime.fromtimestamp(0, tz=UTC))
+    highlight_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/update', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'content': malicious_content}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200, response.text
+    assert response.json()['status'] == 'error'
+    assert response.json()['response']['exception'] == 'Forbidden'
+    unchanged_entry = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=created_at).first()
+    assert unchanged_entry.content == original_content
+
+def test_set_completed_should_update_completed_status(flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    action_item_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=test_request.state.user.id, content='Test action item', completed=False, comments_count=0)
+    action_item_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/set_completed', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'completed': True}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['completed'] is True
+    response = flask_client.post('/api/v1/views/widgets/highlights/set_completed', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'completed': False}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['response']['completed'] is False
+
+def test_set_completed_should_not_work_for_highlight(flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=test_request.state.user.id, content='Test highlight', completed=None, comments_count=0)
+    highlight_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/set_completed', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'completed': True}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200, response.text
+    assert response.json()['status'] == 'error'
+    assert response.json()['response']['exception'] == 'NotFound'
+
+@patch('argus.backend.controller.views_widgets.highlights.HighlightsService.send_action_notification')
+def test_set_assignee_should_set_assignee_for_action_item(notification, flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    action_item_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=test_request.state.user.id, content='Test action item', completed=False, comments_count=0)
+    action_item_entry.save()
+    new_assignee_id = str(uuid4())
+    response = flask_client.post('/api/v1/views/widgets/highlights/set_assignee', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'assignee_id': new_assignee_id}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['assignee_id'] == new_assignee_id
+    assert notification.call_count == 1
+    updated_entry = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=created_at).first()
+    assert str(updated_entry.assignee_id) == new_assignee_id
+
+def test_set_assignee_should_not_work_for_highlight(flask_client, *, test_request):
+    view_id = str(uuid4())
+    created_at = datetime.now(UTC)
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=created_at, creator_id=test_request.state.user.id, content='Test highlight', completed=None, comments_count=0)
+    highlight_entry.save()
+    new_assignee_id = str(uuid4())
+    response = flask_client.post('/api/v1/views/widgets/highlights/set_assignee', content=json.dumps({'view_id': view_id, 'index': 0, 'created_at': created_at.timestamp(), 'assignee_id': new_assignee_id}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200, response.text
+    assert response.json()['status'] == 'error'
+    assert response.json()['response']['exception'] == 'NotFound'
+
+@patch('argus.backend.service.views_widgets.highlights.HighlightsService._send_highlight_notifications')
+def test_create_comment_should_increment_comments_count(notification, flask_client, *, test_request):
+    view_id = str(uuid4())
+    highlight_created_at = datetime.now(UTC)
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=highlight_created_at, creator_id=test_request.state.user.id, content='Test highlight', completed=None, comments_count=0)
+    highlight_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/comments/create', content=json.dumps({'view_id': view_id, 'index': 0, 'highlight_created_at': highlight_created_at.timestamp(), 'content': 'Test comment'}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['content'] == 'Test comment'
+    updated_highlight = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=highlight_created_at).first()
+    assert updated_highlight.comments_count == 1
+
+def test_delete_comment_should_decrement_comments_count(flask_client, *, test_request):
+    view_id = str(uuid4())
+    highlight_created_at = datetime.now(UTC)
+    comment_created_at = datetime.now(UTC)
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=highlight_created_at, creator_id=test_request.state.user.id, content='Test highlight', completed=None, comments_count=1)
+    highlight_entry.save()
+    comment_entry = WidgetComment(view_id=UUID(view_id), index=0, highlight_at=highlight_created_at, created_at=comment_created_at, creator_id=test_request.state.user.id, content='Test comment')
+    comment_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/comments/delete', content=json.dumps({'view_id': view_id, 'index': 0, 'highlight_created_at': highlight_created_at.timestamp(), 'created_at': comment_created_at.timestamp()}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    updated_highlight = WidgetHighlights.find(view_id=UUID(view_id), index=0, created_at=highlight_created_at).first()
+    assert updated_highlight.comments_count == 0
+
+@patch('argus.backend.service.views_widgets.highlights.HighlightsService._send_highlight_notifications')
+def test_update_comment_should_modify_content(notification, flask_client, *, test_request):
+    view_id = str(uuid4())
+    highlight_created_at = datetime.now(UTC)
+    comment_created_at = datetime.now(UTC)
+    comment_content = 'Original comment'
+    updated_content = 'Updated comment'
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=highlight_created_at, creator_id=test_request.state.user.id, content='Test highlight', completed=None, comments_count=1)
+    highlight_entry.save()
+    comment_entry = WidgetComment(view_id=UUID(view_id), index=0, highlight_at=highlight_created_at, created_at=comment_created_at, creator_id=test_request.state.user.id, content=comment_content)
+    comment_entry.save()
+    response = flask_client.post('/api/v1/views/widgets/highlights/comments/update', content=json.dumps({'view_id': view_id, 'index': 0, 'highlight_created_at': highlight_created_at.timestamp(), 'created_at': comment_created_at.timestamp(), 'content': updated_content}), headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    assert response.json()['response']['content'] == updated_content
+
+def test_get_comments_should_return_list_of_comments(flask_client, *, test_request):
+    view_id = str(uuid4())
+    highlight_created_at = datetime.now(UTC)
+    comment_created_at = datetime.now(UTC)
+    highlight_entry = WidgetHighlights(view_id=UUID(view_id), index=0, created_at=highlight_created_at, creator_id=test_request.state.user.id, content='Test highlight', completed=None, comments_count=1)
+    highlight_entry.save()
+    comment_entry = WidgetComment(view_id=UUID(view_id), index=0, highlight_at=highlight_created_at, created_at=comment_created_at, creator_id=test_request.state.user.id, content='Test comment')
+    comment_entry.save()
+    response = flask_client.get(f'/api/v1/views/widgets/highlights/comments?view_id={view_id}&index=0&created_at={highlight_created_at.timestamp()}')
+    assert response.status_code == 200
+    assert response.json()['status'] == 'ok'
+    comments = response.json()['response']
+    assert len(comments) == 1
+    assert comments[0]['content'] == 'Test comment'

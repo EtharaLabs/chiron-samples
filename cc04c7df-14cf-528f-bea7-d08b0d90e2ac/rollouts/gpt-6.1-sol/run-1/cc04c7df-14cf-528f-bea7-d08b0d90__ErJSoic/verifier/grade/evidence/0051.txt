@@ -1,0 +1,56 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/header/RestHeader.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.rest.api.header;
+26  | 
+   -| /**
+   -|  * Set of REST headers and their name.
+   -|  */
+27 +| 
+28  | public enum RestHeader {
+29  | 
+   -|     /**
+   -|      * The <code>Authorization</code> header.
+   -|      */
+30 +|     
+31  |     AUTHORIZATION("Authorization"),
+32  | 
+   -|     /**
+   -|      * The <code>Cache-Control</code> header.
+   -|      */
+33 +|     
+34  |     CACHE_CONTROL("Cache-Control"),
+35  | 
+   -|     /**
+   -|      * The <code>Content-Type</code> header.
+   -|      */
+36 +|     
+37  |     CONTENT_TYPE("Content-Type"),
+38  | 
+   -|     /**
+   -|      * The <code>If-None-Match</code> header.
+   -|      */
+39 +|     
+40  |     IF_NONE_MATCH("If-None-Match");
+41  | 
+42  |     private final String headerName;
+43  | 
+   -|     /**
+   -|      * Constructs a {@link RestHeader}.
+   -|      *
+   -|      * @param headerName the {@link RestHeader} name
+   -|      */
+44 +|     
+45  |     RestHeader(final String headerName) {
+46  |         this.headerName = headerName;
+47  |     }
+48  | 
+   -|     /**
+   -|      * The {@link RestHeader} name.
+   -|      *
+   -|      * @return the name of the {@link RestHeader}
+   -|      */
+49 +|     
+50  |     public String headerName() {
+51  |         return headerName;
+52  |     }

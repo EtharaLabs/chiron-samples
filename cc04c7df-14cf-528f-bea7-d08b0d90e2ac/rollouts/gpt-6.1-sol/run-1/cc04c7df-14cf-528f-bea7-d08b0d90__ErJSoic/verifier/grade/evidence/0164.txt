@@ -1,0 +1,35 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/state/ParsingStateManager.java (changed against State A) ===
+@@
+28  | import org.apache.logging.log4j.LogManager;
+29  | import org.apache.logging.log4j.Logger;
+30  | 
+   -| /**
+   -|  * Utility class to manage the {@link ParsingState}.
+   -|  */
+31 +| 
+32  | public final class ParsingStateManager {
+33  | 
+34  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+39  | 
+40  |     }
+41  | 
+   -|     /**
+   -|      * Get the current {@link ParsingState}. On system startup, the {@link ParsingState} is {@link ParsingState#DISABLED}.
+   -|      *
+   -|      * @return the current {@link ParsingState}
+   -|      */
+42 +|     
+43  |     public static ParsingState current() {
+44  |         return currentState;
+45  |     }
+46  | 
+   -|     /**
+   -|      * Change to the next {@link ParsingState}.
+   -|      *
+   -|      * @param nextState the {@link ParsingState} to transition to
+   -|      */
+47 +|     
+48  |     public static void next(final ParsingState nextState) {
+49  |         if (nextState == currentState) {
+50  |             LOGGER.trace("Parsing state is already {}, no transition needed", nextState);

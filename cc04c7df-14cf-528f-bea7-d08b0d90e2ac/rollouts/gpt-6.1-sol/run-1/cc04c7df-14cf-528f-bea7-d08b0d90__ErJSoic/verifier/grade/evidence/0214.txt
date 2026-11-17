@@ -1,0 +1,10 @@
+=== submission file: folding-stats-service/src/main/resources/application.properties (added against State A) ===
+1 +| server.port=8080
+2 +| server.servlet.context-path=/folding
+3 +| spring.mvc.pathmatch.matching-strategy=path_pattern_parser
+4 +| spring.mvc.throw-exception-if-no-handler-found=true
+5 +| spring.web.resources.add-mappings=false
+6 +| spring.main.banner-mode=off
+7 +| spring.jmx.enabled=false
+8 +| spring.task.execution.pool.core-size=8
+9 +| spring.task.scheduling.pool.size=3

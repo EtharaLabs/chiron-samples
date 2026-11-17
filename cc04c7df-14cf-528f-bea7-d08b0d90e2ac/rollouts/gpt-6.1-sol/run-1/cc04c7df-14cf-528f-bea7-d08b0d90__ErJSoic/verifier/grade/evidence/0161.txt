@@ -1,0 +1,25 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/lars/LarsGpuAveragePpdComparator.java (changed against State A) ===
+@@
+28  | import java.util.Comparator;
+29  | import me.zodac.folding.api.tc.lars.LarsGpu;
+30  | 
+   -| /**
+   -|  * Custom {@link Comparator} that allows for sorting of {@link LarsGpu}s by only comparing the value of {@link LarsGpu#getAveragePpd()}.
+   -|  */
+31 +| 
+32  | final class LarsGpuAveragePpdComparator implements Comparator<LarsGpu>, Serializable {
+33  | 
+34  |     private static final long serialVersionUID = -7988652908218460899L;
+@@
+37  | 
+38  |     }
+39  | 
+   -|     /**
+   -|      * Creates an instance of {@link LarsGpuAveragePpdComparator}.
+   -|      *
+   -|      * @return the created {@link LarsGpuAveragePpdComparator}
+   -|      */
+40 +|     
+41  |     static LarsGpuAveragePpdComparator create() {
+42  |         return new LarsGpuAveragePpdComparator();
+43  |     }

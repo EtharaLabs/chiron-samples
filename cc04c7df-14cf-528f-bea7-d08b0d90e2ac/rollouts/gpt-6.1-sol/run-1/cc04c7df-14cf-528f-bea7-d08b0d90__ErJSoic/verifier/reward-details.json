@@ -1,0 +1,753 @@
+{
+  "reward": {
+    "kind": "group",
+    "score": 0.0,
+    "aggregation": "all-pass",
+    "components": [
+      {
+        "name": "judge",
+        "weight": 1.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "q_collaborators_injected",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "q_collaborators_injected: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_hand_written_singleton",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "q_hand_written_singleton: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_authentication_single_point",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "q_authentication_single_point: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_state_gating_single_point",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "q_state_gating_single_point: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_cors_single_point",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "q_cors_single_point: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_scheduling_support",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "q_scheduling_support: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_async_execution",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "q_async_execution: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_startup_lifecycle",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "q_startup_lifecycle: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_hand_maintained_route_table",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "q_hand_maintained_route_table: not judged: a Stage I item or a Stage II group failed"
+            },
+            {
+              "name": "q_request_state_in_shared_field",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "q_request_state_in_shared_field: not judged: a Stage I item or a Stage II group failed"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      },
+      {
+        "name": "judged_gate",
+        "weight": 1.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "judged_gate",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "compiled veto: g06_system_state_gating: 2 case(s) disagree: ['manual_update_async_invalid_value', 'manual_update_async_empty_value'] | g10_competition_user_stats: 1 case(s) disagree: ['offset_missing_body'] | g15_external_stats_parsing: 2 case(s) disagree: ['manual_update_async_non_boolean', 'manual_update_async_empty_value'] | g18_request_error_representation: 1 case(s) disagree: ['missing_body_without_content_type']"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      },
+      {
+        "name": "test_output",
+        "weight": 1.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "s1_graded_build",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "s1_graded_build: passed: started and answered GET /folding/hardware in 7.2 s [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s1_retired_stack_absent",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "s1_retired_stack_absent: passed: no retired coordinate, package or descriptor found [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s1_new_stack_serves",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "s1_new_stack_serves: passed: every replayed request was dispatched through DispatcherServlet [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s1_no_transplant",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "s1_no_transplant: passed: max_file_containment 0.0344 against threshold 0.5 (largest: resteasy-jaxrs-3.15.1.Final-sources.jar!org/jboss/resteasy/spi/Failure.java) [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s1_no_forwarding",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "s1_no_forwarding: passed: no process, connection or class source reaching the retired stack [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s1_no_verifier_detection",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "s1_no_verifier_detection: passed: no verifier name in the tree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g01_hardware_lifecycle",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g01_hardware_lifecycle: passed: 45 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g02_team_lifecycle",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g02_team_lifecycle: passed: 44 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g03_user_lifecycle",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g03_user_lifecycle: passed: 45 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g04_batch_create",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g04_batch_create: passed: 27 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g05_authn_authz",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g05_authn_authz: passed: 37 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g06_system_state_gating",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g06_system_state_gating: failed: 2 case(s) disagree: ['manual_update_async_invalid_value', 'manual_update_async_empty_value'] [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g07_cache_validation_headers",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g07_cache_validation_headers: passed: 45 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g08_cors",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g08_cors: passed: 26 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g09_invalid_url_redirect",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g09_invalid_url_redirect: passed: 29 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g10_competition_user_stats",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g10_competition_user_stats: failed: 1 case(s) disagree: ['offset_missing_body'] [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g11_leaderboards",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g11_leaderboards: passed: 33 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g12_historic_stats",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g12_historic_stats: passed: 42 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g13_monthly_results",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g13_monthly_results: passed: 30 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g14_lars_hardware_sync",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g14_lars_hardware_sync: passed: 41 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g15_external_stats_parsing",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g15_external_stats_parsing: failed: 2 case(s) disagree: ['manual_update_async_non_boolean', 'manual_update_async_empty_value'] [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g16_reset_and_rollover",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g16_reset_and_rollover: passed: 38 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g17_configuration_binding",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g17_configuration_binding: passed: 30 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g18_request_error_representation",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g18_request_error_representation: failed: 1 case(s) disagree: ['missing_body_without_content_type'] [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g19_persistence_across_restart",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g19_persistence_across_restart: passed: 34 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "g20_scheduled_parsing",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "g20_scheduled_parsing: passed: 43 cases agree [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_01",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_01: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_02",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_02: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_03",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_03: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_04",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_04: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_05",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_05: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_06",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_06: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_07",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_07: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_08",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_08: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_09",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_09: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_10",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_10: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_11",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_11: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_12",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_12: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_13",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_13: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_14",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_14: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_15",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_15: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_16",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_16: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_17",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_17: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_18",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_18: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_19",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_19: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_20",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_20: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_21",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_21: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_22",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_22: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_23",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_23: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_24",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_24: failed: family result differs [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_25",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_25: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_26",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_26: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_27",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_27: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_28",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_28: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_29",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_29: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_30",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_30: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_31",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_31: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_32",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_32: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_33",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_33: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_34",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_34: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_35",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_35: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_36",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_36: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_37",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_37: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_38",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_38: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_39",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_39: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_40",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_40: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_41",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_41: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_42",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_42: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_43",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_43: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_44",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_44: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_45",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_45: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_46",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_46: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_47",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_47: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_48",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_48: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_49",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_49: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_50",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_50: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_51",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_51: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_52",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_52: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_53",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_53: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_54",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_54: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_55",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_55: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_56",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_56: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_57",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_57: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_58",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_58: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_59",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_59: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_60",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_60: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_61",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_61: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_62",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_62: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_63",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_63: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_64",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_64: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            },
+            {
+              "name": "s3_family_65",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "s3_family_65: passed: survived [veto route: a Stage I item or a Stage II group failed]"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      }
+    ]
+  }
+}

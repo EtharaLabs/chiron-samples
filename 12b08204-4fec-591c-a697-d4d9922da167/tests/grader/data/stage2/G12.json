@@ -1,0 +1,1660 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "created": "2026-11-01T11:00:00.000Z",
+        "description": "Seeded view",
+        "display_name": "Core View",
+        "group_ids": [
+         "34f73064-36d3-42e0-9bf8-17840d9eb352"
+        ],
+        "id": "0a11ce00-0000-4000-8000-000000000020",
+        "last_updated": "2026-11-01T11:00:00.000Z",
+        "name": "core-view",
+        "plan_id": null,
+        "release_ids": [
+         "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        ],
+        "tests": [
+         "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "9b79cfa4-33d6-49c2-bd27-30733cf19490"
+        ],
+        "user_id": "0a11ce00-0000-4000-8000-000000000001",
+        "widget_settings": "[{\"position\": 1, \"type\": \"UserViewHighlights\", \"settings\": {}}]"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "views-all",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/all"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "created": "2026-11-01T11:00:00.000Z",
+       "description": "Seeded view",
+       "display_name": "Core View",
+       "group_ids": [
+        "34f73064-36d3-42e0-9bf8-17840d9eb352"
+       ],
+       "id": "0a11ce00-0000-4000-8000-000000000020",
+       "last_updated": "<now>",
+       "name": "core-view",
+       "plan_id": null,
+       "release_ids": [
+        "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       ],
+       "tests": [
+        "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+        "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+        "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+        "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+        "d62928bf-72ec-44c9-92ee-385ba917027c"
+       ],
+       "user_id": "0a11ce00-0000-4000-8000-000000000001",
+       "widget_settings": "[{\"position\": 1, \"type\": \"UserViewHighlights\", \"settings\": {}}]"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-get",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/get",
+     "query": {
+      "viewId": "0a11ce00-0000-4000-8000-000000000020"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "created": "2026-11-01T11:00:00.000Z",
+        "description": "Seeded view",
+        "display_name": "Core View",
+        "group_ids": [
+         "34f73064-36d3-42e0-9bf8-17840d9eb352"
+        ],
+        "id": "0a11ce00-0000-4000-8000-000000000020",
+        "last_updated": "2026-11-01T11:00:00.000Z",
+        "name": "core-view",
+        "plan_id": null,
+        "release_ids": [
+         "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        ],
+        "tests": [
+         "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "9b79cfa4-33d6-49c2-bd27-30733cf19490"
+        ],
+        "user_id": "0a11ce00-0000-4000-8000-000000000001",
+        "widget_settings": "[{\"position\": 1, \"type\": \"UserViewHighlights\", \"settings\": {}}]"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-all-by-user",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/all",
+     "query": {
+      "userId": "0a11ce00-0000-4000-8000-000000000001"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "version": "v1"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "views-index",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "created": "<now>",
+       "description": "",
+       "display_name": "Stage2",
+       "group_ids": [],
+       "id": "<id1>",
+       "last_updated": "<now>",
+       "name": "stage2-view",
+       "plan_id": null,
+       "release_ids": [],
+       "tests": [
+        "3ed77c66-c3b8-404f-8f43-266b75771178"
+       ],
+       "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+       "widget_settings": "[]"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "created": "<now>",
+       "description": "",
+       "display_name": "Stage2",
+       "group_ids": [],
+       "id": "<id1>",
+       "last_updated": "<now>",
+       "name": "stage2-view",
+       "plan_id": null,
+       "release_ids": [],
+       "tests": [
+        "3ed77c66-c3b8-404f-8f43-266b75771178"
+       ],
+       "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+       "widget_settings": "[]"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": true,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "created": "2026-11-01T11:00:00.000Z",
+        "description": "Seeded view",
+        "display_name": "Core View",
+        "group_ids": [
+         "34f73064-36d3-42e0-9bf8-17840d9eb352"
+        ],
+        "id": "0a11ce00-0000-4000-8000-000000000020",
+        "last_updated": "2026-11-01T11:00:00.000Z",
+        "name": "core-view",
+        "plan_id": null,
+        "release_ids": [
+         "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        ],
+        "tests": [
+         "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "9b79cfa4-33d6-49c2-bd27-30733cf19490"
+        ],
+        "user_id": "0a11ce00-0000-4000-8000-000000000001",
+        "widget_settings": "[{\"position\": 1, \"type\": \"UserViewHighlights\", \"settings\": {}}]"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-create-delete",
+   "steps": [
+    {
+     "capture": {
+      "view": "response.id"
+     },
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "description": "",
+      "displayName": "Stage2",
+      "items": [
+       "test:3ed77c66-c3b8-404f-8f43-266b75771178"
+      ],
+      "name": "stage2-view",
+      "settings": "[]"
+     },
+     "method": "POST",
+     "path": "/api/v1/views/create"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/get",
+     "query": {
+      "viewId": "{{view}}"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "viewId": "{{view}}"
+     },
+     "method": "POST",
+     "path": "/api/v1/views/delete"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/all"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "aborted": 3,
+       "created": 0,
+       "disabled": false,
+       "error": 0,
+       "failed": 0,
+       "groups": {
+        "34f73064-36d3-42e0-9bf8-17840d9eb352": {
+         "aborted": 3,
+         "created": 0,
+         "disabled": false,
+         "error": 0,
+         "failed": 0,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         "lastInvestigationStatus": "not_investigated",
+         "lastStatus": "aborted",
+         "not_investigated": {
+          "aborted": 3
+         },
+         "not_planned": 0,
+         "not_run": 0,
+         "passed": 0,
+         "running": 0,
+         "test_error": 0,
+         "tests": {
+          "3ed77c66-c3b8-404f-8f43-266b75771178": {
+           "buildId": "seed-release/longevity-tests/longevity-100gb-12h-test",
+           "buildNumber": 51,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 51,
+             "comments": [],
+             "end_time": "2026-10-17T17:00:01.786Z",
+             "id": "f37d6705-0845-4ff8-8b58-a0b00ef0a58b",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-17T11:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 43,
+             "comments": [],
+             "end_time": "2026-10-06T20:48:01.786Z",
+             "id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+               "issue_id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+               "key": "SEED-88888",
+               "labels": [
+                {
+                 "color": "d93f0b",
+                 "description": "Performance regression",
+                 "id": 11,
+                 "name": "perf-regression"
+                }
+               ],
+               "permalink": "https://fake-org.atlassian.net/browse/SEED-88888",
+               "project": "SEED",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+               "state": "open",
+               "subtype": "jira",
+               "summary": "Performance regression in write path after compaction refactor",
+               "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+               "type": "jira",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-06T15:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 38,
+             "comments": [],
+             "end_time": "2026-10-30T03:21:01.786Z",
+             "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [
+                "fake-dev"
+               ],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+               "issue_id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+               "key": "SEED-99999",
+               "labels": [
+                {
+                 "color": "fbca04",
+                 "description": "Flaky test",
+                 "id": 10,
+                 "name": "flaky-test"
+                }
+               ],
+               "permalink": "https://fake-org.atlassian.net/browse/SEED-99999",
+               "project": "SEED",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+               "state": "in progress",
+               "subtype": "jira",
+               "summary": "Investigate flaky longevity test failures in CI",
+               "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+               "type": "jira",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-30T01:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 23,
+             "comments": [],
+             "end_time": "2026-10-24T02:11:01.786Z",
+             "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-23T21:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 14,
+             "comments": [],
+             "end_time": "2026-10-13T12:34:01.786Z",
+             "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-13T11:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-17T11:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+            "name": "longevity-100gb-12h-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity 100GB 12h",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "437f882f-857e-4e8e-abf3-18a1e2d60bbd": {
+           "buildId": "seed-release/longevity-tests/longevity-10gb-3h-test",
+           "buildNumber": 50,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 50,
+             "comments": [],
+             "end_time": "2026-10-06T13:13:01.786Z",
+             "id": "bf5b7b98-60ac-41dc-ba51-6125fa1aacfd",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-06T12:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 48,
+             "comments": [],
+             "end_time": "2026-10-11T13:42:01.786Z",
+             "id": "862e8783-10de-4a73-ab52-8619c09772e3",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "816b0515-b20b-41b9-9513-8a19c828bd9f",
+               "issue_id": "816b0515-b20b-41b9-9513-8a19c828bd9f",
+               "labels": [
+                {
+                 "color": "e4e669",
+                 "description": "Test infrastructure issue",
+                 "id": 2,
+                 "name": "test-failure"
+                },
+                {
+                 "color": "0075ca",
+                 "description": "Longevity test related",
+                 "id": 3,
+                 "name": "longevity"
+                }
+               ],
+               "number": 5432,
+               "owner": "fake-org",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "repo": "fake-cluster-tests",
+               "run_id": "862e8783-10de-4a73-ab52-8619c09772e3",
+               "state": "open",
+               "subtype": "github",
+               "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+               "title": "Stress command timeout on large partitions",
+               "type": "issues",
+               "url": "https://github.com/fake-org/fake-cluster-tests/issues/5432",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-11T13:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 32,
+             "comments": [],
+             "end_time": "2026-10-08T05:18:01.786Z",
+             "id": "15f99936-e15d-4e39-bd61-d282df388af2",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [
+                {
+                 "html_url": "https://github.com/fake-dev",
+                 "login": "fake-dev"
+                }
+               ],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "715d3b1a-7dbc-4682-8c3e-3e78a1c49fda",
+               "issue_id": "715d3b1a-7dbc-4682-8c3e-3e78a1c49fda",
+               "labels": [
+                {
+                 "color": "d73a4a",
+                 "description": "Something isn't working",
+                 "id": 1,
+                 "name": "bug"
+                }
+               ],
+               "number": 19001,
+               "owner": "fake-org",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "repo": "fake-db",
+               "run_id": "15f99936-e15d-4e39-bd61-d282df388af2",
+               "state": "open",
+               "subtype": "github",
+               "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+               "title": "Decommission fails intermittently under high load",
+               "type": "issues",
+               "url": "https://github.com/fake-org/fake-db/issues/19001",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-08T04:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 27,
+             "comments": [],
+             "end_time": "2026-10-05T04:54:01.786Z",
+             "id": "4cedb62c-ed99-490b-bc97-c01c9a0ea259",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-05T03:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 15,
+             "comments": [],
+             "end_time": "2026-10-01T19:53:01.786Z",
+             "id": "55708022-e580-4ac1-ac21-4b3847627cb1",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-01T16:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-06T12:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+            "name": "longevity-10gb-3h-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity 10GB 3h",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "9b79cfa4-33d6-49c2-bd27-30733cf19490": {
+           "buildId": "seed-release/longevity-tests/longevity-large-partition-test",
+           "buildNumber": 57,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 57,
+             "comments": [],
+             "end_time": "2026-10-18T03:40:01.786Z",
+             "id": "f63fbff4-ee9e-48ac-bfc4-cb4960520bb9",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-18T00:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 40,
+             "comments": [],
+             "end_time": "2026-10-25T23:01:01.786Z",
+             "id": "44aebc46-6fbb-4fc1-9c05-b85ab8f92451",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-25T22:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 34,
+             "comments": [],
+             "end_time": "2026-10-18T08:41:01.786Z",
+             "id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [
+                "fake-dev"
+               ],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "19ab6fae-a205-4dff-8504-53d25896f2b9",
+               "issue_id": "19ab6fae-a205-4dff-8504-53d25896f2b9",
+               "key": "SEED-77777",
+               "labels": [
+                {
+                 "color": "0e8a16",
+                 "description": "Topology operations",
+                 "id": 12,
+                 "name": "topology"
+                },
+                {
+                 "color": "d73a4a",
+                 "description": "Something isn't working",
+                 "id": 1,
+                 "name": "bug"
+                }
+               ],
+               "permalink": "https://fake-org.atlassian.net/browse/SEED-77777",
+               "project": "SEED",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "run_id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+               "state": "in review",
+               "subtype": "jira",
+               "summary": "Node decommission timeout under mixed workloads",
+               "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+               "type": "jira",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-18T05:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 28,
+             "comments": [],
+             "end_time": "2026-10-30T16:55:01.786Z",
+             "id": "e8b0c1d2-500a-4846-a197-8c74625c41ef",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-30T15:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 11,
+             "comments": [],
+             "end_time": "2026-10-14T05:19:01.786Z",
+             "id": "8e98b95a-00f1-4c84-a60b-cbea17e380ca",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-14T03:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-18T00:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+            "name": "longevity-large-partition-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity Large Partition",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          }
+         },
+         "total": 3
+        }
+       },
+       "hasBugReport": false,
+       "ignored": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "in_progress": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "investigated": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "lastInvestigationStatus": "not_investigated",
+       "lastStatus": "not_investigated",
+       "not_investigated": {
+        "aborted": 3,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "not_planned": 0,
+       "not_run": 0,
+       "passed": 0,
+       "perpetual": false,
+       "release": {
+        "created": "2026-11-01T11:00:00.000Z",
+        "description": "Seeded view",
+        "display_name": "Core View",
+        "group_ids": [
+         "34f73064-36d3-42e0-9bf8-17840d9eb352"
+        ],
+        "id": "0a11ce00-0000-4000-8000-000000000020",
+        "last_updated": "2026-11-01T11:00:00.000Z",
+        "name": "core-view",
+        "plan_id": null,
+        "release_ids": [
+         "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        ],
+        "tests": [
+         "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "9b79cfa4-33d6-49c2-bd27-30733cf19490"
+        ],
+        "user_id": "0a11ce00-0000-4000-8000-000000000001",
+        "widget_settings": "[{\"position\": 1, \"type\": \"UserViewHighlights\", \"settings\": {}}]"
+       },
+       "releases": {
+        "feb3dc2e-0397-418b-a980-ddd8061bb847": {
+         "assignee": [
+          "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         ],
+         "description": "Synthetic data for local development",
+         "dormant": false,
+         "enabled": true,
+         "github_repo_url": null,
+         "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "name": "seed-release",
+         "perpetual": false,
+         "picture_id": null,
+         "pretty_name": "Seed Release",
+         "valid_version_regex": null
+        }
+       },
+       "running": 0,
+       "test_error": 0,
+       "total": 3
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-stats",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/stats",
+     "query": {
+      "limited": "0",
+      "viewId": "0a11ce00-0000-4000-8000-000000000020"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "created": "2026-11-01T11:00:00.000Z",
+       "description": "Seeded view",
+       "display_name": "Core View",
+       "group_ids": [
+        "34f73064-36d3-42e0-9bf8-17840d9eb352"
+       ],
+       "id": "0a11ce00-0000-4000-8000-000000000020",
+       "items": [
+        {
+         "assignee": [
+          "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         ],
+         "description": "Synthetic data for local development",
+         "dormant": false,
+         "enabled": true,
+         "github_repo_url": null,
+         "group": null,
+         "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "name": "seed-release",
+         "perpetual": false,
+         "picture_id": null,
+         "pretty_name": "Seed Release",
+         "release": null,
+         "type": "release",
+         "valid_version_regex": null
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests",
+         "description": null,
+         "enabled": true,
+         "group": null,
+         "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "name": "longevity-tests",
+         "pretty_name": "Longevity Tests",
+         "release": "Seed Release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "group"
+        }
+       ],
+       "last_updated": "2026-11-01T11:00:00.000Z",
+       "name": "core-view",
+       "plan_id": null,
+       "release_ids": [
+        "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       ],
+       "tests": [
+        "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+        "9b79cfa4-33d6-49c2-bd27-30733cf19490"
+       ],
+       "user_id": "0a11ce00-0000-4000-8000-000000000001",
+       "widget_settings": "[{\"position\": 1, \"type\": \"UserViewHighlights\", \"settings\": {}}]"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-resolve",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/0a11ce00-0000-4000-8000-000000000020/resolve"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "hits": [
+        {
+         "id": "<id1>",
+         "name": "Add all...",
+         "type": "special"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests",
+         "description": null,
+         "enabled": true,
+         "group": null,
+         "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "name": "longevity-tests",
+         "pretty_name": "Longevity Tests",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "group"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+         "description": null,
+         "enabled": true,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "group": null,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release": {
+           "assignee": [
+            "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+           ],
+           "description": "Synthetic data for local development",
+           "dormant": false,
+           "enabled": true,
+           "github_repo_url": null,
+           "group": null,
+           "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+           "name": "seed-release",
+           "perpetual": false,
+           "picture_id": null,
+           "pretty_name": "Seed Release",
+           "release": null,
+           "type": "release",
+           "valid_version_regex": null
+          },
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "type": "group"
+         },
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "name": "longevity-100gb-12h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 100GB 12h",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+         "description": null,
+         "enabled": true,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "group": null,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release": {
+           "assignee": [
+            "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+           ],
+           "description": "Synthetic data for local development",
+           "dormant": false,
+           "enabled": true,
+           "github_repo_url": null,
+           "group": null,
+           "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+           "name": "seed-release",
+           "perpetual": false,
+           "picture_id": null,
+           "pretty_name": "Seed Release",
+           "release": null,
+           "type": "release",
+           "valid_version_regex": null
+          },
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "type": "group"
+         },
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "name": "longevity-10gb-3h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 10GB 3h",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+         "description": null,
+         "enabled": true,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "group": null,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release": {
+           "assignee": [
+            "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+           ],
+           "description": "Synthetic data for local development",
+           "dormant": false,
+           "enabled": true,
+           "github_repo_url": null,
+           "group": null,
+           "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+           "name": "seed-release",
+           "perpetual": false,
+           "picture_id": null,
+           "pretty_name": "Seed Release",
+           "release": null,
+           "type": "release",
+           "valid_version_regex": null
+          },
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "type": "group"
+         },
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "name": "longevity-large-partition-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity Large Partition",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        }
+       ],
+       "total": 5
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "view-search",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/search",
+     "query": {
+      "query": "longevity"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "action_items": [],
+       "highlights": []
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "widget-highlights",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/widgets/highlights",
+     "query": {
+      "index": "0",
+      "view_id": "0a11ce00-0000-4000-8000-000000000020"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "test_info": {},
+       "versions": {}
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "widget-summary",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/widgets/summary/versioned_runs",
+     "query": {
+      "view_id": "0a11ce00-0000-4000-8000-000000000020"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "nemesis_data": []
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "widget-nemesis",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/widgets/nemesis_data",
+     "query": {
+      "view_id": "0a11ce00-0000-4000-8000-000000000020"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "nemesis_data": [],
+       "test_runs": [
+        {
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "duration": 8460.0,
+         "investigation_status": "in_progress",
+         "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+         "start_time": 1793322001.786,
+         "status": "failed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "duration": 18660.0,
+         "investigation_status": "not_investigated",
+         "run_id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+         "start_time": 1792789201.786,
+         "status": "passed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "duration": 21600.0,
+         "investigation_status": "not_investigated",
+         "run_id": "f37d6705-0845-4ff8-8b58-a0b00ef0a58b",
+         "start_time": 1792234801.786,
+         "status": "aborted",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "duration": 5640.0,
+         "investigation_status": "not_investigated",
+         "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "start_time": 1791889201.786,
+         "status": "passed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "duration": 20880.0,
+         "investigation_status": "investigated",
+         "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+         "start_time": 1791298801.786,
+         "status": "error",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "duration": 2520.0,
+         "investigation_status": "investigated",
+         "run_id": "862e8783-10de-4a73-ab52-8619c09772e3",
+         "start_time": 1791723601.786,
+         "status": "error",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "duration": 4680.0,
+         "investigation_status": "in_progress",
+         "run_id": "15f99936-e15d-4e39-bd61-d282df388af2",
+         "start_time": 1791432001.786,
+         "status": "failed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "duration": 4380.0,
+         "investigation_status": "not_investigated",
+         "run_id": "bf5b7b98-60ac-41dc-ba51-6125fa1aacfd",
+         "start_time": 1791288001.786,
+         "status": "aborted",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "duration": 6840.0,
+         "investigation_status": "not_investigated",
+         "run_id": "4cedb62c-ed99-490b-bc97-c01c9a0ea259",
+         "start_time": 1791169201.786,
+         "status": "passed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "duration": 13980.0,
+         "investigation_status": "not_investigated",
+         "run_id": "55708022-e580-4ac1-ac21-4b3847627cb1",
+         "start_time": 1790870401.786,
+         "status": "passed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "duration": 6900.0,
+         "investigation_status": "not_investigated",
+         "run_id": "e8b0c1d2-500a-4846-a197-8c74625c41ef",
+         "start_time": 1793372401.786,
+         "status": "passed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "duration": 3660.0,
+         "investigation_status": "investigated",
+         "run_id": "44aebc46-6fbb-4fc1-9c05-b85ab8f92451",
+         "start_time": 1792965601.786,
+         "status": "error",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "duration": 13260.0,
+         "investigation_status": "in_progress",
+         "run_id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+         "start_time": 1792299601.786,
+         "status": "failed",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "duration": 13200.0,
+         "investigation_status": "not_investigated",
+         "run_id": "f63fbff4-ee9e-48ac-bfc4-cb4960520bb9",
+         "start_time": 1792281601.786,
+         "status": "aborted",
+         "version": "unknown"
+        },
+        {
+         "build_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "duration": 8340.0,
+         "investigation_status": "not_investigated",
+         "run_id": "8e98b95a-00f1-4c84-a60b-cbea17e380ca",
+         "start_time": 1791946801.786,
+         "status": "passed",
+         "version": "unknown"
+        }
+       ]
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "widget-graphed",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/widgets/graphed_stats",
+     "query": {
+      "filters": "[]",
+      "view_id": "0a11ce00-0000-4000-8000-000000000020"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "widget-pytest",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/0a11ce00-0000-4000-8000-000000000020/pytest/results"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "list index out of range"
+       ],
+       "exception": "IndexError",
+       "message": "list index out of range",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "widget-pytest-results",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/views/widgets/pytest/results",
+     "query": {
+      "limit": "5",
+      "test": "no-such-test"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Views </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer> globalThis.ARGUS_VIEWS = [{\"created\": \"2026-11-01T11:00:00.000Z\", \"description\": \"Seeded view\", \"display_name\": \"Core View\", \"group_ids\": [\"34f73064-36d3-42e0-9bf8-17840d9eb352\"], \"id\": \"0a11ce00-0000-4000-8000-000000000020\", \"last_updated\": \"2026-11-01T11:00:00.000Z\", \"name\": \"core-view\", \"plan_id\": null, \"release_ids\": [\"feb3dc2e-0397-418b-a980-ddd8061bb847\"], \"tests\": [\"3ed77c66-c3b8-404f-8f43-266b75771178\", \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\", \"9b79cfa4-33d6-49c2-bd27-30733cf19490\"], \"user_id\": \"0a11ce00-0000-4000-8000-000000000001\", \"widget_settings\": \"[{\\\"position\\\": 1, \\\"type\\\": \\\"UserViewHighlights\\\", \\\"settings\\\": {}}]\"}] </script> <script defer type=\"module\" src=\"/s/dist/viewsPage.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\"active nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"viewContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Core View </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> globalThis.ARGUS_VIEW_DATA = {\"created\": \"2026-11-01T11:00:00.000Z\", \"description\": \"Seeded view\", \"display_name\": \"Core View\", \"group_ids\": [\"34f73064-36d3-42e0-9bf8-17840d9eb352\"], \"id\": \"0a11ce00-0000-4000-8000-000000000020\", \"last_updated\": \"<now>\", \"name\": \"core-view\", \"plan_id\": null, \"release_ids\": [\"feb3dc2e-0397-418b-a980-ddd8061bb847\"], \"tests\": [\"956122ec-45e2-441d-a87f-2df3e3d7ce70\", \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\", \"3ed77c66-c3b8-404f-8f43-266b75771178\", \"9b79cfa4-33d6-49c2-bd27-30733cf19490\", \"ceee1421-79db-4f1f-9eee-573968bb4ee6\", \"d62928bf-72ec-44c9-92ee-385ba917027c\"], \"user_id\": \"0a11ce00-0000-4000-8000-000000000001\", \"widget_settings\": [{\"position\": 1, \"settings\": {}, \"type\": \"UserViewHighlights\"}]}; </script> <script defer type=\"module\" src=\"/s/dist/viewDashboard.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid my-4\"> <div id=\"viewDashboard\"></div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "view-ui",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/views"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/view/core-view"
+    }
+   ]
+  }
+ ],
+ "group": "G12",
+ "name": "views-and-widgets"
+}

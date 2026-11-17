@@ -1,0 +1,841 @@
+{
+ "id": "g09_invalid_url_redirect",
+ "cases": [
+  {
+   "case": "get_unknown_top_level",
+   "request": {
+    "method": "GET",
+    "path": "/invalid"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7839477,
+    1773572407.7916472
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_top_level_trailing_slash",
+   "request": {
+    "method": "GET",
+    "path": "/invalid/"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7916834,
+    1773572407.7946804
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_nested",
+   "request": {
+    "method": "GET",
+    "path": "/invalid/nested/deeper"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7947075,
+    1773572407.7977233
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_with_query_string",
+   "request": {
+    "method": "GET",
+    "path": "/invalid?foo=bar&baz=1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7977595,
+    1773572407.822876
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_percent_encoded",
+   "request": {
+    "method": "GET",
+    "path": "/inva%6Cid"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8229296,
+    1773572407.8362958
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_with_encoded_space",
+   "request": {
+    "method": "GET",
+    "path": "/unknown%20path"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8363388,
+    1773572407.8397412
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_uppercase_existing_path",
+   "request": {
+    "method": "GET",
+    "path": "/HARDWARE"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8397708,
+    1773572407.8427296
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_context_root",
+   "request": {
+    "method": "GET",
+    "path": "/"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8427548,
+    1773572407.8449552
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "post_unknown",
+   "request": {
+    "method": "POST",
+    "path": "/invalid",
+    "auth": "admin",
+    "json": {
+     "any": "payload"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8449786,
+    1773572407.847452
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "put_unknown",
+   "request": {
+    "method": "PUT",
+    "path": "/invalid",
+    "auth": "admin",
+    "json": {
+     "any": "payload"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8474774,
+    1773572407.8494143
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "patch_unknown",
+   "request": {
+    "method": "PATCH",
+    "path": "/invalid",
+    "auth": "admin",
+    "json": {
+     "any": "payload"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8494356,
+    1773572407.8513198
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_unknown",
+   "request": {
+    "method": "DELETE",
+    "path": "/invalid",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.851338,
+    1773572407.8535721
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_with_admin_auth",
+   "request": {
+    "method": "GET",
+    "path": "/invalid",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.853606,
+    1773572407.8561358
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_with_origin",
+   "request": {
+    "method": "GET",
+    "path": "/invalid",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8561602,
+    1773572407.858066
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_accepting_html",
+   "request": {
+    "method": "GET",
+    "path": "/invalid",
+    "headers": {
+     "Accept": "text/html"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8580859,
+    1773572407.8602128
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_hardware",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1/unknown"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8602479,
+    1773572407.8626485
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_hardware_batch",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/batch/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8626845,
+    1773572407.8645499
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_teams",
+   "request": {
+    "method": "GET",
+    "path": "/teams/1/unknown"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.864572,
+    1773572407.866365
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_users",
+   "request": {
+    "method": "GET",
+    "path": "/users/1/unknown"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8663867,
+    1773572407.8682325
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_stats",
+   "request": {
+    "method": "GET",
+    "path": "/stats/unknown"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8682516,
+    1773572407.8699882
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_historic_with_too_many_segments",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2026/3/15/extra"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8700132,
+    1773572407.8717926
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_login_without_subpath",
+   "request": {
+    "method": "GET",
+    "path": "/login"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8718123,
+    1773572407.8735561
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_debug",
+   "request": {
+    "method": "GET",
+    "path": "/debug/unknown",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8735762,
+    1773572407.8752627
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_unknown_subpath_of_results",
+   "request": {
+    "method": "GET",
+    "path": "/results/unknown"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8752806,
+    1773572407.8768065
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "application_not_found_is_not_redirected",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/9999"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8768241,
+    1773572407.8915722
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "application_not_found_by_name_is_not_redirected",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=nonExistingName"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8916006,
+    1773572407.8982038
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "application_bad_request_is_not_redirected",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/id"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572407.898237,
+    1773572407.9109707
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "method_not_allowed_is_not_redirected",
+   "request": {
+    "method": "PATCH",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.9110048,
+    1773572407.9359314
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "existing_resource_is_not_redirected",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.93595,
+    1773572407.9397037
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

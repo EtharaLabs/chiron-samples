@@ -1,0 +1,52 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/stats/Stats.java (changed against State A) ===
+@@
+30  | import lombok.Getter;
+31  | import lombok.ToString;
+32  | 
+   -| /**
+   -|  * Simple POJO containing stats for a Folding@Home user: points and units.
+   -|  */
+33 +| 
+34  | @AllArgsConstructor(access = AccessLevel.PROTECTED)
+35  | @Getter
+36  | @EqualsAndHashCode
+37  | @ToString(doNotUseGetters = true)
+38  | public class Stats {
+39  | 
+   -|     /**
+   -|      * Initial value for points.
+   -|      */
+40 +|     
+41  |     protected static final long DEFAULT_POINTS = 0L;
+42  | 
+   -|     /**
+   -|      * Initial value for units.
+   -|      */
+43 +|     
+44  |     protected static final int DEFAULT_UNITS = 0;
+45  | 
+46  |     private final long points;
+47  |     private final int units;
+48  | 
+   -|     /**
+   -|      * Creates an instance of {@link Stats}.
+   -|      *
+   -|      * @param points the points
+   -|      * @param units  the units
+   -|      * @return the created {@link Stats}
+   -|      */
+49 +|     
+50  |     public static Stats create(final long points, final int units) {
+51  |         return new Stats(points, units);
+52  |     }
+53  | 
+   -|     /**
+   -|      * Checks if the {@link Stats} instance has both {@code points} set to <b>0L</b> and {@code unitsOffset} set to
+   -|      * <b>0</b>.
+   -|      *
+   -|      * @return <code>true</code> if the {@link Stats} instance is empty
+   -|      */
+54 +|     
+55  |     public boolean isEmpty() {
+56  |         return points == DEFAULT_POINTS && units == DEFAULT_UNITS;
+57  |     }

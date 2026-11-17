@@ -1,0 +1,23 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/state/ParsingState.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api.state;
+26  | 
+   -| /**
+   -|  * The various states that the system is performing with stats parsing.
+   -|  */
+27 +| 
+28  | public enum ParsingState {
+29  | 
+   -|     /**
+   -|      * System is not parsing any stats.
+   -|      */
+30 +|     
+31  |     DISABLED,
+32  | 
+   -|     /**
+   -|      * System is parsing <code>Team Competition</code> stats.
+   -|      */
+33 +|     
+34  |     ENABLED_TEAM_COMPETITION
+35  | }

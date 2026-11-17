@@ -1,0 +1,144 @@
+{
+ "id": "s3_family_06",
+ "source": "f013_query_parameter_name_case",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "upper_case_param_name",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?HARDWARENAME=ProbeHw"
+   }
+  },
+  {
+   "case": "lower_case_param_name",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwarename=ProbeHw"
+   }
+  },
+  {
+   "case": "mixed_case_param_name",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?HardwareName=ProbeHw"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "upper_case_param_name",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?HARDWARENAME=ProbeHw"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "63",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "lower_case_param_name",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwarename=ProbeHw"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "63",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "mixed_case_param_name",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?HardwareName=ProbeHw"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "63",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  }
+ ],
+ "probe": "Query parameter names are case sensitive in JAX-RS: HARDWARENAME, hardwarename and HardwareName must all leave hardwareName unbound and produce the blank-input 400, not a successful lookup."
+}

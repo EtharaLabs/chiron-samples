@@ -1,0 +1,198 @@
+{
+ "id": "s3_family_05",
+ "source": "f012_blank_query_values_and_plus",
+ "steps": [
+  {
+   "case": "setup_team",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "Probe Team"
+    }
+   }
+  },
+  {
+   "case": "param_without_equals",
+   "http": {
+    "method": "GET",
+    "path": "/teams/fields?teamName"
+   }
+  },
+  {
+   "case": "param_encoded_space_value",
+   "http": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=%20"
+   }
+  },
+  {
+   "case": "param_bare_plus_value",
+   "http": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=+"
+   }
+  },
+  {
+   "case": "param_plus_inside_value",
+   "http": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=Probe+Team"
+   }
+  },
+  {
+   "case": "param_encoded_space_inside_value",
+   "http": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=Probe%20Team"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_team",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "Probe Team"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"Probe Team\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "param_without_equals",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ''\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "55",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "param_encoded_space_value",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=%20"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ' '\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "56",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "param_bare_plus_value",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=+"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ' '\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "56",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "param_plus_inside_value",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=Probe+Team"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"Probe Team\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-1413667955\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "param_encoded_space_inside_value",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=Probe%20Team"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"Probe Team\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-1413667955\""
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "A parameter present without '=', a percent-encoded space value, a bare '+' value, and '+' inside a value: RESTEasy does not translate '+' to a space in a query string, so a team named with a space is not found through 'Probe+Team'."
+}

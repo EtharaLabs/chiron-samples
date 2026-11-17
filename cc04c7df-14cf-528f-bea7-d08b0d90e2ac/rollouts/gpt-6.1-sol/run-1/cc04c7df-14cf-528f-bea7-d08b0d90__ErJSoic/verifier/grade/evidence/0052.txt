@@ -1,0 +1,35 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/CompetitionSummary.java (changed against State A) ===
+@@
+36  | import lombok.Setter;
+37  | import lombok.ToString;
+38  | 
+   -| /**
+   -|  * Summary of the stats of all {@link me.zodac.folding.api.tc.Team}s and their {@link me.zodac.folding.api.tc.User}s in
+   -|  * the <code>Team Competition</code>.
+   -|  */
+39 +| 
+40  | @NoArgsConstructor
+41  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+42  | @Getter
+@@
+50  |     private int totalUnits;
+51  |     private Collection<TeamSummary> teams = new ArrayList<>();
+52  | 
+   -|     /**
+   -|      * Creates a {@link CompetitionSummary} from a {@link Collection} of {@link TeamSummary}s.
+   -|      *
+   -|      * <p>
+   -|      * The {@link TeamSummary}s are not ranked, so we will rank them using {@link IntegerRankingCollector}, by comparing
+   -|      * the multiplied points of each {@link TeamSummary}.
+   -|      *
+   -|      * <p>
+   -|      * The points, multiplied points and units from each {@link TeamSummary} are added up to give the total competition
+   -|      * points, multiplied points and units.
+   -|      *
+   -|      * @param teams the {@link TeamSummary}s taking part in the <code>Team Competition</code>
+   -|      * @return the created {@link CompetitionSummary}
+   -|      */
+53 +|     
+54  |     public static CompetitionSummary create(final Collection<TeamSummary> teams) {
+55  |         int totalUnits = 0;
+56  |         long totalPoints = 0L;

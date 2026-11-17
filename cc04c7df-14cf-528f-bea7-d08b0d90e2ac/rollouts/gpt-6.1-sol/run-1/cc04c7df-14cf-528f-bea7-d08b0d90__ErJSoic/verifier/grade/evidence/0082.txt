@@ -1,0 +1,31 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/cache/HardwareCache.java (changed against State A) ===
+@@
+26  | 
+27  | import me.zodac.folding.api.tc.Hardware;
+28  | 
+   -| /**
+   -|  * Implementation of {@link BaseCache} for {@link Hardware}s.
+   -|  *
+   -|  * <p>
+   -|  * <b>key:</b> {@link Hardware} ID
+   -|  *
+   -|  * <p>
+   -|  * <b>value:</b> {@link Hardware}
+   -|  */
+29 +| 
+30  | public final class HardwareCache extends BaseCache<Hardware> {
+31  | 
+32  |     private static final HardwareCache INSTANCE = new HardwareCache();
+@@
+35  |         super();
+36  |     }
+37  | 
+   -|     /**
+   -|      * Returns a singleton instance of {@link HardwareCache}.
+   -|      *
+   -|      * @return the {@link HardwareCache}
+   -|      */
+38 +|     
+39  |     public static HardwareCache getInstance() {
+40  |         return INSTANCE;
+41  |     }

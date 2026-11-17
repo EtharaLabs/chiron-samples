@@ -1,0 +1,212 @@
+{
+ "id": "s3_family_18",
+ "source": "f026_request_bodies_where_none_is_expected",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "get_collection_with_body",
+   "http": {
+    "method": "GET",
+    "path": "/hardware",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "{\"ignored\":true}"
+   }
+  },
+  {
+   "case": "delete_with_body",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/1",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"force\":true}"
+   }
+  },
+  {
+   "case": "manual_update_with_body",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"async\":true}"
+   }
+  },
+  {
+   "case": "debug_caches_with_body",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"anything\":1}"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "get_collection_with_body",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "body": "{\"ignored\":true}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"ProbeHw\",\n    \"displayName\": \"ProbeHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "187",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-951768951\"",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "delete_with_body",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"force\":true}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "DELETE",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "manual_update_with_body",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"async\":true}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "debug_caches_with_body",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"anything\":1}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Sending a JSON body with methods whose resource methods take no entity: the body must be ignored, not rejected and not bound to anything."
+}

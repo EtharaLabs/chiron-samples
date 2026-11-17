@@ -1,0 +1,162 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/Category.java (changed against State A) ===
+@@
+33  | import java.util.stream.Stream;
+34  | import me.zodac.folding.api.util.EnvironmentVariableUtils;
+35  | 
+   -| /**
+   -|  * Lists the possible {@link Team} categories for a {@link User} taking part in the <code>Team Competition</code>.
+   -|  *
+   -|  * <p>
+   -|  * None of these have a user-friendly display name defined, as those will be handled by the frontend.
+   -|  */
+36 +| 
+37  | public enum Category {
+38  | 
+   -|     /**
+   -|      * {@link User} is using an {@link HardwareMake#AMD} {@link HardwareType#GPU} as their {@link Hardware}.
+   -|      */
+39 +|     
+40  |     AMD_GPU(getCategoryCount("USERS_IN_AMD_GPU"), HardwareMake.AMD, HardwareType.GPU),
+41  | 
+   -|     /**
+   -|      * {@link User} is using an {@link HardwareMake#NVIDIA} {@link HardwareType#GPU} as their {@link Hardware}.
+   -|      */
+42 +|     
+43  |     NVIDIA_GPU(getCategoryCount("USERS_IN_NVIDIA_GPU"), HardwareMake.NVIDIA, HardwareType.GPU),
+44  | 
+   -|     /**
+   -|      * {@link User} is permitted to use any {@link HardwareMake} and {@link HardwareType} as their {@link Hardware}.
+   -|      */
+45 +|     
+46  |     WILDCARD(getCategoryCount("USERS_IN_WILDCARD"), HardwareMake.getAllValues(), HardwareType.getAllValues()),
+47  | 
+   -|     /**
+   -|      * Not a valid {@link Category}.
+   -|      */
+48 +|     
+49  |     INVALID(0, Collections.emptySet(), Collections.emptySet());
+50  | 
+51  |     private static final int DEFAULT_USERS_PER_CATEGORY = 1;
+@@
+58  |     private final EnumSet<HardwareMake> supportedHardwareMakes;
+59  |     private final EnumSet<HardwareType> supportedHardwareTypes;
+60  | 
+   -|     /**
+   -|      * Constructs a {@link Category}.
+   -|      *
+   -|      * @param permittedUsers the maximum number of {@link User}s permitted in the {@link Category}
+   -|      * @param hardwareMakes  the supported {@link HardwareMake}s for a piece of {@link Hardware} used by a {@link User}
+   -|      * @param hardwareTypes  the supported {@link HardwareType}s for a piece of {@link Hardware} used by a {@link User}
+   -|      */
+61 +|     
+62  |     Category(final int permittedUsers, final Collection<HardwareMake> hardwareMakes, final Collection<HardwareType> hardwareTypes) {
+63  |         this.permittedUsers = permittedUsers;
+64  |         supportedHardwareMakes = hardwareMakes.isEmpty() ? EnumSet.noneOf(HardwareMake.class) : EnumSet.copyOf(hardwareMakes);
+65  |         supportedHardwareTypes = hardwareTypes.isEmpty() ? EnumSet.noneOf(HardwareType.class) : EnumSet.copyOf(hardwareTypes);
+66  |     }
+67  | 
+   -|     /**
+   -|      * Constructs a {@link Category}.
+   -|      *
+   -|      * @param permittedUsers the maximum number of {@link User}s permitted in the {@link Category}
+   -|      * @param hardwareMake   a supported {@link HardwareMake} for a piece of {@link Hardware} used by a {@link User}
+   -|      * @param hardwareType   a supported {@link HardwareType} for a piece of {@link Hardware} used by a {@link User}
+   -|      */
+68 +|     
+69  |     Category(final int permittedUsers, final HardwareMake hardwareMake, final HardwareType hardwareType) {
+70  |         this.permittedUsers = permittedUsers;
+71  |         supportedHardwareMakes = EnumSet.of(hardwareMake);
+72  |         supportedHardwareTypes = EnumSet.of(hardwareType);
+73  |     }
+74  | 
+   -|     /**
+   -|      * Retrieve all available {@link Category}s (excluding {@link Category#INVALID}).
+   -|      *
+   -|      * <p>
+   -|      * Should be used instead of {@link Category#values()}, as that recalculates the array for each call,
+   -|      * while this method uses a static {@link Collection}.
+   -|      *
+   -|      * @return a {@link Collection} of all {@link Category}s
+   -|      */
+75 +|     
+76  |     public static Collection<Category> getAllValues() {
+77  |         return ALL_VALUES;
+78  |     }
+79  | 
+   -|     /**
+   -|      * Calculates the total number of {@link User}s permitted in a {@link Team} as the sum of the permitted amounts for each {@link Category}.
+   -|      *
+   -|      * @return the total number of {@link User}s for all {@link Category}s
+   -|      */
+80 +|     
+81  |     public static int maximumPermittedAmountForAllCategories() {
+82  |         return ALL_VALUES.stream()
+83  |             .mapToInt(value -> value.permittedUsers)
+84  |             .sum();
+85  |     }
+86  | 
+   -|     /**
+   -|      * Retrieve a {@link Category} based on the input {@link String}. The search is case-insensitive.
+   -|      *
+   -|      * @param input the {@link Category} as a {@link String}
+   -|      * @return the matching {@link Category}, or {@link Category#INVALID} if none is found
+   -|      */
+87 +|     
+88  |     public static Category get(final String input) {
+89  |         return ALL_VALUES
+90  |             .stream()
+@@
+93  |             .orElse(Category.INVALID);
+94  |     }
+95  | 
+   -|     /**
+   -|      * Returns the number of permitted {@link User}s per team in the {@link Category}.
+   -|      *
+   -|      * @return the number of permitted {@link User}s
+   -|      */
+96 +|     
+97  |     public int permittedUsers() {
+98  |         return permittedUsers;
+99  |     }
+100  | 
+   -|     /**
+   -|      * Checks if the provided {@link HardwareMake} is supported by the {@link Category}.
+   -|      *
+   -|      * @param hardwareMake the {@link HardwareMake} to check
+   -|      * @return <b>true</b> if the {@link HardwareMake} is supported
+   -|      */
+101 +|     
+102  |     public boolean isHardwareMakeSupported(final HardwareMake hardwareMake) {
+103  |         return supportedHardwareMakes.contains(hardwareMake);
+104  |     }
+105  | 
+   -|     /**
+   -|      * Checks if the provided {@link HardwareType} is supported by the {@link Category}.
+   -|      *
+   -|      * @param hardwareType the {@link HardwareType} to check
+   -|      * @return <b>true</b> if the {@link HardwareType} is supported
+   -|      */
+106 +|     
+107  |     public boolean isHardwareTypeSupported(final HardwareType hardwareType) {
+108  |         return supportedHardwareTypes.contains(hardwareType);
+109  |     }
+110  | 
+   -|     /**
+   -|      * Returns the supported {@link HardwareMake}s in the {@link Category}.
+   -|      *
+   -|      * @return a {@link Set} of the supported {@link HardwareMake}s
+   -|      */
+111 +|     
+112  |     public Set<HardwareMake> supportedHardwareMakes() {
+113  |         return supportedHardwareMakes;
+114  |     }
+115  | 
+   -|     /**
+   -|      * Returns the supported {@link HardwareType}s in the {@link Category}.
+   -|      *
+   -|      * @return a {@link Set} of the supported {@link HardwareType}s
+   -|      */
+116 +|     
+117  |     public Set<HardwareType> supportedHardwareTypes() {
+118  |         return supportedHardwareTypes;
+119  |     }

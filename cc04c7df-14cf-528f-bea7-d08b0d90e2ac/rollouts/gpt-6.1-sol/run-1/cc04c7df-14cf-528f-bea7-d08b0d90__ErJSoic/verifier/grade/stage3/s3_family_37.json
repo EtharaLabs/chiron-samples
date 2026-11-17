@@ -1,0 +1,199 @@
+{
+ "id": "s3_family_37",
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "165",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572407.1466067,
+    1773572407.2618756
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "hardware_by_name_with_admin_auth",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=ProbeHw",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1256885198\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "content-type": "application/json",
+     "content-length": "165",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572407.261913,
+    1773572407.268225
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_with_readonly_auth",
+   "request": {
+    "method": "GET",
+    "path": "/stats",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "86",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}"
+   },
+   "clock_window": [
+    1773572407.2682853,
+    1773572407.2775674
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "monthly_result_with_unparseable_auth",
+   "request": {
+    "method": "GET",
+    "path": "/results/result/2026/3",
+    "auth": {
+     "raw": "Basic !!!!"
+    }
+   },
+   "compare": "status",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "323",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"AMD_GPU\": [],\n    \"WILDCARD\": [],\n    \"NVIDIA_GPU\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 3,\n      \"day\": 15\n    },\n    \"time\": {\n      \"hour\": 11,\n      \"minute\": 0,\n      \"second\": 7,\n      \"nano\": 291708041\n    }\n  }\n}"
+   },
+   "clock_window": [
+    1773572407.2775981,
+    1773572407.2969902
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "teams_with_bare_scheme",
+   "request": {
+    "method": "GET",
+    "path": "/teams",
+    "auth": {
+     "raw": "Basic "
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.2970128,
+    1773572407.301813
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "historic_with_bearer_token",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2026",
+    "auth": {
+     "raw": "Bearer abc"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.3018606,
+    1773572407.3094685
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

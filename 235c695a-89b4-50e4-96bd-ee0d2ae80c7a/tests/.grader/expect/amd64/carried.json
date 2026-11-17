@@ -1,0 +1,7 @@
+{
+ "S2-ci-test-sanitizers": {
+  "cases": 67,
+  "from_arch": "arm64",
+  "reason": "AddressSanitizer cannot run under qemu-user emulation, so the amd64 recordings leave the sanitizer job out; its arm64 values name no architecture"
+ }
+}

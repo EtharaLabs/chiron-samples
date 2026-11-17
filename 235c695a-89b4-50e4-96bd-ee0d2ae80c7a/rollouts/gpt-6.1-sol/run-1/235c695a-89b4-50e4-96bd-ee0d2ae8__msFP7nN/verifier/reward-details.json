@@ -1,0 +1,379 @@
+{
+  "reward": {
+    "kind": "group",
+    "score": 0.0,
+    "aggregation": "weighted-mean",
+    "components": [
+      {
+        "name": "test_output",
+        "weight": 4.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "S1-make-build-absent",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S1-make-build-absent"
+            },
+            {
+              "name": "S1-cmake-default-installs",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S1-cmake-default-installs"
+            },
+            {
+              "name": "S1-no-embedded-old-build",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S1-no-embedded-old-build"
+            },
+            {
+              "name": "S1-no-build-forwarding",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S1-no-build-forwarding"
+            },
+            {
+              "name": "S1-no-verifier-awareness",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S1-no-verifier-awareness"
+            },
+            {
+              "name": "S2-ci-test-build",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-test-build"
+            },
+            {
+              "name": "S2-ci-test-compile",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-test-compile"
+            },
+            {
+              "name": "S2-ci-test-sanitizers",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-test-sanitizers"
+            },
+            {
+              "name": "S2-ci-extra-builds",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-extra-builds"
+            },
+            {
+              "name": "S2-ci-wheels",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-wheels"
+            },
+            {
+              "name": "S2-ci-source-vendor",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-source-vendor"
+            },
+            {
+              "name": "S2-ci-docs",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-ci-docs"
+            },
+            {
+              "name": "S2-suite-frontends",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-suite-frontends"
+            },
+            {
+              "name": "S2-suite-passes",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-suite-passes"
+            },
+            {
+              "name": "S2-suite-techmap-arch",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-suite-techmap-arch"
+            },
+            {
+              "name": "S2-suite-sim-formal",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-suite-sim-formal"
+            },
+            {
+              "name": "S2-command-reference",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-command-reference"
+            },
+            {
+              "name": "S2-compiled-features",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-compiled-features"
+            },
+            {
+              "name": "S2-install-layout",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-install-layout"
+            },
+            {
+              "name": "S2-binary-abi",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-binary-abi"
+            },
+            {
+              "name": "S2-consumer-routes",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-consumer-routes"
+            },
+            {
+              "name": "S2-option-matrix",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "S2-option-matrix"
+            },
+            {
+              "name": "F-alt-installed-consumer",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-alt-installed-consumer"
+            },
+            {
+              "name": "F-readonly-outside-build",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-readonly-outside-build"
+            },
+            {
+              "name": "F-edit-share-file",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-edit-share-file"
+            },
+            {
+              "name": "F-off-readline",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-off-readline"
+            },
+            {
+              "name": "F-alt-relocated-share",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-alt-relocated-share"
+            },
+            {
+              "name": "F-static-consumer",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-static-consumer"
+            },
+            {
+              "name": "F-off-tcl",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-off-tcl"
+            },
+            {
+              "name": "F-edit-python-tool",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-edit-python-tool"
+            },
+            {
+              "name": "F-edit-cellhelp",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-edit-cellhelp"
+            },
+            {
+              "name": "F-alt-python-tools",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-alt-python-tools"
+            },
+            {
+              "name": "F-datdir-copied-binary",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-datdir-copied-binary"
+            },
+            {
+              "name": "F-install-without-build",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-install-without-build"
+            },
+            {
+              "name": "F-delete-share-product",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-delete-share-product"
+            },
+            {
+              "name": "F-wasi-default",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-wasi-default"
+            },
+            {
+              "name": "F-edit-config-template",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-edit-config-template"
+            },
+            {
+              "name": "F-usr-libdir",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-usr-libdir"
+            },
+            {
+              "name": "F-help-source",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-help-source"
+            },
+            {
+              "name": "F-off-plugins",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-off-plugins"
+            },
+            {
+              "name": "F-off-zlib",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-off-zlib"
+            },
+            {
+              "name": "F-debug-install",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-debug-install"
+            },
+            {
+              "name": "F-alt-noabc-synth",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-alt-noabc-synth"
+            },
+            {
+              "name": "F-noop-rebuild",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-noop-rebuild"
+            },
+            {
+              "name": "F-version-checkout",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-version-checkout"
+            },
+            {
+              "name": "F-edit-generator",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-edit-generator"
+            },
+            {
+              "name": "F-tools-relocated",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-tools-relocated"
+            },
+            {
+              "name": "F-debug-backtrace",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-debug-backtrace"
+            },
+            {
+              "name": "F-debug-banner",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "F-debug-banner"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      },
+      {
+        "name": "vetoed",
+        "weight": 0.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "vetoed",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "veto fired: S2-ci-test-build, S2-ci-test-compile, S2-ci-test-sanitizers"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      }
+    ]
+  }
+}

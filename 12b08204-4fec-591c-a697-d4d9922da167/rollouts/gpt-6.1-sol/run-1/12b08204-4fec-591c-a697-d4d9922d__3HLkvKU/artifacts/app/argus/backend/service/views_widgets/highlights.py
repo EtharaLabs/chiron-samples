@@ -1,0 +1,321 @@
+from fastapi import Request
+from dataclasses import dataclass
+from datetime import datetime, UTC
+from uuid import UUID
+import re
+from argus.backend.error_handlers import APIException
+from argus.backend.db import ScyllaCluster
+from argus.backend.models.view_widgets import WidgetHighlights, WidgetComment
+from argus.backend.models.web import ArgusNotificationTypes, ArgusNotificationSourceTypes, ArgusUserView, User
+from argus.backend.service.notification_manager import NotificationManagerService
+from argus.backend.util.common import strip_html_tags
+
+class NotFound(APIException):
+    pass
+
+class Forbidden(APIException):
+    pass
+
+@dataclass
+class Highlight:
+    view_id: UUID
+    index: int
+    created_at: datetime
+    creator_id: UUID
+    content: str
+    archived_at: datetime
+    comments_count: int
+    group: str | None
+
+    @classmethod
+    def from_db_model(cls, model: WidgetHighlights):
+        created_at = model.created_at.replace(tzinfo=UTC).timestamp()
+        archived_at = model.archived_at.replace(tzinfo=UTC).timestamp() if model.archived_at else None
+        return cls(view_id=model.view_id, index=model.index, created_at=created_at, creator_id=model.creator_id, content=model.content, archived_at=archived_at, comments_count=model.comments_count, group=model.group)
+
+@dataclass
+class ActionItem(Highlight):
+    assignee_id: UUID | None
+    completed: bool
+
+    @classmethod
+    def from_db_model(cls, model: WidgetHighlights):
+        created_at = model.created_at.replace(tzinfo=UTC).timestamp()
+        archived_at = model.archived_at.replace(tzinfo=UTC).timestamp() if model.archived_at else None
+        return cls(view_id=model.view_id, index=model.index, created_at=created_at, creator_id=model.creator_id, content=model.content, archived_at=archived_at, comments_count=model.comments_count, group=model.group or 'General', assignee_id=model.assignee_id, completed=model.completed)
+
+def _coerce_uuid(value: UUID | str | None) -> UUID | None:
+    return UUID(value) if isinstance(value, str) else value
+
+@dataclass
+class CommentCreate:
+    view_id: UUID
+    index: int
+    highlight_created_at: float
+    content: str
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+@dataclass
+class CommentUpdate:
+    view_id: UUID
+    index: int
+    highlight_created_at: float
+    created_at: float
+    content: str
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+@dataclass
+class CommentDelete:
+    view_id: UUID
+    index: int
+    highlight_created_at: float
+    created_at: float
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+
+@dataclass
+class Comment:
+    view_id: UUID
+    index: int
+    highlight_created_at: datetime
+    created_at: datetime
+    creator_id: UUID
+    content: str
+
+    @classmethod
+    def from_db_model(cls, model: WidgetComment):
+        highlight_created_at = model.highlight_at.replace(tzinfo=UTC).timestamp()
+        created_at = model.created_at.replace(tzinfo=UTC).timestamp()
+        return cls(view_id=model.view_id, index=model.index, highlight_created_at=highlight_created_at, created_at=created_at, creator_id=model.creator_id, content=model.content)
+
+@dataclass
+class HighlightCreate:
+    view_id: UUID
+    index: int
+    content: str
+    is_task: bool
+    group: str | None = None
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+@dataclass
+class HighlightGroupCreate:
+    view_id: UUID
+    index: int
+    name: str
+    items: list[str]
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+@dataclass
+class HighlightArchive:
+    view_id: UUID
+    index: int
+    created_at: float
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+@dataclass
+class HighlightUpdate:
+    view_id: UUID
+    index: int
+    created_at: float
+    content: str
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+@dataclass
+class HighlightSetAssignee:
+    view_id: UUID
+    index: int
+    created_at: float
+    assignee_id: UUID | None = None
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+        if self.assignee_id and (not isinstance(self.assignee_id, UUID)):
+            self.assignee_id = UUID(self.assignee_id)
+
+@dataclass
+class HighlightSetCompleted:
+    view_id: UUID
+    index: int
+    created_at: float
+    completed: bool
+
+    def __post_init__(self):
+        self.view_id = _coerce_uuid(self.view_id)
+        self.index = int(self.index)
+
+class HighlightsService:
+
+    def __init__(self) -> None:
+        self.cluster = ScyllaCluster.get()
+        self.RE_MENTION = '@[\\w-]+'
+
+    def _process_mentions(self, content: str, *, request: Request=None) -> set:
+        """Process mentions from content and return set of users to notify."""
+        content_stripped = strip_html_tags(content)
+        mentions = set()
+        for potential_mention in re.findall(self.RE_MENTION, content_stripped):
+            if (user := User.exists_by_name(potential_mention.lstrip('@'))):
+                mentions.add(user) if user.id != request.state.user.id else None
+        return (mentions, content_stripped)
+
+    def _send_highlight_notifications(self, mentions: set, content: str, view_id: UUID, sender_id: UUID, is_action_item: bool, is_comment: bool=False, *, request: Request=None):
+        """Send notifications to mentioned users."""
+        view = ArgusUserView.get(id=view_id)
+        highlight_type = 'action item' if is_action_item else 'highlight'
+        for mention in mentions:
+            NotificationManagerService().send_notification(receiver=mention.id, sender=sender_id, notification_type=ArgusNotificationTypes.ViewHighlightMention, source_type=ArgusNotificationSourceTypes.ViewActionItem if is_action_item else ArgusNotificationSourceTypes.ViewHighlight, source_id=view_id, source_message=content, content_params={'username': request.state.user.username, 'view_id': view.id, 'view_name': view.name, 'display_name': view.display_name, 'highlight_type': f"{highlight_type}{(' comment' if is_comment else '')}", 'message': content}, request=request)
+
+    def create(self, creator: UUID, payload: HighlightCreate, *, request: Request=None) -> Highlight | ActionItem:
+        mentions, content_stripped = self._process_mentions(payload.content, request=request)
+        group_value = None
+        if payload.is_task:
+            group_candidate = payload.group or 'General'
+            group_value = strip_html_tags(group_candidate).strip() or 'General'
+        highlight = WidgetHighlights(view_id=payload.view_id, index=payload.index, created_at=datetime.now(UTC), creator_id=creator, content=content_stripped, group=group_value, completed=None if not payload.is_task else False, archived_at=datetime.fromtimestamp(0, tz=UTC), comments_count=0)
+        highlight.save()
+        self._send_highlight_notifications(mentions, content_stripped, payload.view_id, creator, payload.is_task, request=request)
+        if payload.is_task:
+            return ActionItem.from_db_model(highlight)
+        return Highlight.from_db_model(highlight)
+
+    def create_group(self, creator: UUID, payload: HighlightGroupCreate, *, request: Request=None) -> list[ActionItem]:
+        if not payload.items:
+            return []
+        created_items: list[ActionItem] = []
+        group_name_raw = strip_html_tags(payload.name).strip()
+        if not group_name_raw:
+            raise APIException('Group name is required')
+        group_name = group_name_raw
+        for item in payload.items:
+            item_text_raw = strip_html_tags(item).strip()
+            if not item_text_raw:
+                continue
+            highlight = WidgetHighlights(view_id=payload.view_id, index=payload.index, created_at=datetime.now(UTC), creator_id=creator, assignee_id=creator, content=item_text_raw, group=group_name, completed=False, archived_at=datetime.fromtimestamp(0, tz=UTC), comments_count=0)
+            highlight.save()
+            created_items.append(ActionItem.from_db_model(highlight))
+        return created_items
+
+    def archive_highlight(self, payload: HighlightArchive, *, request: Request=None):
+        entry = WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=datetime.fromtimestamp(payload.created_at, tz=UTC)).first()
+        if entry:
+            entry.archived_at = datetime.now(UTC)
+            entry.save()
+
+    def unarchive_highlight(self, payload: HighlightArchive, *, request: Request=None):
+        entry = WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=datetime.fromtimestamp(payload.created_at, tz=UTC)).first()
+        if entry:
+            entry.archived_at = datetime.fromtimestamp(0, tz=UTC)
+            entry.save()
+
+    def update_highlight(self, user_id: UUID, payload: HighlightUpdate, *, request: Request=None) -> Highlight | ActionItem:
+        entry = WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=datetime.fromtimestamp(payload.created_at, tz=UTC)).first()
+        if not entry:
+            raise NotFound('Highlight not found')
+        if entry.creator_id != user_id:
+            raise Forbidden('Not authorized to update highlight')
+        mentions, content_stripped = self._process_mentions(payload.content, request=request)
+        entry.content = content_stripped
+        entry.save()
+        self._send_highlight_notifications(mentions, content_stripped, payload.view_id, user_id, entry.completed is not None, request=request)
+        if entry.completed is None:
+            return Highlight.from_db_model(entry)
+        else:
+            return ActionItem.from_db_model(entry)
+
+    def set_assignee(self, payload: HighlightSetAssignee, *, request: Request=None) -> ActionItem:
+        entry = WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=datetime.fromtimestamp(payload.created_at, tz=UTC)).first()
+        if not entry or entry.completed is None:
+            raise NotFound('ActionItem not found')
+        if payload.assignee_id is None:
+            entry.assignee_id = None
+        else:
+            entry.assignee_id = payload.assignee_id
+        entry.save()
+        return ActionItem.from_db_model(entry)
+
+    def set_completed(self, payload: HighlightSetCompleted, *, request: Request=None) -> ActionItem:
+        entry = WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=datetime.fromtimestamp(payload.created_at, tz=UTC)).first()
+        if not entry or entry.completed is None:
+            raise NotFound('ActionItem not found')
+        entry.completed = payload.completed
+        entry.save()
+        return ActionItem.from_db_model(entry)
+
+    def get_highlights(self, view_id: UUID, index: int, *, request: Request=None) -> tuple[list[Highlight], list[ActionItem]]:
+        entries = WidgetHighlights.find(view_id=view_id, index=index)
+        highlights = [Highlight.from_db_model(entry) for entry in entries if entry.completed is None]
+        action_items = [ActionItem.from_db_model(entry) for entry in entries if entry.completed is not None]
+        return (highlights, action_items)
+
+    def create_comment(self, creator_id: UUID, payload: CommentCreate, *, request: Request=None) -> Comment:
+        highlight_created_at = datetime.fromtimestamp(payload.highlight_created_at, tz=UTC)
+        highlight = WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=highlight_created_at).first()
+        if not highlight:
+            raise NotFound('Highlight not found')
+        created_at = datetime.now(UTC)
+        mentions, content_stripped = self._process_mentions(payload.content, request=request)
+        comment = WidgetComment(view_id=payload.view_id, index=payload.index, highlight_at=highlight_created_at, created_at=created_at, creator_id=creator_id, content=payload.content)
+        comment.save()
+        highlight.comments_count += 1
+        highlight.save()
+        self._send_highlight_notifications(mentions, content_stripped, payload.view_id, creator_id, highlight.completed is not None, is_comment=True, request=request)
+        return Comment.from_db_model(comment)
+
+    def update_comment(self, user_id: UUID, payload: CommentUpdate, *, request: Request=None) -> Comment:
+        highlight_created_at = datetime.fromtimestamp(payload.highlight_created_at, tz=UTC)
+        created_at = datetime.fromtimestamp(payload.created_at, tz=UTC)
+        comment = WidgetComment.find(view_id=payload.view_id, index=payload.index, highlight_at=highlight_created_at, created_at=created_at).first()
+        if not comment:
+            raise NotFound('Comment not found')
+        if comment.creator_id != user_id:
+            raise Forbidden('Not authorized to update comment')
+        mentions, content_stripped = self._process_mentions(payload.content, request=request)
+        comment.content = payload.content
+        comment.save()
+        self._send_highlight_notifications(mentions, content_stripped, payload.view_id, user_id, WidgetHighlights.find(view_id=payload.view_id, index=payload.index, created_at=highlight_created_at).first().completed is not None, is_comment=True, request=request)
+        return Comment.from_db_model(comment)
+
+    def delete_comment(self, user_id: UUID, payload: CommentDelete, *, request: Request=None):
+        index = int(payload.index)
+        highlight_created_at = datetime.fromtimestamp(payload.highlight_created_at, tz=UTC)
+        created_at = datetime.fromtimestamp(payload.created_at, tz=UTC)
+        comment = WidgetComment.find(view_id=payload.view_id, index=index, highlight_at=highlight_created_at, created_at=created_at).first()
+        if not comment:
+            raise NotFound('Comment not found')
+        if comment.creator_id != user_id:
+            raise Forbidden('Not authorized to delete comment')
+        comment.delete()
+        highlight = WidgetHighlights.find(view_id=payload.view_id, index=index, created_at=highlight_created_at).first()
+        if not highlight:
+            raise NotFound('Highlight not found')
+        highlight.comments_count -= 1
+        highlight.save()
+
+    def get_comments(self, view_id: UUID, index: int, highlight_created_at: float, *, request: Request=None) -> list[Comment]:
+        highlight_created_at = datetime.fromtimestamp(highlight_created_at, tz=UTC)
+        comments = WidgetComment.find(view_id=view_id, index=index, highlight_at=highlight_created_at)
+        return [Comment.from_db_model(c) for c in comments]
+
+    def send_action_notification(self, sender_id: UUID, username: str, view_id: UUID, assignee_id: UUID, action: str, *, request: Request=None):
+        view = ArgusUserView.get(id=view_id)
+        NotificationManagerService().send_notification(receiver=assignee_id, sender=sender_id, notification_type=ArgusNotificationTypes.ViewActionItemAssignee, source_type=ArgusNotificationSourceTypes.ViewActionItem, source_id=view_id, source_message='', content_params={'username': username, 'view_name': view.name, 'display_name': view.display_name, 'action': action}, request=request)

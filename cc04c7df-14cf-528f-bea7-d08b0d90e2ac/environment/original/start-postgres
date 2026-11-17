@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Start a private PostgreSQL 16 for the application and (re)create folding_db from the original's
+# init SQL, with the same users every start uses: admin root/shroot, read-only root2/shroot2,
+# database owner folding_user/shroot. Usage: start-postgres [port]   (default 5432)
+set -euo pipefail
+port="${1:-5432}"
+data="${PGDATA_DIR:-$HOME/.folding-pg}"
+bin=/usr/lib/postgresql/16/bin
+init=/app/docker/postgres/scripts/init
+[ -d "$init" ] || init=/opt/original/init
+if [ ! -f "$data/PG_VERSION" ]; then
+  mkdir -p "$data"
+  printf 'postgres\n' > "$data.pw"
+  "$bin/initdb" -D "$data" -A md5 -U postgres --pwfile="$data.pw" -E UTF8 --locale=C.UTF-8 > /dev/null
+  rm -f "$data.pw"
+fi
+"$bin/pg_ctl" -D "$data" -w -l "$data.log" -o "-c listen_addresses=127.0.0.1 -c port=$port -k /tmp" start > /dev/null 2>&1 || true
+export PGPASSWORD=postgres
+psql -h 127.0.0.1 -p "$port" -U postgres -q -v ON_ERROR_STOP=1 -d postgres <<SQL
+DROP DATABASE IF EXISTS folding_db WITH (FORCE);
+DO \$\$BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname='folding_user') THEN CREATE ROLE folding_user LOGIN PASSWORD 'shroot'; END IF; END\$\$;
+CREATE DATABASE folding_db OWNER folding_user;
+SQL
+export PGPASSWORD=shroot
+for sql in "$init"/*.sql; do
+  sed -e 's/%ADMIN_USERNAME%/root/g' -e 's/%ADMIN_PASSWORD%/shroot/g' \
+      -e 's/%READ_ONLY_USERNAME%/root2/g' -e 's/%READ_ONLY_PASSWORD%/shroot2/g' "$sql" |
+    psql -h 127.0.0.1 -p "$port" -U folding_user -d folding_db -q -v ON_ERROR_STOP=1
+done
+echo "folding_db ready on 127.0.0.1:$port"

@@ -1,0 +1,77 @@
+schema_version = "1.4"
+reward_type = "bounded_continuous"
+artifacts = [
+  { source = "/app", exclude = [".venv", "venv", "node_modules", "__pycache__", ".pytest_cache", ".ruff_cache", ".mypy_cache"] },
+]
+
+[task]
+name = "ethara/12b08204-4fec-591c-a697-d4d9922da167"
+version = "1.0.0"
+description = "Migrate the Argus web backend (scylladb/argus) from Flask and uWSGI to FastAPI on Starlette served by Gunicorn with Uvicorn workers, offline, keeping every observable behaviour of the original application."
+authors = [{ name = "elhaan.daud", email = "elhaan.daud@ethara.ai" }]
+keywords = ["framework-migration", "flask", "fastapi", "starlette", "gunicorn", "uwsgi", "python", "scylladb", "behaviour-preservation"]
+
+[metadata]
+platforms = ["linux/amd64", "linux/arm64"]
+category = "framework-migration"
+license = "Apache-2.0"
+upstream = "https://github.com/scylladb/argus"
+state_a = "the Argus web backend on Flask and uWSGI, Python 3.12, against ScyllaDB"
+state_b = "the same backend on FastAPI and Starlette, served by Gunicorn with Uvicorn workers, with every observable behaviour kept"
+scale = "the reference migration changes 122 files (+5,738 -5,315 lines)"
+tags = ["behaviour-preserving", "offline", "single-turn"]
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-11-01"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "https://github.com/scylladb/argus"
+fork_ancestry_digest = "sha256:de836a3a71f07c0602b60ca89fd89d670e4810f90cf5f70af97b555da22096bc"
+base_commit = "8a0367430a024b78caff70cfb7059807b3e127da"
+event_timestamp = "2026-08-13T19:47:08Z"
+
+[verifier]
+timeout_sec = 3600.0
+user = "root"
+environment_mode = "separate"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+
+[verifier.env]
+ANTHROPIC_BASE_URL = "${ANTHROPIC_BASE_URL:-https://api.anthropic.com}"
+ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY:-}"
+OPENAI_BASE_URL = "${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+LITELLM_LOCAL_MODEL_COST_MAP = "True"
+
+[verifier.environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:12b08204-verifier@sha256:64baab927fbb840c258bc45484839a627917f1d9e0d1252769979988fe1369a6"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+build_timeout_sec = 1800.0
+cpus = 4
+memory_mb = 8192
+storage_mb = 20480
+gpus = 0
+
+[agent]
+timeout_sec = 86400.0
+user = 1000
+network_mode = "no-network"
+
+[environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:12b08204-environment@sha256:cfd1eadc88558cc951b40ac8a67aa11bcdfba5df6993f355bbf51b317459550a"
+network_mode = "allowlist"
+allowed_hosts = ["cdn-ubi.redhat.com", "astral.sh", "releases.astral.sh", "github.com", "objects.githubusercontent.com", "release-assets.githubusercontent.com", "pypi.org", "files.pythonhosted.org"]
+build_timeout_sec = 1800.0
+cpus = 4
+memory_mb = 8192
+storage_mb = 20480
+gpus = 0
+os = "linux"
+
+[environment.env]
+
+[solution.env]

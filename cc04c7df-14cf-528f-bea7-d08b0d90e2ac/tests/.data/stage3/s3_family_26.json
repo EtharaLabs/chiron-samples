@@ -1,0 +1,201 @@
+{
+ "id": "s3_family_26",
+ "source": "f042_duplicate_json_keys",
+ "steps": [
+  {
+   "case": "duplicate_name_last_wins",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"DupHwFirst\",\"hardwareName\":\"DupHwSecond\",\"displayName\":\"DupHw\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":1.0,\"averagePpd\":100}"
+   }
+  },
+  {
+   "case": "duplicate_multiplier_valid_last",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"DupHwThree\",\"displayName\":\"DupHwThree\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":0.5,\"multiplier\":2.0,\"averagePpd\":100}"
+   }
+  },
+  {
+   "case": "duplicate_multiplier_invalid_last",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"DupHwFour\",\"displayName\":\"DupHwFour\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":2.0,\"multiplier\":0.5,\"averagePpd\":100}"
+   }
+  },
+  {
+   "case": "duplicate_team_name",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"teamName\":\"DupTeamA\",\"teamName\":\"DupTeamB\"}"
+   }
+  },
+  {
+   "case": "list_after_duplicates",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "duplicate_name_last_wins",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"DupHwFirst\",\"hardwareName\":\"DupHwSecond\",\"displayName\":\"DupHw\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":1.0,\"averagePpd\":100}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DupHwSecond\",\n  \"displayName\": \"DupHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "167",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "duplicate_multiplier_valid_last",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"DupHwThree\",\"displayName\":\"DupHwThree\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":0.5,\"multiplier\":2.0,\"averagePpd\":100}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"DupHwThree\",\n  \"displayName\": \"DupHwThree\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "171",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "duplicate_multiplier_invalid_last",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"DupHwFour\",\"displayName\":\"DupHwFour\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":2.0,\"multiplier\":0.5,\"averagePpd\":100}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"DupHwFour\",\n    \"displayName\": \"DupHwFour\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 0.5,\n    \"averagePpd\": 100\n  },\n  \"errors\": [\n    \"Field 'multiplier' must be 1.00 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "262",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "duplicate_team_name",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "{\"teamName\":\"DupTeamA\",\"teamName\":\"DupTeamB\"}",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DupTeamB\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "39",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "list_after_duplicates",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"DupHwSecond\",\n    \"displayName\": \"DupHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"DupHwThree\",\n    \"displayName\": \"DupHwThree\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 100\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "380",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "etag": "\"-84292337\"",
+     "x-total-count": "2"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Duplicate keys in one object: State A's reader keeps the last occurrence, so whether the payload is valid depends on the order of the duplicates."
+}

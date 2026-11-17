@@ -1,0 +1,368 @@
+{
+ "items": {
+  "g01_hardware_lifecycle": {
+   "passed": true,
+   "reason": "45 cases agree"
+  },
+  "g02_team_lifecycle": {
+   "passed": true,
+   "reason": "44 cases agree"
+  },
+  "g03_user_lifecycle": {
+   "passed": true,
+   "reason": "45 cases agree"
+  },
+  "g04_batch_create": {
+   "passed": true,
+   "reason": "27 cases agree"
+  },
+  "g05_authn_authz": {
+   "passed": true,
+   "reason": "37 cases agree"
+  },
+  "g06_system_state_gating": {
+   "passed": false,
+   "reason": "2 case(s) disagree: ['manual_update_async_invalid_value', 'manual_update_async_empty_value']"
+  },
+  "g07_cache_validation_headers": {
+   "passed": true,
+   "reason": "45 cases agree"
+  },
+  "g08_cors": {
+   "passed": true,
+   "reason": "26 cases agree"
+  },
+  "g09_invalid_url_redirect": {
+   "passed": true,
+   "reason": "29 cases agree"
+  },
+  "g10_competition_user_stats": {
+   "passed": false,
+   "reason": "1 case(s) disagree: ['offset_missing_body']"
+  },
+  "g11_leaderboards": {
+   "passed": true,
+   "reason": "33 cases agree"
+  },
+  "g12_historic_stats": {
+   "passed": true,
+   "reason": "42 cases agree"
+  },
+  "g13_monthly_results": {
+   "passed": true,
+   "reason": "30 cases agree"
+  },
+  "g14_lars_hardware_sync": {
+   "passed": true,
+   "reason": "41 cases agree"
+  },
+  "g15_external_stats_parsing": {
+   "passed": false,
+   "reason": "2 case(s) disagree: ['manual_update_async_non_boolean', 'manual_update_async_empty_value']"
+  },
+  "g16_reset_and_rollover": {
+   "passed": true,
+   "reason": "38 cases agree"
+  },
+  "g17_configuration_binding": {
+   "passed": true,
+   "reason": "30 cases agree"
+  },
+  "g18_request_error_representation": {
+   "passed": false,
+   "reason": "1 case(s) disagree: ['missing_body_without_content_type']"
+  },
+  "g19_persistence_across_restart": {
+   "passed": true,
+   "reason": "34 cases agree"
+  },
+  "g20_scheduled_parsing": {
+   "passed": true,
+   "reason": "43 cases agree"
+  },
+  "s1_graded_build": {
+   "passed": true,
+   "reason": "started and answered GET /folding/hardware in 7.2 s"
+  },
+  "s1_new_stack_serves": {
+   "passed": true,
+   "reason": "every replayed request was dispatched through DispatcherServlet"
+  },
+  "s1_no_forwarding": {
+   "passed": true,
+   "reason": "no process, connection or class source reaching the retired stack"
+  },
+  "s1_no_transplant": {
+   "passed": true,
+   "reason": "max_file_containment 0.0344 against threshold 0.5 (largest: resteasy-jaxrs-3.15.1.Final-sources.jar!org/jboss/resteasy/spi/Failure.java)"
+  },
+  "s1_no_verifier_detection": {
+   "passed": true,
+   "reason": "no verifier name in the tree"
+  },
+  "s1_retired_stack_absent": {
+   "passed": true,
+   "reason": "no retired coordinate, package or descriptor found"
+  },
+  "s3_family_01": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_02": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_03": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_04": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_05": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_06": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_07": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_08": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_09": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_10": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_11": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_12": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_13": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_14": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_15": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_16": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_17": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_18": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_19": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_20": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_21": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_22": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_23": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_24": {
+   "passed": false,
+   "reason": "family result differs"
+  },
+  "s3_family_25": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_26": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_27": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_28": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_29": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_30": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_31": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_32": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_33": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_34": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_35": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_36": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_37": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_38": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_39": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_40": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_41": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_42": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_43": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_44": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_45": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_46": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_47": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_48": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_49": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_50": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_51": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_52": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_53": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_54": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_55": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_56": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_57": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_58": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_59": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_60": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_61": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_62": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_63": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_64": {
+   "passed": true,
+   "reason": "survived"
+  },
+  "s3_family_65": {
+   "passed": true,
+   "reason": "survived"
+  }
+ }
+}

@@ -1,0 +1,26 @@
+# The zero route. tests/test.sh takes it when the host offers no execution boundary, when
+# the graded build shipped no library, when the judge packet could not carry the whole of
+# the submission's collected source, or when it could not be staged and swept so the judged
+# gate could not be read. A false Stage I or Stage II item takes the compiled veto route
+# instead. The emulated benchmark scores every one of those as zero rather than as a share.
+#
+# test_output.py carries the 300 compiled weight here and judge.py the 30 judged weight,
+# split 4 to 1 exactly as the root table splits them. Both return zero for every item, so
+# both tables are zero; what the route reports is WHICH items were zeroed and why, which a
+# bare number could not.
+
+[[reward]]
+name = "reward"
+aggregation = "weighted-mean"
+weights = { test_output = 4, judge = 1 }
+
+[[reward]]
+name = "compiled"
+aggregation = "weighted-mean"
+weights = { test_output = 4, judge = 1 }
+
+[scoring.test_output]
+aggregation = "weighted-mean"
+
+[scoring.judge]
+aggregation = "weighted-mean"

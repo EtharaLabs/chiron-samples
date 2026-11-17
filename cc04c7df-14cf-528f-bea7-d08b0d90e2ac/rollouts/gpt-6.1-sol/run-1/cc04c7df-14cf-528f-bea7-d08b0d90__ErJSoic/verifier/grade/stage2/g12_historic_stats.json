@@ -1,0 +1,1318 @@
+{
+ "id": "g12_historic_stats",
+ "cases": [
+  {
+   "case": "setup_create_hardware_nvidia",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "177",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572408.1116629,
+    1773572408.2427998
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_hardware_amd",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware2",
+     "displayName": "DummyHardware2",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/2",
+     "content-type": "application/json",
+     "content-length": "174",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"DummyHardware2\",\n  \"displayName\": \"DummyHardware2\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572408.2428603,
+    1773572408.255358
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_team_one",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/1",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DummyTeam1\"\n}"
+   },
+   "clock_window": [
+    1773572408.255398,
+    1773572408.2737403
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_team_two",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/2",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\"\n}"
+   },
+   "clock_window": [
+    1773572408.273793,
+    1773572408.2896411
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_team_three",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam3"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/3",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"teamName\": \"DummyTeam3\"\n}"
+   },
+   "clock_window": [
+    1773572408.2896857,
+    1773572408.3103132
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_team_four",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam4"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/4",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 4,\n  \"teamName\": \"DummyTeam4\"\n}"
+   },
+   "clock_window": [
+    1773572408.310371,
+    1773572408.3439848
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_user_one",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser1",
+     "displayName": "DummyUser1",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "1",
+     "teamId": "1"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/1",
+     "content-type": "application/json",
+     "content-length": "450",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"DummyUser1\",\n  \"displayName\": \"DummyUser1\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"DummyHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"DummyTeam1\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572408.3440416,
+    1773572408.7129138
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_user_two",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser2",
+     "displayName": "DummyUser2",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "1",
+     "teamId": "2"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/2",
+     "content-type": "application/json",
+     "content-length": "450",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"foldingUserName\": \"DummyUser2\",\n  \"displayName\": \"DummyUser2\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"DummyHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"DummyTeam2\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572410.7130842,
+    1773572411.0373547
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_user_three",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser3",
+     "displayName": "DummyUser3",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "1",
+     "teamId": "3"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/3",
+     "content-type": "application/json",
+     "content-length": "450",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"foldingUserName\": \"DummyUser3\",\n  \"displayName\": \"DummyUser3\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"DummyHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 3,\n    \"teamName\": \"DummyTeam3\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572413.037521,
+    1773572413.3675053
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_user_four",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser4",
+     "displayName": "DummyUser4",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "1",
+     "teamId": "4"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/4",
+     "content-type": "application/json",
+     "content-length": "450",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 4,\n  \"foldingUserName\": \"DummyUser4\",\n  \"displayName\": \"DummyUser4\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"DummyHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 4,\n    \"teamName\": \"DummyTeam4\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572415.3676782,
+    1773572415.6370392
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_create_user_five",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser5",
+     "displayName": "DummyUser5",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": "2",
+     "teamId": "4"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/5",
+     "content-type": "application/json",
+     "content-length": "444",
+     "date": "Sun, 15 Mar 2026 11:00:17 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 5,\n  \"foldingUserName\": \"DummyUser5\",\n  \"displayName\": \"DummyUser5\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 2,\n    \"hardwareName\": \"DummyHardware2\",\n    \"displayName\": \"DummyHardware2\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 4,\n    \"teamName\": \"DummyTeam4\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572417.6372075,
+    1773572417.957928
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_no_stats",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572420.0859337,
+    1773572420.0955553
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_daily_no_stats",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572420.095603,
+    1773572420.1150346
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_monthly_no_stats",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572420.1150787,
+    1773572420.153007
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_single_stat",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/2/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1428114869\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "284",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 0,\n    \"multipliedPoints\": 0,\n    \"units\": 0\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.1530516,
+    1773572420.1700544
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_conditional_not_modified",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/2/2020/4/12",
+    "headers": {
+     "If-None-Match": "\"-1428114869\""
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 304,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "cache-control": "no-transform, max-age=3600",
+     "etag": "\"-1428114869\"",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572420.1700976,
+    1773572420.1763487
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_daily_single_stat",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/2/2020/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"40274079\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "289",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 0,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 100,\n    \"multipliedPoints\": 1000,\n    \"units\": 10\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.1763837,
+    1773572420.1817276
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_monthly_single_stat",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/2/2020"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1404095379\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "290",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 100,\n    \"multipliedPoints\": 1000,\n    \"units\": 10\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.1817605,
+    1773572420.1856353
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_multiple_hours_max_per_hour",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/3/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"634694406\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "569",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 13,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 0,\n    \"multipliedPoints\": 0,\n    \"units\": 0\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 60,\n    \"multipliedPoints\": 600,\n    \"units\": 6\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.1856654,
+    1773572420.1914325
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_leading_zero_month",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/3/2020/04/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"634694406\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "569",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 13,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 0,\n    \"multipliedPoints\": 0,\n    \"units\": 0\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 60,\n    \"multipliedPoints\": 600,\n    \"units\": 6\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.1914647,
+    1773572420.196749
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_daily_multiple_days",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/3/2020/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"58930616\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "570",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 11\n      },\n      \"time\": {\n        \"hour\": 0,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 0,\n    \"multipliedPoints\": 0,\n    \"units\": 0\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 0,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 110,\n    \"multipliedPoints\": 1100,\n    \"units\": 11\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.1967785,
+    1773572420.2149293
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_monthly_multiple_months",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/3/2020"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"651507705\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "575",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 3,\n        \"day\": 20\n      },\n      \"time\": {\n        \"hour\": 13,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 20,\n    \"multipliedPoints\": 200,\n    \"units\": 2\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 110,\n    \"multipliedPoints\": 1100,\n    \"units\": 11\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.214988,
+    1773572420.2377822
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_hourly_no_stats",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/1/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572420.2378404,
+    1773572420.2440956
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_hourly_combined_users",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/4/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"670723641\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "572",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 13,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 0,\n    \"multipliedPoints\": 0,\n    \"units\": 0\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 210,\n    \"multipliedPoints\": 2100,\n    \"units\": 21\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.244135,
+    1773572420.2547522
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_daily_combined_users",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/4/2020/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"106969596\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "570",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 11\n      },\n      \"time\": {\n        \"hour\": 0,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 0,\n    \"multipliedPoints\": 0,\n    \"units\": 0\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 0,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 310,\n    \"multipliedPoints\": 3100,\n    \"units\": 31\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.2548008,
+    1773572420.2630196
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_daily_conditional_not_modified",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/4/2020/4",
+    "headers": {
+     "If-None-Match": "\"106969596\""
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 304,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "cache-control": "no-transform, max-age=3600",
+     "etag": "\"106969596\"",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572420.263073,
+    1773572420.2696426
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_monthly_combined_users",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/4/2020"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"706752556\"",
+     "cache-control": "no-transform, max-age=3600",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "575",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 3,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 13,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 50,\n    \"multipliedPoints\": 500,\n    \"units\": 5\n  },\n  {\n    \"dateTime\": {\n      \"date\": {\n        \"year\": 2020,\n        \"month\": 4,\n        \"day\": 12\n      },\n      \"time\": {\n        \"hour\": 14,\n        \"minute\": 0,\n        \"second\": 0,\n        \"nano\": 0\n      }\n    },\n    \"points\": 310,\n    \"multipliedPoints\": 3100,\n    \"units\": 31\n  }\n]"
+   },
+   "clock_window": [
+    1773572420.269685,
+    1773572420.2759035
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_invalid_day_too_large",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/4/35"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "59",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The day '35' is not a valid day for 2020/4\"\n}"
+   },
+   "clock_window": [
+    1773572420.275949,
+    1773572420.2790234
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_day_zero",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/4/0"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "58",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The day '0' is not a valid day for 2020/4\"\n}"
+   },
+   "clock_window": [
+    1773572420.2790527,
+    1773572420.2816706
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_month_out_of_range",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/13/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "53",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The month '13' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.2817008,
+    1773572420.2851
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_month_not_a_number",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/invalidMonth/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "75",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The month 'invalidMonth' or day '12' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.2851322,
+    1773572420.2878578
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_year_not_a_number",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/invalidYear/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "61",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The year 'invalidYear' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.2878883,
+    1773572420.290533
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_daily_month_out_of_range",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/2020/25"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "53",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The month '25' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.2905629,
+    1773572420.2931032
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_daily_year_not_a_number",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/invalidYear/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "61",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The year 'invalidYear' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.2931323,
+    1773572420.2959204
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_monthly_year_not_a_number",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/1/invalidYear"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "61",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The year 'invalidYear' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.2959473,
+    1773572420.2986429
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_hourly_non_existing_user",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/9999/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572420.2986705,
+    1773572420.3378267
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_daily_out_of_range_user",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/-1/2020/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572420.3378708,
+    1773572420.34054
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_monthly_invalid_user_id",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/id/2020"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.34057,
+    1773572420.343252
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_hourly_non_existing_team",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/9999/2020/4/12"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572420.3432803,
+    1773572420.3482115
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_daily_out_of_range_team",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/-1/2020/4"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572420.3482463,
+    1773572420.35094
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_monthly_invalid_team_id",
+   "request": {
+    "method": "GET",
+    "path": "/historic/teams/id/2020"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572420.350968,
+    1773572420.3533783
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "historic_delete_not_allowed",
+   "request": {
+    "method": "DELETE",
+    "path": "/historic/users/2/2020",
+    "auth": "admin"
+   },
+   "compare": "status",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:20 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572420.353407,
+    1773572420.3579342
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

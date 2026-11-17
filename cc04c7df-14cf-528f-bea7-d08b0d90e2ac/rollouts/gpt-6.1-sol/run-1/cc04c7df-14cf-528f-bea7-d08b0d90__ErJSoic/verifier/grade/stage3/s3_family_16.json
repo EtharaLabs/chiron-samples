@@ -1,0 +1,151 @@
+{
+ "id": "s3_family_16",
+ "cases": [
+  {
+   "case": "options_manual_update",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/stats/manual/update"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "13",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "POST, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.3332303,
+    1773572407.3413188
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "options_manual_reset",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/stats/manual/reset"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "13",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "POST, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.3413365,
+    1773572407.3441508
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "options_manual_save",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/results/manual/save"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "13",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "POST, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.3441646,
+    1773572407.346663
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "options_debug_caches",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/debug/caches"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "13",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "POST, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.3466754,
+    1773572407.3490236
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "options_login_admin",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/login/admin"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "13",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "POST, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.3490353,
+    1773572407.3513534
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

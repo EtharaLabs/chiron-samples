@@ -1,0 +1,91 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/stats/UserStats.java (changed against State A) ===
+@@
+30  | import me.zodac.folding.api.tc.User;
+31  | import me.zodac.folding.api.util.DateTimeUtils;
+32  | 
+   -| /**
+   -|  * POJO that extends {@link Stats} adding a {@link User} ID and a {@link Timestamp}.
+   -|  */
+33 +| 
+34  | @EqualsAndHashCode(callSuper = true)
+35  | @ToString(doNotUseGetters = true, callSuper = true)
+36  | public class UserStats extends Stats {
+@@
+38  |     private final int userId;
+39  |     private final Timestamp timestamp;
+40  | 
+   -|     /**
+   -|      * Constructor for {@link UserStats}.
+   -|      *
+   -|      * @param userId    the {@link me.zodac.folding.api.tc.User} ID
+   -|      * @param timestamp the {@link Timestamp} the stats were retrieved
+   -|      * @param points    the points
+   -|      * @param units     the units
+   -|      */
+41 +|     
+42  |     protected UserStats(final int userId, final Timestamp timestamp, final long points, final int units) {
+43  |         super(points, units);
+44  |         this.userId = userId;
+45  |         this.timestamp = new Timestamp(timestamp.getTime());
+46  |     }
+47  | 
+   -|     /**
+   -|      * Creates an instance of {@link UserStats}.
+   -|      *
+   -|      * @param userId    the ID of the {@link User}
+   -|      * @param timestamp the {@link Timestamp} the {@link UserStats} were retrieved
+   -|      * @param points    the points
+   -|      * @param units     the units
+   -|      * @return the created {@link UserStats}
+   -|      */
+48 +|     
+49  |     public static UserStats create(final int userId, final Timestamp timestamp, final long points, final int units) {
+50  |         return new UserStats(userId, timestamp, points, units);
+51  |     }
+52  | 
+   -|     /**
+   -|      * Creates an empty instance of {@link UserStats}, with no values. Can be used where no stats are necessary, but
+   -|      * an {@link java.util.Optional} is not clean enough.
+   -|      *
+   -|      * @return the empty {@link UserStats}
+   -|      */
+53 +|     
+54  |     public static UserStats empty() {
+55  |         return create(User.EMPTY_USER_ID, DateTimeUtils.currentUtcTimestamp(), Stats.DEFAULT_POINTS, Stats.DEFAULT_UNITS);
+56  |     }
+57  | 
+   -|     /**
+   -|      * Retrieve the ID of the {@link User}.
+   -|      *
+   -|      * @return the {@link User} ID
+   -|      */
+58 +|     
+59  |     public int getUserId() {
+60  |         return userId;
+61  |     }
+62  | 
+   -|     /**
+   -|      * The {@link Timestamp} for when the {@link UserStats} were created.
+   -|      *
+   -|      * @return the {@link Timestamp}
+   -|      */
+63 +|     
+64  |     public Timestamp getTimestamp() {
+65  |         return new Timestamp(timestamp.getTime());
+66  |     }
+@@
+70  |         return userId == User.EMPTY_USER_ID && super.isEmpty();
+71  |     }
+72  | 
+   -|     /**
+   -|      * Checks whether the {@link UserStats} has no points or units.
+   -|      *
+   -|      * <p>
+   -|      * This is distinct from {@link #isEmpty()}, as it does not check the {@code userId}.
+   -|      *
+   -|      * @return <code>true</code> is there are <b>0</b> stats
+   -|      */
+73 +|     
+74  |     public boolean isEmptyStats() {
+75  |         return super.isEmpty();
+76  |     }

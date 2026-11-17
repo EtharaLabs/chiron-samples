@@ -1,0 +1,18 @@
+nav:
+    - index.md
+    - User guide: https://guide.datalab-org.io
+    - Reference:
+        - Data models: schemas
+        - Data blocks: blocks/reference
+    - Development:
+        - Contributing: CONTRIBUTING.md
+        - Code of conduct: CODE_OF_CONDUCT.md
+        - INSTALL.md
+        - plugins.md
+        - Writing data blocks: blocks/index.md
+        - roadmap.md
+    - Deployment:
+        - deployment.md
+        - config.md
+    - About: about.md
+    - Changelog: CHANGELOG.md

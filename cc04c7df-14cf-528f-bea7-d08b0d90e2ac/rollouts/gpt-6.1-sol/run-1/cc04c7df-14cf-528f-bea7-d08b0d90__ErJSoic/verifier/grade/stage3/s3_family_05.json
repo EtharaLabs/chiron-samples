@@ -1,0 +1,183 @@
+{
+ "id": "s3_family_05",
+ "cases": [
+  {
+   "case": "setup_team",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "Probe Team"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/1",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"Probe Team\"\n}"
+   },
+   "clock_window": [
+    1773572406.7226758,
+    1773572406.822564
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "param_without_equals",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "55",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ''\"\n}"
+   },
+   "clock_window": [
+    1773572406.8226001,
+    1773572406.828906
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "param_encoded_space_value",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=%20"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "56",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ' '\"\n}"
+   },
+   "clock_window": [
+    1773572406.8289344,
+    1773572406.8319392
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "param_bare_plus_value",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=+"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "56",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ' '\"\n}"
+   },
+   "clock_window": [
+    1773572406.831962,
+    1773572406.8347242
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "param_plus_inside_value",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=Probe+Team"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1413667955\"",
+     "cache-control": "no-transform, max-age=1429193",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"Probe Team\"\n}"
+   },
+   "clock_window": [
+    1773572406.834744,
+    1773572406.8381379
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "param_encoded_space_inside_value",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=Probe%20Team"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1413667955\"",
+     "cache-control": "no-transform, max-age=1429193",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"Probe Team\"\n}"
+   },
+   "clock_window": [
+    1773572406.8381813,
+    1773572406.8409226
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

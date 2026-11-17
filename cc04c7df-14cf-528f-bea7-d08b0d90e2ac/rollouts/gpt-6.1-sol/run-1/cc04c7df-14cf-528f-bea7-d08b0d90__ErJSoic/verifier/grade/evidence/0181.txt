@@ -1,0 +1,91 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/WebConfiguration.java (added against State A) ===
+1 +| package me.zodac.folding.rest;
+2 +| 
+3 +| import java.util.List;
+4 +| import java.util.Map;
+5 +| import javax.servlet.http.HttpServletRequest;
+6 +| import javax.servlet.http.HttpServletResponse;
+7 +| import me.zodac.folding.service.api.FoldingStatsCore;
+8 +| import me.zodac.folding.api.UserAuthenticationResult;
+9 +| import me.zodac.folding.api.util.EncodingUtils;
+10 +| import me.zodac.folding.api.state.ReadRequired;
+11 +| import me.zodac.folding.api.state.WriteRequired;
+12 +| import me.zodac.folding.state.SystemStateManager;
+13 +| import org.springframework.context.annotation.Configuration;
+14 +| import org.springframework.http.converter.HttpMessageConverter;
+15 +| import org.springframework.http.converter.json.GsonHttpMessageConverter;
+16 +| import org.springframework.web.method.HandlerMethod;
+17 +| import org.springframework.web.servlet.HandlerInterceptor;
+18 +| import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+19 +| import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+20 +| 
+21 +| @Configuration
+22 +| public class WebConfiguration implements WebMvcConfigurer {
+23 +|     // Servlet components are registered by Spring; no annotation scanning is needed.
+24 +|     @org.springframework.context.annotation.Bean
+25 +|     public org.springframework.boot.web.server.WebServerFactoryCustomizer<org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory> servletConfiguration() {
+26 +|         return factory -> factory.addContextCustomizers(context -> {
+27 +|             context.setIgnoreAnnotations(true);
+28 +|             context.setMapperContextRootRedirectEnabled(false);
+29 +|         });
+30 +|     }
+31 +|     private final FoldingStatsCore core;
+32 +|     public WebConfiguration(FoldingStatsCore core,
+33 +|             org.springframework.beans.factory.ObjectProvider<org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping> mappings) {
+34 +|         this.core = core;
+35 +|         this.mappings = mappings;
+36 +|     }
+37 +|     @Override public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+38 +|         converters.removeIf(c -> c instanceof GsonHttpMessageConverter);
+39 +|         converters.add(new GsonHttpMessageConverter(me.zodac.folding.rest.util.RestUtilConstants.GSON));
+40 +|     }
+41 +|     private final org.springframework.beans.factory.ObjectProvider<org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping> mappings;
+42 +|     @Override public void addInterceptors(InterceptorRegistry registry) {
+43 +|         registry.addInterceptor(new HandlerInterceptor() {
+44 +|             @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+45 +|                 if (request.getMethod().equals("OPTIONS")) {
+46 +|                     response.setContentType("text/plain;charset=UTF-8");
+47 +|                     java.util.Set<String> allowed = new java.util.HashSet<>();
+48 +|                     mappings.getObject().getHandlerMethods().forEach((mapping, method) -> {
+49 +|                         if (mapping.getPathPatternsCondition() != null && mapping.getPathPatternsCondition().getMatchingCondition(request) != null) {
+50 +|                             mapping.getMethodsCondition().getMethods().forEach(verb -> allowed.add(verb.name()));
+51 +|                         }
+52 +|                     });
+53 +|                     if (allowed.contains("GET")) allowed.add("HEAD");
+54 +|                     allowed.add("OPTIONS");
+55 +|                     response.getWriter().write(String.join(", ", allowed));
+56 +|                     return false;
+57 +|                 }
+58 +|                 return true;
+59 +|             }
+60 +|         });
+61 +|         registry.addInterceptor(new HandlerInterceptor() {
+62 +|             @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+63 +|                 if (!(handler instanceof HandlerMethod)) return true;
+64 +|                 RequiredRoles roles = ((HandlerMethod) handler).getMethodAnnotation(RequiredRoles.class);
+65 +|                 if (roles == null) return true;
+66 +|                 try {
+67 +|                     String auth = request.getHeader("Authorization");
+68 +|                     if (EncodingUtils.isInvalidBasicAuthentication(auth)) return reject(response, 401);
+69 +|                     Map<String,String> decoded = EncodingUtils.decodeBasicAuthentication(auth);
+70 +|                     UserAuthenticationResult user = core.authenticateSystemUser(decoded.get(EncodingUtils.DECODED_USERNAME_KEY), decoded.get(EncodingUtils.DECODED_PASSWORD_KEY));
+71 +|                     if (!user.isUserExists() || !user.isPasswordMatch()) return reject(response, 401);
+72 +|                     for (String permitted : roles.value())
+73 +|                         for (String actual : user.getUserRoles()) if (permitted.equalsIgnoreCase(actual)) return true;
+74 +|                     return reject(response, 403);
+75 +|                 } catch (Exception ignored) { return true; }
+76 +|             }
+77 +|         });
+78 +|         registry.addInterceptor(new HandlerInterceptor() {
+79 +|             @Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+80 +|                 if (!(handler instanceof HandlerMethod)) return true;
+81 +|                 HandlerMethod method = (HandlerMethod) handler;
+82 +|                 if ((method.hasMethodAnnotation(ReadRequired.class) && SystemStateManager.current().isReadBlocked()) ||
+83 +|                     (method.hasMethodAnnotation(WriteRequired.class) && SystemStateManager.current().isWriteBlocked())) return reject(response, 503);
+84 +|                 return true;
+85 +|             }
+86 +|         });
+87 +|     }
+88 +|     private static boolean reject(HttpServletResponse response, int status) { response.setStatus(status); return false; }
+89 +| 
+90 +| }

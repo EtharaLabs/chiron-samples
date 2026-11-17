@@ -1,0 +1,16 @@
+from __future__ import annotations
+from argus.backend.util.config import Config
+"Local conftest for the replay tests.\n\nThe parent ``conftest.py`` has a session-scope autouse fixture that boots a\nScyllaDB Docker container before any test in ``argus/backend/tests`` runs.\nThe replay-service tests are pure unit tests that don't touch the database,\nso override the heavyweight fixtures with no-ops here. This lets developers\niterate on the replay logic with ``pytest argus/backend/tests/replay`` and\nno Docker daemon.\n"
+import pytest
+
+@pytest.fixture(scope='session')
+def argus_db():
+    yield None
+
+@pytest.fixture(scope='session')
+def argus_app():
+    yield None
+
+@pytest.fixture(scope='session', autouse=True)
+def app_context(argus_db, argus_app):
+    yield

@@ -1,0 +1,855 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Dashboard </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/workArea.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid\" id=\"dashboard-body\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Dashboard </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/workArea.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\"active nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid\" id=\"dashboard-body\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "dashboard",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/run_dashboard"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/workspace"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Releases </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/releasePage.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\"active nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container my-2 rounded overflow-hidden shadow-sm bg-light-three p-4\"> <div class=\"row rounded overflow-hidden shadow-sm bg-white mb-2\"> <div class=\"col-8 release-card\" data-argus-release-name=\"seed-release\"> <div class=\"card-body\"> <h3 class=\"card-title\">Seed Release</h3> <p class=\"card-subtitle text-muted\">Synthetic data for local development</p> <div class=\"release-stats mb-1\"></div> </div> </div> <div class=\"col-4 p-2\"> <div class=\"d-flex justify-content-center flex-column\"> <div class=\"btn-group\"> <a href=\"/dashboard/seed-release\" class=\"btn btn-outline-success\"><i class=\"fas fa-tachometer-alt\"></i> Dashboard</a> <a href=\"/release/seed-release/planner\" class=\"btn btn-outline-success\"><i class=\"fas fa-calendar-alt\"></i> Release Planner</a> </div> </div> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "releases-page",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/releases"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Release: seed-release </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const releaseData = JSON.parse('{\"groups\": [{\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests\", \"description\": null, \"enabled\": true, \"id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"name\": \"longevity-tests\", \"pretty_name\": \"Longevity Tests\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests\", \"description\": null, \"enabled\": true, \"id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"name\": \"performance-tests\", \"pretty_name\": \"Performance Tests\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}], \"release\": {\"assignee\": [\"f67d055a-dc67-49a9-b4c4-36760d5389e5\"], \"description\": \"Synthetic data for local development\", \"dormant\": false, \"enabled\": true, \"github_repo_url\": null, \"id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"name\": \"seed-release\", \"perpetual\": false, \"picture_id\": null, \"pretty_name\": \"Seed Release\", \"valid_version_regex\": null}, \"tests\": [{\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-100gb-12h-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"3ed77c66-c3b8-404f-8f43-266b75771178\", \"name\": \"longevity-100gb-12h-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity 100GB 12h\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-10gb-3h-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\", \"name\": \"longevity-10gb-3h-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity 10GB 3h\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-throughput-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"ceee1421-79db-4f1f-9eee-573968bb4ee6\", \"name\": \"perf-throughput-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Throughput\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-large-partition-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"9b79cfa4-33d6-49c2-bd27-30733cf19490\", \"name\": \"longevity-large-partition-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity Large Partition\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-regression-latency-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"956122ec-45e2-441d-a87f-2df3e3d7ce70\", \"name\": \"perf-regression-latency-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Regression Latency\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-large-partition-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"d62928bf-72ec-44c9-92ee-385ba917027c\", \"name\": \"perf-large-partition-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Large Partition\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}]}'); </script> <script defer type=\"module\" src=\"/s/dist/releaseDashboard.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid my-4\"> <div id=\"releaseDashboard\"></div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "release-dashboard",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/dashboard/seed-release"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Release Calendar for seed-release </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const releaseData = JSON.parse('{\"groups\": [{\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests\", \"description\": null, \"enabled\": true, \"id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"name\": \"longevity-tests\", \"pretty_name\": \"Longevity Tests\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests\", \"description\": null, \"enabled\": true, \"id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"name\": \"performance-tests\", \"pretty_name\": \"Performance Tests\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}], \"release\": {\"assignee\": [\"f67d055a-dc67-49a9-b4c4-36760d5389e5\"], \"description\": \"Synthetic data for local development\", \"dormant\": false, \"enabled\": true, \"github_repo_url\": null, \"id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"name\": \"seed-release\", \"perpetual\": false, \"picture_id\": null, \"pretty_name\": \"Seed Release\", \"valid_version_regex\": null}, \"tests\": [{\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-100gb-12h-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"3ed77c66-c3b8-404f-8f43-266b75771178\", \"name\": \"longevity-100gb-12h-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity 100GB 12h\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-10gb-3h-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\", \"name\": \"longevity-10gb-3h-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity 10GB 3h\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-throughput-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"ceee1421-79db-4f1f-9eee-573968bb4ee6\", \"name\": \"perf-throughput-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Throughput\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-large-partition-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"9b79cfa4-33d6-49c2-bd27-30733cf19490\", \"name\": \"longevity-large-partition-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity Large Partition\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-regression-latency-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"956122ec-45e2-441d-a87f-2df3e3d7ce70\", \"name\": \"perf-regression-latency-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Regression Latency\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-large-partition-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"d62928bf-72ec-44c9-92ee-385ba917027c\", \"name\": \"perf-large-partition-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Large Partition\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}]}'); </script> <script defer type=\"module\" src=\"/s/dist/releaseScheduler.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid\"> <div id=\"releaseScheduler\"></div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Release Planner for seed-release </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> window.releaseData = {\"plans\": [{\"assignee_mapping\": {\"3ed77c66-c3b8-404f-8f43-266b75771178\": \"0a11ce00-0000-4000-8000-000000000001\"}, \"completed\": false, \"created_from\": null, \"creation_time\": \"2026-11-01T11:00:00.000Z\", \"description\": \"Seeded plan\", \"ends_at\": null, \"groups\": [\"34f73064-36d3-42e0-9bf8-17840d9eb352\"], \"id\": \"0a11ce00-0000-1000-8000-000000000030\", \"key\": \"core-plan\", \"last_updated\": \"2026-11-01T11:00:00.000Z\", \"name\": \"Core plan\", \"options\": null, \"owner\": \"0a11ce00-0000-4000-8000-000000000002\", \"participants\": [\"0a11ce00-0000-4000-8000-000000000001\"], \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"target_version\": \"2025.1\", \"tests\": [\"3ed77c66-c3b8-404f-8f43-266b75771178\", \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\"], \"view_id\": null}], \"release\": {\"assignee\": [\"f67d055a-dc67-49a9-b4c4-36760d5389e5\"], \"description\": \"Synthetic data for local development\", \"dormant\": false, \"enabled\": true, \"github_repo_url\": null, \"id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"name\": \"seed-release\", \"perpetual\": false, \"picture_id\": null, \"pretty_name\": \"Seed Release\", \"valid_version_regex\": null}}; </script> <script defer type=\"module\" src=\"/s/dist/releasePlanner.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid\"> <div id=\"releasePlanner\"></div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Duty Planner for seed-release </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const releaseData = JSON.parse('{\"groups\": [{\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests\", \"description\": null, \"enabled\": true, \"id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"name\": \"longevity-tests\", \"pretty_name\": \"Longevity Tests\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests\", \"description\": null, \"enabled\": true, \"id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"name\": \"performance-tests\", \"pretty_name\": \"Performance Tests\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}], \"release\": {\"assignee\": [\"f67d055a-dc67-49a9-b4c4-36760d5389e5\"], \"description\": \"Synthetic data for local development\", \"dormant\": false, \"enabled\": true, \"github_repo_url\": null, \"id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"name\": \"seed-release\", \"perpetual\": false, \"picture_id\": null, \"pretty_name\": \"Seed Release\", \"valid_version_regex\": null}, \"tests\": [{\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-100gb-12h-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"3ed77c66-c3b8-404f-8f43-266b75771178\", \"name\": \"longevity-100gb-12h-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity 100GB 12h\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-10gb-3h-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\", \"name\": \"longevity-10gb-3h-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity 10GB 3h\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-throughput-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"ceee1421-79db-4f1f-9eee-573968bb4ee6\", \"name\": \"perf-throughput-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Throughput\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/longevity-tests/longevity-large-partition-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test\", \"description\": null, \"enabled\": true, \"group_id\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"id\": \"9b79cfa4-33d6-49c2-bd27-30733cf19490\", \"name\": \"longevity-large-partition-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Longevity Large Partition\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-regression-latency-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"956122ec-45e2-441d-a87f-2df3e3d7ce70\", \"name\": \"perf-regression-latency-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Regression Latency\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}, {\"assignee\": [], \"build_system_id\": \"seed-release/performance-tests/perf-large-partition-test\", \"build_system_url\": \"http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test\", \"description\": null, \"enabled\": true, \"group_id\": \"d2bdc3c8-3303-44f5-b95b-50defbc2aa96\", \"id\": \"d62928bf-72ec-44c9-92ee-385ba917027c\", \"name\": \"perf-large-partition-test\", \"plugin_name\": \"scylla-cluster-tests\", \"plugin_subtype\": null, \"pretty_name\": \"Performance Large Partition\", \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\"}]}'); </script> <script defer type=\"module\" src=\"/s/dist/dutyPlanner.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid\"> <div id=\"dutyPlanner\"></div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "release-scheduler",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/release/seed-release/scheduler"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/release/seed-release/planner"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/release/seed-release/duty"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Test Runs </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/testRuns.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container mt-3\"> <div class=\"row\"> <div class=\"col border rounded shadow-sm bg-main\" id=\"testRunsBreakout\"> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Test Run </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const test_run_id = \"4978044e-c5ad-4b3c-8323-c11a57b4e909\"; </script> <script defer type=\"module\" src=\"/s/dist/testRunDetails.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container p-1\" id=\"testRunBody\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "test-runs-page",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/test_runs"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/test_run/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Test Run </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const gTestId = \"3ed77c66-c3b8-404f-8f43-266b75771178\"; const additionalRuns = JSON.parse('[]'); </script> <script defer type=\"module\" src=\"/s/dist/testRunsStandalone.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container p-1\" id=\"testRunBody\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "runs-by-test-page",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/test/3ed77c66-c3b8-404f-8f43-266b75771178/runs"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Test Run </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const gTestId = \"3ed77c66-c3b8-404f-8f43-266b75771178\"; const gRun = [\"4978044e-c5ad-4b3c-8323-c11a57b4e909\"] const gTab = \"details\"; </script> <script defer type=\"module\" src=\"/s/dist/runByPlugin.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container p-1\" id=\"testRunBody\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Test Run </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const gTestId = \"3ed77c66-c3b8-404f-8f43-266b75771178\"; const gRun = [\"4978044e-c5ad-4b3c-8323-c11a57b4e909\"] const gTab = \"events\"; </script> <script defer type=\"module\" src=\"/s/dist/runByPlugin.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container p-1\" id=\"testRunBody\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "plugin-run-page",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/tests/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/tests/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909/events"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Test Run </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> const gTestId = \"3ed77c66-c3b8-404f-8f43-266b75771178\"; const gRun = [\"4978044e-c5ad-4b3c-8323-c11a57b4e909\"] const gTab = \"details\"; </script> <script defer type=\"module\" src=\"/s/dist/runByPlugin.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container p-1\" id=\"testRunBody\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "run-by-build-page",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/test/seed-release/longevity-tests/longevity-100gb-12h-test/14"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Profile </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a003\", \"email\": \"manny@argus.test\", \"full_name\": \"Manny Manager\", \"id\": \"0a11ce00-0000-4000-8000-000000000002\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"manny\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\"active nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> manny </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\"> <div class=\"row border rounded bg-main my-3 shadow-sm\"> <div class=\"col-2 border-end p-2\"> <img class=\"img-profile img-thumbnail\" src=\"/s/no-user-picture.png\" alt=\"\"> </div> <div class=\"col-10\"> <h1>Profile</h1> <h4>manny</h4> <h6>Details</h6> <div class=\"row\"> <div class=\"col-1 p-2\"> Username: </div> <div class=\"col-4\"> <form class=\"form mb-3\" action=\"/profile/update/username\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateUserName\" name=\"new_username\" type=\"text\" placeholder=\"@manny\"> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </div> </form> </div> </div> <div class=\"row\"> <div class=\"col-1 p-2\"> Name: </div> <div class=\"col-4\"> <form class=\"form mb-3\" action=\"/profile/update/name\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateName\" name=\"new_name\" type=\"text\" placeholder=\"Manny Manager\"> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </div> </form> </div> </div> <div class=\"row\"> <div class=\"col-1 p-2\"> Email: </div> <div class=\"col-6\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateName\" name=\"new_email\" type=\"text\" placeholder=\"manny@argus.test\" disabled> </div> </div> </div> <h4>Change profile picture</h4> <form class=\"form mb-3\" action=\"/profile/update/picture\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3\"> <label for=\"formPictureData\" class=\"form-label\">Profile Image</label> <input class=\"form-control form-control-sm\" id=\"formPictureData\" name=\"filedata\" type=\"file\"> </div> <button type=\"submit\" class=\"btn btn-primary\">Upload new image</button> </form> <h4>Change password</h4> <form class=\"form mb-3\" action=\"/profile/update/password\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3\"> <label for=\"formCurrentPassword\" class=\"form-label\">Current Password</label> <input class=\"form-control form-control-sm\" id=\"formCurrentPassword\" name=\"old_password\" type=\"password\"> </div> <div class=\"mb-3\"> <label for=\"formNewPassword\" class=\"form-label\">New Password</label> <input class=\"form-control form-control-sm\" id=\"formNewPassword\" name=\"new_password\" type=\"password\"> </div> <div class=\"mb-3\"> <label for=\"formNewPasswordConfirm\" class=\"form-label\">New Password confirmation</label> <input class=\"form-control form-control-sm\" id=\"formNewPasswordConfirm\" name=\"new_password_confirm\" type=\"password\"> </div> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </form> <h4>API Token</h4> <div class=\"mb-2\"> <p>Generate an API token</p> <form class=\"d-flex align-items-center\" action=\"/auth/profile/api/token/generate\" method=\"post\"> <div class=\"input-group\"> <span class=\"input-group-text\">Current token</span> <input class=\"form-control\" type=\"text\" disabled value=\"************\"> </div> <div class=\"ms-2\"> <button class=\"btn btn-sm btn-primary\" type=\"submit\"> Regenerate </button> </div> </form> </div> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - My Jobs </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a003\", \"email\": \"manny@argus.test\", \"full_name\": \"Manny Manager\", \"id\": \"0a11ce00-0000-4000-8000-000000000002\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"manny\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/profileJobs.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\"active nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> manny </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"jobsContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - My Schedule </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalSchedules = JSON.parse('[]'); </script> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a003\", \"email\": \"manny@argus.test\", \"full_name\": \"Manny Manager\", \"id\": \"0a11ce00-0000-4000-8000-000000000002\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"manny\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/profileSchedules.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> manny </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\" id=\"scheduleContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "profile-page",
+   "steps": [
+    {
+     "client": "manny",
+     "form": {
+      "password": "manny-password",
+      "username": "manny"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "manny",
+     "method": "GET",
+     "path": "/profile/"
+    },
+    {
+     "client": "manny",
+     "method": "GET",
+     "path": "/profile/jobs"
+    },
+    {
+     "client": "manny",
+     "method": "GET",
+     "path": "/profile/schedules"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Login </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = [[\"error\", \"Incorrect Password\"]]; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/login.bundle.js\"></script> <script> const GITHUB_SCOPES = \"user:email read:user read:org\"; const GITHUB_CLIENT_ID = \"none\"; const CSRF_TOKEN = \"<tok1>\"; const LOGIN_METHODS = ['password']; const MANUAL_LOGOUT = false </script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\"active nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"loginContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Login </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/login.bundle.js\"></script> <script> const GITHUB_SCOPES = \"user:email read:user read:org\"; const GITHUB_CLIENT_ID = \"none\"; const CSRF_TOKEN = \"<tok2>\"; const LOGIN_METHODS = ['password']; const MANUAL_LOGOUT = false </script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\"active nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"loginContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "flash-after-failure",
+   "steps": [
+    {
+     "client": "anon",
+     "form": {
+      "password": "bad",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/login"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - 400 Error </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\" nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\"> <div class=\"row justify-content-center my-4\"> <div class=\"col text-center\"> <h1>ERROR - 400</h1> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - 404 Error </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\" nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\"> <div class=\"row justify-content-center my-4\"> <div class=\"col text-center\"> <h1>ERROR - 404</h1> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "error-page",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/error/"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/error/",
+     "query": {
+      "type": "404"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Alert Tester </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = [[\"error\", \"Hi \\u003cb\\u003e\"]]; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script src=\"/s/dist/flashDebug.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\"> <div class=\"row\" id=\"svelteAlertDebug\"> </div> <div class=\"row\"> <div class=\"col\"> <a href=\"/alert_debug?type=error&message=Example%20Backend%20Error\" class=\"btn btn-danger\">Error</a> <a href=\"/alert_debug?type=success&message=Example%20Backend%20Success\" class=\"btn btn-success\">Success</a> </div> <div class=\"col\" id=\"flashDebug\"></div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "alert-debug",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/alert_debug",
+     "query": {
+      "message": "Hi <b>",
+      "type": "error"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Core plan </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script> globalThis.ARGUS_PLAN_DATA = {\"assignee_mapping\": {\"3ed77c66-c3b8-404f-8f43-266b75771178\": \"0a11ce00-0000-4000-8000-000000000001\"}, \"completed\": false, \"created_from\": null, \"creation_time\": \"2026-11-01T11:00:00.000Z\", \"description\": \"Seeded plan\", \"ends_at\": null, \"groups\": [\"34f73064-36d3-42e0-9bf8-17840d9eb352\"], \"id\": \"0a11ce00-0000-1000-8000-000000000030\", \"key\": \"core-plan\", \"last_updated\": \"2026-11-01T11:00:00.000Z\", \"name\": \"Core plan\", \"options\": null, \"owner\": \"0a11ce00-0000-4000-8000-000000000002\", \"participants\": [\"0a11ce00-0000-4000-8000-000000000001\"], \"release_id\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"target_version\": \"2025.1\", \"tests\": [\"3ed77c66-c3b8-404f-8f43-266b75771178\", \"437f882f-857e-4e8e-abf3-18a1e2d60bbd\"], \"view_id\": null}; </script> <script defer type=\"module\" src=\"/s/dist/plan.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid my-4\"> <div id=\"planDashboard\"></div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "plan-page",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/plan/0a11ce00-0000-1000-8000-000000000030"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 500,
+     "text": "<!doctype html> <html lang=en> <title>500 Internal Server Error</title> <h1>Internal Server Error</h1> <p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>"
+    }
+   ],
+   "id": "unknown-picture",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/storage/picture/7e57ab1e-0000-4000-8000-0000000000ff"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/profile/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/profile/\">/profile/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Profile </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = [[\"error\", \"This username is already taken.\"]]; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\"active nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\"> <div class=\"row border rounded bg-main my-3 shadow-sm\"> <div class=\"col-2 border-end p-2\"> <img class=\"img-profile img-thumbnail\" src=\"/s/no-user-picture.png\" alt=\"\"> </div> <div class=\"col-10\"> <h1>Profile</h1> <h4>alice</h4> <h6>Details</h6> <div class=\"row\"> <div class=\"col-1 p-2\"> Username: </div> <div class=\"col-4\"> <form class=\"form mb-3\" action=\"/profile/update/username\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateUserName\" name=\"new_username\" type=\"text\" placeholder=\"@alice\"> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </div> </form> </div> </div> <div class=\"row\"> <div class=\"col-1 p-2\"> Name: </div> <div class=\"col-4\"> <form class=\"form mb-3\" action=\"/profile/update/name\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateName\" name=\"new_name\" type=\"text\" placeholder=\"Alice Tester\"> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </div> </form> </div> </div> <div class=\"row\"> <div class=\"col-1 p-2\"> Email: </div> <div class=\"col-6\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateName\" name=\"new_email\" type=\"text\" placeholder=\"alice@argus.test\" disabled> </div> </div> </div> <h4>Change profile picture</h4> <form class=\"form mb-3\" action=\"/profile/update/picture\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3\"> <label for=\"formPictureData\" class=\"form-label\">Profile Image</label> <input class=\"form-control form-control-sm\" id=\"formPictureData\" name=\"filedata\" type=\"file\"> </div> <button type=\"submit\" class=\"btn btn-primary\">Upload new image</button> </form> <h4>Change password</h4> <form class=\"form mb-3\" action=\"/profile/update/password\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3\"> <label for=\"formCurrentPassword\" class=\"form-label\">Current Password</label> <input class=\"form-control form-control-sm\" id=\"formCurrentPassword\" name=\"old_password\" type=\"password\"> </div> <div class=\"mb-3\"> <label for=\"formNewPassword\" class=\"form-label\">New Password</label> <input class=\"form-control form-control-sm\" id=\"formNewPassword\" name=\"new_password\" type=\"password\"> </div> <div class=\"mb-3\"> <label for=\"formNewPasswordConfirm\" class=\"form-label\">New Password confirmation</label> <input class=\"form-control form-control-sm\" id=\"formNewPasswordConfirm\" name=\"new_password_confirm\" type=\"password\"> </div> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </form> <h4>API Token</h4> <div class=\"mb-2\"> <p>Generate an API token</p> <form class=\"d-flex align-items-center\" action=\"/auth/profile/api/token/generate\" method=\"post\"> <div class=\"input-group\"> <span class=\"input-group-text\">Current token</span> <input class=\"form-control\" type=\"text\" disabled value=\"************\"> </div> <div class=\"ms-2\"> <button class=\"btn btn-sm btn-primary\" type=\"submit\"> Regenerate </button> </div> </form> </div> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "profile-update-flash",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "form": {
+      "new_username": "manny"
+     },
+     "method": "POST",
+     "path": "/profile/update/username"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/profile/"
+    }
+   ]
+  }
+ ],
+ "group": "G14",
+ "name": "ui-page-rendering"
+}

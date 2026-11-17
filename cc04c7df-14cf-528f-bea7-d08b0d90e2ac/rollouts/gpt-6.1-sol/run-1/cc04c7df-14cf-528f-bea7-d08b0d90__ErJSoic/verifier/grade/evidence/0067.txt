@@ -1,0 +1,359 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/request/HistoricStatsRequestSender.java (changed against State A) ===
+@@
+38  | import me.zodac.folding.rest.api.header.RestHeader;
+39  | import me.zodac.folding.rest.util.RestUtilConstants;
+40  | 
+   -| /**
+   -|  * Convenience class to send HTTP requests to the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} REST endpoint.
+   -|  */
+41 +| 
+42  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+43  | public final class HistoricStatsRequestSender {
+44  | 
+45  |     private final String historicStatsUrl;
+46  | 
+   -|     /**
+   -|      * Create an instance of {@link HistoricStatsRequestSender}.
+   -|      *
+   -|      * @param foldingUrl the root URL of the <code>/folding</code> endpoint, i.e:
+   -|      *                   <pre>http://127.0.0.1:8080/folding</pre>
+   -|      * @return the created {@link HistoricStatsRequestSender}
+   -|      */
+47 +|     
+48  |     public static HistoricStatsRequestSender createWithUrl(final String foldingUrl) {
+49  |         final String historicStatsUrl = foldingUrl + "/historic";
+50  |         return new HistoricStatsRequestSender(historicStatsUrl);
+51  |     }
+52  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve hourly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.User} for the given {@code year}/{@code month}/{@code day}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * @param userId the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *               retrieved
+   -|      * @param year   the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month  the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param day    the day of the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getHourlyUserStats(int, Year, Month, int, String)
+   -|      */
+53 +|     
+54  |     public HttpResponse<String> getHourlyUserStats(final int userId, final Year year, final Month month, final int day) throws FoldingRestException {
+55  |         return getHourlyStats(HistoricStatsType.USER, userId, year, month, day, null);
+56  |     }
+57  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve hourly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.User} for the given {@code year}/{@code month}/{@code day}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param userId    the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *                  retrieved
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month     the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param day       the day of the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getHourlyUserStats(int, Year, Month, int)
+   -|      */
+58 +|     
+59  |     public HttpResponse<String> getHourlyUserStats(final int userId, final Year year, final Month month, final int day, final String entityTag)
+60  |         throws FoldingRestException {
+61  |         return getHourlyStats(HistoricStatsType.USER, userId, year, month, day, entityTag);
+62  |     }
+63  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve hourly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.Team}  for the given {@code year}/{@code month}/{@code day}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * @param teamId the ID of the {@link me.zodac.folding.api.tc.Team} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *               retrieved
+   -|      * @param year   the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month  the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param day    the day of the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getHourlyTeamStats(int, Year, Month, int, String)
+   -|      */
+64 +|     
+65  |     public HttpResponse<String> getHourlyTeamStats(final int teamId, final Year year, final Month month, final int day) throws FoldingRestException {
+66  |         return getHourlyStats(HistoricStatsType.TEAM, teamId, year, month, day, null);
+67  |     }
+68  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve hourly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.Team} for the given {@code year}/{@code month}/{@code day}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamId    the ID of the {@link me.zodac.folding.api.tc.Team} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *                  retrieved
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month     the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param day       the day of the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getHourlyTeamStats(int, Year, Month, int)
+   -|      */
+69 +|     
+70  |     public HttpResponse<String> getHourlyTeamStats(final int teamId, final Year year, final Month month, final int day, final String entityTag)
+71  |         throws FoldingRestException {
+72  |         return getHourlyStats(HistoricStatsType.TEAM, teamId, year, month, day, entityTag);
+@@
+96  |         }
+97  |     }
+98  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve daily {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.User} for the given {@code year}/{@code month}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param userId the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *               retrieved
+   -|      * @param year   the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month  the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getDailyUserStats(int, Year, Month, String)
+   -|      */
+99 +|     
+100  |     public HttpResponse<String> getDailyUserStats(final int userId, final Year year, final Month month) throws FoldingRestException {
+101  |         return getDailyStats(HistoricStatsType.USER, userId, year, month, null);
+102  |     }
+103  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve daily {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.User} for the given {@code year}/{@code month}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param userId    the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *                  retrieved
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month     the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getDailyUserStats(int, Year, Month)
+   -|      */
+104 +|     
+105  |     public HttpResponse<String> getDailyUserStats(final int userId, final Year year, final Month month, final String entityTag)
+106  |         throws FoldingRestException {
+107  |         return getDailyStats(HistoricStatsType.USER, userId, year, month, entityTag);
+108  |     }
+109  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve daily {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.Team} for the given {@code year}/{@code month}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamId the ID of the {@link me.zodac.folding.api.tc.Team} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *               retrieved
+   -|      * @param year   the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month  the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getDailyTeamStats(int, Year, Month, String)
+   -|      */
+110 +|     
+111  |     public HttpResponse<String> getDailyTeamStats(final int teamId, final Year year, final Month month) throws FoldingRestException {
+112  |         return getDailyStats(HistoricStatsType.TEAM, teamId, year, month, null);
+113  |     }
+114  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve daily {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.Team} for the given {@code year}/{@code month}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamId    the ID of the {@link me.zodac.folding.api.tc.Team} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *                  retrieved
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param month     the {@link Month} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getDailyTeamStats(int, Year, Month)
+   -|      */
+115 +|     
+116  |     public HttpResponse<String> getDailyTeamStats(final int teamId, final Year year, final Month month, final String entityTag)
+117  |         throws FoldingRestException {
+118  |         return getDailyStats(HistoricStatsType.TEAM, teamId, year, month, entityTag);
+@@
+142  |         }
+143  |     }
+144  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve monthly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.User} for the given {@code year}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param userId the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *               retrieved
+   -|      * @param year   the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyUserStats(int, Year, String)
+   -|      */
+145 +|     
+146  |     public HttpResponse<String> getMonthlyUserStats(final int userId, final Year year) throws FoldingRestException {
+147  |         return getMonthlyStats(HistoricStatsType.USER, userId, year, null);
+148  |     }
+149  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve monthly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.User} for the given {@code year}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param userId    the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *                  retrieved
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyUserStats(int, Year)
+   -|      */
+150 +|     
+151  |     public HttpResponse<String> getMonthlyUserStats(final int userId, final Year year, final String entityTag) throws FoldingRestException {
+152  |         return getMonthlyStats(HistoricStatsType.USER, userId, year, entityTag);
+153  |     }
+154  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve monthly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.Team} for the given {@code year}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamId the ID of the {@link me.zodac.folding.api.tc.Team} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *               retrieved
+   -|      * @param year   the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyTeamStats(int, Year, String)
+   -|      */
+155 +|     
+156  |     public HttpResponse<String> getMonthlyTeamStats(final int teamId, final Year year) throws FoldingRestException {
+157  |         return getMonthlyStats(HistoricStatsType.TEAM, teamId, year, null);
+158  |     }
+159  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve monthly {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} for a
+   -|      * {@link me.zodac.folding.api.tc.Team} for the given {@code year}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamId    the ID of the {@link me.zodac.folding.api.tc.Team} whose {@link me.zodac.folding.rest.api.tc.historic.HistoricStats} are to be
+   -|      *                  retrieved
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.historic.HistoricStats}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyTeamStats(int, Year)
+   -|      */
+160 +|     
+161  |     public HttpResponse<String> getMonthlyTeamStats(final int teamId, final Year year, final String entityTag) throws FoldingRestException {
+162  |         return getMonthlyStats(HistoricStatsType.TEAM, teamId, year, entityTag);
+163  |     }
+@@
+185  |         }
+186  |     }
+187  | 
+   -|     /**
+   -|      * Defines the type of historic stats we want to retrieve.
+   -|      */
+188 +|     
+189  |     private enum HistoricStatsType {
+190  | 
+   -|         /**
+   -|          * Historic stats for a {@link me.zodac.folding.api.tc.Team}.
+   -|          */
+191 +|         
+192  |         TEAM("teams"),
+193  | 
+   -|         /**
+   -|          * Historic stats for a {@link me.zodac.folding.api.tc.User}.
+   -|          */
+194 +|         
+195  |         USER("users");
+196  | 
+197  |         private final String endpointUrl;
+198  | 
+   -|         /**
+   -|          * Constructs a {@link HistoricStatsType}.
+   -|          *
+   -|          * @param endpointUrl the value of the {@link HistoricStatsType}
+   -|          */
+199 +|         
+200  |         HistoricStatsType(final String endpointUrl) {
+201  |             this.endpointUrl = endpointUrl;
+202  |         }

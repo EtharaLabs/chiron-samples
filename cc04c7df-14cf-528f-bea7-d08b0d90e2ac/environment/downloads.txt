@@ -1,0 +1,8 @@
+# name arch sha256 url  (arch "all" = platform independent)
+jdk11 arm64 f27033e6f7523c1b0b2565a78e9c0e0abe5596a854ce00ca04ec1b06ece7a935 https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.32.1%2B1/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.32.1_1.tar.gz
+jdk11 amd64 5c3f68887c325d36d852ba534303e1f5f1f5cae7d6cc1e951d73e0d8e98a058d https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.32.1%2B1/OpenJDK11U-jdk_x64_linux_hotspot_11.0.32.1_1.tar.gz
+jdk17 arm64 3e4eca7ead088f080af1476007decf010a240a1eb4e1e78c54fa32fbcc347084 https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21%2B9/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.21_9.tar.gz
+jdk17 amd64 8b9b611d917e3dfd8419d3566b5949226f69b052fed7e109c1368add1dfe8711 https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21%2B9/OpenJDK17U-jdk_x64_linux_hotspot_17.0.21_9.tar.gz
+maven all c7047a48deb626abf26f71ab3643d296db9b1e67f1faa7d988637deac876b5a9 https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+wildfly all 4b510847b41052a2509f78bf4099ef55b1a704dab344f9f433b706f96f62a00a https://repo1.maven.org/maven2/org/wildfly/wildfly-dist/24.0.0.Final/wildfly-dist-24.0.0.Final.tar.gz
+libfaketime all 729ad33b9c750a50d9c68e97b90499680a74afd1568d859c574c0fe56fe7947f https://github.com/wolfcw/libfaketime/archive/refs/tags/v0.9.10.tar.gz

@@ -1,0 +1,153 @@
+{
+ "id": "s3_family_13",
+ "source": "f021_head_on_error_responses",
+ "steps": [
+  {
+   "case": "head_unknown_hardware",
+   "http": {
+    "method": "HEAD",
+    "path": "/hardware/9999"
+   }
+  },
+  {
+   "case": "head_malformed_hardware_id",
+   "http": {
+    "method": "HEAD",
+    "path": "/hardware/abc"
+   }
+  },
+  {
+   "case": "head_unknown_path_redirect",
+   "http": {
+    "method": "HEAD",
+    "path": "/nosuchpath"
+   }
+  },
+  {
+   "case": "head_passkey_without_auth",
+   "http": {
+    "method": "HEAD",
+    "path": "/users/1/passkey"
+   }
+  },
+  {
+   "case": "head_passkey_as_admin",
+   "http": {
+    "method": "HEAD",
+    "path": "/users/1/passkey",
+    "auth": "admin"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "head_unknown_hardware",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/hardware/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "head_malformed_hardware_id",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/hardware/abc"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "51",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "head_unknown_path_redirect",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/nosuchpath"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://frontend.example"
+    },
+    "status": 303
+   }
+  },
+  {
+   "case": "head_passkey_without_auth",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "head_passkey_as_admin",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "HEAD",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "HEAD on responses that are not 200: an application 404, an application 400, the 303 redirect and a 401 challenge. The status and the contract headers (Location, Content-Type, WWW-Authenticate) must match the GET exactly with no body."
+}

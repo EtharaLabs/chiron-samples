@@ -1,0 +1,377 @@
+import re
+import requests
+from typing import Any, NotRequired, TypedDict
+from uuid import UUID
+import xml.etree.ElementTree as ET
+import jenkins
+import logging
+
+from flask import current_app, g
+
+from argus.backend.error_handlers import DataValidationError
+from argus.backend.models.web import ArgusGroup, ArgusRelease, ArgusTest, UserOauthToken
+
+LOGGER = logging.getLogger(__name__)
+GITHUB_REPO_RE = r"(?P<http>^https?:\/\/(www\.)?github\.com\/(?P<user>[\w\d\-]+)\/(?P<repo>[\w\d\-]+)(\.git)?$)|(?P<ssh>git@github\.com:(?P<ssh_user>[\w\d\-]+)\/(?P<ssh_repo>[\w\d\-]+)(\.git)?)"
+
+# The mutually-exclusive Scylla "version source" families for scylla-cluster-tests
+# jobs, mirroring the SCTParameterWizard front-end. Exactly one family must carry
+# a non-empty value for a build to start correctly. The image family groups the
+# per-backend image parameters (only one is ever relevant for a given backend).
+SCT_VERSION_SOURCE_FAMILIES: dict[str, list[str]] = {
+    "scylla_version": ["scylla_version"],
+    "scylla_repo": ["scylla_repo"],
+    "scylla_image": ["scylla_ami_id", "gce_image_db", "azure_image_db", "oci_image_db"],
+    "rolling_upgrade": ["new_scylla_repo"],
+    "scylla_byo": ["byo_scylla_repo"],
+}
+
+
+class Parameter(TypedDict):
+    _class: str
+    name: str
+    description: str
+    value: Any
+    choices: NotRequired[list[str]]
+
+
+class JenkinsServiceError(Exception):
+    pass
+
+
+class JenkinsService:
+    RESERVED_PARAMETER_NAME = "requested_by_user"
+    # Choice parameters that must default to an explicit "unset" (empty) value
+    # instead of silently selecting the first option from the Jenkins job.
+    OPTIONAL_CHOICE_PARAMETERS = frozenset({"billing_project"})
+
+    SETTINGS_CONFIG_MAP = {
+        "scylla-cluster-tests": {
+            "gitRepo": "*//scm/userRemoteConfigs/hudson.plugins.git.UserRemoteConfig/url",
+            "gitBranch": "*//scm/branches/hudson.plugins.git.BranchSpec/name",
+            "pipelineFile": "*//scriptPath",
+        },
+        "driver-matrix-tests": {
+            "gitRepo": "*//scm/userRemoteConfigs/hudson.plugins.git.UserRemoteConfig/url",
+            "gitBranch": "*//scm/branches/hudson.plugins.git.BranchSpec/name",
+            "pipelineFile": "*//scriptPath",
+        },
+        "sirenada": {
+            "gitRepo": "*//scm/userRemoteConfigs/hudson.plugins.git.UserRemoteConfig/url",
+            "gitBranch": "*//scm/branches/hudson.plugins.git.BranchSpec/name",
+            "pipelineFile": "*//scriptPath",
+        }
+    }
+
+    def __init__(self) -> None:
+        self._jenkins = jenkins.Jenkins(url=current_app.config["JENKINS_URL"],
+                                        username=current_app.config["JENKINS_USER"],
+                                        password=current_app.config["JENKINS_API_TOKEN"])
+
+    @staticmethod
+    def _extract_choice_parameters(config: ET.Element) -> dict[str, list[str]]:
+        """Map each ChoiceParameterDefinition name to its list of choices.
+
+        Handles both the nested ArrayList form
+        (<choices class="..."><a><string>..) and the flat form
+        (<choices><string>..).
+        """
+        choices: dict[str, list[str]] = {}
+        for define in config.iterfind(".//hudson.model.ChoiceParameterDefinition"):
+            name = define.findtext("name")
+            if not name:
+                continue
+            choices[name] = [s.text for s in define.findall("choices//string") if s.text is not None]
+        return choices
+
+    def _default_params_from_job_info(self, job_info: dict) -> list[Parameter]:
+        """Build the parameter list from the job's configured default values
+        (its "initial" parameters), independent of any past build. Optional
+        choice parameters default to empty rather than their first option."""
+        default_params = next((prop for prop in job_info["property"] if prop.get(
+            "_class", "") == "hudson.model.ParametersDefinitionProperty"), {}).get("parameterDefinitions", {})
+        return [{"name": param["name"],
+                 "value": "" if param["name"] in self.OPTIONAL_CHOICE_PARAMETERS
+                 else param.get("defaultParameterValue", {}).get("value", "")}
+                for param in default_params if param["name"] != self.RESERVED_PARAMETER_NAME]
+
+    def retrieve_job_parameters(self, build_id: str, build_number: int | None,
+                                from_defaults: bool = False) -> list[Parameter]:
+        """Return a job's parameters. When from_defaults is False the values are
+        seeded from a past build instead: the given build_number, or the last
+        build when build_number is falsy (the rebuild/clone behaviour).
+        Default values:
+        Cli: True
+        Frontend: False
+        """
+        job_info = self._jenkins.get_job_info(name=build_id)
+        raw_config = self._jenkins.get_job_config(name=build_id)
+        config = ET.fromstring(raw_config)
+        parameter_defs = config.find("*//parameterDefinitions")
+        if parameter_defs:
+            descriptions = {
+                define.findtext("name"): f"{define.findtext('description', '')}" + f" (default: <span class=\"fw-bold\">{define.findtext('defaultValue')}</span>)" if define.findtext('defaultValue') else ""
+                for define in parameter_defs.iterfind("hudson.model.StringParameterDefinition")
+            }
+        else:
+            descriptions = {}
+        choices = self._extract_choice_parameters(config)
+
+        if from_defaults:
+            params = self._default_params_from_job_info(job_info)
+        else:
+            if not build_number:
+                next_build_number = job_info.get("nextBuildNumber")
+                if not next_build_number:
+                    raise JenkinsServiceError("#noBuildsAvailable")
+                try:
+                    build_info = self._jenkins.get_build_info(name=build_id, number=next_build_number - 1)
+                except jenkins.JenkinsException:
+                    raise JenkinsServiceError("#noBuildsAvailable")
+            else:
+                build_info = self._jenkins.get_build_info(name=build_id, number=build_number)
+            params = next((a for a in build_info["actions"] if a.get(
+                "_class", "#NONE") == "hudson.model.ParametersAction"), None)
+            if params:
+                params = [param for param in params["parameters"] if param["name"] != self.RESERVED_PARAMETER_NAME]
+            else:
+                params = self._default_params_from_job_info(job_info)
+        self._apply_choice_defaults(params, choices, descriptions)
+
+        return params
+
+    @classmethod
+    def _apply_choice_defaults(cls, params: list[Parameter], choices: dict[str, list[str]],
+                               descriptions: dict[str, str]) -> None:
+        """Attach descriptions/choices to params and resolve each default value.
+
+        Regular choice parameters fall back to the first choice when their value
+        is unknown. Optional choice parameters (e.g. billing_project) instead get
+        an explicit empty option and default to it, so a run is never silently
+        charged to the first project in the list.
+        """
+        for idx, param in enumerate(params):
+            params[idx]["description"] = descriptions.get(param["name"], "")
+            if param["name"] not in choices:
+                continue
+            param_choices = choices[param["name"]]
+            if param["name"] in cls.OPTIONAL_CHOICE_PARAMETERS:
+                if "" not in param_choices:
+                    param_choices = ["", *param_choices]
+                params[idx]["choices"] = param_choices
+                if param.get("value") not in param_choices:
+                    params[idx]["value"] = ""
+            else:
+                params[idx]["choices"] = param_choices
+                if param_choices and param.get("value") not in param_choices:
+                    params[idx]["value"] = param_choices[0]
+
+    def latest_build(self, build_id: str) -> int:
+        try:
+            job_info = self._jenkins.get_job_info(name=build_id)
+            last_build = job_info.get("lastBuild")
+            if not last_build:
+                return -1
+            return last_build["number"]
+        except jenkins.JenkinsException:
+            raise JenkinsServiceError("Job doesn't exist", build_id)
+
+    def next_build_number(self, build_id: str) -> int:
+        """Best-effort guess of the build number Jenkins will assign to the next
+        build of ``build_id``. Used to hand out a stable Argus run link right
+        after triggering, before the build leaves the queue. Returns ``-1`` when
+        the number can't be determined (the trigger itself already succeeded, so
+        this must never be fatal)."""
+        try:
+            job_info = self._jenkins.get_job_info(name=build_id)
+            return job_info.get("nextBuildNumber", -1)
+        except jenkins.JenkinsException:
+            return -1
+
+    @staticmethod
+    def validate_sct_version_source(params: dict) -> None:
+        """Ensure a scylla-cluster-tests build specifies exactly one Scylla
+        version source (see SCT_VERSION_SOURCE_FAMILIES). Raises
+        DataValidationError when none or more than one family carries a value, so
+        the trigger is aborted before Jenkins schedules a doomed build."""
+        set_families = [
+            family
+            for family, keys in SCT_VERSION_SOURCE_FAMILIES.items()
+            if any(str(params.get(key) or "").strip() for key in keys)
+        ]
+        if not set_families:
+            options = ", ".join(
+                key for keys in SCT_VERSION_SOURCE_FAMILIES.values() for key in keys
+            )
+            raise DataValidationError(
+                f"A Scylla version source must be set: one of {options}."
+            )
+        if len(set_families) > 1:
+            raise DataValidationError(
+                "Only one Scylla version source may be set, but multiple were "
+                f"provided: {', '.join(set_families)}."
+            )
+
+    def get_releases_for_clone(self, test_id: str):
+        test_id = UUID(test_id)
+        # TODO: Filtering based on origin location / user preferences
+        _: ArgusTest = ArgusTest.get(id=test_id)
+
+        releases = list(ArgusRelease.find().all())
+
+        return sorted(releases, key=lambda r: r.pretty_name if r.pretty_name else r.name)
+
+    def get_groups_for_release(self, release_id: str):
+        groups = list(ArgusGroup.find(release_id=release_id).all())
+
+        return sorted(groups, key=lambda g: g.pretty_name if g.pretty_name else g.name)
+
+    def _verify_sct_settings(self, new_settings: dict[str, str]) -> tuple[bool, str]:
+        if not (match := re.match(GITHUB_REPO_RE, new_settings["gitRepo"])):
+            return (False, "Repository doesn't conform to GitHub schema")
+
+        git_info = match.groupdict()
+        if git_info.get("ssh"):
+            repo = git_info["ssh_repo"]
+            user = git_info["ssh_user"]
+        else:
+            repo = git_info["repo"]
+            user = git_info["user"]
+
+        token = current_app.config.get("GITHUB_ACCESS_TOKEN")
+        response = requests.get(
+            url=f"https://api.github.com/repos/{user}/{repo}/contents/{new_settings['pipelineFile']}?ref={new_settings['gitBranch']}",
+            headers={
+                "Accept": "application/vnd.github+json",
+                "Authorization": f"Bearer {token}",
+            },
+            timeout=60
+        )
+
+        if response.status_code == 404:
+            return (False, f"Pipeline file not found in the <a href=\"https://github.com/{user}/{repo}/tree/{new_settings['gitBranch']}\"> target repository</a>, please check the repository before continuing")
+
+        if response.status_code == 403:
+            return (True, "No access to this repository using your token. The pipeline file cannot be verified.")
+
+        if response.status_code == 200:
+            return (True, "")
+
+        return (False, "Generic Error")
+
+    def verify_job_settings(self, build_id: str, new_settings: dict[str, str]) -> tuple[bool, str]:
+        PLUGIN_MAP = {
+            "scylla-cluster-tests": self._verify_sct_settings,
+            # for now they match
+            "sirenada": self._verify_sct_settings,
+            "driver-matrix-tests": self._verify_sct_settings,
+        }
+        test: ArgusTest = ArgusTest.get(build_system_id=build_id)
+        plugin_name = test.plugin_name
+
+        validated, message = PLUGIN_MAP.get(plugin_name, lambda _: (True, ""))(new_settings)
+
+        return {
+            "validated": validated,
+            "message": message,
+        }
+
+    def get_advanced_settings(self, build_id: str):
+        test: ArgusTest = ArgusTest.get(build_system_id=build_id)
+        plugin_name = test.plugin_name
+
+        if not (plugin_settings := self.SETTINGS_CONFIG_MAP.get(plugin_name)):
+            return {}
+
+        settings = {}
+        raw_config = self._jenkins.get_job_config(name=build_id)
+        config = ET.fromstring(raw_config)
+
+        for setting, xpath in plugin_settings.items():
+            value = config.find(xpath)
+            settings[setting] = value.text
+
+        return settings
+
+    def adjust_job_settings(self, build_id: str, plugin_name: str, settings: dict[str, str]):
+        xpath_map = self.SETTINGS_CONFIG_MAP.get(plugin_name)
+        if not xpath_map:
+            return
+
+        config = self._jenkins.get_job_config(name=build_id)
+        xml = ET.fromstring(config)
+        for setting, value in settings.items():
+            element = xml.find(xpath_map[setting])
+            element.text = value
+
+        adjusted_config = ET.tostring(xml, encoding="unicode")
+        self._jenkins.reconfig_job(name=build_id, config_xml=adjusted_config)
+
+    def clone_job(self, current_test_id: str, new_name: str, target: str, group: str, advanced_settings: bool | dict[str, str]):
+        cloned_test: ArgusTest = ArgusTest.get(id=UUID(current_test_id))
+        target_release: ArgusRelease = ArgusRelease.get(id=UUID(target))
+        target_group: ArgusGroup = ArgusGroup.get(id=UUID(group))
+
+        if target_group.id == cloned_test.id and new_name == cloned_test.name:
+            raise JenkinsServiceError("Unable to clone: source and destination are the same")
+
+        if not target_group.build_system_id:
+            raise JenkinsServiceError("Unable to clone: target group is missing jenkins folder path")
+
+        jenkins_new_build_id = f"{target_group.build_system_id}/{new_name}"
+
+        new_test = ArgusTest()
+        new_test.name = new_name
+        new_test.build_system_id = jenkins_new_build_id
+        new_test.group_id = target_group.id
+        new_test.release_id = target_release.id
+        new_test.plugin_name = cloned_test.plugin_name
+
+        old_config = self._jenkins.get_job_config(name=cloned_test.build_system_id)
+        LOGGER.info(old_config)
+        xml = ET.fromstring(old_config)
+        display_name = xml.find("displayName")
+        if display_name:
+            display_name.text = new_name
+        new_config = ET.tostring(xml, encoding="unicode")
+        self._jenkins.create_job(name=jenkins_new_build_id, config_xml=new_config)
+        new_job_info = self._jenkins.get_job_info(name=jenkins_new_build_id)
+        new_test.build_system_url = new_job_info["url"]
+        new_test.save()
+
+        if advanced_settings:
+            self.adjust_job_settings(build_id=jenkins_new_build_id,
+                                     plugin_name=new_test.plugin_name, settings=advanced_settings)
+
+        return {
+            "new_job": new_job_info,
+            "new_entity": new_test,
+        }
+
+    def clone_build_job(self, build_id: str, params: dict[str, str]):
+        queue_item = self.build_job(build_id=build_id, params=params)
+        return {
+            "queueItem": queue_item,
+        }
+
+    def build_job(self, build_id: str, params: dict, user_override: str = None):
+        queue_number = self._jenkins.build_job(build_id, {
+            **params,
+            # use the user's email as the default value for the requested by user parameter,
+            # so it would align with how SCT default works, on runs not trigger by argus
+            self.RESERVED_PARAMETER_NAME: g.user.email.split('@')[0] if not user_override else user_override
+        })
+        return queue_number
+
+    def get_queue_info(self, queue_item: int):
+        build_info = self._jenkins.get_queue_item(queue_item)
+        LOGGER.info("%s", build_info)
+        executable = build_info.get("executable")
+        if executable:
+            return executable
+        else:
+            return {
+                "why": build_info["why"],
+                "inQueueSince": build_info["inQueueSince"],
+                "taskUrl": build_info["task"]["url"],
+            }

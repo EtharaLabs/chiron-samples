@@ -1,0 +1,31 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/cache/TotalStatsCache.java (changed against State A) ===
+@@
+26  | 
+27  | import me.zodac.folding.api.tc.stats.UserStats;
+28  | 
+   -| /**
+   -|  * Implementation of {@link BaseCache} for total {@link UserStats}.
+   -|  *
+   -|  * <p>
+   -|  * <b>key:</b> the {@link me.zodac.folding.api.tc.User} ID
+   -|  *
+   -|  * <p>
+   -|  * <b>value:</b> {@link UserStats}
+   -|  */
+29 +| 
+30  | public final class TotalStatsCache extends BaseCache<UserStats> {
+31  | 
+32  |     private static final TotalStatsCache INSTANCE = new TotalStatsCache();
+@@
+35  |         super();
+36  |     }
+37  | 
+   -|     /**
+   -|      * Returns a singleton instance of {@link TotalStatsCache}.
+   -|      *
+   -|      * @return the {@link TotalStatsCache}
+   -|      */
+38 +|     
+39  |     public static TotalStatsCache getInstance() {
+40  |         return INSTANCE;
+41  |     }

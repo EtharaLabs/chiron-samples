@@ -1,0 +1,316 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/endpoint/HardwareEndpoint.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.rest.endpoint;
+26 +| 
+27 +| import org.springframework.web.bind.annotation.*;
+28 +| import org.springframework.http.ResponseEntity;
+29 +| import org.springframework.http.MediaType;
+30 +| import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+31 +| import org.springframework.web.util.UriComponentsBuilder;
+32 +| import javax.servlet.http.HttpServletRequest;
+33 +| import org.springframework.beans.factory.annotation.Autowired;
+34 +| import org.springframework.context.annotation.Lazy;
+35 +| import me.zodac.folding.rest.RequiredRoles;
+36 +| 
+37 +| import static me.zodac.folding.api.util.DateTimeUtils.untilNextMonthUtc;
+38 +| import static me.zodac.folding.rest.response.Responses.badRequest;
+39 +| import static me.zodac.folding.rest.response.Responses.cachedOk;
+40 +| import static me.zodac.folding.rest.response.Responses.created;
+41 +| import static me.zodac.folding.rest.response.Responses.notFound;
+42 +| import static me.zodac.folding.rest.response.Responses.nullRequest;
+43 +| import static me.zodac.folding.rest.response.Responses.ok;
+44 +| import static me.zodac.folding.rest.response.Responses.serverError;
+45 +| 
+46 +| import java.time.temporal.ChronoUnit;
+47 +| import java.util.ArrayList;
+48 +| import java.util.Collection;
+49 +| import java.util.List;
+50 +| import java.util.Optional;
+51 +| import me.zodac.folding.api.util.StringUtils;
+52 +| import me.zodac.folding.state.SystemStateManager;
+53 +| import me.zodac.folding.api.state.ReadRequired;
+54 +| import me.zodac.folding.api.state.SystemState;
+55 +| import me.zodac.folding.api.state.WriteRequired;
+56 +| import me.zodac.folding.api.tc.Hardware;
+57 +| import me.zodac.folding.service.api.FoldingStatsCore;
+58 +| import me.zodac.folding.rest.api.tc.request.HardwareRequest;
+59 +| import me.zodac.folding.rest.endpoint.util.IdResult;
+60 +| import me.zodac.folding.rest.endpoint.util.IntegerParser;
+61 +| import me.zodac.folding.rest.endpoint.util.ValidationFailureResponseMapper;
+62 +| import me.zodac.folding.rest.response.BatchCreateResponse;
+63 +| import me.zodac.folding.api.tc.validation.HardwareValidator;
+64 +| import me.zodac.folding.api.tc.validation.ValidationFailure;
+65 +| import me.zodac.folding.api.tc.validation.ValidationResult;
+66 +| import org.apache.logging.log4j.LogManager;
+67 +| import org.apache.logging.log4j.Logger;
+68 +| 
+69 +| @RestController
+70 +| @RequestMapping("/hardware")
+71 +| public class HardwareEndpoint {
+72 +| 
+73 +|     private static final Logger LOGGER = LogManager.getLogger();
+74 +| 
+75 +|     @Autowired
+76 +|     @Lazy
+77 +|     private FoldingStatsCore foldingStatsCore;
+78 +| 
+79 +|     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+80 +|     @WriteRequired
+81 +|     @RequiredRoles("admin")
+82 +|     public ResponseEntity<String> create(@RequestBody(required = false) final HardwareRequest hardwareRequest) {
+83 +| 
+84 +|         final ValidationResult<Hardware> validationResult = validateCreate(hardwareRequest);
+85 +|         if (validationResult.isFailure()) {
+86 +|             return ValidationFailureResponseMapper.map(validationResult);
+87 +|         }
+88 +|         final Hardware validatedHardware = validationResult.getOutput();
+89 +| 
+90 +|         try {
+91 +|             final Hardware elementWithId = foldingStatsCore.createHardware(validatedHardware);
+92 +| 
+93 +|             final UriComponentsBuilder elementLocationBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
+94 +|                 .pathSegment(String.valueOf(elementWithId.getId()));
+95 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+96 +|             LOGGER.info("Created hardware with ID {}", elementWithId.getId());
+97 +|             return created(elementWithId, elementLocationBuilder);
+98 +|         } catch (final Exception e) {
+99 +|             LOGGER.error("Unexpected error creating hardware: {}", hardwareRequest, e);
+100 +|             return serverError();
+101 +|         }
+102 +|     }
+103 +|     @PostMapping(value = "/batch", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+104 +|     @WriteRequired
+105 +|     @RequiredRoles("admin")
+106 +|     public ResponseEntity<String> createBatchOf(@RequestBody(required = false) final Collection<HardwareRequest> hardwareRequests) {
+107 +| 
+108 +|         final Collection<Hardware> validHardwares = new ArrayList<>(hardwareRequests.size() / 2);
+109 +|         final Collection<ValidationFailure> failedValidationResponses = new ArrayList<>(hardwareRequests.size() / 2);
+110 +| 
+111 +|         for (final HardwareRequest hardwareRequest : hardwareRequests) {
+112 +|             final ValidationResult<Hardware> validationResult = validateCreate(hardwareRequest);
+113 +| 
+114 +|             if (validationResult.isFailure()) {
+115 +|                 LOGGER.error("Found validation error for {}: {}", hardwareRequest, validationResult);
+116 +|                 failedValidationResponses.add(validationResult.getValidationFailure());
+117 +|             } else {
+118 +|                 validHardwares.add(validationResult.getOutput());
+119 +|             }
+120 +|         }
+121 +| 
+122 +|         if (validHardwares.isEmpty()) {
+123 +|             LOGGER.error("All hardwares contain validation errors: {}", failedValidationResponses);
+124 +|             return badRequest(failedValidationResponses);
+125 +|         }
+126 +| 
+127 +|         final List<Object> successful = new ArrayList<>();
+128 +|         final List<Object> unsuccessful = new ArrayList<>(failedValidationResponses);
+129 +| 
+130 +|         for (final Hardware validHardware : validHardwares) {
+131 +|             try {
+132 +|                 final Hardware hardwareWithId = foldingStatsCore.createHardware(validHardware);
+133 +|                 successful.add(hardwareWithId);
+134 +|             } catch (final Exception e) {
+135 +|                 LOGGER.error("Unexpected error creating hardware: {}", validHardware, e);
+136 +|                 unsuccessful.add(validHardware);
+137 +|             }
+138 +|         }
+139 +| 
+140 +|         final BatchCreateResponse batchCreateResponse = BatchCreateResponse.create(successful, unsuccessful);
+141 +| 
+142 +|         if (successful.isEmpty()) {
+143 +|             return badRequest(batchCreateResponse);
+144 +|         }
+145 +| 
+146 +|         if (!unsuccessful.isEmpty()) {
+147 +|             LOGGER.error("{} hardwares successfully created, {} hardwares unsuccessful", successful.size(), unsuccessful.size());
+148 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+149 +|             return ok(batchCreateResponse);
+150 +|         }
+151 +| 
+152 +|         LOGGER.info("{} hardwares successfully created", successful.size());
+153 +|         SystemStateManager.next(SystemState.WRITE_EXECUTED);
+154 +|         return ok(batchCreateResponse.getSuccessful());
+155 +|     }
+156 +|     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+157 +|     @ReadRequired
+158 +|     public ResponseEntity<String> getAll(final HttpServletRequest request) {
+159 +| 
+160 +|         try {
+161 +|             final Collection<Hardware> elements = foldingStatsCore.getAllHardware();
+162 +|             return cachedOk(elements, request, untilNextMonthUtc(ChronoUnit.SECONDS));
+163 +|         } catch (final Exception e) {
+164 +|             LOGGER.error("Unexpected error getting all hardwares", e);
+165 +|             return serverError();
+166 +|         }
+167 +|     }
+168 +|     @GetMapping(value = "/{hardwareId}", produces = MediaType.APPLICATION_JSON_VALUE)
+169 +|     @ReadRequired
+170 +|     public ResponseEntity<String> getById(@PathVariable("hardwareId") final String hardwareId, final HttpServletRequest request) {
+171 +| 
+172 +|         try {
+173 +|             final IdResult idResult = IntegerParser.parsePositive(hardwareId);
+174 +|             if (idResult.isFailure()) {
+175 +|                 return idResult.getFailureResponse();
+176 +|             }
+177 +|             final int parsedId = idResult.getId();
+178 +| 
+179 +|             final Optional<Hardware> optionalElement = foldingStatsCore.getHardware(parsedId);
+180 +|             if (optionalElement.isEmpty()) {
+181 +|                 LOGGER.error("No hardware found with ID {}", hardwareId);
+182 +|                 return notFound();
+183 +|             }
+184 +| 
+185 +|             final Hardware element = optionalElement.get();
+186 +|             return cachedOk(element, request, untilNextMonthUtc(ChronoUnit.SECONDS));
+187 +|         } catch (final Exception e) {
+188 +|             LOGGER.error("Unexpected error getting hardware with ID: {}", hardwareId, e);
+189 +|             return serverError();
+190 +|         }
+191 +|     }
+192 +|     @GetMapping(value = "/fields", produces = MediaType.APPLICATION_JSON_VALUE)
+193 +|     @ReadRequired
+194 +|     public ResponseEntity<String> getByHardwareName(@RequestParam(required = false, value = "hardwareName") final String hardwareName, final HttpServletRequest request) {
+195 +| 
+196 +|         try {
+197 +|             if (StringUtils.isBlank(hardwareName)) {
+198 +|                 final String errorMessage = String.format("Input 'hardwareName' must not be blank: '%s'", hardwareName);
+199 +|                 LOGGER.error(errorMessage);
+200 +|                 return badRequest(errorMessage);
+201 +|             }
+202 +| 
+203 +|             final Optional<Hardware> optionalHardware = foldingStatsCore.getAllHardware()
+204 +|                 .stream()
+205 +|                 .filter(hardware -> hardware.getHardwareName().equalsIgnoreCase(hardwareName))
+206 +|                 .findAny();
+207 +| 
+208 +|             if (optionalHardware.isEmpty()) {
+209 +|                 LOGGER.error("No hardware found with 'hardwareName' '{}'", hardwareName);
+210 +|                 return notFound();
+211 +|             }
+212 +| 
+213 +|             final Hardware element = optionalHardware.get();
+214 +|             return cachedOk(element, request, untilNextMonthUtc(ChronoUnit.SECONDS));
+215 +|         } catch (final Exception e) {
+216 +|             LOGGER.error("Unexpected error getting hardware with 'hardwareName': '{}'", hardwareName, e);
+217 +|             return serverError();
+218 +|         }
+219 +|     }
+220 +|     @PutMapping(value = "/{hardwareId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+221 +|     @WriteRequired
+222 +|     @RequiredRoles("admin")
+223 +|     public ResponseEntity<String> updateById(@PathVariable("hardwareId") final String hardwareId, @RequestBody(required = false) final HardwareRequest hardwareRequest) {
+224 +| 
+225 +|         if (hardwareRequest == null) {
+226 +|             LOGGER.error("No payload provided");
+227 +|             return nullRequest();
+228 +|         }
+229 +| 
+230 +|         try {
+231 +|             final IdResult idResult = IntegerParser.parsePositive(hardwareId);
+232 +|             if (idResult.isFailure()) {
+233 +|                 return idResult.getFailureResponse();
+234 +|             }
+235 +|             final int parsedId = idResult.getId();
+236 +| 
+237 +|             final Optional<Hardware> optionalElement = foldingStatsCore.getHardware(parsedId);
+238 +|             if (optionalElement.isEmpty()) {
+239 +|                 LOGGER.error("No hardware found with ID {}", hardwareId);
+240 +|                 return notFound();
+241 +|             }
+242 +|             final Hardware existingHardware = optionalElement.get();
+243 +| 
+244 +|             if (existingHardware.isEqualRequest(hardwareRequest)) {
+245 +|                 LOGGER.debug("No change necessary");
+246 +|                 return ok(existingHardware);
+247 +|             }
+248 +| 
+249 +|             final ValidationResult<Hardware> validationResult = validateUpdate(hardwareRequest, existingHardware);
+250 +|             if (validationResult.isFailure()) {
+251 +|                 return ValidationFailureResponseMapper.map(validationResult);
+252 +|             }
+253 +|             final Hardware validatedHardware = validationResult.getOutput();
+254 +| 
+255 +|             // The payload 'should' have the ID, but it's not guaranteed if the correct URL is used
+256 +|             final Hardware hardwareWithId = Hardware.updateWithId(existingHardware.getId(), validatedHardware);
+257 +|             final Hardware updatedHardwareWithId = foldingStatsCore.updateHardware(hardwareWithId, existingHardware);
+258 +| 
+259 +|             final UriComponentsBuilder elementLocationBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
+260 +|                 .pathSegment(String.valueOf(updatedHardwareWithId.getId()));
+261 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+262 +|             LOGGER.info("Updated hardware with ID {}", updatedHardwareWithId.getId());
+263 +|             return ok(updatedHardwareWithId, elementLocationBuilder);
+264 +|         } catch (final Exception e) {
+265 +|             LOGGER.error("Unexpected error updating hardware with ID: {}", hardwareId, e);
+266 +|             return serverError();
+267 +|         }
+268 +|     }
+269 +|     @DeleteMapping(value = "/{hardwareId}", produces = MediaType.APPLICATION_JSON_VALUE)
+270 +|     @WriteRequired
+271 +|     @RequiredRoles("admin")
+272 +|     public ResponseEntity<String> deleteById(@PathVariable("hardwareId") final String hardwareId) {
+273 +| 
+274 +|         try {
+275 +|             final IdResult idResult = IntegerParser.parsePositive(hardwareId);
+276 +|             if (idResult.isFailure()) {
+277 +|                 return idResult.getFailureResponse();
+278 +|             }
+279 +|             final int parsedId = idResult.getId();
+280 +| 
+281 +|             final Optional<Hardware> optionalElement = foldingStatsCore.getHardware(parsedId);
+282 +|             if (optionalElement.isEmpty()) {
+283 +|                 LOGGER.error("No hardware found with ID {}", hardwareId);
+284 +|                 return notFound();
+285 +|             }
+286 +|             final Hardware hardware = optionalElement.get();
+287 +| 
+288 +|             final ValidationResult<Hardware> validationResult = validateDelete(hardware);
+289 +|             if (validationResult.isFailure()) {
+290 +|                 return ValidationFailureResponseMapper.map(validationResult);
+291 +|             }
+292 +|             final Hardware validatedHardware = validationResult.getOutput();
+293 +| 
+294 +|             foldingStatsCore.deleteHardware(validatedHardware);
+295 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+296 +|             LOGGER.info("Deleted hardware with ID {}", hardwareId);
+297 +|             return ok();
+298 +|         } catch (final Exception e) {
+299 +|             LOGGER.error("Unexpected error deleting hardware with ID: {}", hardwareId, e);
+300 +|             return serverError();
+301 +|         }
+302 +|     }
+303 +| 
+304 +|     private ValidationResult<Hardware> validateCreate(final HardwareRequest hardwareRequest) {
+305 +|         return HardwareValidator.validateCreate(hardwareRequest, foldingStatsCore.getAllHardware());
+306 +|     }
+307 +| 
+308 +|     private ValidationResult<Hardware> validateUpdate(final HardwareRequest hardwareRequest, final Hardware existingHardware) {
+309 +|         return HardwareValidator.validateUpdate(hardwareRequest, existingHardware, foldingStatsCore.getAllHardware());
+310 +|     }
+311 +| 
+312 +|     private ValidationResult<Hardware> validateDelete(final Hardware hardware) {
+313 +|         return HardwareValidator.validateDelete(hardware, foldingStatsCore.getAllUsersWithoutPasskeys());
+314 +|     }
+315 +| }

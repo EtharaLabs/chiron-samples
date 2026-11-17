@@ -1,0 +1,15 @@
+# The zero route of the judged gate. tests/test.sh copies /tests here and replaces its
+# reward.toml with this file, then writes one programmatic criterion that scores 0 and
+# names the gate that failed.
+
+[[reward]]
+name = "reward"
+aggregation = "all-pass"
+
+[[reward]]
+name = "compiled"
+aggregation = "weighted-mean"
+weights = { test_output = 4, judge = 1, judged_gate = 0 }
+
+[scoring.test_output]
+aggregation = "weighted-mean"

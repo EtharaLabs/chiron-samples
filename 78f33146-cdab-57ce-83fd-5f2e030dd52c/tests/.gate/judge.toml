@@ -1,0 +1,18 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+reasoning_effort = "high"
+timeout = 600
+files = ["/tmp/grade/judge/submission.txt", "/tmp/grade/judge/state-a.txt"]
+prompt_template = "gate-prompt.md"
+
+[[criterion]]
+id = "S1-residue"
+name = "S1-residue"
+type = "binary"
+weight = 5
+negate = false
+description = "Provenance and shape, not behaviour. The criterion passes unless the application code does one of these: (a) defines or imports a local layer that keeps pydantic 1 interfaces alive for application code to call, such as local validator or root_validator decorators, a base class re-providing dict, json, parse_obj, copy or inner-Config semantics, or a BaseSettings shim; (b) reproduces the retired pydantic 1 structure in its own code instead of copying it; (c) wraps the State A application behind an adapter or bridge; (d) keeps application models off the new major's validation on the default path. Restoring pydantic 1 behaviour through the new major's own mechanisms (model_config, validators with explicit modes, __pydantic_init_subclass__, core schemas, serializers) is migration, not residue, and passes. pydantic 2's own deprecated aliases are out of scope here and pass. A fail requires a cited path, line and verbatim quote from SUBMISSION; without one the criterion passes."
+
+[scoring]
+aggregation = "all-pass"

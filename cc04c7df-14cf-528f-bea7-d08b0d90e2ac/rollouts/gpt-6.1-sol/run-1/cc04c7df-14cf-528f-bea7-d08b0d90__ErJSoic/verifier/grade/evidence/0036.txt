@@ -1,0 +1,116 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/validation/UserValidator.java (changed against State A) ===
+@@
+45  | import me.zodac.folding.api.tc.stats.Stats;
+46  | import me.zodac.folding.rest.api.tc.request.UserRequest;
+47  | 
+   -| /**
+   -|  * Validator class to validate a {@link User} or {@link UserRequest}.
+   -|  */
+48 +| 
+49  | public final class UserValidator {
+50  | 
+51  |     private static final Pattern FOLDING_USER_NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9._-]*$");
+@@
+61  |         this.foldingStatsRetriever = foldingStatsRetriever;
+62  |     }
+63  | 
+   -|     /**
+   -|      * Create an instance of {@link UserValidator}.
+   -|      *
+   -|      * @param foldingStatsRetriever the {@link FoldingStatsRetriever} to verify the user stats
+   -|      * @return the created {@link UserValidator}
+   -|      */
+64 +|     
+65  |     public static UserValidator create(final FoldingStatsRetriever foldingStatsRetriever) {
+66  |         return new UserValidator(foldingStatsRetriever);
+67  |     }
+68  | 
+   -|     /**
+   -|      * Validates a {@link UserRequest} for a {@link User} to be created on the system.
+   -|      *
+   -|      * <p>
+   -|      * Validation checks include:
+   -|      * <ul>
+   -|      *     <li>Input {@code userRequest} must not be <b>null</b></li>
+   -|      *     <li>Field 'foldingUserName' must not be empty, must only include alphanumeric characters or underscore (_), period (.) or hyphen (-)</li>
+   -|      *     <li>Field 'displayName' must not be empty</li>
+   -|      *     <li>Field 'passkey' must not be empty, must be 32-characters long, and must only include alphanumeric characters</li>
+   -|      *     <li>If fields 'foldingUserName' and 'passkey' are valid, they must not be used by another {@link User}</li>
+   -|      *     <li>Field 'category' must be a valid {@link Category}, and must match the {@link me.zodac.folding.api.tc.HardwareMake} and
+   -|      *     {@link me.zodac.folding.api.tc.HardwareType} of the user's {@link Hardware}</li>
+   -|      *     <li>If field 'profileLink' is not empty, it must be a valid URL</li>
+   -|      *     <li>If field 'liveStatsLink' is not empty, it must be a valid URL</li>
+   -|      *     <li>Field 'hardwareId' must match an existing {@link Hardware}</li>
+   -|      *     <li>Field 'teamId' must match an existing {@link Team}</li>
+   -|      *     <li>The {@link User} must not cause its {@link Team} to exceed the {@link Category#maximumPermittedAmountForAllCategories()}</li>
+   -|      *     <li>The {@link User} must not cause its {@link Category} to exceed the {@link Category#permittedUsers()}</li>
+   -|      *     <li>The 'foldingUserName' and 'passkey' combination has at least 1 Work Unit successfully completed</li>
+   -|      * </ul>
+   -|      *
+   -|      * @param userRequest the {@link UserRequest} to validate
+   -|      * @param allUsers    all existing {@link User}s in the system
+   -|      * @param allHardware all existing {@link Hardware}s in the system
+   -|      * @param allTeams    all existing {@link Team}s in the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+69 +|     
+70  |     public ValidationResult<User> validateCreate(final UserRequest userRequest,
+71  |                                                  final Collection<User> allUsers,
+72  |                                                  final Collection<Hardware> allHardware,
+@@
+125  |         return ValidationResult.successful(User.createWithoutId(userRequest, hardwareForUser, teamForUser));
+126  |     }
+127  | 
+   -|     /**
+   -|      * Validates a {@link UserRequest} for a {@link User} to be updated on the system.
+   -|      *
+   -|      * <p>
+   -|      * Validation checks include:
+   -|      * <ul>
+   -|      *     <li>Input {@code userRequest} and {@code existingUser} must not be <b>null</b></li>
+   -|      *     <li>Field 'foldingUserName' must not be empty</li>
+   -|      *     <li>Field 'displayName' must not be empty</li>
+   -|      *     <li>Field 'passkey' must not be empty, must be 32-characters long, and must only include alphanumeric characters</li>
+   -|      *     <li>If fields 'foldingUserName' and 'passkey' are valid, they must not be used by another {@link User}, unless it is the {@link User} being
+   -|      *     updated</li>
+   -|      *     <li>Field 'category' must be a valid {@link Category}, and must match the {@link me.zodac.folding.api.tc.HardwareMake} and
+   -|      *     {@link me.zodac.folding.api.tc.HardwareType} of the user's {@link Hardware}</li>
+   -|      *     <li>If field 'profileLink' is not empty, it must be a valid URL</li>
+   -|      *     <li>If field 'liveStatsLink' is not empty, it must be a valid URL</li>
+   -|      *     <li>Field 'hardwareId' must match an existing {@link Hardware}</li>
+   -|      *     <li>Field 'teamId' must match an existing {@link Team}</li>
+   -|      *     <li>If the {@link User} is updating its {@link Team}, it must not cause its {@link Team} to exceed the
+   -|      *     {@link Category#maximumPermittedAmountForAllCategories()}</li>
+   -|      *     <li>If the {@link User} is updating its {@link Category} must not cause its {@link Category} to exceed the
+   -|      *     {@link Category#permittedUsers()}</li>
+   -|      *     <li>The 'foldingUserName' and 'passkey' combination has at least 1 Work Unit successfully completed</li>
+   -|      * </ul>
+   -|      *
+   -|      * @param userRequest  the {@link UserRequest} to validate
+   -|      * @param existingUser the already existing {@link User} in the system to be updated
+   -|      * @param allUsers     all existing {@link User}s in the system
+   -|      * @param allHardware  all existing {@link Hardware}s in the system
+   -|      * @param allTeams     all existing {@link Team}s in the system
+   -|      * @return the {@link ValidationResult}
+   -|      */
+128 +|     
+129  |     public ValidationResult<User> validateUpdate(final UserRequest userRequest,
+130  |                                                  final User existingUser,
+131  |                                                  final Collection<User> allUsers,
+@@
+186  |         return ValidationResult.successful(User.createWithoutId(userRequest, hardwareForUser, teamForUser));
+187  |     }
+188  | 
+   -|     /**
+   -|      * Validates whether a {@link User} can be deleted from the system.
+   -|      *
+   -|      * <p>
+   -|      * If the {@link User} is their {@link Team} captain, they cannot be deleted.
+   -|      *
+   -|      * @param user the {@link User} to delete
+   -|      * @return the {@link ValidationResult}
+   -|      */
+189 +|     
+190  |     public ValidationResult<User> validateDelete(final User user) {
+191  |         if (user.isUserIsCaptain()) {
+192  |             return ValidationResult.failure(user,

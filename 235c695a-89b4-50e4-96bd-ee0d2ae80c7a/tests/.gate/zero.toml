@@ -1,0 +1,11 @@
+[[reward]]
+name = "reward"
+aggregation = "all-pass"
+
+[[reward]]
+name = "compiled"
+aggregation = "weighted-mean"
+weights = { test_output = 4, judge = 1, judged_gate = 0 }
+
+[scoring.test_output]
+aggregation = "weighted-mean"

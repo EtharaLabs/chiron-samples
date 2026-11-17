@@ -1,0 +1,12 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/RequestPojo.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api;
+26  | 
+   -| /**
+   -|  * Marker interface for POJOs are sent in a REST request to the service.
+   -|  */
+27 +| 
+28  | public interface RequestPojo {
+29  | 
+30  | }

@@ -1,0 +1,1777 @@
+{
+ "id": "g01_hardware_lifecycle",
+ "source": "g01_hardware_lifecycle",
+ "steps": [
+  {
+   "case": "list_empty",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "notes": "Compared in full under contract revision 4 replay_comparison.cache_control (clock-derived max-age checked against State A's rule over the request window)."
+  },
+  {
+   "case": "create_without_auth",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "json": {
+     "hardwareName": "NoAuthHardware",
+     "displayName": "NoAuthHardware",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "create_valid",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "create_lowercase_enum_values",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware2",
+     "displayName": "DummyHardware2",
+     "hardwareMake": "nvidia",
+     "hardwareType": "gpu",
+     "multiplier": 1.25,
+     "averagePpd": 25000
+    }
+   }
+  },
+  {
+   "case": "create_trailing_slash",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware3",
+     "displayName": "DummyHardware3",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 3.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "create_duplicate_name_conflict",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "SomethingElse",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 2.0,
+     "averagePpd": 500
+    }
+   }
+  },
+  {
+   "case": "create_duplicate_name_other_case_conflict",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "dummyhardware1",
+     "displayName": "SomethingElse",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 2.0,
+     "averagePpd": 500
+    }
+   }
+  },
+  {
+   "case": "create_missing_hardware_name",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "displayName": "NoName",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 2.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "create_blank_display_name",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "BlankDisplay",
+     "displayName": "   ",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 2.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "create_invalid_hardware_make",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "BadMake",
+     "displayName": "BadMake",
+     "hardwareMake": "ATI",
+     "hardwareType": "GPU",
+     "multiplier": 2.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "create_invalid_hardware_type",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "BadType",
+     "displayName": "BadType",
+     "hardwareMake": "AMD",
+     "hardwareType": "APU",
+     "multiplier": 2.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "create_multiplier_below_minimum",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "LowMultiplier",
+     "displayName": "LowMultiplier",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 0.5,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "create_average_ppd_zero",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ZeroPpd",
+     "displayName": "ZeroPpd",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 0
+    }
+   }
+  },
+  {
+   "case": "create_missing_numeric_fields",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "NoNumbers",
+     "displayName": "NoNumbers",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU"
+    }
+   }
+  },
+  {
+   "case": "create_every_field_invalid",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "",
+     "displayName": "",
+     "hardwareMake": "",
+     "hardwareType": "",
+     "multiplier": 0.0,
+     "averagePpd": 0
+    }
+   }
+  },
+  {
+   "case": "create_null_json_payload",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "null"
+   }
+  },
+  {
+   "case": "get_by_id",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "notes": "Compared in full under contract revision 4 replay_comparison.cache_control (clock-derived max-age checked against State A's rule over the request window)."
+  },
+  {
+   "case": "get_by_id_trailing_slash",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1/"
+   },
+   "notes": "Compared in full under contract revision 4 replay_comparison.cache_control (clock-derived max-age checked against State A's rule over the request window)."
+  },
+  {
+   "case": "get_by_id_not_found",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/9999"
+   }
+  },
+  {
+   "case": "get_by_id_out_of_range",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/-1"
+   }
+  },
+  {
+   "case": "get_by_id_malformed",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/id"
+   }
+  },
+  {
+   "case": "get_by_id_above_integer_range",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/99999999999"
+   }
+  },
+  {
+   "case": "get_by_id_encoded_space",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/%201"
+   }
+  },
+  {
+   "case": "get_fields_by_name",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=DummyHardware1"
+   },
+   "notes": "Compared in full under contract revision 4 replay_comparison.cache_control (clock-derived max-age checked against State A's rule over the request window)."
+  },
+  {
+   "case": "get_fields_missing_query_param",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields"
+   }
+  },
+  {
+   "case": "get_fields_blank_query_param",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName="
+   }
+  },
+  {
+   "case": "get_fields_unknown_name",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=nonExistingName"
+   }
+  },
+  {
+   "case": "update_without_auth",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "update_no_change",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "update_changed_fields",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "RenamedDisplay",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 2.5,
+     "averagePpd": 5000
+    }
+   }
+  },
+  {
+   "case": "update_rename_to_existing_name_conflict",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware2",
+     "displayName": "RenamedDisplay",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 2.5,
+     "averagePpd": 5000
+    }
+   }
+  },
+  {
+   "case": "update_invalid_payload",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "",
+     "hardwareMake": "ATI",
+     "hardwareType": "APU",
+     "multiplier": 0.0,
+     "averagePpd": 0
+    }
+   }
+  },
+  {
+   "case": "update_null_json_payload",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "null"
+   }
+  },
+  {
+   "case": "update_not_found",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/9999",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware9999",
+     "displayName": "DummyHardware9999",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "update_out_of_range_id",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/-1",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardwareNeg",
+     "displayName": "DummyHardwareNeg",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "update_malformed_id",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/id",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardwareId",
+     "displayName": "DummyHardwareId",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   }
+  },
+  {
+   "case": "delete_not_found",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/9999",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "delete_out_of_range_id",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/-1",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "delete_malformed_id",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/id",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "delete_valid",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/3",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "get_after_delete",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/3"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=DummyUser1&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "create_team_for_user",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    }
+   }
+  },
+  {
+   "case": "create_user_using_hardware_two",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser1",
+     "displayName": "DummyUser1",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 2,
+     "teamId": 1
+    }
+   }
+  },
+  {
+   "case": "delete_hardware_used_by_user_conflict",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/2",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "delete_hardware_not_used_by_user",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/1",
+    "auth": "admin"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "list_empty",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429189",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "etag": "\"0\"",
+     "x-total-count": "0"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "create_without_auth",
+   "compare": "full",
+   "request": {
+    "json": {
+     "averagePpd": 1,
+     "displayName": "NoAuthHardware",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "NoAuthHardware",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "create_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_lowercase_enum_values",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 25000,
+     "displayName": "DummyHardware2",
+     "hardwareMake": "nvidia",
+     "hardwareName": "DummyHardware2",
+     "hardwareType": "gpu",
+     "multiplier": 1.25
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"DummyHardware2\",\n  \"displayName\": \"DummyHardware2\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.25,\n  \"averagePpd\": 25000\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "182",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_trailing_slash",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "DummyHardware3",
+     "hardwareMake": "INTEL",
+     "hardwareName": "DummyHardware3",
+     "hardwareType": "CPU",
+     "multiplier": 3.0
+    },
+    "method": "POST",
+    "path": "/hardware/"
+   },
+   "response": {
+    "body": "{\n  \"id\": 3,\n  \"hardwareName\": \"DummyHardware3\",\n  \"displayName\": \"DummyHardware3\",\n  \"hardwareMake\": \"INTEL\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 3.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "178",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/3"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_duplicate_name_conflict",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 500,
+     "displayName": "SomethingElse",
+     "hardwareMake": "AMD",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "GPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"SomethingElse\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 500\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "532",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "create_duplicate_name_other_case_conflict",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 500,
+     "displayName": "SomethingElse",
+     "hardwareMake": "AMD",
+     "hardwareName": "dummyhardware1",
+     "hardwareType": "GPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"dummyhardware1\",\n    \"displayName\": \"SomethingElse\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 500\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "532",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "create_missing_hardware_name",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "NoName",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"displayName\": \"NoName\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 100\n  },\n  \"errors\": [\n    \"Field 'hardwareName' must not be empty\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "220",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_blank_display_name",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "   ",
+     "hardwareMake": "AMD",
+     "hardwareName": "BlankDisplay",
+     "hardwareType": "CPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"BlankDisplay\",\n    \"displayName\": \"   \",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 100\n  },\n  \"errors\": [\n    \"Field 'displayName' must not be empty\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "252",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_invalid_hardware_make",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "BadMake",
+     "hardwareMake": "ATI",
+     "hardwareName": "BadMake",
+     "hardwareType": "GPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"BadMake\",\n    \"displayName\": \"BadMake\",\n    \"hardwareMake\": \"ATI\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 100\n  },\n  \"errors\": [\n    \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "271",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_invalid_hardware_type",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "BadType",
+     "hardwareMake": "AMD",
+     "hardwareName": "BadType",
+     "hardwareType": "APU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"BadType\",\n    \"displayName\": \"BadType\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"APU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 100\n  },\n  \"errors\": [\n    \"Field 'hardwareType' must be one of: [CPU, GPU]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "261",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_multiplier_below_minimum",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "LowMultiplier",
+     "hardwareMake": "AMD",
+     "hardwareName": "LowMultiplier",
+     "hardwareType": "GPU",
+     "multiplier": 0.5
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"LowMultiplier\",\n    \"displayName\": \"LowMultiplier\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 0.5,\n    \"averagePpd\": 100\n  },\n  \"errors\": [\n    \"Field 'multiplier' must be 1.00 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "267",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_average_ppd_zero",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 0,
+     "displayName": "ZeroPpd",
+     "hardwareMake": "AMD",
+     "hardwareName": "ZeroPpd",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"ZeroPpd\",\n    \"displayName\": \"ZeroPpd\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "250",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_missing_numeric_fields",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "displayName": "NoNumbers",
+     "hardwareMake": "AMD",
+     "hardwareName": "NoNumbers",
+     "hardwareType": "GPU"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"NoNumbers\",\n    \"displayName\": \"NoNumbers\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 0.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'multiplier' must be 1.00 or higher\",\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "303",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_every_field_invalid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 0,
+     "displayName": "",
+     "hardwareMake": "",
+     "hardwareName": "",
+     "hardwareType": "",
+     "multiplier": 0.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"\",\n    \"displayName\": \"\",\n    \"hardwareMake\": \"\",\n    \"hardwareType\": \"\",\n    \"multiplier\": 0.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'hardwareName' must not be empty\",\n    \"Field 'displayName' must not be empty\",\n    \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n    \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n    \"Field 'multiplier' must be 1.00 or higher\",\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "490",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "create_null_json_payload",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "null",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"errors\": [\n    \"Payload is null\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "43",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_by_id",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429189",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "etag": "\"-428298165\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "get_by_id_trailing_slash",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1/"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429189",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "etag": "\"-428298165\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "get_by_id_not_found",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "get_by_id_out_of_range",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/-1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_by_id_malformed",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/id"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_by_id_above_integer_range",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/99999999999"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '99999999999' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "59",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_by_id_encoded_space",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/%201"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID ' 1' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_fields_by_name",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=DummyHardware1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429189",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "etag": "\"-428298165\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "get_fields_missing_query_param",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: 'null'\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "63",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_fields_blank_query_param",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName="
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Input 'hardwareName' must not be blank: ''\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "59",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "get_fields_unknown_name",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=nonExistingName"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "update_without_auth",
+   "compare": "full",
+   "request": {
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "update_no_change",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "update_changed_fields",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 5000,
+     "displayName": "RenamedDisplay",
+     "hardwareMake": "AMD",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "CPU",
+     "multiplier": 2.5
+    },
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"RenamedDisplay\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 2.5,\n  \"averagePpd\": 5000\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "update_rename_to_existing_name_conflict",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 5000,
+     "displayName": "RenamedDisplay",
+     "hardwareMake": "AMD",
+     "hardwareName": "DummyHardware2",
+     "hardwareType": "CPU",
+     "multiplier": 2.5
+    },
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"DummyHardware2\",\n    \"displayName\": \"RenamedDisplay\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 2.5,\n    \"averagePpd\": 5000\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 2,\n      \"hardwareName\": \"DummyHardware2\",\n      \"displayName\": \"DummyHardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.25,\n      \"averagePpd\": 25000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "539",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "update_invalid_payload",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 0,
+     "displayName": "",
+     "hardwareMake": "ATI",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "APU",
+     "multiplier": 0.0
+    },
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"\",\n    \"hardwareMake\": \"ATI\",\n    \"hardwareType\": \"APU\",\n    \"multiplier\": 0.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'displayName' must not be empty\",\n    \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n    \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n    \"Field 'multiplier' must be 1.00 or higher\",\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "464",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "update_null_json_payload",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "body": "null",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Payload is null\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "32",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "update_not_found",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardware9999",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardware9999",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "PUT",
+    "path": "/hardware/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "update_out_of_range_id",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardwareNeg",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardwareNeg",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "PUT",
+    "path": "/hardware/-1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "update_malformed_id",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardwareId",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardwareId",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "PUT",
+    "path": "/hardware/id"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "delete_not_found",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/hardware/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "delete_out_of_range_id",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/hardware/-1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "delete_malformed_id",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/hardware/id"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "delete_valid",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/hardware/3"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "get_after_delete",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/3"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "create_team_for_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DummyTeam1\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_user_using_hardware_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "DummyUser1",
+     "foldingUserName": "DummyUser1",
+     "hardwareId": 2,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"DummyUser1\",\n  \"displayName\": \"DummyUser1\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 2,\n    \"hardwareName\": \"DummyHardware2\",\n    \"displayName\": \"DummyHardware2\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.25,\n    \"averagePpd\": 25000\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"DummyTeam1\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "455",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "delete_hardware_used_by_user_conflict",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/hardware/2"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"id\": 2,\n    \"hardwareName\": \"DummyHardware2\",\n    \"displayName\": \"DummyHardware2\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.25,\n    \"averagePpd\": 25000\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"foldingUserName\": \"DummyUser1\",\n      \"displayName\": \"DummyUser1\",\n      \"passkey\": \"DummyPas************************\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardware\": {\n        \"id\": 2,\n        \"hardwareName\": \"DummyHardware2\",\n        \"displayName\": \"DummyHardware2\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 1.25,\n        \"averagePpd\": 25000\n      },\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"DummyTeam1\"\n      },\n      \"userIsCaptain\": false\n    }\n  ],\n  \"errors\": [\n    \"Payload is used by an existing object\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "855",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "delete_hardware_not_used_by_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "capability": "Full CRUD contract of the /hardware endpoint: status codes, Location header, field-level JSON shape, validation message text, duplicate conflict, and path-variable parsing of unknown, malformed and out-of-range ids."
+}

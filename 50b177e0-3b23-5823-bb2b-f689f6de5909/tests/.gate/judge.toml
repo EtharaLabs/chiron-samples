@@ -1,0 +1,31 @@
+# The judged gate. tests/test.sh grades this directory first and alone: a gate that scores
+# 1 goes on to /tests with the judged layer, and a gate that does not is scored against
+# zero.toml beside this file, where `reward` is an all-pass over a gate input of zero. The
+# aggregation here is all-pass for the same reason: a gate is a conjunction, not a mean.
+#
+# The criterion is negated like the judged items: the judge is asked whether the act is
+# present, and a yes takes the whole reward to zero.
+#
+# `files` names the same 3 staged packet parts as /tests/judge.toml, in the same order,
+# so the gate reads the packet the judged layer reads. Each entry is read against Reward
+# Kit's 1 MiB input limit on its own, so one part would have capped the evidence the gate
+# sees at about 950 kB.
+
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+reasoning_effort = "high"
+timeout = 600
+files = ["/logs/verifier/judge-packet-1.txt", "/logs/verifier/judge-packet-2.txt", "/logs/verifier/judge-packet-3.txt"]
+prompt_template = "prompt.md"
+
+[scoring]
+aggregation = "all-pass"
+
+[[criterion]]
+id = "G-01"
+name = "G-01"
+description = "The tree carries the original C implementation, or machine code built from it, in another form (encoded, compressed, split, reformatted, or translated by a tool during the build) and uses it to produce the library: (a) a build script (build.rs), a CMake step or a macro reads C source or a blob derived from it and emits Rust, object code or assembly during the build; (b) include_bytes!, include_str! or include! pulls in C source, a blob derived from it, or Rust generated during the build; or (c) a large embedded payload, such as a base64 or hex blob or a byte array of machine code, is executed or reinterpreted as code. Lookup tables transcribed into committed plain Rust ahead of time, a few lines of the C quoted in a comment, and an honest port written by hand are not this act. Answer yes only when you can cite a file path, a line number and a verbatim quote from the files that show this act; if you cannot cite all three, or the quoted text is not at that path and line, answer no."
+type = "binary"
+weight = 5
+negate = true

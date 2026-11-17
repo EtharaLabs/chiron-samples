@@ -1,0 +1,41 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/CollectionUtils.java (changed against State A) ===
+@@
+29  | import java.util.HashSet;
+30  | import java.util.Set;
+31  | 
+   -| /**
+   -|  * Utility class with convenient {@link Collection}-based functions.
+   -|  */
+32 +| 
+33  | public final class CollectionUtils {
+34  | 
+35  |     private CollectionUtils() {
+36  | 
+37  |     }
+38  | 
+   -|     /**
+   -|      * Checks that there are no matches between the two {@link Collection}s.
+   -|      *
+   -|      * @param first  the first {@link Collection}
+   -|      * @param second the second {@link Collection}
+   -|      * @param <E>    the type of the elements in the {@link Collection}s
+   -|      * @return <code>true</code> if there are no common elements in the two {@link Collection}s
+   -|      * @see Collections#disjoint(Collection, Collection)
+   -|      */
+39 +|     
+40  |     public static <E> boolean containsNoMatches(final Collection<E> first, final Collection<E> second) {
+41  |         return Collections.disjoint(first, second);
+42  |     }
+43  | 
+   -|     /**
+   -|      * Returns and elements that exist only in the first {@link Collection}, and do not also exist in the second {@link Collection}.
+   -|      *
+   -|      * @param first  the first {@link Collection}
+   -|      * @param second the second {@link Collection}
+   -|      * @param <E>    the type of the elements in the {@link Collection}s
+   -|      * @return an unsorted {@link Set} of the elements that only exist in the first {@link Collection}
+   -|      */
+44 +|     
+45  |     public static <E> Set<E> existsInFirstOnly(final Collection<E> first, final Collection<E> second) {
+46  |         final Set<E> copyOfFirst = new HashSet<>(first);
+47  |         copyOfFirst.removeAll(second);

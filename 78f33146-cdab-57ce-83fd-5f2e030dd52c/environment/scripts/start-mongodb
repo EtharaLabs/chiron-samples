@@ -1,0 +1,8 @@
+#!/bin/bash
+# Start a local MongoDB 8.0 on loopback: start-mongodb [port] [dbpath]
+set -euo pipefail
+port=${1:-27017}
+dbpath=${2:-/tmp/mongodb-$port}
+mkdir -p "$dbpath"
+exec /opt/mongodb/bin/mongod --bind_ip 127.0.0.1 --port "$port" --dbpath "$dbpath" \
+  --fork --logpath "$dbpath/mongod.log" --quiet

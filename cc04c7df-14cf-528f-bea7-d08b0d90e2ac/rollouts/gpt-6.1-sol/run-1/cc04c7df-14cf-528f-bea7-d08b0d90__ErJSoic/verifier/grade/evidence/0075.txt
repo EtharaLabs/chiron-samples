@@ -1,0 +1,26 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/response/MonthlyResultResponseParser.java (changed against State A) ===
+@@
+30  | import me.zodac.folding.api.tc.result.MonthlyResult;
+31  | import me.zodac.folding.rest.util.RestUtilConstants;
+32  | 
+   -| /**
+   -|  * Utility class used to parse a {@link HttpResponse} returned from {@link me.zodac.folding.client.java.request.MonthlyResultRequestSender}.
+   -|  */
+33 +| 
+34  | public final class MonthlyResultResponseParser {
+35  | 
+36  |     private MonthlyResultResponseParser() {
+37  | 
+38  |     }
+39  | 
+   -|     /**
+   -|      * Returns the {@link MonthlyResult} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.MonthlyResultRequestSender#getMonthlyResult(Year, Month, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link MonthlyResult}
+   -|      */
+40 +|     
+41  |     public static MonthlyResult getMonthlyResult(final HttpResponse<String> response) {
+42  |         return RestUtilConstants.GSON.fromJson(response.body(), MonthlyResult.class);
+43  |     }

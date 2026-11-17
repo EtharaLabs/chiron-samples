@@ -1,0 +1,55 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/request/LoginRequestSender.java (changed against State A) ===
+@@
+38  | import me.zodac.folding.rest.api.header.RestHeader;
+39  | import me.zodac.folding.rest.util.RestUtilConstants;
+40  | 
+   -| /**
+   -|  * Convenience class to send HTTP requests to the {@link Hardware} REST endpoint.
+   -|  */
+41 +| 
+42  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+43  | public final class LoginRequestSender {
+44  | 
+45  |     private final String loginUrl;
+46  | 
+   -|     /**
+   -|      * Create an instance of {@link LoginRequestSender}.
+   -|      *
+   -|      * @param foldingUrl the root URL of the <code>/folding</code> endpoint, i.e:
+   -|      *                   <pre>http://127.0.0.1:8080/folding</pre>
+   -|      * @return the created {@link LoginRequestSender}
+   -|      */
+47 +|     
+48  |     public static LoginRequestSender createWithUrl(final String foldingUrl) {
+49  |         final String loginUrl = foldingUrl + "/login";
+50  |         return new LoginRequestSender(loginUrl);
+51  |     }
+52  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to login to the system as an admin.
+   -|      *
+   -|      * <p>
+   -|      * The username and password will be encoded using {@link EncodingUtils#encodeBasicAuthentication(String, String)}.
+   -|      *
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+53 +|     
+54  |     public HttpResponse<Void> loginAsAdmin(final String userName, final String password) throws FoldingRestException {
+55  |         final String encodedUserNameAndPassword = EncodingUtils.encodeBasicAuthentication(userName, password);
+56  |         return loginAsAdmin(encodedUserNameAndPassword);
+57  |     }
+58  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to login to the system as an admin.
+   -|      *
+   -|      * @param encodedUserNameAndPassword the encoded username and password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+59 +|     
+60  |     public HttpResponse<Void> loginAsAdmin(final String encodedUserNameAndPassword) throws FoldingRestException {
+61  |         final LoginCredentials loginCredentials = LoginCredentials.createWithBasicAuthentication(encodedUserNameAndPassword);
+62  | 

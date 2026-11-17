@@ -1,0 +1,204 @@
+{
+ "id": "s3_family_32",
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "EnumHw",
+     "displayName": "EnumHw",
+     "hardwareMake": "amd",
+     "hardwareType": "cpu",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "160",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"EnumHw\",\n  \"displayName\": \"EnumHw\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572407.2287102,
+    1773572407.3258095
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_team",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "ProbeTeam"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/1",
+     "content-type": "application/json",
+     "content-length": "40",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"ProbeTeam\"\n}"
+   },
+   "clock_window": [
+    1773572407.3258455,
+    1773572407.3439457
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "setup_user",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "ProbeUser",
+     "displayName": "ProbeUser",
+     "passkey": "ProbePasskey12345678901234567890",
+     "category": "wildcard",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/1",
+     "content-type": "application/json",
+     "content-length": "428",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"ProbeUser\",\n  \"displayName\": \"ProbeUser\",\n  \"passkey\": \"ProbePasskey12345678901234567890\",\n  \"category\": \"WILDCARD\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"EnumHw\",\n    \"displayName\": \"EnumHw\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ProbeTeam\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572407.3445776,
+    1773572407.729243
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "hardware_enum_output",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1006925289\"",
+     "cache-control": "no-transform, max-age=1429190",
+     "content-type": "application/json",
+     "content-length": "160",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"EnumHw\",\n  \"displayName\": \"EnumHw\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572409.7293723,
+    1773572409.736191
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_category_output",
+   "request": {
+    "method": "GET",
+    "path": "/users/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1989731910\"",
+     "cache-control": "no-transform, max-age=1429190",
+     "content-type": "application/json",
+     "content-length": "428",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"ProbeUser\",\n  \"displayName\": \"ProbeUser\",\n  \"passkey\": \"ProbePas************************\",\n  \"category\": \"WILDCARD\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"EnumHw\",\n    \"displayName\": \"EnumHw\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ProbeTeam\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572409.7362523,
+    1773572409.740233
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "category_leaderboard_keys",
+   "request": {
+    "method": "GET",
+    "path": "/stats/category"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "766",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"AMD_GPU\": [],\n  \"NVIDIA_GPU\": [],\n  \"WILDCARD\": [\n    {\n      \"user\": {\n        \"id\": 1,\n        \"foldingUserName\": \"ProbeUser\",\n        \"displayName\": \"ProbeUser\",\n        \"passkey\": \"ProbePas************************\",\n        \"category\": \"WILDCARD\",\n        \"hardware\": {\n          \"id\": 1,\n          \"hardwareName\": \"EnumHw\",\n          \"displayName\": \"EnumHw\",\n          \"hardwareMake\": \"AMD\",\n          \"hardwareType\": \"CPU\",\n          \"multiplier\": 1.0,\n          \"averagePpd\": 100\n        },\n        \"team\": {\n          \"id\": 1,\n          \"teamName\": \"ProbeTeam\"\n        },\n        \"userIsCaptain\": false\n      },\n      \"points\": 0,\n      \"multipliedPoints\": 0,\n      \"units\": 0,\n      \"rank\": 1,\n      \"diffToLeader\": 0,\n      \"diffToNext\": 0\n    }\n  ]\n}"
+   },
+   "clock_window": [
+    1773572409.7402945,
+    1773572409.7634048
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

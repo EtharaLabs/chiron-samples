@@ -1,0 +1,163 @@
+{
+ "id": "s3_family_22",
+ "source": "f032_text_plain_body_to_json_endpoints",
+ "steps": [
+  {
+   "case": "create_team_as_text_plain",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "auth": "admin",
+    "body": "{\"teamName\":\"PlainTeam\"}"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "create_user_as_text_plain",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "auth": "admin",
+    "body": "{\"foldingUserName\":\"PlainUser\"}"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "offset_stats_as_text_plain",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/1",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "auth": "admin",
+    "body": "{\"pointsOffset\":1}"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "login_as_text_plain",
+   "http": {
+    "method": "POST",
+    "path": "/login/admin",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "body": "{\"encodedUserNameAndPassword\":\"Basic cm9vdDpzaHJvb3Q=\"}"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "create_team_as_text_plain",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"teamName\":\"PlainTeam\"}",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "create_user_as_text_plain",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"foldingUserName\":\"PlainUser\"}",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "offset_stats_as_text_plain",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"pointsOffset\":1}",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "login_as_text_plain",
+   "compare": "status",
+   "request": {
+    "body": "{\"encodedUserNameAndPassword\":\"Basic cm9vdDpzaHJvb3Q=\"}",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "method": "POST",
+    "path": "/login/admin"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  }
+ ],
+ "probe": "A syntactically valid JSON body sent as text/plain to the team, user and offset endpoints must be refused on media type before any application validation runs."
+}

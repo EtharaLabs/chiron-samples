@@ -1,0 +1,161 @@
+{
+    "id": "49b52f43-5225-4041-8584-cfe3d002a45f",
+    "task_name": "ethara/235c695a-89b4-50e4-96bd-ee0d2ae80c7a",
+    "trial_name": "235c695a-89b4-50e4-96bd-ee0d2ae8__msFP7nN",
+    "trial_uri": "235c695a-89b4-50e4-96bd-ee0d2ae80c7a/rollouts/gpt-6.1-sol/run-1/235c695a-89b4-50e4-96bd-ee0d2ae8__msFP7nN",
+    "task_id": {
+        "path": "235c695a-89b4-50e4-96bd-ee0d2ae80c7a"
+    },
+    "source": null,
+    "task_checksum": "fec07fc4f4b3dffeeaad809ae9e8deb9a1709771a2d3e7e2b1fa226dc60fd435",
+    "config": {
+        "task": {
+            "path": "235c695a-89b4-50e4-96bd-ee0d2ae80c7a",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": null
+        },
+        "trial_name": "235c695a-89b4-50e4-96bd-ee0d2ae8__msFP7nN",
+        "trials_dir": "235c695a-89b4-50e4-96bd-ee0d2ae80c7a/rollouts/gpt-6.1-sol/run-1",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": 5.0,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "codex",
+            "import_path": null,
+            "model_name": "openai/gpt-6.1-sol",
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [
+                "172.31.14.51"
+            ],
+            "kwargs": {
+                "version": "0.166.0",
+                "reasoning_effort": "high",
+                "web_search": "disabled"
+            },
+            "env": {
+                "OPENAI_BASE_URL": "${P1_CODEX_BASE_URL}",
+                "OPENAI_API_KEY": "${KAIJU_CODEX_BRIDGE_SECRET}"
+            },
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": [
+                "snapshot.debian.org",
+                "deb.debian.org",
+                "snapshot.ubuntu.com",
+                "archive.ubuntu.com",
+                "security.ubuntu.com",
+                "astral.sh",
+                "releases.astral.sh",
+                "github.com",
+                "objects.githubusercontent.com",
+                "release-assets.githubusercontent.com",
+                "pypi.org",
+                "files.pythonhosted.org",
+                "repo.maven.apache.org",
+                "repo1.maven.org",
+                "storage.googleapis.com",
+                "fastdl.mongodb.org",
+                "raw.githubusercontent.com",
+                "nodejs.org",
+                "registry.npmjs.org"
+            ]
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "env": {
+                "ANTHROPIC_BASE_URL": "${P1_JUDGE_BASE_URL}",
+                "ANTHROPIC_API_BASE": "${P1_JUDGE_BASE_URL}",
+                "ANTHROPIC_API_KEY": "${P1_JUDGE_API_KEY}"
+            },
+            "disable": false
+        },
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "1d03e221-ad90-4be1-a0b8-843c284adfaf",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "codex",
+        "version": "0.166.0",
+        "model_info": {
+            "name": "gpt-6.1-sol",
+            "provider": "openai"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 17286980,
+        "n_cache_tokens": 17147776,
+        "n_output_tokens": 85954,
+        "cost_usd": 2.8527256,
+        "model_usage": {
+            "openai/gpt-6.1-sol": {
+                "n_input_tokens": 17286980,
+                "n_cache_tokens": 17147776,
+                "n_output_tokens": 85954,
+                "cost_usd": 2.8527256
+            }
+        },
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "verifier_environment_mode": "separate",
+    "exception_info": null,
+    "started_at": "2026-11-14T03:50:22.505788Z",
+    "finished_at": "2026-11-14T06:05:19.250765Z",
+    "environment_setup": {
+        "started_at": "2026-11-14T03:50:22.549857Z",
+        "finished_at": "2026-11-14T04:00:23.406139Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-11-14T04:00:23.406195Z",
+        "finished_at": "2026-11-14T04:00:46.163283Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-11-14T04:00:46.163433Z",
+        "finished_at": "2026-11-14T04:48:16.646448Z"
+    },
+    "verifier": {
+        "started_at": "2026-11-14T04:48:41.359449Z",
+        "finished_at": "2026-11-14T06:05:19.250744Z"
+    },
+    "step_results": null
+}

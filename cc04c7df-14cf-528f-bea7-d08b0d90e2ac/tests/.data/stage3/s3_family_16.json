@@ -1,0 +1,164 @@
+{
+ "id": "s3_family_16",
+ "source": "f024_options_on_write_endpoints",
+ "steps": [
+  {
+   "case": "options_manual_update",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/stats/manual/update"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_manual_reset",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/stats/manual/reset"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_manual_save",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/results/manual/save"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_debug_caches",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/debug/caches"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_login_admin",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/login/admin"
+   },
+   "compare": "status+headers"
+  }
+ ],
+ "cases": [
+  {
+   "case": "options_manual_update",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/stats/manual/update"
+   },
+   "response": {
+    "body": "POST, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "13",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_manual_reset",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/stats/manual/reset"
+   },
+   "response": {
+    "body": "POST, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "13",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_manual_save",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/results/manual/save"
+   },
+   "response": {
+    "body": "POST, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "13",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_debug_caches",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "POST, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "13",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_login_admin",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/login/admin"
+   },
+   "response": {
+    "body": "POST, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "13",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "OPTIONS on the POST-only administrative endpoints: the container's generated response must not be gated by SecurityInterceptor (no resource method is matched) and must still carry the CORS headers."
+}

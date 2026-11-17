@@ -1,0 +1,116 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/user/UserStateChangeHandler.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc.user;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import java.math.BigDecimal;
+32 +| import me.zodac.folding.state.ParsingStateManager;
+33 +| import me.zodac.folding.api.exception.ExternalConnectionException;
+34 +| import me.zodac.folding.api.state.ParsingState;
+35 +| import me.zodac.folding.api.stats.FoldingStatsRetriever;
+36 +| import me.zodac.folding.api.tc.Hardware;
+37 +| import me.zodac.folding.api.tc.User;
+38 +| import me.zodac.folding.api.tc.stats.OffsetTcStats;
+39 +| import me.zodac.folding.api.tc.stats.UserStats;
+40 +| import me.zodac.folding.api.tc.stats.UserTcStats;
+41 +| import me.zodac.folding.service.api.FoldingStatsCore;
+42 +| import org.apache.logging.log4j.LogManager;
+43 +| import org.apache.logging.log4j.Logger;
+44 +| 
+45 +| @Service
+46 +| public class UserStateChangeHandler {
+47 +| 
+48 +|     private static final Logger LOGGER = LogManager.getLogger();
+49 +|     @Autowired
+50 +|     private FoldingStatsRetriever foldingStatsRetriever;
+51 +| 
+52 +|     @Autowired
+53 +|     @Lazy
+54 +|     private FoldingStatsCore foldingStatsCore;
+55 +| 
+56 +|     public boolean isUserStateChange(final User updatedUser, final User existingUser) {
+57 +|         if (existingUser.getHardware().getId() != updatedUser.getHardware().getId()) {
+58 +|             LOGGER.debug("User '{}' (ID: {}) had state change to hardware, {} -> {}", existingUser.getDisplayName(),
+59 +|                 existingUser.getId(), existingUser.getHardware(), updatedUser.getHardware());
+60 +|             return true;
+61 +|         }
+62 +| 
+63 +|         if (!existingUser.getFoldingUserName().equalsIgnoreCase(updatedUser.getFoldingUserName())) {
+64 +|             LOGGER.debug("User '{}' (ID: {}) had state change to Folding username, {} -> {}",
+65 +|                 existingUser.getDisplayName(), existingUser.getId(), existingUser.getFoldingUserName(), updatedUser.getFoldingUserName());
+66 +|             return true;
+67 +|         }
+68 +| 
+69 +|         if (!existingUser.getPasskey().equalsIgnoreCase(updatedUser.getPasskey())) {
+70 +|             LOGGER.debug("User '{}' (ID: {}) had state change to passkey, {} -> {}", existingUser.getDisplayName(),
+71 +|                 existingUser.getId(), existingUser.getPasskey(), updatedUser.getPasskey());
+72 +|             return true;
+73 +|         }
+74 +| 
+75 +|         LOGGER.debug("No state change required for updated user '{}' (ID: {})", updatedUser.getDisplayName(), updatedUser.getId());
+76 +|         return false;
+77 +|     }
+78 +| 
+79 +|     public boolean isHardwareStateChange(final Hardware updatedHardware, final Hardware existingHardware) {
+80 +|         // Using BigDecimal since equality checks with doubles can be imprecise
+81 +|         final BigDecimal existingMultiplier = BigDecimal.valueOf(existingHardware.getMultiplier());
+82 +|         final BigDecimal updatedMultiplier = BigDecimal.valueOf(updatedHardware.getMultiplier());
+83 +|         final boolean isMultiplierChange = !existingMultiplier.equals(updatedMultiplier);
+84 +| 
+85 +|         if (isMultiplierChange) {
+86 +|             LOGGER.debug("Hardware '{}' (ID: {}) had state change to multiplier, {} -> {}", updatedHardware.getId(),
+87 +|                 updatedHardware.getHardwareName(), existingHardware.getMultiplier(), updatedHardware.getMultiplier());
+88 +|         }
+89 +| 
+90 +|         return isMultiplierChange;
+91 +|     }
+92 +| 
+93 +|     public void handleStateChange(final User userWithStateChange) {
+94 +|         if (ParsingStateManager.current() == ParsingState.DISABLED) {
+95 +|             LOGGER.debug("Received a state change for user '{}' (ID: {}), but system is not currently parsing stats",
+96 +|                 userWithStateChange.getDisplayName(), userWithStateChange.getId());
+97 +|             return;
+98 +|         }
+99 +| 
+100 +|         try {
+101 +|             final UserStats userTotalStats = foldingStatsRetriever.getTotalStats(userWithStateChange);
+102 +|             LOGGER.debug("Setting initial stats to: {}", userTotalStats);
+103 +|             foldingStatsCore.createInitialStats(userTotalStats);
+104 +| 
+105 +|             final UserTcStats currentUserTcStats = foldingStatsCore.getHourlyTcStats(userWithStateChange);
+106 +|             final OffsetTcStats offsetTcStats = OffsetTcStats.create(currentUserTcStats);
+107 +|             final OffsetTcStats createdOffsetStats = foldingStatsCore.createOffsetStats(userWithStateChange, offsetTcStats);
+108 +|             LOGGER.debug("Added offset stats of: {}", createdOffsetStats);
+109 +| 
+110 +|             LOGGER.info("Handled state change for user '{}' (ID: {})", userWithStateChange.getDisplayName(), userWithStateChange.getId());
+111 +|         } catch (final ExternalConnectionException e) {
+112 +|             LOGGER.error("Unable to update the state of user '{}' (ID: {})", userWithStateChange.getDisplayName(), userWithStateChange.getId(), e);
+113 +|         }
+114 +|     }
+115 +| }

@@ -1,0 +1,470 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/core/Storage.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.core;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| 
+30 +| import static me.zodac.folding.cache.CompetitionSummaryCache.COMPETITION_SUMMARY_ID;
+31 +| 
+32 +| import java.time.Month;
+33 +| import java.time.Year;
+34 +| import java.util.Collection;
+35 +| import java.util.Collections;
+36 +| import java.util.Optional;
+37 +| import me.zodac.folding.api.UserAuthenticationResult;
+38 +| import me.zodac.folding.api.db.DbManager;
+39 +| import me.zodac.folding.api.tc.Hardware;
+40 +| import me.zodac.folding.api.tc.Team;
+41 +| import me.zodac.folding.api.tc.User;
+42 +| import me.zodac.folding.api.tc.result.MonthlyResult;
+43 +| import me.zodac.folding.api.tc.stats.OffsetTcStats;
+44 +| import me.zodac.folding.api.tc.stats.RetiredUserTcStats;
+45 +| import me.zodac.folding.api.tc.stats.UserStats;
+46 +| import me.zodac.folding.api.tc.stats.UserTcStats;
+47 +| import me.zodac.folding.cache.CompetitionSummaryCache;
+48 +| import me.zodac.folding.cache.HardwareCache;
+49 +| import me.zodac.folding.cache.InitialStatsCache;
+50 +| import me.zodac.folding.cache.OffsetTcStatsCache;
+51 +| import me.zodac.folding.cache.RetiredTcStatsCache;
+52 +| import me.zodac.folding.cache.TcStatsCache;
+53 +| import me.zodac.folding.cache.TeamCache;
+54 +| import me.zodac.folding.cache.TotalStatsCache;
+55 +| import me.zodac.folding.cache.UserCache;
+56 +| import me.zodac.folding.rest.api.tc.CompetitionSummary;
+57 +| import me.zodac.folding.rest.api.tc.historic.HistoricStats;
+58 +| import org.apache.logging.log4j.LogManager;
+59 +| import org.apache.logging.log4j.Logger;
+60 +| 
+61 +| @Service
+62 +| public class Storage {
+63 +| 
+64 +|     private static final Logger LOGGER = LogManager.getLogger();
+65 +|     @Autowired
+66 +|     private DbManager dbManager;
+67 +| 
+68 +|     // POJO caches
+69 +|     private final HardwareCache hardwareCache = HardwareCache.getInstance();
+70 +|     private final TeamCache teamCache = TeamCache.getInstance();
+71 +|     private final UserCache userCache = UserCache.getInstance();
+72 +| 
+73 +|     // Stats caches
+74 +|     private final CompetitionSummaryCache competitionSummaryCache = CompetitionSummaryCache.getInstance();
+75 +|     private final InitialStatsCache initialStatsCache = InitialStatsCache.getInstance();
+76 +|     private final OffsetTcStatsCache offsetTcStatsCache = OffsetTcStatsCache.getInstance();
+77 +|     private final RetiredTcStatsCache retiredTcStatsCache = RetiredTcStatsCache.getInstance();
+78 +|     private final TcStatsCache tcStatsCache = TcStatsCache.getInstance();
+79 +|     private final TotalStatsCache totalStatsCache = TotalStatsCache.getInstance();
+80 +| 
+81 +|     @Cached(HardwareCache.class)
+82 +|     public Hardware createHardware(final Hardware hardware) {
+83 +|         final Hardware hardwareWithId = dbManager.createHardware(hardware);
+84 +|         hardwareCache.add(hardwareWithId.getId(), hardwareWithId);
+85 +|         return hardwareWithId;
+86 +|     }
+87 +| 
+88 +|     @Cached(HardwareCache.class)
+89 +|     public Optional<Hardware> getHardware(final int hardwareId) {
+90 +|         final Optional<Hardware> fromCache = hardwareCache.get(hardwareId);
+91 +| 
+92 +|         if (fromCache.isPresent()) {
+93 +|             return fromCache;
+94 +|         }
+95 +| 
+96 +|         LOGGER.trace("Cache miss! Get hardware");
+97 +|         final Optional<Hardware> fromDb = dbManager.getHardware(hardwareId);
+98 +|         fromDb.ifPresent(hardware -> hardwareCache.add(hardwareId, hardware));
+99 +|         return fromDb;
+100 +|     }
+101 +| 
+102 +|     @Cached(HardwareCache.class)
+103 +|     public Collection<Hardware> getAllHardware() {
+104 +|         final Collection<Hardware> fromCache = hardwareCache.getAll();
+105 +| 
+106 +|         if (!fromCache.isEmpty()) {
+107 +|             return fromCache;
+108 +|         }
+109 +| 
+110 +|         LOGGER.trace("Cache miss! Get all hardware");
+111 +|         final Collection<Hardware> fromDb = dbManager.getAllHardware();
+112 +| 
+113 +|         for (final Hardware hardware : fromDb) {
+114 +|             hardwareCache.add(hardware.getId(), hardware);
+115 +|         }
+116 +| 
+117 +|         return fromDb;
+118 +|     }
+119 +| 
+120 +|     @Cached({HardwareCache.class, UserCache.class})
+121 +|     public Hardware updateHardware(final Hardware hardwareToUpdate) {
+122 +|         final Hardware updatedHardware = dbManager.updateHardware(hardwareToUpdate);
+123 +|         hardwareCache.add(updatedHardware.getId(), updatedHardware);
+124 +| 
+125 +|         getAllUsers()
+126 +|             .stream()
+127 +|             .filter(user -> user.getHardware().getId() == updatedHardware.getId())
+128 +|             .map(user -> User.updateHardware(user, updatedHardware))
+129 +|             .forEach(updatedUser -> userCache.add(updatedUser.getId(), updatedUser));
+130 +| 
+131 +|         return updatedHardware;
+132 +|     }
+133 +| 
+134 +|     @Cached(HardwareCache.class)
+135 +|     public void deleteHardware(final int hardwareId) {
+136 +|         dbManager.deleteHardware(hardwareId);
+137 +|         hardwareCache.remove(hardwareId);
+138 +|     }
+139 +| 
+140 +|     @Cached(TeamCache.class)
+141 +|     public Team createTeam(final Team team) {
+142 +|         final Team teamWithId = dbManager.createTeam(team);
+143 +|         teamCache.add(teamWithId.getId(), teamWithId);
+144 +|         return teamWithId;
+145 +|     }
+146 +| 
+147 +|     @Cached(TeamCache.class)
+148 +|     public Optional<Team> getTeam(final int teamId) {
+149 +|         final Optional<Team> fromCache = teamCache.get(teamId);
+150 +| 
+151 +|         if (fromCache.isPresent()) {
+152 +|             return fromCache;
+153 +|         }
+154 +| 
+155 +|         LOGGER.trace("Cache miss! Get team");
+156 +|         final Optional<Team> fromDb = dbManager.getTeam(teamId);
+157 +|         fromDb.ifPresent(team -> teamCache.add(teamId, team));
+158 +|         return fromDb;
+159 +|     }
+160 +| 
+161 +|     @Cached(TeamCache.class)
+162 +|     public Collection<Team> getAllTeams() {
+163 +|         final Collection<Team> fromCache = teamCache.getAll();
+164 +| 
+165 +|         if (!fromCache.isEmpty()) {
+166 +|             return fromCache;
+167 +|         }
+168 +| 
+169 +|         LOGGER.trace("Cache miss! Get all teams");
+170 +|         final Collection<Team> fromDb = dbManager.getAllTeams();
+171 +| 
+172 +|         for (final Team team : fromDb) {
+173 +|             teamCache.add(team.getId(), team);
+174 +|         }
+175 +| 
+176 +|         return fromDb;
+177 +|     }
+178 +| 
+179 +|     @Cached({TeamCache.class, UserCache.class})
+180 +|     public Team updateTeam(final Team teamToUpdate) {
+181 +|         final Team updatedTeam = dbManager.updateTeam(teamToUpdate);
+182 +|         teamCache.add(updatedTeam.getId(), updatedTeam);
+183 +| 
+184 +|         getAllUsers()
+185 +|             .stream()
+186 +|             .filter(user -> user.getTeam().getId() == updatedTeam.getId())
+187 +|             .map(user -> User.updateTeam(user, updatedTeam))
+188 +|             .forEach(updatedUser -> userCache.add(updatedUser.getId(), updatedUser));
+189 +| 
+190 +|         return updatedTeam;
+191 +|     }
+192 +| 
+193 +|     @Cached(TeamCache.class)
+194 +|     public void deleteTeam(final int teamId) {
+195 +|         dbManager.deleteTeam(teamId);
+196 +|         teamCache.remove(teamId);
+197 +|     }
+198 +| 
+199 +|     @Cached(UserCache.class)
+200 +|     public User createUser(final User user) {
+201 +|         final User userWithId = dbManager.createUser(user);
+202 +|         userCache.add(userWithId.getId(), userWithId);
+203 +|         return userWithId;
+204 +|     }
+205 +| 
+206 +|     @Cached(UserCache.class)
+207 +|     public Optional<User> getUser(final int userId) {
+208 +|         final Optional<User> fromCache = userCache.get(userId);
+209 +| 
+210 +|         if (fromCache.isPresent()) {
+211 +|             return fromCache;
+212 +|         }
+213 +| 
+214 +|         LOGGER.trace("Cache miss! Get user");
+215 +|         final Optional<User> fromDb = dbManager.getUser(userId);
+216 +|         fromDb.ifPresent(user -> userCache.add(userId, user));
+217 +|         return fromDb;
+218 +|     }
+219 +| 
+220 +|     @Cached(UserCache.class)
+221 +|     public Collection<User> getAllUsers() {
+222 +|         final Collection<User> fromCache = userCache.getAll();
+223 +| 
+224 +|         if (!fromCache.isEmpty()) {
+225 +|             return fromCache;
+226 +|         }
+227 +| 
+228 +|         LOGGER.trace("Cache miss! Get all users");
+229 +|         final Collection<User> fromDb = dbManager.getAllUsers();
+230 +| 
+231 +|         for (final User user : fromDb) {
+232 +|             userCache.add(user.getId(), user);
+233 +|         }
+234 +| 
+235 +|         return fromDb;
+236 +|     }
+237 +| 
+238 +|     @Cached(UserCache.class)
+239 +|     public User updateUser(final User userToUpdate) {
+240 +|         final User updatedUser = dbManager.updateUser(userToUpdate);
+241 +|         userCache.add(updatedUser.getId(), updatedUser);
+242 +|         return updatedUser;
+243 +|     }
+244 +| 
+245 +|     @Cached({UserCache.class, InitialStatsCache.class, OffsetTcStatsCache.class, TcStatsCache.class, TotalStatsCache.class})
+246 +|     public void deleteUser(final int userId) {
+247 +|         dbManager.deleteUser(userId);
+248 +|         userCache.remove(userId);
+249 +| 
+250 +|         // Remove the user entry from all stats caches
+251 +|         offsetTcStatsCache.remove(userId);
+252 +|         totalStatsCache.remove(userId);
+253 +|         initialStatsCache.remove(userId);
+254 +|         tcStatsCache.remove(userId);
+255 +|     }
+256 +| 
+257 +|     @NotCached
+258 +|     public MonthlyResult createMonthlyResult(final MonthlyResult monthlyResult) {
+259 +|         return dbManager.createMonthlyResult(monthlyResult);
+260 +|     }
+261 +| 
+262 +|     @NotCached
+263 +|     public Optional<MonthlyResult> getMonthlyResult(final Month month, final Year year) {
+264 +|         return dbManager.getMonthlyResult(month, year);
+265 +|     }
+266 +| 
+267 +|     @Cached(RetiredTcStatsCache.class)
+268 +|     public RetiredUserTcStats createRetiredUserStats(final RetiredUserTcStats retiredUserTcStats) {
+269 +|         final RetiredUserTcStats createdRetiredUserTcStats = dbManager.createRetiredUserStats(retiredUserTcStats);
+270 +|         retiredTcStatsCache.add(createdRetiredUserTcStats.getRetiredUserId(), createdRetiredUserTcStats);
+271 +|         return createdRetiredUserTcStats;
+272 +|     }
+273 +| 
+274 +|     @Cached(RetiredTcStatsCache.class)
+275 +|     public Collection<RetiredUserTcStats> getAllRetiredUsers() {
+276 +|         final Collection<RetiredUserTcStats> fromCache = retiredTcStatsCache.getAll();
+277 +| 
+278 +|         if (!fromCache.isEmpty()) {
+279 +|             return fromCache;
+280 +|         }
+281 +| 
+282 +|         LOGGER.trace("Cache miss! Get all retired users");
+283 +|         final Collection<RetiredUserTcStats> fromDb = dbManager.getAllRetiredUserStats();
+284 +| 
+285 +|         for (final RetiredUserTcStats retiredUserTcStats : fromDb) {
+286 +|             retiredTcStatsCache.add(retiredUserTcStats.getRetiredUserId(), retiredUserTcStats);
+287 +|         }
+288 +| 
+289 +|         return fromDb;
+290 +|     }
+291 +| 
+292 +|     @Cached(RetiredTcStatsCache.class)
+293 +|     public void deleteAllRetiredUserTcStats() {
+294 +|         dbManager.deleteAllRetiredUserStats();
+295 +|         retiredTcStatsCache.removeAll();
+296 +|     }
+297 +| 
+298 +|     @NotCached
+299 +|     public UserAuthenticationResult authenticateSystemUser(final String userName, final String password) {
+300 +|         return dbManager.authenticateSystemUser(userName, password);
+301 +|     }
+302 +| 
+303 +|     @NotCached
+304 +|     public Collection<HistoricStats> getHistoricStats(final int userId, final Year year, final Month month, final int day) {
+305 +|         if (year == null) {
+306 +|             return Collections.emptyList();
+307 +|         }
+308 +| 
+309 +|         if (month == null) {
+310 +|             return dbManager.getHistoricStatsMonthly(userId, year);
+311 +|         }
+312 +| 
+313 +|         if (day == 0) {
+314 +|             return dbManager.getHistoricStatsDaily(userId, year, month);
+315 +|         }
+316 +| 
+317 +|         return dbManager.getHistoricStatsHourly(userId, year, month, day);
+318 +|     }
+319 +| 
+320 +|     @Cached(TotalStatsCache.class)
+321 +|     public UserStats createTotalStats(final UserStats userStats) {
+322 +|         final UserStats fromDb = dbManager.createTotalStats(userStats);
+323 +|         totalStatsCache.add(fromDb.getUserId(), fromDb);
+324 +|         return fromDb;
+325 +|     }
+326 +| 
+327 +|     @Cached(TotalStatsCache.class)
+328 +|     public Optional<UserStats> getTotalStats(final int userId) {
+329 +|         final Optional<UserStats> fromCache = totalStatsCache.get(userId);
+330 +| 
+331 +|         if (fromCache.isPresent()) {
+332 +|             return fromCache;
+333 +|         }
+334 +| 
+335 +|         LOGGER.trace("Cache miss! Total stats");
+336 +|         final Optional<UserStats> fromDb = dbManager.getTotalStats(userId);
+337 +|         fromDb.ifPresent(userStats -> totalStatsCache.add(userId, userStats));
+338 +|         return fromDb;
+339 +|     }
+340 +| 
+341 +|     @Cached(OffsetTcStatsCache.class)
+342 +|     public OffsetTcStats createOrUpdateOffsetStats(final int userId, final OffsetTcStats offsetTcStats) {
+343 +|         final OffsetTcStats fromDb = dbManager.createOrUpdateOffsetStats(userId, offsetTcStats);
+344 +|         offsetTcStatsCache.add(userId, fromDb);
+345 +|         return fromDb;
+346 +|     }
+347 +| 
+348 +|     @Cached(OffsetTcStatsCache.class)
+349 +|     public Optional<OffsetTcStats> getOffsetStats(final int userId) {
+350 +|         final Optional<OffsetTcStats> fromCache = offsetTcStatsCache.get(userId);
+351 +| 
+352 +|         if (fromCache.isPresent()) {
+353 +|             return fromCache;
+354 +|         }
+355 +| 
+356 +|         LOGGER.trace("Cache miss! Offset stats");
+357 +|         final Optional<OffsetTcStats> fromDb = dbManager.getOffsetStats(userId);
+358 +|         fromDb.ifPresent(offsetTcStats -> offsetTcStatsCache.add(userId, offsetTcStats));
+359 +|         return fromDb;
+360 +|     }
+361 +| 
+362 +|     @Cached(OffsetTcStatsCache.class)
+363 +|     public void deleteOffsetStats(final int userId) {
+364 +|         dbManager.deleteOffsetStats(userId);
+365 +|         offsetTcStatsCache.remove(userId);
+366 +|     }
+367 +| 
+368 +|     @Cached(OffsetTcStatsCache.class)
+369 +|     public void deleteAllOffsetTcStats() {
+370 +|         dbManager.deleteAllOffsetStats();
+371 +|         offsetTcStatsCache.removeAll();
+372 +|     }
+373 +| 
+374 +|     @Cached(TcStatsCache.class)
+375 +|     public UserTcStats createHourlyTcStats(final UserTcStats userTcStats) {
+376 +|         final UserTcStats fromDb = dbManager.createHourlyTcStats(userTcStats);
+377 +|         tcStatsCache.add(userTcStats.getUserId(), fromDb);
+378 +|         return fromDb;
+379 +|     }
+380 +| 
+381 +|     @Cached(TcStatsCache.class)
+382 +|     public Optional<UserTcStats> getHourlyTcStats(final int userId) {
+383 +|         final Optional<UserTcStats> fromCache = tcStatsCache.get(userId);
+384 +| 
+385 +|         if (fromCache.isPresent()) {
+386 +|             return fromCache;
+387 +|         }
+388 +| 
+389 +|         LOGGER.trace("Cache miss! Hourly TC stats");
+390 +|         final Optional<UserTcStats> fromDb = dbManager.getHourlyTcStats(userId);
+391 +|         fromDb.ifPresent(userTcStats -> tcStatsCache.add(userId, userTcStats));
+392 +|         return fromDb;
+393 +|     }
+394 +| 
+395 +|     @NotCached
+396 +|     public Optional<UserTcStats> getFirstHourlyTcStats() {
+397 +|         return dbManager.getFirstHourlyTcStats();
+398 +|     }
+399 +| 
+400 +|     @Cached(InitialStatsCache.class)
+401 +|     public UserStats createInitialStats(final UserStats userStats) {
+402 +|         final UserStats fromDb = dbManager.createInitialStats(userStats);
+403 +|         initialStatsCache.add(fromDb.getUserId(), fromDb);
+404 +|         return fromDb;
+405 +|     }
+406 +| 
+407 +|     @Cached(InitialStatsCache.class)
+408 +|     public Optional<UserStats> getInitialStats(final int userId) {
+409 +|         final Optional<UserStats> fromCache = initialStatsCache.get(userId);
+410 +| 
+411 +|         if (fromCache.isPresent()) {
+412 +|             return fromCache;
+413 +|         }
+414 +| 
+415 +|         LOGGER.trace("Cache miss! Initial stats");
+416 +|         final Optional<UserStats> fromDb = dbManager.getInitialStats(userId);
+417 +|         fromDb.ifPresent(userStats -> initialStatsCache.add(userId, userStats));
+418 +|         return fromDb;
+419 +|     }
+420 +| 
+421 +|     @Cached(CompetitionSummaryCache.class)
+422 +|     public CompetitionSummary createCompetitionSummary(final CompetitionSummary competitionSummary) {
+423 +|         this.competitionSummaryCache.add(COMPETITION_SUMMARY_ID, competitionSummary);
+424 +|         return competitionSummary;
+425 +|     }
+426 +| 
+427 +|     @Cached(CompetitionSummaryCache.class)
+428 +|     public Optional<CompetitionSummary> getCompetitionSummary() {
+429 +|         return competitionSummaryCache.get(COMPETITION_SUMMARY_ID);
+430 +|     }
+431 +| 
+432 +|     @Cached(TotalStatsCache.class)
+433 +|     public void evictTcStatsCache() {
+434 +|         tcStatsCache.removeAll();
+435 +|     }
+436 +| 
+437 +|     @Cached(InitialStatsCache.class)
+438 +|     public void evictInitialStatsCache() {
+439 +|         initialStatsCache.removeAll();
+440 +|     }
+441 +| 
+442 +|     @Cached({
+443 +|         CompetitionSummaryCache.class,
+444 +|         HardwareCache.class,
+445 +|         InitialStatsCache.class,
+446 +|         OffsetTcStatsCache.class,
+447 +|         RetiredTcStatsCache.class,
+448 +|         TcStatsCache.class,
+449 +|         TeamCache.class,
+450 +|         TotalStatsCache.class,
+451 +|         UserCache.class
+452 +|     })
+453 +|     public void printCacheContents() {
+454 +|         // POJOs
+455 +|         LOGGER.info("HardwareCache: {}", hardwareCache.getCacheContents());
+456 +|         LOGGER.info("TeamCache: {}", teamCache.getCacheContents());
+457 +|         LOGGER.info("UserCache: {}", userCache.getCacheContents());
+458 +| 
+459 +|         // Stats
+460 +|         LOGGER.info("InitialStatsCache: {}", initialStatsCache.getCacheContents());
+461 +|         LOGGER.info("OffsetStatsCache: {}", offsetTcStatsCache.getCacheContents());
+462 +|         LOGGER.info("RetiredTcStatsCache: {}", retiredTcStatsCache.getCacheContents());
+463 +|         LOGGER.info("TcStatsCache: {}", tcStatsCache.getCacheContents());
+464 +|         LOGGER.info("TotalStatsCache: {}", totalStatsCache.getCacheContents());
+465 +| 
+466 +|         // TC overall
+467 +|         LOGGER.info("CompetitionSummaryCache: {}", competitionSummaryCache.getCacheContents());
+468 +|     }
+469 +| }

@@ -1,0 +1,185 @@
+{
+ "id": "s3_family_41",
+ "source": "f060_forbidden_responses_are_empty",
+ "steps": [
+  {
+   "case": "create_hardware_as_read_only",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "readonly",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "teams_batch_as_read_only",
+   "http": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "readonly",
+    "json": [
+     {
+      "teamName": "RoTeam"
+     }
+    ]
+   }
+  },
+  {
+   "case": "manual_reset_as_read_only",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/reset",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "debug_lars_as_read_only",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "user_passkey_as_read_only",
+   "http": {
+    "method": "GET",
+    "path": "/users/1/passkey",
+    "auth": "readonly"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "create_hardware_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "teams_batch_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": [
+     {
+      "teamName": "RoTeam"
+     }
+    ],
+    "method": "POST",
+    "path": "/teams/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "manual_reset_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "POST",
+    "path": "/stats/manual/reset"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "debug_lars_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "user_passkey_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "GET",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 403
+   }
+  }
+ ],
+ "probe": "Responses.forbidden() returns a bare 403 with no body and no Content-Type for the read-only user on every admin-only write; a migration's default error handler would add a JSON problem body and a Content-Type."
+}

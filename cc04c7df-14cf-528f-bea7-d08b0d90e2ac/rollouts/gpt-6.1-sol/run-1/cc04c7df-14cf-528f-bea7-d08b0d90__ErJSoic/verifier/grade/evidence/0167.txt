@@ -1,0 +1,49 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/stats/http/request/PointsUrlBuilder.java (changed against State A) ===
+@@
+27  | import me.zodac.folding.api.util.EnvironmentVariableUtils;
+28  | import me.zodac.folding.api.util.StringUtils;
+29  | 
+   -| /**
+   -|  * Utility class used to build the URL to request Folding points for a user from the Stanford Folding@Home API.
+   -|  */
+30 +| 
+31  | public class PointsUrlBuilder {
+32  | 
+33  |     // We do not care about the team number, as we want the points for user/passkey on all teams
+@@
+39  |     private String user;
+40  |     private String passkey;
+41  | 
+   -|     /**
+   -|      * Update the {@link PointsUrlBuilder} with the 'user' for the URL.
+   -|      *
+   -|      * @param user the user for the request
+   -|      * @return the updated {@link PointsUrlBuilder}
+   -|      */
+42 +|     
+43  |     public PointsUrlBuilder forUser(final String user) {
+44  |         this.user = user;
+45  |         return this;
+46  |     }
+47  | 
+   -|     /**
+   -|      * Update the {@link PointsUrlBuilder} with the 'passkey' for the URL.
+   -|      *
+   -|      * @param passkey the passkey for the request
+   -|      * @return the updated {@link PointsUrlBuilder}
+   -|      */
+48 +|     
+49  |     public PointsUrlBuilder withPasskey(final String passkey) {
+50  |         this.passkey = passkey;
+51  |         return this;
+52  |     }
+53  | 
+   -|     /**
+   -|      * Build the points REST request URL for a user/passkey.
+   -|      *
+   -|      * @return the URL to request units
+   -|      */
+54 +|     
+55  |     public StatsRequestUrl build() {
+56  |         if (StringUtils.isBlank(user)) {
+57  |             throw new IllegalArgumentException("'user' cannot be null or empty");

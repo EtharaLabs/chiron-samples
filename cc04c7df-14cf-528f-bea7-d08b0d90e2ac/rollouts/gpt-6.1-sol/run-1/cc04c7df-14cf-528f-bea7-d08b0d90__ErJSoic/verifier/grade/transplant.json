@@ -1,0 +1,31 @@
+{
+ "k": 50,
+ "min_tokens": 200,
+ "corpus_files": 1415,
+ "max_file_containment": 0.0344,
+ "max_file": "resteasy-jaxrs-3.15.1.Final-sources.jar!org/jboss/resteasy/spi/Failure.java",
+ "files_over_0.5": 0,
+ "aggregate_share": 3e-05,
+ "top5": [
+  [
+   0.0344,
+   "resteasy-jaxrs-3.15.1.Final-sources.jar!org/jboss/resteasy/spi/Failure.java"
+  ],
+  [
+   0.0321,
+   "wildfly-ejb3-24.0.0.Final-sources.jar!org/jboss/as/ejb3/timerservice/persistence/filestore/LegacyFileStore.java"
+  ],
+  [
+   0.0016,
+   "wildfly-ejb3-24.0.0.Final-sources.jar!org/jboss/as/ejb3/timerservice/TimerServiceImpl.java"
+  ],
+  [
+   0.0,
+   "wildfly-weld-24.0.0.Final-sources.jar!org/jboss/as/weld/util/Utils.java"
+  ],
+  [
+   0.0,
+   "wildfly-weld-24.0.0.Final-sources.jar!org/jboss/as/weld/util/Indices.java"
+  ]
+ ]
+}

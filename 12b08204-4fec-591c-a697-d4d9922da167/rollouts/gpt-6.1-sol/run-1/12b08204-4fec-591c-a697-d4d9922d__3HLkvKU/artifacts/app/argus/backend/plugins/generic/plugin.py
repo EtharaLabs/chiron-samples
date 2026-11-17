@@ -1,0 +1,10 @@
+from fastapi import APIRouter
+from argus.backend.plugins.core import PluginInfoBase, PluginModelBase
+from argus.backend.plugins.generic.model import GenericRun
+
+class PluginInfo(PluginInfoBase):
+    name: str = 'generic'
+    model: PluginModelBase = GenericRun
+    controller: APIRouter = None
+    all_models = [GenericRun]
+    all_types = []

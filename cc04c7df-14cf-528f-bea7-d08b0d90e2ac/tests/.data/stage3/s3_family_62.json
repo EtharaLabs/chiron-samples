@@ -1,0 +1,101 @@
+{
+ "id": "s3_family_62",
+ "source": "f094_lars_multiplier_two_place_rounding",
+ "steps": [
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Top",
+      "manufacturer": "nVidia",
+      "modelInfo": "Top Gpu",
+      "rank": 1,
+      "averagePpd": 1000
+     },
+     {
+      "displayName": "Third",
+      "manufacturer": "nVidia",
+      "modelInfo": "Third Gpu",
+      "rank": 2,
+      "averagePpd": 3
+     },
+     {
+      "displayName": "Seventh",
+      "manufacturer": "nVidia",
+      "modelInfo": "Seventh Gpu",
+      "rank": 3,
+      "averagePpd": 7
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_with_rounding",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_multipliers",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "lars_update_with_rounding",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_multipliers",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"Seventh Gpu\",\n    \"displayName\": \"Seventh\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 142.86,\n    \"averagePpd\": 7\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"Third Gpu\",\n    \"displayName\": \"Third\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 333.33,\n    \"averagePpd\": 3\n  },\n  {\n    \"id\": 3,\n    \"hardwareName\": \"Top Gpu\",\n    \"displayName\": \"Top\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1000\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "560",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "etag": "\"-1389649544\"",
+     "x-total-count": "3"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Multipliers are best-PPD/this-PPD passed through String.format(\"%.2f\"): 1000/3 must become 333.33 and 1000/7 must become 142.86 (rounded up), and the output must spell them exactly as Gson writes those doubles."
+}

@@ -1,0 +1,243 @@
+{
+ "id": "s3_family_56",
+ "source": "f087_if_match_preconditions",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "read_for_tag",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "capture": {
+    "hwTag": "header:ETag"
+   }
+  },
+  {
+   "case": "if_match_matching_tag",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1",
+    "headers": {
+     "If-Match": "${hwTag}"
+    }
+   }
+  },
+  {
+   "case": "if_match_unknown_tag",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1",
+    "headers": {
+     "If-Match": "\"deadbeef\""
+    }
+   }
+  },
+  {
+   "case": "if_match_wildcard",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1",
+    "headers": {
+     "If-Match": "*"
+    }
+   }
+  },
+  {
+   "case": "if_match_list_including_tag",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1",
+    "headers": {
+     "If-Match": "\"deadbeef\", ${hwTag}"
+    }
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "read_for_tag",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-118894181\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "if_match_matching_tag",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "headers": {
+     "If-Match": "\"-118894181\""
+    },
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-118894181\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "if_match_unknown_tag",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "headers": {
+     "If-Match": "\"deadbeef\""
+    },
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-118894181\""
+    },
+    "status": 412
+   }
+  },
+  {
+   "case": "if_match_wildcard",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "headers": {
+     "If-Match": "*"
+    },
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-118894181\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "if_match_list_including_tag",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "headers": {
+     "If-Match": "\"deadbeef\", \"-118894181\""
+    },
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-118894181\""
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "If-Match is evaluated by the same evaluatePreconditions call: a non-matching tag must produce 412 (with the Cache-Control still attached and no body), while the matching tag, the wildcard and a list containing the tag must all produce 200."
+}

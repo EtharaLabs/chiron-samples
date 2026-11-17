@@ -1,0 +1,63 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/response/TeamResponseParser.java (changed against State A) ===
+@@
+31  | import me.zodac.folding.api.tc.Team;
+32  | import me.zodac.folding.rest.util.RestUtilConstants;
+33  | 
+   -| /**
+   -|  * Utility class used to parse a {@link HttpResponse} returned from {@link me.zodac.folding.client.java.request.TeamRequestSender}.
+   -|  */
+34 +| 
+35  | public final class TeamResponseParser {
+36  | 
+37  |     private TeamResponseParser() {
+38  | 
+39  |     }
+40  | 
+   -|     /**
+   -|      * Returns the {@link Team}s retrieved by {@link me.zodac.folding.client.java.request.TeamRequestSender#getAll()}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link Team}s
+   -|      */
+41 +|     
+42  |     public static Collection<Team> getAll(final HttpResponse<String> response) {
+43  |         final Type collectionType = new TypeToken<Collection<Team>>() {
+44  |         }.getType();
+45  |         return RestUtilConstants.GSON.fromJson(response.body(), collectionType);
+46  |     }
+47  | 
+   -|     /**
+   -|      * Returns the {@link Team} retrieved by {@link me.zodac.folding.client.java.request.TeamRequestSender#get(int)} or
+   -|      * {@link me.zodac.folding.client.java.request.TeamRequestSender#get(String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link Team}
+   -|      */
+48 +|     
+49  |     public static Team get(final HttpResponse<String> response) {
+50  |         return RestUtilConstants.GSON.fromJson(response.body(), Team.class);
+51  |     }
+52  | 
+   -|     /**
+   -|      * Returns the {@link Team} created by
+   -|      * {@link me.zodac.folding.client.java.request.TeamRequestSender#create(me.zodac.folding.rest.api.tc.request.TeamRequest)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the created {@link Team}
+   -|      */
+53 +|     
+54  |     public static Team create(final HttpResponse<String> response) {
+55  |         return RestUtilConstants.GSON.fromJson(response.body(), Team.class);
+56  |     }
+57  | 
+   -|     /**
+   -|      * Returns the {@link Team} updated by
+   -|      * {@link me.zodac.folding.client.java.request.TeamRequestSender#update(int, me.zodac.folding.rest.api.tc.request.TeamRequest)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the updated {@link Team}
+   -|      */
+58 +|     
+59  |     public static Team update(final HttpResponse<String> response) {
+60  |         return RestUtilConstants.GSON.fromJson(response.body(), Team.class);
+61  |     }

@@ -1,0 +1,214 @@
+{
+ "id": "s3_family_46",
+ "source": "f070_delete_team_used_by_its_captain",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "setup_team",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "ProbeTeam"
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=ProbeUser&passkey=ProbePasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "setup_user",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "ProbeUser",
+     "displayName": "ProbeUser",
+     "passkey": "ProbePasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": true
+    }
+   }
+  },
+  {
+   "case": "delete_team_used_by_captain",
+   "http": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "team_still_present",
+   "http": {
+    "method": "GET",
+    "path": "/teams/1"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "setup_team",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "ProbeTeam"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"ProbeTeam\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "40",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "setup_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "ProbeUser",
+     "foldingUserName": "ProbeUser",
+     "hardwareId": 1,
+     "passkey": "ProbePasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": true
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"ProbeUser\",\n  \"displayName\": \"ProbeUser\",\n  \"passkey\": \"ProbePasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"ProbeHw\",\n    \"displayName\": \"ProbeHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ProbeTeam\"\n  },\n  \"userIsCaptain\": true\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "434",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "delete_team_used_by_captain",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"id\": 1,\n    \"teamName\": \"ProbeTeam\"\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"foldingUserName\": \"ProbeUser\",\n      \"displayName\": \"ProbeUser\",\n      \"passkey\": \"ProbePas************************\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardware\": {\n        \"id\": 1,\n        \"hardwareName\": \"ProbeHw\",\n        \"displayName\": \"ProbeHw\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 1.0,\n        \"averagePpd\": 100\n      },\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"ProbeTeam\"\n      },\n      \"userIsCaptain\": true\n    }\n  ],\n  \"errors\": [\n    \"Payload is used by an existing object\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "682",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "team_still_present",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"ProbeTeam\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429188",
+     "connection": "close",
+     "content-length": "40",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "etag": "\"-265119603\""
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Deleting a team whose only member is the captain: the conflict body must show userIsCaptain true on the nested user, and the team must survive."
+}

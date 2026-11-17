@@ -1,0 +1,91 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/cache/BaseCache.java (changed against State A) ===
+@@
+30  | import java.util.Optional;
+31  | import java.util.concurrent.ConcurrentHashMap;
+32  | 
+   -| /**
+   -|  * A base {@link Class} to be extended and used as a cache for any element with an {@link Integer} available to key it. Defines useful functions and
+   -|  * instantiates a {@link ConcurrentHashMap} to be used by all implementations.
+   -|  *
+   -|  * @param <V> the type of the element to be cached
+   -|  */
+33 +| 
+34  | public class BaseCache<V> {
+35  | 
+36  |     private final Map<Integer, V> elementsById;
+37  | 
+   -|     /**
+   -|      * Instantiates the {@link BaseCache} with a {@link ConcurrentHashMap}.
+   -|      */
+38 +|     
+39  |     protected BaseCache() {
+40  |         elementsById = new ConcurrentHashMap<>();
+41  |     }
+42  | 
+   -|     /**
+   -|      * Add an element to the cache.
+   -|      *
+   -|      * @param elementId the ID to key the element in the cache
+   -|      * @param element   the element to add to the cache
+   -|      * @throws IllegalArgumentException thrown if the input element is <code>null</code> or has an ID of <b>0</b> or
+   -|      *                                  lower
+   -|      */
+43 +|     
+44  |     public void add(final int elementId, final V element) {
+45  |         if (element == null) {
+46  |             throw new IllegalArgumentException("Input element cannot be null");
+@@
+52  |         elementsById.put(elementId, element);
+53  |     }
+54  | 
+   -|     /**
+   -|      * Retrieves an element from the cache.
+   -|      *
+   -|      * @param elementId the ID of the element to retrieve
+   -|      * @return an {@link Optional} of the element
+   -|      */
+55 +|     
+56  |     public Optional<V> get(final int elementId) {
+57  |         if (elementsById.containsKey(elementId)) {
+58  |             return Optional.of(elementsById.get(elementId));
+@@
+61  |         return Optional.empty();
+62  |     }
+63  | 
+   -|     /**
+   -|      * Retrieves all elements from the cache.
+   -|      *
+   -|      * @return an unmodifiable {@link Collection} of all elements
+   -|      */
+64 +|     
+65  |     public Collection<V> getAll() {
+66  |         return Collections.unmodifiableCollection(elementsById.values());
+67  |     }
+68  | 
+   -|     /**
+   -|      * Retrieves all elements from the cache as a {@link Map}.
+   -|      *
+   -|      * @return an unmodifiable {@link Map} of all elements
+   -|      */
+69 +|     
+70  |     public Map<Integer, V> getCacheContents() {
+71  |         return Collections.unmodifiableMap(elementsById);
+72  |     }
+73  | 
+   -|     /**
+   -|      * Removes an element from the cache.
+   -|      *
+   -|      * @param elementId the ID of the element to remove
+   -|      */
+74 +|     
+75  |     public void remove(final int elementId) {
+76  |         elementsById.remove(elementId);
+77  |     }
+78  | 
+   -|     /**
+   -|      * Removes all elements from the cache.
+   -|      */
+79 +|     
+80  |     public void removeAll() {
+81  |         elementsById.clear();
+82  |     }

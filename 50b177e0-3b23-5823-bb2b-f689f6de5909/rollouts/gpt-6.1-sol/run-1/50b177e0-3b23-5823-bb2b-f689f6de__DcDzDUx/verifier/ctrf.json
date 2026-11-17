@@ -1,0 +1,446 @@
+{
+  "results": {
+    "extra": {
+      "boundary_available": true,
+      "route": "zero",
+      "route_reason": "the graded build produced no shipped library",
+      "shipped_library": false,
+      "staged_packet": false
+    },
+    "summary": {
+      "failed": 84,
+      "other": 0,
+      "passed": 0,
+      "pending": 0,
+      "skipped": 0,
+      "start": 1794629482066,
+      "stop": 1794629482066,
+      "tests": 84
+    },
+    "tests": [
+      {
+        "duration": 0,
+        "name": "T-02",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-03",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-04",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-05",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-06",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-07",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-08",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-09",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-10",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-11",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-12",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-13",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-14",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-15",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-16",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-17",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-23",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "T-24",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "P-01",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "P-02",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "P-03",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "P-04",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "P-05",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "P-06",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-bom",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-comma",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-comment",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-errpos",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-esc",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-esckey",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-json5",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-trunc",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-utf8",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-ws",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X01-trunc23",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-d17",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-d768",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-diyfp",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-e21",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-expext",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-fuzz",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-halfrnd",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-halfway",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-hexinf",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-intbound",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-longdig",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-pow2",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-rnd",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-round",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X02-subnormal",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X03-num",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X03-str",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-build_then_patch",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-copy_roundtrip",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-copy_scalars",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-deep_nest",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-equality",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-mutpatch_all_mutable",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-patch_fails_midway",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-patch_on_empty",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-patch_op_names",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-ptr_array_tokens",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-ptr_ctx_after_mutation",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-ptr_escapes",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-ptr_then_mutate",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X04-fuzz",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-build_arr_grow",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-build_obj",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-copy_cycle",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-dupkey_copy",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-dyn_strings",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-merge_patch",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-mutpatch_mutable",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-numbers",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-patch_add_copy",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-patch_fail_mid",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-ptr_create_parent",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-ptr_mod_seq",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-read_escapes",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-read_write",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-strpool",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-valpool",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-write_big",
+        "status": "failed"
+      },
+      {
+        "duration": 0,
+        "name": "S3-X05-fuzz",
+        "status": "failed"
+      }
+    ],
+    "tool": {
+      "name": "chiron-verifier"
+    }
+  }
+}

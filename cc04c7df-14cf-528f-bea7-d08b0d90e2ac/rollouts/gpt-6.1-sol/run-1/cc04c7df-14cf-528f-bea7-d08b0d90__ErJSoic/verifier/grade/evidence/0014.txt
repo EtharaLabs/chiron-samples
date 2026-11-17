@@ -1,0 +1,23 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/state/OperationType.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api.state;
+26  | 
+   -| /**
+   -|  * Simple ENUM defining the types of executions that can be performed on the system by a {@link SystemState}.
+   -|  */
+27 +| 
+28  | public enum OperationType {
+29  | 
+   -|     /**
+   -|      * The system can perform <b>READ</b> operations.
+   -|      */
+30 +|     
+31  |     READ,
+32  | 
+   -|     /**
+   -|      * The system can perform <b>WRITE</b> operations.
+   -|      */
+33 +|     
+34  |     WRITE
+35  | }

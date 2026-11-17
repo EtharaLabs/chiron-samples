@@ -1,0 +1,1466 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "status": "failed",
+       "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+       "build_number": 14,
+       "cloud_setup": null,
+       "config_files": [
+        "test-cases/longevity-100gb-12h-test.yaml"
+       ],
+       "end_time": "2026-10-13T12:34:01.786Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "investigation_status": "not_investigated",
+       "junit_reports": [],
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": "2025.1.4",
+       "region_name": [
+        "us-east-1"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "0c32bacab063aae9",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": "6.1.9",
+       "start_time": "2026-10-13T11:00:01.786Z",
+       "started_by": "dev-user",
+       "status": "failed",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": "longevity-100gb-12h-test",
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "status-set",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "status": "failed"
+     },
+     "method": "POST",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/status/set"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "investigation_status": "investigated",
+       "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "events": {
+        "<id1>": "Investigation status was changed from not_investigated to investigated by admin",
+        "a70b1208-a0c3-4b04-b109-fa1d4604fed6": "Status changed to passed"
+       },
+       "raw_events": [
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-13T11:00:20.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "a70b1208-a0c3-4b04-b109-fa1d4604fed6",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\":\"Investigation status was changed from {old_status} to {new_status} by {username}\",\"old_status\":\"not_investigated\",\"new_status\":\"investigated\",\"username\":\"admin\"}",
+         "created_at": "<now>",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "<id1>",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        }
+       ],
+       "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "investigation-set",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "investigation_status": "investigated"
+     },
+     "method": "POST",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/investigation_status/set"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/activity"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee": "0a11ce00-0000-4000-8000-000000000001",
+       "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "0a11ce00-0000-4000-8000-000000000001",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+       "build_number": 14,
+       "cloud_setup": null,
+       "config_files": [
+        "test-cases/longevity-100gb-12h-test.yaml"
+       ],
+       "end_time": "2026-10-13T12:34:01.786Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "investigation_status": "not_investigated",
+       "junit_reports": [],
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": "2025.1.4",
+       "region_name": [
+        "us-east-1"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "0c32bacab063aae9",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": "6.1.9",
+       "start_time": "2026-10-13T11:00:01.786Z",
+       "started_by": "dev-user",
+       "status": "passed",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": "longevity-100gb-12h-test",
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "assignee-set",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "assignee": "0a11ce00-0000-4000-8000-000000000001"
+     },
+     "method": "POST",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/assignee/set"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "id": "<id1>",
+        "mentions": [],
+        "message": "first look",
+        "posted_at": "<now>",
+        "reactions": {},
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "id": "<id1>",
+        "mentions": [],
+        "message": "first look",
+        "posted_at": "<now>",
+        "reactions": {},
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "id": "<id1>",
+        "mentions": [],
+        "message": "second look",
+        "posted_at": "<now>",
+        "reactions": {},
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "id": "<id1>",
+       "mentions": [],
+       "message": "second look",
+       "posted_at": "<now>",
+       "reactions": {},
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "comment-submit-update-delete",
+   "steps": [
+    {
+     "capture": {
+      "comment": "response.0.id"
+     },
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "mentions": [],
+      "message": "first look",
+      "reactions": {}
+     },
+     "method": "POST",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/comments/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/comments"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "mentions": [],
+      "message": "second look",
+      "reactions": {}
+     },
+     "method": "POST",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/comment/{{comment}}/update"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/comment/{{comment}}/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "POST",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/comment/{{comment}}/delete"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/comments"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "added_on": "<now>",
+        "assignees": [
+         "fake-dev"
+        ],
+        "event_id": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+        "issue_id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+        "key": "SEED-99999",
+        "labels": [
+         {
+          "color": "fbca04",
+          "description": "Flaky test",
+          "id": 10,
+          "name": "flaky-test"
+         }
+        ],
+        "permalink": "https://fake-org.atlassian.net/browse/SEED-99999",
+        "project": "SEED",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "state": "in progress",
+        "subtype": "jira",
+        "summary": "Investigate flaky longevity test failures in CI",
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "type": "jira",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "issues-get-run",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/issues/get",
+     "query": {
+      "filterKey": "run_id",
+      "id": "22145c0f-8c80-4774-86b8-2caa899590f1"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/51",
+        "build_number": 51,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-17T17:00:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "f37d6705-0845-4ff8-8b58-a0b00ef0a58b",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-17T11:00:01.786Z",
+        "started_by": null,
+        "status": "aborted",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/43",
+        "build_number": 43,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-06T20:48:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+        "investigation_status": "investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-06T15:00:01.786Z",
+        "started_by": null,
+        "status": "error",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/38",
+        "build_number": 38,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-30T03:21:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "investigation_status": "in_progress",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-30T01:00:01.786Z",
+        "started_by": null,
+        "status": "failed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/23",
+        "build_number": 23,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-24T02:11:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-23T21:00:01.786Z",
+        "started_by": null,
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+        "build_number": 14,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-13T12:34:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-13T11:00:01.786Z",
+        "started_by": null,
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "runs-by-test",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/runs",
+     "query": {
+      "limit": "10"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "This endpoint has been removed"
+       ],
+       "exception": "APIException",
+       "message": "This endpoint has been removed",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "This endpoint has been removed"
+       ],
+       "exception": "APIException",
+       "message": "This endpoint has been removed",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "runs-poll",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test_run/poll",
+     "query": {
+      "runId": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+      "testId": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test_runs/poll",
+     "query": {
+      "limit": "5",
+      "testId": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "runs": {
+        "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d": {
+         "allocated_resources": [],
+         "assignee": null,
+         "branch_name": null,
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/23",
+         "build_number": 23,
+         "cloud_setup": null,
+         "config_files": [],
+         "end_time": "1970-01-01T00:00:00.000Z",
+         "events": [],
+         "gemini_command": null,
+         "gemini_read_errors": null,
+         "gemini_read_ops": null,
+         "gemini_seed": null,
+         "gemini_status": null,
+         "gemini_version": null,
+         "gemini_write_errors": null,
+         "gemini_write_ops": null,
+         "group_id": null,
+         "heartbeat": "<now>",
+         "histograms": [],
+         "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+         "investigation_status": "not_investigated",
+         "logs": [],
+         "nemesis_data": [],
+         "nemesis_stats": {},
+         "oracle_node_ami_id": null,
+         "oracle_node_instance_type": null,
+         "oracle_node_scylla_version": null,
+         "oracle_nodes_count": null,
+         "origin_url": null,
+         "packages": [],
+         "perf_avg_latency_99th": null,
+         "perf_avg_latency_mean": null,
+         "perf_op_rate_average": null,
+         "perf_op_rate_total": null,
+         "perf_total_errors": null,
+         "product_version": null,
+         "region_name": [],
+         "release_id": null,
+         "scm_revision_id": null,
+         "screenshots": [],
+         "sct_runner_host": null,
+         "scylla_version": null,
+         "start_time": "2026-10-23T21:00:01.786Z",
+         "started_by": null,
+         "status": "created",
+         "stress_cmd": null,
+         "stress_duration": null,
+         "subtest_name": null,
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "test_method": null,
+         "test_name": null,
+         "version_source": null,
+         "yaml_test_duration": null
+        },
+        "4978044e-c5ad-4b3c-8323-c11a57b4e909": {
+         "allocated_resources": [],
+         "assignee": null,
+         "branch_name": null,
+         "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+         "build_number": 14,
+         "cloud_setup": null,
+         "config_files": [],
+         "end_time": "1970-01-01T00:00:00.000Z",
+         "events": [],
+         "gemini_command": null,
+         "gemini_read_errors": null,
+         "gemini_read_ops": null,
+         "gemini_seed": null,
+         "gemini_status": null,
+         "gemini_version": null,
+         "gemini_write_errors": null,
+         "gemini_write_ops": null,
+         "group_id": null,
+         "heartbeat": "<now>",
+         "histograms": [],
+         "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "investigation_status": "not_investigated",
+         "logs": [],
+         "nemesis_data": [],
+         "nemesis_stats": {},
+         "oracle_node_ami_id": null,
+         "oracle_node_instance_type": null,
+         "oracle_node_scylla_version": null,
+         "oracle_nodes_count": null,
+         "origin_url": null,
+         "packages": [],
+         "perf_avg_latency_99th": null,
+         "perf_avg_latency_mean": null,
+         "perf_op_rate_average": null,
+         "perf_op_rate_total": null,
+         "perf_total_errors": null,
+         "product_version": null,
+         "region_name": [],
+         "release_id": null,
+         "scm_revision_id": null,
+         "screenshots": [],
+         "sct_runner_host": null,
+         "scylla_version": null,
+         "start_time": "2026-10-13T11:00:01.786Z",
+         "started_by": null,
+         "status": "created",
+         "stress_cmd": null,
+         "stress_duration": null,
+         "subtest_name": null,
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "test_method": null,
+         "test_name": null,
+         "version_source": null,
+         "yaml_test_duration": null
+        }
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "get-runs-by-ids",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": [
+      [
+       "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      ],
+      [
+       "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d"
+      ]
+     ],
+     "method": "POST",
+     "path": "/api/v1/get_runs_by_test_id_run_id"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "affectedJobs": 1
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/51",
+        "build_number": 51,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-17T17:00:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "f37d6705-0845-4ff8-8b58-a0b00ef0a58b",
+        "investigation_status": "ignored",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-17T11:00:01.786Z",
+        "started_by": null,
+        "status": "aborted",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/38",
+        "build_number": 38,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-30T03:21:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "investigation_status": "in_progress",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-30T01:00:01.786Z",
+        "started_by": null,
+        "status": "failed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/23",
+        "build_number": 23,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-24T02:11:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-23T21:00:01.786Z",
+        "started_by": null,
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "ignore-jobs",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "reason": "flaky",
+      "testId": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     },
+     "method": "POST",
+     "path": "/api/v1/ignore_jobs"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/runs",
+     "query": {
+      "limit": "3"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "plugin_name": "scylla-cluster-tests",
+       "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "url": "http://argus.test/tests/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "run-by-build",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/seed-release/longevity-tests/longevity-100gb-12h-test/14"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "No JiraIssue found matching {'id': UUID('<id1>')}"
+       ],
+       "exception": "DocumentNotFound",
+       "message": "No JiraIssue found matching {'id': UUID('<id1>')}",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "issue-delete-unknown",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "issue_id": "7e57ab1e-0000-4000-8000-0000000000ff",
+      "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+     },
+     "method": "POST",
+     "path": "/api/v1/issues/delete"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "added_on": "<now>",
+        "assignees": [
+         "fake-dev"
+        ],
+        "event_id": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+        "issue_id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+        "key": "SEED-99999",
+        "labels": [
+         {
+          "color": "fbca04",
+          "description": "Flaky test",
+          "id": 10,
+          "name": "flaky-test"
+         }
+        ],
+        "permalink": "https://fake-org.atlassian.net/browse/SEED-99999",
+        "project": "SEED",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "state": "in progress",
+        "subtype": "jira",
+        "summary": "Investigate flaky longevity test failures in CI",
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "type": "jira",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       },
+       {
+        "added_on": "<now>",
+        "assignees": [],
+        "event_id": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+        "issue_id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+        "key": "SEED-88888",
+        "labels": [
+         {
+          "color": "d93f0b",
+          "description": "Performance regression",
+          "id": 11,
+          "name": "perf-regression"
+         }
+        ],
+        "permalink": "https://fake-org.atlassian.net/browse/SEED-88888",
+        "project": "SEED",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+        "state": "open",
+        "subtype": "jira",
+        "summary": "Performance regression in write path after compaction refactor",
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "type": "jira",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "issues-by-test",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/issues/get",
+     "query": {
+      "filterKey": "test_id",
+      "id": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     }
+    }
+   ]
+  }
+ ],
+ "group": "G08",
+ "name": "test-run-lifecycle"
+}

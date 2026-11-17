@@ -1,0 +1,169 @@
+{
+ "id": "s3_family_39",
+ "source": "f058_unauthenticated_versus_forbidden_on_a_delete",
+ "steps": [
+  {
+   "case": "delete_team_without_auth",
+   "http": {
+    "method": "DELETE",
+    "path": "/teams/1"
+   }
+  },
+  {
+   "case": "delete_team_as_read_only",
+   "http": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "delete_team_wrong_password",
+   "http": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": {
+     "user": "root",
+     "password": "wrongpassword"
+    }
+   }
+  },
+  {
+   "case": "delete_team_unknown_user",
+   "http": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": {
+     "user": "nosuchuser",
+     "password": "shroot"
+    }
+   }
+  },
+  {
+   "case": "delete_team_as_admin_not_found",
+   "http": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": "admin"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "delete_team_without_auth",
+   "compare": "full",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "delete_team_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "delete_team_wrong_password",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "password": "wrongpassword",
+     "user": "root"
+    },
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "delete_team_unknown_user",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "password": "shroot",
+     "user": "nosuchuser"
+    },
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "delete_team_as_admin_not_found",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "On the same admin-only delete, a missing header must be 401, a read-only user 403, a wrong password 401 and an unknown user 401 - all decided before the resource exists, so the team id need not exist."
+}

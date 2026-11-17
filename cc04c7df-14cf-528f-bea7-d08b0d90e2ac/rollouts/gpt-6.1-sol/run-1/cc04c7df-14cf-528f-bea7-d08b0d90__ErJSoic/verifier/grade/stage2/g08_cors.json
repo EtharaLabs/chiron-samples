@@ -1,0 +1,910 @@
+{
+ "id": "g08_cors",
+ "cases": [
+  {
+   "case": "cors_on_create_with_origin",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {
+     "hardwareName": "CorsHardware1",
+     "displayName": "CorsHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "175",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"CorsHardware1\",\n  \"displayName\": \"CorsHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572407.536558,
+    1773572407.6545014
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_create_without_origin",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "CorsHardware2",
+     "displayName": "CorsHardware2",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 2.0,
+     "averagePpd": 20
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/2",
+     "content-type": "application/json",
+     "content-length": "173",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"CorsHardware2\",\n  \"displayName\": \"CorsHardware2\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.0,\n  \"averagePpd\": 20\n}"
+   },
+   "clock_window": [
+    1773572407.6545475,
+    1773572407.667064
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_conflict",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {
+     "hardwareName": "CorsHardware1",
+     "displayName": "CorsHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 409,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "530",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"CorsHardware1\",\n    \"displayName\": \"CorsHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"CorsHardware1\",\n      \"displayName\": \"CorsHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572407.6671102,
+    1773572407.682925
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_unauthorized",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {
+     "hardwareName": "CorsHardware3",
+     "displayName": "CorsHardware3",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.6829722,
+    1773572407.6853967
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_forbidden",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "readonly",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {
+     "hardwareName": "CorsHardware4",
+     "displayName": "CorsHardware4",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.6854377,
+    1773572407.6946452
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_validation_failure",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {
+     "hardwareName": "CorsHardware5",
+     "displayName": "CorsHardware5",
+     "hardwareMake": "ATI",
+     "hardwareType": "GPU",
+     "multiplier": 0.0,
+     "averagePpd": 0
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "376",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"CorsHardware5\",\n    \"displayName\": \"CorsHardware5\",\n    \"hardwareMake\": \"ATI\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 0.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n    \"Field 'multiplier' must be 1.00 or higher\",\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572407.6946902,
+    1773572407.71304
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_not_found",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/9999",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7130885,
+    1773572407.7294056
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_bad_request",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/abc",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "51",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'abc' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572407.7294514,
+    1773572407.7350469
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_with_literal_null_origin",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/9999",
+    "headers": {
+     "Origin": "null"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7350817,
+    1773572407.739189
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_update",
+   "request": {
+    "method": "PUT",
+    "path": "/hardware/2",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {
+     "hardwareName": "CorsHardware2",
+     "displayName": "CorsHardware2Renamed",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 3.0,
+     "averagePpd": 30
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "180",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"CorsHardware2\",\n  \"displayName\": \"CorsHardware2Renamed\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 3.0,\n  \"averagePpd\": 30\n}"
+   },
+   "clock_window": [
+    1773572407.7392364,
+    1773572407.7679431
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_delete",
+   "request": {
+    "method": "DELETE",
+    "path": "/hardware/2",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.767987,
+    1773572407.7833798
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_batch_create",
+   "request": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": [
+     {
+      "hardwareName": "CorsHardware6",
+      "displayName": "CorsHardware6",
+      "hardwareMake": "NVIDIA",
+      "hardwareType": "GPU",
+      "multiplier": 1.0,
+      "averagePpd": 1
+     },
+     {
+      "hardwareName": "CorsHardware7",
+      "displayName": "CorsHardware7",
+      "hardwareMake": "INTEL",
+      "hardwareType": "CPU",
+      "multiplier": 5.0,
+      "averagePpd": 5
+     }
+    ]
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "391",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 3,\n    \"hardwareName\": \"CorsHardware6\",\n    \"displayName\": \"CorsHardware6\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  {\n    \"id\": 4,\n    \"hardwareName\": \"CorsHardware7\",\n    \"displayName\": \"CorsHardware7\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 5.0,\n    \"averagePpd\": 5\n  }\n]"
+   },
+   "clock_window": [
+    1773572407.7834237,
+    1773572407.797173
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_invalid_url_redirect",
+   "request": {
+    "method": "GET",
+    "path": "/invalid",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.7972057,
+    1773572407.8235672
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_method_not_allowed",
+   "request": {
+    "method": "PATCH",
+    "path": "/hardware",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com"
+    },
+    "json": {}
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 405,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8236144,
+    1773572407.8374128
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_unsupported_media_type",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "headers": {
+     "Origin": "http://example.com",
+     "Content-Type": "text/plain"
+    },
+    "body": "not json"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 415,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8374355,
+    1773572407.8402405
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_stats_summary",
+   "request": {
+    "method": "GET",
+    "path": "/stats",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "86",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}"
+   },
+   "clock_window": [
+    1773572407.8402605,
+    1773572407.8502598
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "cors_on_leaderboard",
+   "request": {
+    "method": "GET",
+    "path": "/stats/leaderboard",
+    "headers": {
+     "Origin": "http://example.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.8502977,
+    1773572407.8563538
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_hardware_create",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "POST",
+     "Access-Control-Request-Headers": "content-type, authorization"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "24",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, POST, GET, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.8563802,
+    1773572407.8625689
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_hardware_update",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware/1",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "PUT",
+     "Access-Control-Request-Headers": "content-type"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "31",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, DELETE, GET, OPTIONS, PUT"
+   },
+   "clock_window": [
+    1773572407.8625894,
+    1773572407.8651526
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_hardware_delete",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware/1",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "DELETE"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "31",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, DELETE, GET, OPTIONS, PUT"
+   },
+   "clock_window": [
+    1773572407.8651702,
+    1773572407.8676183
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_teams_create",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/teams",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "POST",
+     "Access-Control-Request-Headers": "content-type, authorization"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "24",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, POST, GET, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.8676383,
+    1773572407.8694584
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_users_batch",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/users/batch",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "POST"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "37",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, DELETE, POST, GET, OPTIONS, PUT"
+   },
+   "clock_window": [
+    1773572407.8694744,
+    1773572407.8711205
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_stats_read",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/stats",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "GET"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "18",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, GET, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.871134,
+    1773572407.8725505
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_requesting_unsupported_method",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "TRACE"
+    }
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "24",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, POST, GET, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.8725631,
+    1773572407.8743997
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_without_origin",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware"
+   },
+   "compare": "status+headers",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-type": "text/plain;charset=UTF-8",
+     "content-length": "24",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "HEAD, POST, GET, OPTIONS"
+   },
+   "clock_window": [
+    1773572407.8744109,
+    1773572407.876012
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "preflight_unknown_path",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/invalid",
+    "headers": {
+     "Origin": "http://example.com",
+     "Access-Control-Request-Method": "POST"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "allow": "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.8760297,
+    1773572407.878001
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

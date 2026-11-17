@@ -1,0 +1,35 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/state/SystemStateManager.java (changed against State A) ===
+@@
+28  | import org.apache.logging.log4j.LogManager;
+29  | import org.apache.logging.log4j.Logger;
+30  | 
+   -| /**
+   -|  * Utility class to manage the {@link SystemState}.
+   -|  */
+31 +| 
+32  | public final class SystemStateManager {
+33  | 
+34  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+39  | 
+40  |     }
+41  | 
+   -|     /**
+   -|      * Get the current {@link SystemState}. On system startup, the {@link SystemState} is {@link SystemState#STARTING}.
+   -|      *
+   -|      * @return the current {@link SystemState}
+   -|      */
+42 +|     
+43  |     public static SystemState current() {
+44  |         return currentState;
+45  |     }
+46  | 
+   -|     /**
+   -|      * Change to the next {@link SystemState}.
+   -|      *
+   -|      * @param nextState the {@link SystemState} to transition to
+   -|      */
+47 +|     
+48  |     public static void next(final SystemState nextState) {
+49  |         if (nextState == currentState) {
+50  |             LOGGER.trace("System state is already {}, no transition needed", nextState);

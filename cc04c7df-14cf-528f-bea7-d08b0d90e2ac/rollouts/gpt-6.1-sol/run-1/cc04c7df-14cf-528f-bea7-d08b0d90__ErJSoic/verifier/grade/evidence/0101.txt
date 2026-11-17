@@ -1,0 +1,111 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/gen/Tables.java (changed against State A) ===
+@@
+22  | import org.jooq.Result;
+23  | 
+24  | 
+   -| /**
+   -|  * Convenience access to all tables in public.
+   -|  */
+25 +| 
+26  | @SuppressWarnings({ "all", "unchecked", "rawtypes" })
+27  | public class Tables {
+28  | 
+   -|     /**
+   -|      * The table <code>public.hardware</code>.
+   -|      */
+29 +|     
+30  |     public static final Hardware HARDWARE = Hardware.HARDWARE;
+31  | 
+   -|     /**
+   -|      * The table <code>public.monthly_results</code>.
+   -|      */
+32 +|     
+33  |     public static final MonthlyResults MONTHLY_RESULTS = MonthlyResults.MONTHLY_RESULTS;
+34  | 
+   -|     /**
+   -|      * The table <code>public.pgp_armor_headers</code>.
+   -|      */
+35 +|     
+36  |     public static final PgpArmorHeaders PGP_ARMOR_HEADERS = PgpArmorHeaders.PGP_ARMOR_HEADERS;
+37  | 
+   -|     /**
+   -|      * Call <code>public.pgp_armor_headers</code>.
+   -|      */
+38 +|     
+39  |     public static Result<PgpArmorHeadersRecord> PGP_ARMOR_HEADERS(
+40  |           Configuration configuration
+41  |         , String __1
+@@
+45  |         )).fetch();
+46  |     }
+47  | 
+   -|     /**
+   -|      * Get <code>public.pgp_armor_headers</code> as a table.
+   -|      */
+48 +|     
+49  |     public static PgpArmorHeaders PGP_ARMOR_HEADERS(
+50  |           String __1
+51  |     ) {
+@@
+54  |         );
+55  |     }
+56  | 
+   -|     /**
+   -|      * Get <code>public.pgp_armor_headers</code> as a table.
+   -|      */
+57 +|     
+58  |     public static PgpArmorHeaders PGP_ARMOR_HEADERS(
+59  |           Field<String> __1
+60  |     ) {
+@@
+63  |         );
+64  |     }
+65  | 
+   -|     /**
+   -|      * The table <code>public.retired_user_stats</code>.
+   -|      */
+66 +|     
+67  |     public static final RetiredUserStats RETIRED_USER_STATS = RetiredUserStats.RETIRED_USER_STATS;
+68  | 
+   -|     /**
+   -|      * The table <code>public.system_users</code>.
+   -|      */
+69 +|     
+70  |     public static final SystemUsers SYSTEM_USERS = SystemUsers.SYSTEM_USERS;
+71  | 
+   -|     /**
+   -|      * The table <code>public.teams</code>.
+   -|      */
+72 +|     
+73  |     public static final Teams TEAMS = Teams.TEAMS;
+74  | 
+   -|     /**
+   -|      * The table <code>public.user_initial_stats</code>.
+   -|      */
+75 +|     
+76  |     public static final UserInitialStats USER_INITIAL_STATS = UserInitialStats.USER_INITIAL_STATS;
+77  | 
+   -|     /**
+   -|      * The table <code>public.user_offset_tc_stats</code>.
+   -|      */
+78 +|     
+79  |     public static final UserOffsetTcStats USER_OFFSET_TC_STATS = UserOffsetTcStats.USER_OFFSET_TC_STATS;
+80  | 
+   -|     /**
+   -|      * The table <code>public.user_tc_stats_hourly</code>.
+   -|      */
+81 +|     
+82  |     public static final UserTcStatsHourly USER_TC_STATS_HOURLY = UserTcStatsHourly.USER_TC_STATS_HOURLY;
+83  | 
+   -|     /**
+   -|      * The table <code>public.user_total_stats</code>.
+   -|      */
+84 +|     
+85  |     public static final UserTotalStats USER_TOTAL_STATS = UserTotalStats.USER_TOTAL_STATS;
+86  | 
+   -|     /**
+   -|      * The table <code>public.users</code>.
+   -|      */
+87 +|     
+88  |     public static final Users USERS = Users.USERS;
+89  | }

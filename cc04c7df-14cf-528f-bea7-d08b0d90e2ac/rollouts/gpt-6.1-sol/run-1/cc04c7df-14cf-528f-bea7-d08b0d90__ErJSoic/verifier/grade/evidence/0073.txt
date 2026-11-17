@@ -1,0 +1,63 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/response/HardwareResponseParser.java (changed against State A) ===
+@@
+31  | import me.zodac.folding.api.tc.Hardware;
+32  | import me.zodac.folding.rest.util.RestUtilConstants;
+33  | 
+   -| /**
+   -|  * Utility class used to parse a {@link HttpResponse} returned from {@link me.zodac.folding.client.java.request.HardwareRequestSender}.
+   -|  */
+34 +| 
+35  | public final class HardwareResponseParser {
+36  | 
+37  |     private HardwareResponseParser() {
+38  | 
+39  |     }
+40  | 
+   -|     /**
+   -|      * Returns the {@link Hardware}s retrieved by {@link me.zodac.folding.client.java.request.HardwareRequestSender#getAll()}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link Hardware}s
+   -|      */
+41 +|     
+42  |     public static Collection<Hardware> getAll(final HttpResponse<String> response) {
+43  |         final Type collectionType = new TypeToken<Collection<Hardware>>() {
+44  |         }.getType();
+45  |         return RestUtilConstants.GSON.fromJson(response.body(), collectionType);
+46  |     }
+47  | 
+   -|     /**
+   -|      * Returns the {@link Hardware} retrieved by {@link me.zodac.folding.client.java.request.HardwareRequestSender#get(int)} or
+   -|      * {@link me.zodac.folding.client.java.request.HardwareRequestSender#get(String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link Hardware}
+   -|      */
+48 +|     
+49  |     public static Hardware get(final HttpResponse<String> response) {
+50  |         return RestUtilConstants.GSON.fromJson(response.body(), Hardware.class);
+51  |     }
+52  | 
+   -|     /**
+   -|      * Returns the {@link Hardware} created by
+   -|      * {@link me.zodac.folding.client.java.request.HardwareRequestSender#create(me.zodac.folding.rest.api.tc.request.HardwareRequest)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the created {@link Hardware}
+   -|      */
+53 +|     
+54  |     public static Hardware create(final HttpResponse<String> response) {
+55  |         return RestUtilConstants.GSON.fromJson(response.body(), Hardware.class);
+56  |     }
+57  | 
+   -|     /**
+   -|      * Returns the {@link Hardware} updated by
+   -|      * {@link me.zodac.folding.client.java.request.HardwareRequestSender#update(int, me.zodac.folding.rest.api.tc.request.HardwareRequest)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the updated {@link Hardware}
+   -|      */
+58 +|     
+59  |     public static Hardware update(final HttpResponse<String> response) {
+60  |         return RestUtilConstants.GSON.fromJson(response.body(), Hardware.class);
+61  |     }

@@ -1,0 +1,159 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/LeaderboardStatsGenerator.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import static java.util.stream.Collectors.toList;
+32 +| 
+33 +| import java.util.ArrayList;
+34 +| import java.util.Collection;
+35 +| import java.util.Collections;
+36 +| import java.util.Comparator;
+37 +| import java.util.EnumMap;
+38 +| import java.util.List;
+39 +| import java.util.Map;
+40 +| import java.util.TreeMap;
+41 +| import me.zodac.folding.api.tc.Category;
+42 +| import me.zodac.folding.service.api.FoldingStatsCore;
+43 +| import me.zodac.folding.rest.api.tc.CompetitionSummary;
+44 +| import me.zodac.folding.rest.api.tc.TeamSummary;
+45 +| import me.zodac.folding.rest.api.tc.UserSummary;
+46 +| import me.zodac.folding.rest.api.tc.leaderboard.TeamLeaderboardEntry;
+47 +| import me.zodac.folding.rest.api.tc.leaderboard.UserCategoryLeaderboardEntry;
+48 +| import org.apache.logging.log4j.LogManager;
+49 +| import org.apache.logging.log4j.Logger;
+50 +| 
+51 +| @Service
+52 +| public class LeaderboardStatsGenerator {
+53 +| 
+54 +|     private static final Logger LOGGER = LogManager.getLogger();
+55 +| 
+56 +|     @Autowired
+57 +|     @Lazy
+58 +|     private FoldingStatsCore foldingStatsCore;
+59 +| 
+60 +|     public List<TeamLeaderboardEntry> generateTeamLeaderboards() {
+61 +|         final CompetitionSummary competitionSummary = foldingStatsCore.getCompetitionSummary();
+62 +|         final List<TeamSummary> teamResults = competitionSummary.getTeams()
+63 +|             .stream()
+64 +|             .sorted(Comparator.comparingLong(TeamSummary::getTeamMultipliedPoints).reversed())
+65 +|             .collect(toList());
+66 +| 
+67 +|         if (teamResults.isEmpty()) {
+68 +|             LOGGER.warn("No TC teams to show");
+69 +|             return Collections.emptyList();
+70 +|         }
+71 +| 
+72 +|         final TeamLeaderboardEntry leader = TeamLeaderboardEntry.createLeader(teamResults.get(0));
+73 +| 
+74 +|         final List<TeamLeaderboardEntry> teamSummaries = new ArrayList<>(teamResults.size());
+75 +|         teamSummaries.add(leader);
+76 +| 
+77 +|         for (int i = 1; i < teamResults.size(); i++) {
+78 +|             final TeamSummary teamSummary = teamResults.get(i);
+79 +|             final TeamSummary teamAhead = teamResults.get(i - 1);
+80 +| 
+81 +|             final long diffToLeader = leader.getTeamMultipliedPoints() - teamSummary.getTeamMultipliedPoints();
+82 +|             final long diffToNext = teamAhead.getTeamMultipliedPoints() - teamSummary.getTeamMultipliedPoints();
+83 +| 
+84 +|             final int rank = i + 1;
+85 +|             final TeamLeaderboardEntry teamLeaderboardEntry = TeamLeaderboardEntry.create(teamSummary, rank, diffToLeader, diffToNext);
+86 +|             teamSummaries.add(teamLeaderboardEntry);
+87 +|         }
+88 +| 
+89 +|         return teamSummaries;
+90 +|     }
+91 +| 
+92 +|     public Map<Category, List<UserCategoryLeaderboardEntry>> generateUserCategoryLeaderboards() {
+93 +|         final CompetitionSummary competitionSummary = foldingStatsCore.getCompetitionSummary();
+94 +|         final Map<Category, List<UserSummary>> usersByCategory = getUsersSortedByCategory(competitionSummary);
+95 +| 
+96 +|         final Map<Category, List<UserCategoryLeaderboardEntry>> categoryLeaderboard = new TreeMap<>();
+97 +|         for (final var entry : usersByCategory.entrySet()) {
+98 +|             final Category category = entry.getKey();
+99 +|             final List<UserSummary> userSummaries = entry.getValue()
+100 +|                 .stream()
+101 +|                 .sorted(Comparator.comparingLong(UserSummary::getMultipliedPoints).reversed())
+102 +|                 .collect(toList());
+103 +| 
+104 +|             final List<UserCategoryLeaderboardEntry> userSummariesInCategory = getUserLeaderboardForCategory(userSummaries);
+105 +|             categoryLeaderboard.put(category, userSummariesInCategory);
+106 +|         }
+107 +| 
+108 +|         return categoryLeaderboard;
+109 +|     }
+110 +| 
+111 +|     private List<UserCategoryLeaderboardEntry> getUserLeaderboardForCategory(final List<UserSummary> userSummaries) {
+112 +|         // If we have no users for the category, no need to do anything
+113 +|         if (userSummaries.isEmpty()) {
+114 +|             return Collections.emptyList();
+115 +|         }
+116 +| 
+117 +|         final UserSummary firstResult = userSummaries.get(0);
+118 +|         final UserCategoryLeaderboardEntry categoryLeader = UserCategoryLeaderboardEntry.createLeader(firstResult);
+119 +| 
+120 +|         final List<UserCategoryLeaderboardEntry> userSummariesInCategory = new ArrayList<>(userSummaries.size());
+121 +|         userSummariesInCategory.add(categoryLeader);
+122 +| 
+123 +|         for (int i = 1; i < userSummaries.size(); i++) {
+124 +|             final UserSummary userSummary = userSummaries.get(i);
+125 +|             final UserSummary userAhead = userSummaries.get(i - 1);
+126 +| 
+127 +|             final long diffToLeader = categoryLeader.getMultipliedPoints() - userSummary.getMultipliedPoints();
+128 +|             final long diffToNext = userAhead.getMultipliedPoints() - userSummary.getMultipliedPoints();
+129 +| 
+130 +|             final int rank = i + 1;
+131 +|             final UserCategoryLeaderboardEntry userCategoryLeaderboardEntry = UserCategoryLeaderboardEntry.create(userSummary, rank, diffToLeader,
+132 +|                 diffToNext);
+133 +|             userSummariesInCategory.add(userCategoryLeaderboardEntry);
+134 +|         }
+135 +|         return userSummariesInCategory;
+136 +|     }
+137 +| 
+138 +|     private static Map<Category, List<UserSummary>> getUsersSortedByCategory(final CompetitionSummary competitionSummary) {
+139 +|         final Map<Category, List<UserSummary>> usersByCategory = new EnumMap<>(Category.class);
+140 +|         final Collection<UserSummary> usersInAllTeams = competitionSummary
+141 +|             .getTeams()
+142 +|             .stream()
+143 +|             .map(TeamSummary::getActiveUsers)
+144 +|             .flatMap(Collection::stream)
+145 +|             .collect(toList());
+146 +| 
+147 +|         // Iterate over each category so even if we don't have a user in that category, we will have an entry
+148 +|         for (final Category category : Category.getAllValues()) {
+149 +|             final List<UserSummary> usersInCategory = usersInAllTeams
+150 +|                 .stream()
+151 +|                 .filter(userSummary -> userSummary.getUser().getCategory() == category)
+152 +|                 .collect(toList());
+153 +| 
+154 +|             usersByCategory.put(category, usersInCategory);
+155 +|         }
+156 +|         return usersByCategory;
+157 +|     }
+158 +| }

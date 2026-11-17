@@ -1,0 +1,22 @@
+# `test_output` carries the 300 compiled weight over 84 items and `judge` the
+# 30 judged weight over 10 items. The split between them is 4 to 1, which is the
+# 0.8 and 0.2 of the reward read as 4/5 and 1/5. Neither layer is scaled: each
+# criterion carries the weight the rubric gives it and the mean is taken at that weight.
+#
+# `compiled` repeats `reward` under a second name because the judged-gate route swaps this
+# file for tests/.gate/zero.toml, which turns `reward` into an all-pass over a gate input
+# that scored zero and leaves `compiled` as the weighted mean. Declaring it here is what
+# keeps that file from naming a table the root never had.
+
+[[reward]]
+name = "reward"
+aggregation = "weighted-mean"
+weights = { test_output = 4, judge = 1 }
+
+[[reward]]
+name = "compiled"
+aggregation = "weighted-mean"
+weights = { test_output = 4, judge = 1 }
+
+[scoring.test_output]
+aggregation = "weighted-mean"

@@ -1,0 +1,104 @@
+
+The following files have been resolved:
+   none
+
+
+The following files have been resolved:
+   com.google.code.gson:gson:jar:2.8.9:compile -- module com.google.gson
+   org.projectlombok:lombok:jar:1.18.22:provided -- module lombok
+   org.assertj:assertj-core:jar:3.22.0:test -- module org.assertj.core
+   org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test -- module org.junit.jupiter.engine
+   org.junit.platform:junit-platform-engine:jar:1.8.2:test -- module org.junit.platform.engine
+   org.opentest4j:opentest4j:jar:1.2.0:test -- module org.opentest4j
+   org.junit.platform:junit-platform-commons:jar:1.8.2:test -- module org.junit.platform.commons
+   org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test -- module org.junit.jupiter.api
+   org.apiguardian:apiguardian-api:jar:1.1.2:test -- module org.apiguardian.api
+
+
+The following files have been resolved:
+   me.zodac:folding-stats-api:jar:1.0.0-SNAPSHOT:compile -- module folding.stats.api (auto)
+   com.google.code.gson:gson:jar:2.8.9:compile -- module com.google.gson
+   org.projectlombok:lombok:jar:1.18.22:provided -- module lombok
+
+
+The following files have been resolved:
+   me.zodac:folding-stats-api:jar:1.0.0-SNAPSHOT:compile -- module folding.stats.api (auto)
+   me.zodac:folding-stats-client-library-java:jar:1.0.0-SNAPSHOT:compile -- module folding.stats.client.library.java (auto)
+   com.google.code.gson:gson:jar:2.8.9:compile -- module com.google.gson
+   com.zaxxer:HikariCP:jar:5.0.1:compile -- module com.zaxxer.hikari
+   org.slf4j:slf4j-api:jar:1.7.36:compile -- module org.slf4j [auto]
+   org.jooq:jooq:jar:3.16.3:compile -- module org.jooq
+   org.jsoup:jsoup:jar:1.14.3:compile -- module org.jsoup [auto]
+   org.apache.logging.log4j:log4j-api:jar:2.17.1:compile -- module org.apache.logging.log4j
+   org.projectlombok:lombok:jar:1.18.22:provided -- module lombok
+   org.assertj:assertj-core:jar:3.22.0:test -- module org.assertj.core
+   org.apache.commons:commons-text:jar:1.9:test -- module org.apache.commons.text [auto]
+   org.apache.commons:commons-lang3:jar:3.11:test -- module org.apache.commons.lang3 [auto]
+   io.zonky.test:embedded-postgres:jar:1.3.1:test -- module embedded.postgres (auto)
+   io.zonky.test.postgres:embedded-postgres-binaries-windows-amd64:jar:14.1.0:test -- module embedded.postgres.binaries.windows.amd64 (auto)
+   io.zonky.test.postgres:embedded-postgres-binaries-darwin-amd64:jar:14.1.0:test -- module embedded.postgres.binaries.darwin.amd64 (auto)
+   io.zonky.test.postgres:embedded-postgres-binaries-linux-amd64:jar:14.1.0:test -- module embedded.postgres.binaries.linux.amd64 (auto)
+   io.zonky.test.postgres:embedded-postgres-binaries-linux-amd64-alpine:jar:14.1.0:test -- module embedded.postgres.binaries.linux.amd64.alpine (auto)
+   org.apache.commons:commons-compress:jar:1.21:test -- module org.apache.commons.compress [auto]
+   org.tukaani:xz:jar:1.8:test -- module org.tukaani.xz [auto]
+   commons-io:commons-io:jar:2.7:test -- module org.apache.commons.io [auto]
+   commons-codec:commons-codec:jar:1.14:test -- module org.apache.commons.codec [auto]
+   org.postgresql:postgresql:jar:42.3.2:test -- module org.postgresql.jdbc [auto]
+   org.checkerframework:checker-qual:jar:3.5.0:test -- module org.checkerframework.checker.qual [auto]
+   org.flywaydb:flyway-core:jar:8.4.4:test -- module org.flywaydb.core [auto]
+   org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test -- module org.junit.jupiter.engine
+   org.junit.platform:junit-platform-engine:jar:1.8.2:test -- module org.junit.platform.engine
+   org.opentest4j:opentest4j:jar:1.2.0:test -- module org.opentest4j
+   org.junit.platform:junit-platform-commons:jar:1.8.2:test -- module org.junit.platform.commons
+   org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test -- module org.junit.jupiter.api
+   org.apiguardian:apiguardian-api:jar:1.1.2:test -- module org.apiguardian.api
+   io.r2dbc:r2dbc-spi:jar:0.9.0.RELEASE:compile -- module r2dbc.spi [auto]
+   org.reactivestreams:reactive-streams:jar:1.0.3:compile -- module org.reactivestreams [auto]
+
+
+The following files have been resolved:
+   me.zodac:folding-stats-api:jar:1.0.0-SNAPSHOT:compile -- module folding.stats.api (auto)
+   me.zodac:folding-stats-client-library-java:jar:1.0.0-SNAPSHOT:compile -- module folding.stats.client.library.java (auto)
+   me.zodac:folding-stats-jar:jar:1.0.0-SNAPSHOT:compile -- module folding.stats.jar (auto)
+   com.zaxxer:HikariCP:jar:5.0.1:compile -- module com.zaxxer.hikari
+   org.jooq:jooq:jar:3.16.3:compile -- module org.jooq
+   org.jsoup:jsoup:jar:1.14.3:compile -- module org.jsoup [auto]
+   io.r2dbc:r2dbc-spi:jar:0.9.0.RELEASE:compile -- module r2dbc.spi [auto]
+   org.reactivestreams:reactive-streams:jar:1.0.3:compile -- module org.reactivestreams [auto]
+   com.google.code.gson:gson:jar:2.8.9:compile -- module com.google.gson
+   org.apache.logging.log4j:log4j-api:jar:2.17.1:compile -- module org.apache.logging.log4j
+   org.projectlombok:lombok:jar:1.18.22:provided -- module lombok
+   org.postgresql:postgresql:jar:42.3.2:compile -- module org.postgresql.jdbc [auto]
+   org.checkerframework:checker-qual:jar:3.5.0:runtime -- module org.checkerframework.checker.qual [auto]
+   org.springframework.boot:spring-boot:jar:2.6.3:compile -- module spring.boot [auto]
+   org.springframework:spring-core:jar:5.3.15:compile -- module spring.core [auto]
+   org.springframework:spring-jcl:jar:5.3.15:compile -- module spring.jcl [auto]
+   org.springframework:spring-context:jar:5.3.15:compile -- module spring.context [auto]
+   org.springframework.boot:spring-boot-autoconfigure:jar:2.6.3:compile -- module spring.boot.autoconfigure [auto]
+   org.springframework:spring-webmvc:jar:5.3.15:compile -- module spring.webmvc [auto]
+   org.springframework:spring-aop:jar:5.3.15:compile -- module spring.aop [auto]
+   org.springframework:spring-beans:jar:5.3.15:compile -- module spring.beans [auto]
+   org.springframework:spring-expression:jar:5.3.15:compile -- module spring.expression [auto]
+   org.springframework:spring-web:jar:5.3.15:compile -- module spring.web [auto]
+   org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.56:compile -- module org.apache.tomcat.embed.core
+   ch.qos.logback:logback-classic:jar:1.2.9:compile -- module logback.classic (auto)
+   ch.qos.logback:logback-core:jar:1.2.9:compile -- module logback.core (auto)
+   org.slf4j:slf4j-api:jar:1.7.36:compile -- module org.slf4j [auto]
+   org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.1:compile -- module org.apache.logging.slf4j [auto]
+   org.slf4j:jul-to-slf4j:jar:1.7.33:compile -- module jul.to.slf4j (auto)
+
+
+The following files have been resolved:
+   me.zodac:folding-stats-api:jar:1.0.0-SNAPSHOT:test -- module folding.stats.api (auto)
+   me.zodac:folding-stats-client-library-java:jar:1.0.0-SNAPSHOT:test -- module folding.stats.client.library.java (auto)
+   com.google.code.gson:gson:jar:2.8.9:test -- module com.google.gson
+   org.postgresql:postgresql:jar:42.3.2:test -- module org.postgresql.jdbc [auto]
+   org.checkerframework:checker-qual:jar:3.5.0:test -- module org.checkerframework.checker.qual [auto]
+   org.assertj:assertj-core:jar:3.22.0:test -- module org.assertj.core
+   org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test -- module org.junit.jupiter.engine
+   org.junit.platform:junit-platform-engine:jar:1.8.2:test -- module org.junit.platform.engine
+   org.opentest4j:opentest4j:jar:1.2.0:test -- module org.opentest4j
+   org.junit.platform:junit-platform-commons:jar:1.8.2:test -- module org.junit.platform.commons
+   org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test -- module org.junit.jupiter.api
+   org.apiguardian:apiguardian-api:jar:1.1.2:test -- module org.apiguardian.api
+

@@ -1,0 +1,23 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/ProcessingType.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api.util;
+26  | 
+   -| /**
+   -|  * Defines the possible types of executions for long-running tasks.
+   -|  */
+27 +| 
+28  | public enum ProcessingType {
+29  | 
+   -|     /**
+   -|      * Marks a specific function, method or task to be run in a background process, if possible.
+   -|      */
+30 +|     
+31  |     ASYNCHRONOUS,
+32  | 
+   -|     /**
+   -|      * Marks a specific function, method or task to be run in the main process and block until completed, if possible.
+   -|      */
+33 +|     
+34  |     SYNCHRONOUS
+35  | }

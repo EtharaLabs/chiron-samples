@@ -1,0 +1,1250 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "v1",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "planner-version",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee_mapping": {
+        "3ed77c66-c3b8-404f-8f43-266b75771178": "0a11ce00-0000-4000-8000-000000000001"
+       },
+       "completed": false,
+       "created_from": null,
+       "creation_time": "2026-11-01T11:00:00.000Z",
+       "description": "Seeded plan",
+       "ends_at": null,
+       "groups": [
+        "34f73064-36d3-42e0-9bf8-17840d9eb352"
+       ],
+       "id": "0a11ce00-0000-1000-8000-000000000030",
+       "key": "core-plan",
+       "last_updated": "2026-11-01T11:00:00.000Z",
+       "name": "Core plan",
+       "options": null,
+       "owner": "0a11ce00-0000-4000-8000-000000000002",
+       "participants": [
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "target_version": "2025.1",
+       "tests": [
+        "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "437f882f-857e-4e8e-abf3-18a1e2d60bbd"
+       ],
+       "view_id": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plan-get",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/0a11ce00-0000-1000-8000-000000000030/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee_mapping": {
+         "3ed77c66-c3b8-404f-8f43-266b75771178": "0a11ce00-0000-4000-8000-000000000001"
+        },
+        "completed": false,
+        "created_from": null,
+        "creation_time": "2026-11-01T11:00:00.000Z",
+        "description": "Seeded plan",
+        "ends_at": null,
+        "groups": [
+         "34f73064-36d3-42e0-9bf8-17840d9eb352"
+        ],
+        "id": "0a11ce00-0000-1000-8000-000000000030",
+        "key": "core-plan",
+        "last_updated": "2026-11-01T11:00:00.000Z",
+        "name": "Core plan",
+        "options": null,
+        "owner": "0a11ce00-0000-4000-8000-000000000002",
+        "participants": [
+         "0a11ce00-0000-4000-8000-000000000001"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "target_version": "2025.1",
+        "tests": [
+         "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "437f882f-857e-4e8e-abf3-18a1e2d60bbd"
+        ],
+        "view_id": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plans-for-release",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/release/feb3dc2e-0397-418b-a980-ddd8061bb847/all"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "groups": {
+        "34f73064-36d3-42e0-9bf8-17840d9eb352": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests",
+         "description": null,
+         "enabled": true,
+         "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "name": "longevity-tests",
+         "pretty_name": "Longevity Tests",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "group"
+        },
+        "d2bdc3c8-3303-44f5-b95b-50defbc2aa96": {
+         "assignee": [],
+         "build_system_id": "seed-release/performance-tests",
+         "description": null,
+         "enabled": true,
+         "id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "name": "performance-tests",
+         "pretty_name": "Performance Tests",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "group"
+        }
+       },
+       "testByGroup": {
+        "34f73064-36d3-42e0-9bf8-17840d9eb352": [
+         {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+          "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+          "description": null,
+          "enabled": true,
+          "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+          "name": "longevity-100gb-12h-test",
+          "plugin_name": "scylla-cluster-tests",
+          "plugin_subtype": null,
+          "pretty_name": "Longevity 100GB 12h",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+          "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+          "description": null,
+          "enabled": true,
+          "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+          "name": "longevity-10gb-3h-test",
+          "plugin_name": "scylla-cluster-tests",
+          "plugin_subtype": null,
+          "pretty_name": "Longevity 10GB 3h",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+          "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+          "description": null,
+          "enabled": true,
+          "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+          "name": "longevity-large-partition-test",
+          "plugin_name": "scylla-cluster-tests",
+          "plugin_subtype": null,
+          "pretty_name": "Longevity Large Partition",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         }
+        ],
+        "d2bdc3c8-3303-44f5-b95b-50defbc2aa96": [
+         {
+          "assignee": [],
+          "build_system_id": "seed-release/performance-tests/perf-throughput-test",
+          "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test",
+          "description": null,
+          "enabled": true,
+          "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+          "id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+          "name": "perf-throughput-test",
+          "plugin_name": "scylla-cluster-tests",
+          "plugin_subtype": null,
+          "pretty_name": "Performance Throughput",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         {
+          "assignee": [],
+          "build_system_id": "seed-release/performance-tests/perf-regression-latency-test",
+          "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test",
+          "description": null,
+          "enabled": true,
+          "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+          "id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+          "name": "perf-regression-latency-test",
+          "plugin_name": "scylla-cluster-tests",
+          "plugin_subtype": null,
+          "pretty_name": "Performance Regression Latency",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         {
+          "assignee": [],
+          "build_system_id": "seed-release/performance-tests/perf-large-partition-test",
+          "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test",
+          "description": null,
+          "enabled": true,
+          "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+          "id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+          "name": "perf-large-partition-test",
+          "plugin_name": "scylla-cluster-tests",
+          "plugin_subtype": null,
+          "pretty_name": "Performance Large Partition",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         }
+        ]
+       },
+       "tests": {
+        "3ed77c66-c3b8-404f-8f43-266b75771178": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+         "description": null,
+         "enabled": true,
+         "group": "Longevity Tests",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "name": "longevity-100gb-12h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 100GB 12h",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        "437f882f-857e-4e8e-abf3-18a1e2d60bbd": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+         "description": null,
+         "enabled": true,
+         "group": "Longevity Tests",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "name": "longevity-10gb-3h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 10GB 3h",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        "956122ec-45e2-441d-a87f-2df3e3d7ce70": {
+         "assignee": [],
+         "build_system_id": "seed-release/performance-tests/perf-regression-latency-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test",
+         "description": null,
+         "enabled": true,
+         "group": "Performance Tests",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "name": "perf-regression-latency-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Performance Regression Latency",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        "9b79cfa4-33d6-49c2-bd27-30733cf19490": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+         "description": null,
+         "enabled": true,
+         "group": "Longevity Tests",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "name": "longevity-large-partition-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity Large Partition",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        "ceee1421-79db-4f1f-9eee-573968bb4ee6": {
+         "assignee": [],
+         "build_system_id": "seed-release/performance-tests/perf-throughput-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test",
+         "description": null,
+         "enabled": true,
+         "group": "Performance Tests",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "name": "perf-throughput-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Performance Throughput",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        "d62928bf-72ec-44c9-92ee-385ba917027c": {
+         "assignee": [],
+         "build_system_id": "seed-release/performance-tests/perf-large-partition-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test",
+         "description": null,
+         "enabled": true,
+         "group": "Performance Tests",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "name": "perf-large-partition-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Performance Large Partition",
+         "release": "seed-release",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        }
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "gridview",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/release/feb3dc2e-0397-418b-a980-ddd8061bb847/gridview"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "hits": [
+        {
+         "id": "<id1>",
+         "name": "Add all...",
+         "type": "special"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests",
+         "description": null,
+         "enabled": true,
+         "group": null,
+         "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "name": "longevity-tests",
+         "pretty_name": "Longevity Tests",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "group"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+         "description": null,
+         "enabled": true,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "group": null,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release": {
+           "assignee": [
+            "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+           ],
+           "description": "Synthetic data for local development",
+           "dormant": false,
+           "enabled": true,
+           "github_repo_url": null,
+           "group": null,
+           "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+           "name": "seed-release",
+           "perpetual": false,
+           "picture_id": null,
+           "pretty_name": "Seed Release",
+           "release": null,
+           "type": "release",
+           "valid_version_regex": null
+          },
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "type": "group"
+         },
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "name": "longevity-100gb-12h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 100GB 12h",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+         "description": null,
+         "enabled": true,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "group": null,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release": {
+           "assignee": [
+            "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+           ],
+           "description": "Synthetic data for local development",
+           "dormant": false,
+           "enabled": true,
+           "github_repo_url": null,
+           "group": null,
+           "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+           "name": "seed-release",
+           "perpetual": false,
+           "picture_id": null,
+           "pretty_name": "Seed Release",
+           "release": null,
+           "type": "release",
+           "valid_version_regex": null
+          },
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "type": "group"
+         },
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "name": "longevity-10gb-3h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 10GB 3h",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        },
+        {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+         "description": null,
+         "enabled": true,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "group": null,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release": {
+           "assignee": [
+            "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+           ],
+           "description": "Synthetic data for local development",
+           "dormant": false,
+           "enabled": true,
+           "github_repo_url": null,
+           "group": null,
+           "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+           "name": "seed-release",
+           "perpetual": false,
+           "picture_id": null,
+           "pretty_name": "Seed Release",
+           "release": null,
+           "type": "release",
+           "valid_version_regex": null
+          },
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "type": "group"
+         },
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "name": "longevity-large-partition-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity Large Partition",
+         "release": {
+          "assignee": [
+           "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+          ],
+          "description": "Synthetic data for local development",
+          "dormant": false,
+          "enabled": true,
+          "github_repo_url": null,
+          "group": null,
+          "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "name": "seed-release",
+          "perpetual": false,
+          "picture_id": null,
+          "pretty_name": "Seed Release",
+          "release": null,
+          "type": "release",
+          "valid_version_regex": null
+         },
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "type": "test"
+        }
+       ],
+       "total": 5
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "hits": [],
+       "total": 0
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "search",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/search",
+     "query": {
+      "query": "longevity",
+      "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/search",
+     "query": {
+      "query": "",
+      "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+        "description": null,
+        "enabled": true,
+        "group": "Longevity Tests",
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "name": "Longevity 100GB 12h",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 100GB 12h",
+        "release": "seed-release",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "type": "test"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+        "description": null,
+        "enabled": true,
+        "group": "Longevity Tests",
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+        "name": "Longevity 10GB 3h",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 10GB 3h",
+        "release": "seed-release",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "type": "test"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+        "description": null,
+        "enabled": true,
+        "group": "Longevity Tests",
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+        "name": "Longevity Large Partition",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity Large Partition",
+        "release": "seed-release",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "type": "test"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "explode-group",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/group/34f73064-36d3-42e0-9bf8-17840d9eb352/explode"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "missing": {
+        "groups": [],
+        "tests": []
+       },
+       "originalRelease": {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       },
+       "status": "passed",
+       "targetRelease": {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "copy-check",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/0a11ce00-0000-1000-8000-000000000030/copy/check",
+     "query": {
+      "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+        "description": null,
+        "enabled": true,
+        "group": "Longevity Tests",
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "name": "longevity-100gb-12h-test",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 100GB 12h",
+        "release": "seed-release",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "type": "test"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+        "description": null,
+        "enabled": true,
+        "group": "Longevity Tests",
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+        "name": "longevity-10gb-3h-test",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 10GB 3h",
+        "release": "seed-release",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "type": "test"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests",
+        "description": null,
+        "enabled": true,
+        "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "name": "longevity-tests",
+        "pretty_name": "Longevity Tests",
+        "release": "seed-release",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "type": "group"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "resolve-entities",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/0a11ce00-0000-1000-8000-000000000030/resolve_entities"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "list index out of range"
+       ],
+       "exception": "IndexError",
+       "message": "list index out of range",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Plan {{plan}} not found"
+       ],
+       "exception": "DocumentNotFound",
+       "message": "Plan {{plan}} not found",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Plan {{plan}} not found"
+       ],
+       "exception": "DocumentNotFound",
+       "message": "Plan {{plan}} not found",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee_mapping": {
+         "3ed77c66-c3b8-404f-8f43-266b75771178": "0a11ce00-0000-4000-8000-000000000001"
+        },
+        "completed": false,
+        "created_from": null,
+        "creation_time": "2026-11-01T11:00:00.000Z",
+        "description": "Seeded plan",
+        "ends_at": null,
+        "groups": [
+         "34f73064-36d3-42e0-9bf8-17840d9eb352"
+        ],
+        "id": "0a11ce00-0000-1000-8000-000000000030",
+        "key": "core-plan",
+        "last_updated": "2026-11-01T11:00:00.000Z",
+        "name": "Core plan",
+        "options": null,
+        "owner": "0a11ce00-0000-4000-8000-000000000002",
+        "participants": [
+         "0a11ce00-0000-4000-8000-000000000001"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "target_version": "2025.1",
+        "tests": [
+         "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "437f882f-857e-4e8e-abf3-18a1e2d60bbd"
+        ],
+        "view_id": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plan-create-delete",
+   "steps": [
+    {
+     "capture": {
+      "plan": "response.id"
+     },
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "assignments": {},
+      "created_from": null,
+      "description": "created in a case",
+      "groups": [],
+      "name": "Stage two plan",
+      "owner": "0a11ce00-0000-4000-8000-000000000002",
+      "participants": [
+       "0a11ce00-0000-4000-8000-000000000001"
+      ],
+      "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+      "target_version": "2025.2",
+      "tests": [
+       "3ed77c66-c3b8-404f-8f43-266b75771178"
+      ]
+     },
+     "method": "POST",
+     "path": "/api/v1/planning/plan/create"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/{{plan}}/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "DELETE",
+     "path": "/api/v1/planning/plan/{{plan}}/delete",
+     "query": {
+      "deleteView": "1"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/release/feb3dc2e-0397-418b-a980-ddd8061bb847/all"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": true,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee_mapping": {
+        "3ed77c66-c3b8-404f-8f43-266b75771178": "0a11ce00-0000-4000-8000-000000000001"
+       },
+       "completed": false,
+       "created_from": null,
+       "creation_time": "2026-11-01T11:00:00.000Z",
+       "description": "Seeded plan",
+       "ends_at": null,
+       "groups": [
+        "34f73064-36d3-42e0-9bf8-17840d9eb352"
+       ],
+       "id": "0a11ce00-0000-1000-8000-000000000030",
+       "key": "core-plan",
+       "last_updated": "<now>",
+       "name": "Core plan renamed",
+       "options": "{}",
+       "owner": "0a11ce00-0000-4000-8000-000000000002",
+       "participants": [
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "target_version": "2025.1",
+       "tests": [
+        "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "437f882f-857e-4e8e-abf3-18a1e2d60bbd"
+       ],
+       "view_id": "<id1>"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plan-update",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "id": "0a11ce00-0000-1000-8000-000000000030",
+      "name": "Core plan renamed",
+      "tests_add": [
+       "3ed77c66-c3b8-404f-8f43-266b75771178"
+      ]
+     },
+     "method": "POST",
+     "path": "/api/v1/planning/plan/update"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/0a11ce00-0000-1000-8000-000000000030/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": true,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee_mapping": {
+        "3ed77c66-c3b8-404f-8f43-266b75771178": "0a11ce00-0000-4000-8000-000000000001"
+       },
+       "completed": false,
+       "created_from": null,
+       "creation_time": "2026-11-01T11:00:00.000Z",
+       "description": "Seeded plan",
+       "ends_at": null,
+       "groups": [
+        "34f73064-36d3-42e0-9bf8-17840d9eb352"
+       ],
+       "id": "0a11ce00-0000-1000-8000-000000000030",
+       "key": "core-plan",
+       "last_updated": "<now>",
+       "name": "Core plan",
+       "options": null,
+       "owner": "0a11ce00-0000-4000-8000-000000000001",
+       "participants": [
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "target_version": "2025.1",
+       "tests": [
+        "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "437f882f-857e-4e8e-abf3-18a1e2d60bbd"
+       ],
+       "view_id": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plan-owner",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "newOwner": "0a11ce00-0000-4000-8000-000000000001"
+     },
+     "method": "POST",
+     "path": "/api/v1/planning/plan/0a11ce00-0000-1000-8000-000000000030/owner/set"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/planning/plan/0a11ce00-0000-1000-8000-000000000030/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "list index out of range"
+       ],
+       "exception": "IndexError",
+       "message": "list index out of range",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "plan-as-user",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "json": {
+      "assignments": {},
+      "created_from": null,
+      "description": "created in a case",
+      "groups": [],
+      "name": "Stage two plan",
+      "owner": "0a11ce00-0000-4000-8000-000000000002",
+      "participants": [
+       "0a11ce00-0000-4000-8000-000000000001"
+      ],
+      "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+      "target_version": "2025.2",
+      "tests": [
+       "3ed77c66-c3b8-404f-8f43-266b75771178"
+      ]
+     },
+     "method": "POST",
+     "path": "/api/v1/planning/plan/create"
+    }
+   ]
+  }
+ ],
+ "group": "G11",
+ "name": "planner"
+}

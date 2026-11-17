@@ -1,0 +1,203 @@
+{
+ "id": "s3_family_24",
+ "source": "f037_numbers_sent_as_strings",
+ "steps": [
+  {
+   "case": "multiplier_and_ppd_as_strings",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "StrNumHwOne",
+     "displayName": "StrNumHwOne",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": "2.5",
+     "averagePpd": "100"
+    }
+   }
+  },
+  {
+   "case": "ppd_as_exponent_string",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "StrNumHwTwo",
+     "displayName": "StrNumHwTwo",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": "1",
+     "averagePpd": "1e3"
+    }
+   },
+   "compare": "status"
+  },
+  {
+   "case": "multiplier_as_non_numeric_string",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "StrNumHwThree",
+     "displayName": "StrNumHwThree",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": "abc",
+     "averagePpd": 100
+    }
+   },
+   "compare": "status"
+  },
+  {
+   "case": "ids_as_strings_on_user",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "StrIdUser",
+     "displayName": "Str Id User",
+     "passkey": "ProbePasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "1",
+     "teamId": "1",
+     "userIsCaptain": "false"
+    }
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "multiplier_and_ppd_as_strings",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": "100",
+     "displayName": "StrNumHwOne",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "StrNumHwOne",
+     "hardwareType": "GPU",
+     "multiplier": "2.5"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"StrNumHwOne\",\n  \"displayName\": \"StrNumHwOne\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.5,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "173",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "ppd_as_exponent_string",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": "1e3",
+     "displayName": "StrNumHwTwo",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "StrNumHwTwo",
+     "hardwareType": "GPU",
+     "multiplier": "1"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "javax.ws.rs.ProcessingException: RESTEASY008200: JSON Binding deserialization error: javax.json.bind.JsonbException: Unable to deserialize property &#x27;averagePpd&#x27; because of: Error deserialize JSON value into type: class java.lang.Long.",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "244",
+     "content-type": "text/html;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "multiplier_as_non_numeric_string",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "StrNumHwThree",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "StrNumHwThree",
+     "hardwareType": "GPU",
+     "multiplier": "abc"
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "javax.ws.rs.ProcessingException: RESTEASY008200: JSON Binding deserialization error: javax.json.bind.JsonbException: Unable to deserialize property &#x27;multiplier&#x27; because of: Error deserialize JSON value into type: class java.lang.Double.",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "246",
+     "content-type": "text/html;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "ids_as_strings_on_user",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Str Id User",
+     "foldingUserName": "StrIdUser",
+     "hardwareId": "1",
+     "passkey": "ProbePasskey12345678901234567890",
+     "teamId": "1",
+     "userIsCaptain": "false"
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"StrIdUser\",\n    \"displayName\": \"Str Id User\",\n    \"passkey\": \"ProbePasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"No teams exist on the system\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "298",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  }
+ ],
+ "probe": "Numeric fields supplied as JSON strings: State A's reader coerces \"2.5\" and \"100\" into the double/long fields, so the create succeeds and the response echoes the coerced numbers, while a non-numeric string is rejected at read time."
+}

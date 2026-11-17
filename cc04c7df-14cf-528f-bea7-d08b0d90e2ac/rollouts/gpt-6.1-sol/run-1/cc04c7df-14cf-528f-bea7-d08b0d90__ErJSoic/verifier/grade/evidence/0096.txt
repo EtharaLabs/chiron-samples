@@ -1,0 +1,12 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/gen/Indexes.java (changed against State A) ===
+@@
+20  | import org.jooq.impl.Internal;
+21  | 
+22  | 
+   -| /**
+   -|  * A class modelling indexes of tables in public.
+   -|  */
+23 +| 
+24  | @SuppressWarnings({ "all", "unchecked", "rawtypes" })
+25  | public class Indexes {
+26  | 

@@ -1,0 +1,33 @@
+[
+  {
+    "source": "/logs/artifacts",
+    "destination": "artifacts/logs/artifacts",
+    "type": "directory",
+    "status": "empty",
+    "service": null,
+    "exclude": []
+  },
+  {
+    "source": "/app",
+    "destination": "artifacts/D1_migrated-app",
+    "type": "directory",
+    "status": "ok",
+    "service": null,
+    "exclude": [
+      ".git",
+      "target",
+      ".m2",
+      ".idea",
+      ".vscode",
+      ".settings",
+      ".gradle",
+      "node_modules",
+      "logs",
+      "*.class",
+      "*.jar",
+      "*.war",
+      "*.ear",
+      "*.log"
+    ]
+  }
+]

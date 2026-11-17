@@ -1,0 +1,26 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/stats/http/request/StatsRequestUrl.java (changed against State A) ===
+@@
+30  | import lombok.Getter;
+31  | import lombok.ToString;
+32  | 
+   -| /**
+   -|  * Simple wrapper for a {@link String} to hold the URL for a points or units REST request.
+   -|  */
+33 +| 
+34  | @Getter
+35  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+36  | @EqualsAndHashCode
+@@
+39  | 
+40  |     private final String url;
+41  | 
+   -|     /**
+   -|      * Creates a {@link StatsRequestUrl} based on the provided URL.
+   -|      *
+   -|      * @param statsRequestUrl the URL
+   -|      * @return the created {@link StatsRequestUrl}
+   -|      */
+42 +|     
+43  |     public static StatsRequestUrl create(final StringBuilder statsRequestUrl) {
+44  |         return new StatsRequestUrl(statsRequestUrl.toString());
+45  |     }

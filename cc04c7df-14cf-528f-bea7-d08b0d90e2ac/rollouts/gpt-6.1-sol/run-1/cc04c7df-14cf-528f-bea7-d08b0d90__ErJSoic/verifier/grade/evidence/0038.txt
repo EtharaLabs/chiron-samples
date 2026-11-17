@@ -1,0 +1,30 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/validation/ValidationFailureType.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api.tc.validation;
+26  | 
+   -| /**
+   -|  * ENUM defining the types of {@link ValidationResult} that can be returned.
+   -|  */
+27 +| 
+28  | public enum ValidationFailureType {
+29  | 
+   -|     /**
+   -|      * Validation failed due to a bad request; the content was invalid in some way.
+   -|      */
+30 +|     
+31  |     BAD_REQUEST,
+32  | 
+   -|     /**
+   -|      * Validation failed due to a conflict with another object. Either another object already exists, or something is using the current object so it
+   -|      * cannot be deleted.
+   -|      */
+33 +|     
+34  |     CONFLICT,
+35  | 
+   -|     /**
+   -|      * No validation failure occurred.
+   -|      */
+36 +|     
+37  |     NONE
+38  | }

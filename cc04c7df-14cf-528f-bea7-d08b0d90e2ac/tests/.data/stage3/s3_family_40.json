@@ -1,0 +1,181 @@
+{
+ "id": "s3_family_40",
+ "source": "f059_no_www_authenticate_challenge",
+ "steps": [
+  {
+   "case": "debug_caches_401",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches"
+   }
+  },
+  {
+   "case": "delete_hardware_401",
+   "http": {
+    "method": "DELETE",
+    "path": "/hardware/1"
+   }
+  },
+  {
+   "case": "users_batch_401",
+   "http": {
+    "method": "POST",
+    "path": "/users/batch",
+    "json": [
+     {
+      "foldingUserName": "X",
+      "displayName": "X",
+      "passkey": "ProbePasskey12345678901234567890",
+      "category": "NVIDIA_GPU",
+      "hardwareId": 1,
+      "teamId": 1,
+      "userIsCaptain": false
+     }
+    ]
+   }
+  },
+  {
+   "case": "manual_save_401",
+   "http": {
+    "method": "POST",
+    "path": "/results/manual/save"
+   }
+  },
+  {
+   "case": "offset_stats_401",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/1",
+    "json": {
+     "pointsOffset": 1,
+     "multipliedPointsOffset": 1,
+     "unitsOffset": 1
+    }
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "debug_caches_401",
+   "compare": "full",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "delete_hardware_401",
+   "compare": "full",
+   "request": {
+    "method": "DELETE",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "users_batch_401",
+   "compare": "full",
+   "request": {
+    "json": [
+     {
+      "category": "NVIDIA_GPU",
+      "displayName": "X",
+      "foldingUserName": "X",
+      "hardwareId": 1,
+      "passkey": "ProbePasskey12345678901234567890",
+      "teamId": 1,
+      "userIsCaptain": false
+     }
+    ],
+    "method": "POST",
+    "path": "/users/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "manual_save_401",
+   "compare": "full",
+   "request": {
+    "method": "POST",
+    "path": "/results/manual/save"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "offset_stats_401",
+   "compare": "full",
+   "request": {
+    "json": {
+     "multipliedPointsOffset": 1,
+     "pointsOffset": 1,
+     "unitsOffset": 1
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  }
+ ],
+ "probe": "State A's 401 is built by Responses.unauthorized() with no entity and no WWW-Authenticate header at all; a migration that wires Spring Security's BasicAuthenticationEntryPoint would add the challenge header and change this contract."
+}

@@ -1,0 +1,60 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/UserSummary.java (changed against State A) ===
+@@
+33  | import lombok.ToString;
+34  | import me.zodac.folding.api.tc.User;
+35  | 
+   -| /**
+   -|  * Summary of the stats of an active {@link User} in the <code>Team Competition</code>.
+   -|  */
+36 +| 
+37  | @NoArgsConstructor
+38  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+39  | @Getter
+@@
+53  |     private int units;
+54  |     private int rankInTeam;
+55  | 
+   -|     /**
+   -|      * Creates a {@link UserSummary}, summarising the stats for an active {@link User}.
+   -|      *
+   -|      * @param user             the {@link User}
+   -|      * @param points           the points of the {@link User}
+   -|      * @param multipliedPoints the multiplied points of the {@link User}
+   -|      * @param units            the units of the {@link User}
+   -|      * @param rankInTeam       the rank of the {@link User} in this {@link me.zodac.folding.api.tc.Team}
+   -|      * @return the created {@link UserSummary}
+   -|      */
+56 +|     
+57  |     public static UserSummary create(final User user, final long points, final long multipliedPoints, final int units, final int rankInTeam) {
+58  |         return new UserSummary(user, points, multipliedPoints, units, rankInTeam);
+59  |     }
+60  | 
+   -|     /**
+   -|      * Creates a {@link UserSummary}, summarising the stats for an active {@link User}.
+   -|      *
+   -|      * <p>
+   -|      * The {@link UserSummary} is not ranked to begin with, since it is not aware of the other {@link UserSummary}s.
+   -|      * The rank can be updated later using {@link UserSummary#updateWithRankInTeam(UserSummary, int)}.
+   -|      *
+   -|      * @param user             the {@link User}
+   -|      * @param points           the points of the {@link User}
+   -|      * @param multipliedPoints the multiplied points of the {@link User}
+   -|      * @param units            the units of the {@link User}
+   -|      * @return the created {@link UserSummary}
+   -|      */
+61 +|     
+62  |     public static UserSummary createWithDefaultRank(final User user, final long points, final long multipliedPoints, final int units) {
+63  |         return create(user, points, multipliedPoints, units, DEFAULT_RANK);
+64  |     }
+65  | 
+   -|     /**
+   -|      * Updates a {@link UserSummary} with a rank, after it has been calculated.
+   -|      *
+   -|      * @param userSummary the {@link UserSummary} to update
+   -|      * @param rankInTeam  the rank within the {@link TeamSummary}
+   -|      * @return the updated {@link UserSummary}
+   -|      */
+66 +|     
+67  |     public static UserSummary updateWithRankInTeam(final UserSummary userSummary, final int rankInTeam) {
+68  |         return create(userSummary.user, userSummary.points, userSummary.multipliedPoints, userSummary.units, rankInTeam);
+69  |     }

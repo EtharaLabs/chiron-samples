@@ -1,0 +1,1857 @@
+[
+ {
+  "endpoint": "main.home",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/"
+ },
+ {
+  "endpoint": "admin.index",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/"
+ },
+ {
+  "endpoint": "admin.index",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/<string:path>"
+ },
+ {
+  "endpoint": "admin.admin_api.index",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/"
+ },
+ {
+  "endpoint": "admin.admin_api.create_group",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/group/create"
+ },
+ {
+  "endpoint": "admin.admin_api.delete_group",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/group/delete"
+ },
+ {
+  "endpoint": "admin.admin_api.update_group",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/group/update"
+ },
+ {
+  "endpoint": "admin.admin_api.get_groups_for_release",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/groups/get"
+ },
+ {
+  "endpoint": "admin.admin_api.get_proxy_tunnel_config",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/proxy-tunnel/config"
+ },
+ {
+  "endpoint": "admin.admin_api.save_proxy_tunnel_config",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/proxy-tunnel/config"
+ },
+ {
+  "endpoint": "admin.admin_api.delete_proxy_tunnel_config",
+  "methods": [
+   "DELETE"
+  ],
+  "rule": "/admin/api/v1/proxy-tunnel/config/<string:tunnel_id>"
+ },
+ {
+  "endpoint": "admin.admin_api.set_proxy_tunnel_config_active",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/proxy-tunnel/config/<string:tunnel_id>/active"
+ },
+ {
+  "endpoint": "admin.admin_api.list_proxy_tunnel_configs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/proxy-tunnel/configs"
+ },
+ {
+  "endpoint": "admin.admin_api.create_release",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/create"
+ },
+ {
+  "endpoint": "admin.admin_api.delete_release",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/delete"
+ },
+ {
+  "endpoint": "admin.admin_api.edit_release",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/edit"
+ },
+ {
+  "endpoint": "admin.admin_api.quick_toggle_group_enabled",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/group/state/toggle"
+ },
+ {
+  "endpoint": "admin.admin_api.set_release_dormancy",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/set_dormant"
+ },
+ {
+  "endpoint": "admin.admin_api.set_release_perpetual",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/set_perpetual"
+ },
+ {
+  "endpoint": "admin.admin_api.set_release_state",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/set_state"
+ },
+ {
+  "endpoint": "admin.admin_api.quick_toggle_test_enabled",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/release/test/state/toggle"
+ },
+ {
+  "endpoint": "admin.admin_api.get_releases",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/releases/get"
+ },
+ {
+  "endpoint": "admin.admin_api.list_ssh_keys",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/ssh/keys"
+ },
+ {
+  "endpoint": "admin.admin_api.delete_ssh_key",
+  "methods": [
+   "DELETE"
+  ],
+  "rule": "/admin/api/v1/ssh/keys/<string:key_id>"
+ },
+ {
+  "endpoint": "admin.admin_api.batch_move_tests",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/test/batch_move"
+ },
+ {
+  "endpoint": "admin.admin_api.create_test",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/test/create"
+ },
+ {
+  "endpoint": "admin.admin_api.delete_test",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/test/delete"
+ },
+ {
+  "endpoint": "admin.admin_api.update_test",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/test/update"
+ },
+ {
+  "endpoint": "admin.admin_api.get_tests_for_group",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/tests/get"
+ },
+ {
+  "endpoint": "admin.admin_api.user_toggle_admin",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/user/<string:user_id>/admin/toggle"
+ },
+ {
+  "endpoint": "admin.admin_api.user_delete",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/user/<string:user_id>/delete"
+ },
+ {
+  "endpoint": "admin.admin_api.user_change_email",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/user/<string:user_id>/email/set"
+ },
+ {
+  "endpoint": "admin.admin_api.user_change_password",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/admin/api/v1/user/<string:user_id>/password/set"
+ },
+ {
+  "endpoint": "admin.admin_api.user_info",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/admin/api/v1/users"
+ },
+ {
+  "endpoint": "main.alert_debug",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/alert_debug"
+ },
+ {
+  "endpoint": "api.resolve_artifact_size",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/artifact/resolveSize"
+ },
+ {
+  "endpoint": "api.client_api.get_all_run_configs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/<string:run_id>/config/all"
+ },
+ {
+  "endpoint": "api.client_api.submit_run_config",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/<string:run_id>/config/submit"
+ },
+ {
+  "endpoint": "api.client_api.driver_matrix_api.submit_env",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/driver_matrix/env/submit"
+ },
+ {
+  "endpoint": "api.client_api.driver_matrix_api.submit_failure",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/driver_matrix/result/fail"
+ },
+ {
+  "endpoint": "api.client_api.driver_matrix_api.submit_result",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/driver_matrix/result/submit"
+ },
+ {
+  "endpoint": "api.client_api.driver_matrix_api.driver_matrix_test_report",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/driver_matrix/test_report"
+ },
+ {
+  "endpoint": "api.client_api.replay_api.replay_ingest",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/replay/ingest"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_get_similar_events_realtime",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/event/similar"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_event_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/event/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_events_count_by_severity",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/events/<string:severity>/count"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_events_get_by_severity",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/events/<string:severity>/get"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_events_get",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/events/get"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_events_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/events/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_gemini_results_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/gemini/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_submit_junit_report",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/junit/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_nemesis_finalize",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/nemesis/finalize"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_nemesis_get",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/nemesis/get"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_nemesis_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/nemesis/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_submit_packages",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/packages/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_get_performance_history",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/performance/history"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_performance_results_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/performance/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_resource_get",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/resource/<string:name>/get"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_resource_update_shards",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/resource/<string:resource_name>/shards"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_resource_terminate",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/resource/<string:resource_name>/terminate"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_resource_update",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/resource/<string:resource_name>/update"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_resource_all",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/resource/all"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_resource_create",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/resource/create"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_submit_screenshots",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/screenshots/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_set_runner",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/sct_runner/set"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_get_similar_events",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/similar_events"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_get_all_stress_cmds",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/stress_cmd/get"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_add_stress_cmd",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/<string:run_id>/stress_cmd/submit"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_get_kernel_report",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/sct/release/<path:release_name>/kernels"
+ },
+ {
+  "endpoint": "api.client_api.sct_api.sct_get_similar_runs_info",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/sct/similar_runs_info"
+ },
+ {
+  "endpoint": "api.client_api.ssh_api.get_authorized_keys",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/ssh/keys"
+ },
+ {
+  "endpoint": "api.client_api.ssh_api.get_tunnel_connection",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/ssh/tunnel"
+ },
+ {
+  "endpoint": "api.client_api.ssh_api.register_tunnel",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/ssh/tunnel"
+ },
+ {
+  "endpoint": "api.client_api.ssh_api.get_user_keys",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/ssh/tunnel/keys"
+ },
+ {
+  "endpoint": "api.client_api.get_run_info",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_id>/info"
+ },
+ {
+  "endpoint": "api.client_api.run_finalize",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/finalize"
+ },
+ {
+  "endpoint": "api.client_api.get_run",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/get"
+ },
+ {
+  "endpoint": "api.client_api.run_get_status",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/get_status"
+ },
+ {
+  "endpoint": "api.client_api.run_heartbeat",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/heartbeat"
+ },
+ {
+  "endpoint": "api.client_api.run_submit_logs",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/logs/submit"
+ },
+ {
+  "endpoint": "api.client_api.run_set_status",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/set_status"
+ },
+ {
+  "endpoint": "api.client_api.submit_results",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/submit_results"
+ },
+ {
+  "endpoint": "api.client_api.run_update_product_version",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/<string:run_id>/update_product_version"
+ },
+ {
+  "endpoint": "api.client_api.submit_run",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/<string:run_type>/submit"
+ },
+ {
+  "endpoint": "api.client_api.get_pytest_test_field_stats",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/client/testrun/pytest/<string:test_name>/stats/<string:field_name>/<string:aggr_function>"
+ },
+ {
+  "endpoint": "api.client_api.submit_pytest_result",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/pytest/result/submit"
+ },
+ {
+  "endpoint": "api.client_api.render_email_report",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/report"
+ },
+ {
+  "endpoint": "api.client_api.send_email_report",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/client/testrun/report/email"
+ },
+ {
+  "endpoint": "api.testrun_api.get_single_comment",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/comment/<string:comment_id>/get"
+ },
+ {
+  "endpoint": "api.create_graph_view",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/create-graph-view"
+ },
+ {
+  "endpoint": "api.testrun_api.get_runs_by_test_id_run_id",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/get_runs_by_test_id_run_id"
+ },
+ {
+  "endpoint": "api.get_group_details",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/group/<string:group_id>/details"
+ },
+ {
+  "endpoint": "api.argus_groups",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/groups"
+ },
+ {
+  "endpoint": "api.testrun_api.ignore_jobs",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/ignore_jobs"
+ },
+ {
+  "endpoint": "api.testrun_api.issues_delete",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/issues/delete"
+ },
+ {
+  "endpoint": "api.testrun_api.issues_get",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/issues/get"
+ },
+ {
+  "endpoint": "api.testrun_api.build_jenkins_job",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/jenkins/build"
+ },
+ {
+  "endpoint": "api.testrun_api.clone_build_jenkins_job",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/jenkins/clone/build"
+ },
+ {
+  "endpoint": "api.testrun_api.clone_jenkins_job",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/jenkins/clone/create"
+ },
+ {
+  "endpoint": "api.testrun_api.get_groups_for_target",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/jenkins/clone/groups"
+ },
+ {
+  "endpoint": "api.testrun_api.get_clone_job_advanced_settings",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/jenkins/clone/settings"
+ },
+ {
+  "endpoint": "api.testrun_api.set_job_settings",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/jenkins/clone/settings/change"
+ },
+ {
+  "endpoint": "api.testrun_api.clone_validate_new_settings",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/jenkins/clone/settings/validate"
+ },
+ {
+  "endpoint": "api.testrun_api.get_clone_targets",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/jenkins/clone/targets"
+ },
+ {
+  "endpoint": "api.testrun_api.get_jenkins_job_params",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/jenkins/params"
+ },
+ {
+  "endpoint": "api.testrun_api.get_queue_info",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/jenkins/queue_info"
+ },
+ {
+  "endpoint": "api.notifications.get_notification",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/notifications/get"
+ },
+ {
+  "endpoint": "api.notifications.get_unread_count",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/notifications/get_unread"
+ },
+ {
+  "endpoint": "api.notifications.read_notification",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/notifications/read"
+ },
+ {
+  "endpoint": "api.notifications.get_summary",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/notifications/summary"
+ },
+ {
+  "endpoint": "api.planning_api.version",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/"
+ },
+ {
+  "endpoint": "api.planning_api.explode_group",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/group/<string:group_id>/explode"
+ },
+ {
+  "endpoint": "api.planning_api.is_plan_eligible_for_copy",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/plan/<string:plan_id>/copy/check"
+ },
+ {
+  "endpoint": "api.planning_api.delete_plan",
+  "methods": [
+   "DELETE"
+  ],
+  "rule": "/api/v1/planning/plan/<string:plan_id>/delete"
+ },
+ {
+  "endpoint": "api.planning_api.get_plan",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/plan/<string:plan_id>/get"
+ },
+ {
+  "endpoint": "api.planning_api.change_plan_owner",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/planning/plan/<string:plan_id>/owner/set"
+ },
+ {
+  "endpoint": "api.planning_api.resolve_plan_entities",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/plan/<string:plan_id>/resolve_entities"
+ },
+ {
+  "endpoint": "api.planning_api.copy_plan",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/planning/plan/copy"
+ },
+ {
+  "endpoint": "api.planning_api.create_plan",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/planning/plan/create"
+ },
+ {
+  "endpoint": "api.planning_api.trigger_jobs_for_plans",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/planning/plan/trigger"
+ },
+ {
+  "endpoint": "api.planning_api.update_plan",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/planning/plan/update"
+ },
+ {
+  "endpoint": "api.planning_api.get_plans_for_release",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/release/<string:release_id>/all"
+ },
+ {
+  "endpoint": "api.planning_api.grid_view_for_release",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/release/<string:release_id>/gridview"
+ },
+ {
+  "endpoint": "api.planning_api.search_tests",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/planning/search"
+ },
+ {
+  "endpoint": "api.testrun_api.get_pytest_test_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/pytest/<string:test_name>/results"
+ },
+ {
+  "endpoint": "api.testrun_api.get_pytest_test_field_stats",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/pytest/<string:test_name>/stats/<string:field_name>/<string:aggr_function>"
+ },
+ {
+  "endpoint": "api.get_release_details",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/<string:release_id>/details"
+ },
+ {
+  "endpoint": "api.release_images",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/<string:release_id>/images"
+ },
+ {
+  "endpoint": "api.release_pytest_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/<string:release_id>/pytest/results"
+ },
+ {
+  "endpoint": "api.release_versions",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/<string:release_id>/versions"
+ },
+ {
+  "endpoint": "api.release_activity",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/activity"
+ },
+ {
+  "endpoint": "api.group_assignees",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/assignees/groups"
+ },
+ {
+  "endpoint": "api.tests_assignees",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/assignees/tests"
+ },
+ {
+  "endpoint": "api.release_create",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/release/create"
+ },
+ {
+  "endpoint": "api.get_planner_comment_by_test",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/planner/comment/get/test"
+ },
+ {
+  "endpoint": "api.release_planner_data",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/planner/data"
+ },
+ {
+  "endpoint": "api.release_schedules",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/schedules"
+ },
+ {
+  "endpoint": "api.release_schedules_assignee_update",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/release/schedules/assignee/update"
+ },
+ {
+  "endpoint": "api.release_schedules_comment_update",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/release/schedules/comment/update"
+ },
+ {
+  "endpoint": "api.release_schedules_delete",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/release/schedules/delete"
+ },
+ {
+  "endpoint": "api.release_schedules_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/release/schedules/submit"
+ },
+ {
+  "endpoint": "api.release_schedule_update",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/release/schedules/update"
+ },
+ {
+  "endpoint": "api.release_stats_v2",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/release/stats/v2"
+ },
+ {
+  "endpoint": "api.releases",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/releases"
+ },
+ {
+  "endpoint": "api.testrun_api.test_run_activity",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/run/<string:run_id>/activity"
+ },
+ {
+  "endpoint": "api.testrun_api.get_testrun_comments",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/run/<string:run_id>/comments"
+ },
+ {
+  "endpoint": "api.testrun_api.get_testrun_pytest_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/run/<string:run_id>/pytest/results"
+ },
+ {
+  "endpoint": "api.testrun_api.get_type_for_run",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/run/<string:run_id>/type"
+ },
+ {
+  "endpoint": "api.testrun_api.get_testrun",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/run/<string:run_type>/<string:run_id>"
+ },
+ {
+  "endpoint": "api.testrun_api.fetch_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/run/<string:test_id>/<string:run_id>/fetch_results"
+ },
+ {
+  "endpoint": "api.s3_generic_proxy",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/s3/<string:bucket_name>/<path:bucket_path>"
+ },
+ {
+  "endpoint": "api.team_api.team_delete",
+  "methods": [
+   "DELETE"
+  ],
+  "rule": "/api/v1/team/<string:team_id>/delete"
+ },
+ {
+  "endpoint": "api.team_api.team_edit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/team/<string:team_id>/edit"
+ },
+ {
+  "endpoint": "api.team_api.team_get",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/team/<string:team_id>/get"
+ },
+ {
+  "endpoint": "api.team_api.team_edit_motd",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/team/<string:team_id>/motd/edit"
+ },
+ {
+  "endpoint": "api.team_api.team_create",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/team/create"
+ },
+ {
+  "endpoint": "api.team_api.leader_teams",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/team/leader/<string:user_id>/teams"
+ },
+ {
+  "endpoint": "api.team_api.user_jobs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/team/user/<string:user_id>/jobs"
+ },
+ {
+  "endpoint": "api.team_api.user_teams",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/team/user/<string:user_id>/teams"
+ },
+ {
+  "endpoint": "api.testrun_api.sct_terminate_stuck_runs",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/terminate_stuck_runs"
+ },
+ {
+  "endpoint": "api.test_info",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test-info"
+ },
+ {
+  "endpoint": "api.test_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test-results"
+ },
+ {
+  "endpoint": "api.get_run_by_build",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test/<path:build_id>/<int:build_number>"
+ },
+ {
+  "endpoint": "api.get_test_details",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/details"
+ },
+ {
+  "endpoint": "api.testrun_api.set_testrun_assignee",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/assignee/set"
+ },
+ {
+  "endpoint": "api.testrun_api.test_run_delete_comment",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/comment/<string:comment_id>/delete"
+ },
+ {
+  "endpoint": "api.testrun_api.test_run_update_comment",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/comment/<string:comment_id>/update"
+ },
+ {
+  "endpoint": "api.testrun_api.submit_testrun_comment",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/comments/submit"
+ },
+ {
+  "endpoint": "api.testrun_api.set_testrun_investigation_status",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/investigation_status/set"
+ },
+ {
+  "endpoint": "api.testrun_api.issues_submit_for_event",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/issues/event/<string:event_id>/submit"
+ },
+ {
+  "endpoint": "api.testrun_api.issues_submit",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/issues/submit"
+ },
+ {
+  "endpoint": "api.testrun_api.set_testrun_status",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/run/<string:run_id>/status/set"
+ },
+ {
+  "endpoint": "api.testrun_api.get_runs_for_test",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/runs"
+ },
+ {
+  "endpoint": "api.set_test_plugin",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/test/<string:test_id>/set_plugin"
+ },
+ {
+  "endpoint": "api.get_test_run_comment",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test_run/comment/get"
+ },
+ {
+  "endpoint": "api.test_run_poll_single",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test_run/poll"
+ },
+ {
+  "endpoint": "api.test_runs_poll",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/test_runs/poll"
+ },
+ {
+  "endpoint": "api.argus_tests",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/tests"
+ },
+ {
+  "endpoint": "api.testrun_api.download_log",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/tests/<string:plugin_name>/<string:run_id>/log/<string:log_name>/download"
+ },
+ {
+  "endpoint": "api.testrun_api.proxy_screenshot",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/tests/<string:plugin_name>/<string:run_id>/screenshot/<string:image_name>"
+ },
+ {
+  "endpoint": "api.update_graph_view",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/update-graph-view"
+ },
+ {
+  "endpoint": "api.user_jobs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/user/jobs"
+ },
+ {
+  "endpoint": "api.user_planned_jobs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/user/planned_jobs"
+ },
+ {
+  "endpoint": "api.user_token",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/user/token"
+ },
+ {
+  "endpoint": "api.user_info",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/users"
+ },
+ {
+  "endpoint": "api.app_version",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/version"
+ },
+ {
+  "endpoint": "api.view_api.index",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/"
+ },
+ {
+  "endpoint": "api.view_api.view_images",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/<string:view_id>/images"
+ },
+ {
+  "endpoint": "api.view_api.view_get_pytest_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/<string:view_id>/pytest/results"
+ },
+ {
+  "endpoint": "api.view_api.view_resolve",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/<string:view_id>/resolve"
+ },
+ {
+  "endpoint": "api.view_api.view_resolve_tests",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/<string:view_id>/resolve/tests"
+ },
+ {
+  "endpoint": "api.view_api.view_versions",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/<string:view_id>/versions"
+ },
+ {
+  "endpoint": "api.view_api.get_all_views",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/all"
+ },
+ {
+  "endpoint": "api.view_api.create_view",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/create"
+ },
+ {
+  "endpoint": "api.view_api.delete_view",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/delete"
+ },
+ {
+  "endpoint": "api.view_api.get_view",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/get"
+ },
+ {
+  "endpoint": "api.view_api.search_tests",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/search"
+ },
+ {
+  "endpoint": "api.view_api.view_stats",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/stats"
+ },
+ {
+  "endpoint": "api.view_api.update_view",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/update"
+ },
+ {
+  "endpoint": "api.view_api.graphed_stats.get_graphed_stats",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/graphed_stats"
+ },
+ {
+  "endpoint": "api.view_api.graphs.get_graph_views",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/graphs/graph_views"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.get_highlights",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/highlights"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.archive_highlight",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/archive"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.get_comments",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/comments"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.create_comment",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/comments/create"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.delete_comment",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/comments/delete"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.update_comment",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/comments/update"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.create_highlight",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/create"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.create_highlight_group",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/create_group"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.set_assignee",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/set_assignee"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.set_completed",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/set_completed"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.unarchive_highlight",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/unarchive"
+ },
+ {
+  "endpoint": "api.view_api.view_widgets.update_highlight",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/highlights/update"
+ },
+ {
+  "endpoint": "api.view_api.nemesis_stats.get_nemesis_data",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/nemesis_data"
+ },
+ {
+  "endpoint": "api.view_api.pytest.get_user_fields_for_test",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/pytest/<path:test_name>/<string:id>/fields"
+ },
+ {
+  "endpoint": "api.view_api.pytest.get_release_pytest_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/pytest/release/<string:release_id>/results"
+ },
+ {
+  "endpoint": "api.view_api.pytest.get_pytest_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/pytest/results"
+ },
+ {
+  "endpoint": "api.view_api.pytest.get_versioned_runs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/pytest/view"
+ },
+ {
+  "endpoint": "api.view_api.pytest.get_view_pytest_results",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/pytest/view/<string:view_id>/results"
+ },
+ {
+  "endpoint": "api.view_api.graphed_stats.get_runs_details",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/runs_details"
+ },
+ {
+  "endpoint": "api.view_api.summary.get_runs_results",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/api/v1/views/widgets/summary/runs_results"
+ },
+ {
+  "endpoint": "api.view_api.summary.get_versioned_runs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/api/v1/views/widgets/summary/versioned_runs"
+ },
+ {
+  "endpoint": "api.zeus_proxy",
+  "methods": [
+   "DELETE",
+   "GET",
+   "POST",
+   "PUT"
+  ],
+  "rule": "/api/v1/zeus/<path:endpoint>"
+ },
+ {
+  "endpoint": "auth.switch_user",
+  "methods": [
+   "GET",
+   "POST"
+  ],
+  "rule": "/auth/admin/impersonate"
+ },
+ {
+  "endpoint": "auth.stop_impersonation",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/auth/admin/impersonate/stop"
+ },
+ {
+  "endpoint": "auth.login",
+  "methods": [
+   "GET",
+   "POST"
+  ],
+  "rule": "/auth/login"
+ },
+ {
+  "endpoint": "auth.cf_login",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/auth/login/cf"
+ },
+ {
+  "endpoint": "auth.logout",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/auth/logout"
+ },
+ {
+  "endpoint": "auth.generate_api_token",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/auth/profile/api/token/generate"
+ },
+ {
+  "endpoint": "auth.register",
+  "methods": [
+   "GET",
+   "POST"
+  ],
+  "rule": "/auth/register"
+ },
+ {
+  "endpoint": "main.release_dashboard",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/dashboard/<path:release_name>"
+ },
+ {
+  "endpoint": "main.error",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/error/"
+ },
+ {
+  "endpoint": "prometheus_metrics",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/metrics"
+ },
+ {
+  "endpoint": "main.notifications.index",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/notifications/"
+ },
+ {
+  "endpoint": "main.plan_dashboard",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/plan/<string:plan_id>"
+ },
+ {
+  "endpoint": "main.profile",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/profile/"
+ },
+ {
+  "endpoint": "main.profile_user_create",
+  "methods": [
+   "GET",
+   "POST"
+  ],
+  "rule": "/profile/create"
+ },
+ {
+  "endpoint": "main.profile_jobs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/profile/jobs"
+ },
+ {
+  "endpoint": "main.profile_oauth_github_callback",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/profile/oauth/github"
+ },
+ {
+  "endpoint": "main.profile_schedules",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/profile/schedules"
+ },
+ {
+  "endpoint": "main.update_email",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/profile/update/email"
+ },
+ {
+  "endpoint": "main.update_full_name",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/profile/update/name"
+ },
+ {
+  "endpoint": "main.update_password",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/profile/update/password"
+ },
+ {
+  "endpoint": "main.upload_file",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/profile/update/picture"
+ },
+ {
+  "endpoint": "main.update_user_name",
+  "methods": [
+   "POST"
+  ],
+  "rule": "/profile/update/username"
+ },
+ {
+  "endpoint": "main.duty_planner",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/release/<string:name>/duty"
+ },
+ {
+  "endpoint": "main.release_planner",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/release/<string:name>/planner"
+ },
+ {
+  "endpoint": "main.release_scheduler",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/release/<string:name>/scheduler"
+ },
+ {
+  "endpoint": "main.release_planner_by_id",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/release/by-id/<string:id>/planner"
+ },
+ {
+  "endpoint": "main.releases",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/releases"
+ },
+ {
+  "endpoint": "main.run_dashboard",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/run_dashboard"
+ },
+ {
+  "endpoint": "static",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/s/<path:filename>"
+ },
+ {
+  "endpoint": "main.get_picture",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/storage/picture/<string:picture_id>"
+ },
+ {
+  "endpoint": "main.teams.index",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/teams/"
+ },
+ {
+  "endpoint": "main.get_run_by_build",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/test/<path:build_id>/<int:build_number>"
+ },
+ {
+  "endpoint": "main.get_run_by_build",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/test/<path:build_id>/<int:build_number>/<string:tab>"
+ },
+ {
+  "endpoint": "main.runs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/test/<string:test_id>/runs"
+ },
+ {
+  "endpoint": "main.test_run",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/test_run/<string:run_id>"
+ },
+ {
+  "endpoint": "main.test_runs",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/test_runs"
+ },
+ {
+  "endpoint": "main.get_run_by_plugin",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/tests/<string:plugin_name>/<string:run_id>"
+ },
+ {
+  "endpoint": "main.get_run_by_plugin",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/tests/<string:plugin_name>/<string:run_id>/<string:tab>"
+ },
+ {
+  "endpoint": "main.view_dashboard",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/view/<string:view_name>"
+ },
+ {
+  "endpoint": "main.views",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/views"
+ },
+ {
+  "endpoint": "main.run_dashboard",
+  "methods": [
+   "GET"
+  ],
+  "rule": "/workspace"
+ }
+]

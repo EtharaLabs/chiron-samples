@@ -1,0 +1,1101 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "d3f4d155-3724-41a8-991e-9e55a3632865",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "ERROR [shard 2] storage_service - Decommission failed: node 10.0.3.196 unreachable",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.3.196",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "ERROR",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:31:01.786Z"
+       },
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "cc0bed45-6da2-4cb3-8481-dbffcc943510",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "WARN  [shard 0] compaction - Compaction is slow, took 8299ms for 219MB",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.1.114",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "WARNING",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:52:01.786Z"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "d3f4d155-3724-41a8-991e-9e55a3632865",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "ERROR [shard 2] storage_service - Decommission failed: node 10.0.3.196 unreachable",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.3.196",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "ERROR",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:31:01.786Z"
+       },
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "cc0bed45-6da2-4cb3-8481-dbffcc943510",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "WARN  [shard 0] compaction - Compaction is slow, took 8299ms for 219MB",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.1.114",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "WARNING",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:52:01.786Z"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "events-get",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/get",
+     "query": {
+      "limit": "1"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "d3f4d155-3724-41a8-991e-9e55a3632865",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "ERROR [shard 2] storage_service - Decommission failed: node 10.0.3.196 unreachable",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.3.196",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "ERROR",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:31:01.786Z"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": 1,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "'str' object has no attribute 'value'"
+       ],
+       "exception": "AttributeError",
+       "message": "'str' object has no attribute 'value'",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "events-by-severity",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/ERROR/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/ERROR/count"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/get",
+     "query": [
+      [
+       "severity",
+       "ERROR"
+      ],
+      [
+       "severity",
+       "CRITICAL"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": true,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": 2,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "event-submit",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "data": {
+       "duration": null,
+       "event_type": "DatabaseLogEvent",
+       "known_issue": null,
+       "message": "stage2 event",
+       "nemesis_name": null,
+       "nemesis_status": null,
+       "node": "10.0.0.1",
+       "received_timestamp": null,
+       "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "severity": "ERROR",
+       "target_node": null,
+       "ts": 1793534400.0
+      }
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/event/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/ERROR/count"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Received an argument of invalid type for column \"run_id\". Expected: <class 'cassandra.cqltypes.UUIDType'>, Got: <class 'str'>; (Got a non-UUID object for a UUID value)"
+       ],
+       "exception": "TypeError",
+       "message": "Received an argument of invalid type for column \"run_id\". Expected: <class 'cassandra.cqltypes.UUIDType'>, Got: <class 'str'>; (Got a non-UUID object for a UUID value)",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "updated",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Received an argument of invalid type for column \"run_id\". Expected: <class 'cassandra.cqltypes.UUIDType'>, Got: <class 'str'>; (Got a non-UUID object for a UUID value)"
+       ],
+       "exception": "TypeError",
+       "message": "Received an argument of invalid type for column \"run_id\". Expected: <class 'cassandra.cqltypes.UUIDType'>, Got: <class 'str'>; (Got a non-UUID object for a UUID value)",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "nemesis-cycle",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "nemesis": {
+       "class_name": "Stage2Monkey",
+       "description": "stage two",
+       "name": "disrupt_stage2",
+       "node_ip": "10.0.0.1",
+       "node_name": "node-1",
+       "node_shards": 1,
+       "start_time": 1793534400
+      }
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/nemesis/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/nemesis/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "nemesis": {
+       "message": "",
+       "name": "disrupt_stage2",
+       "start_time": 1793534400,
+       "status": "succeeded"
+      }
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/nemesis/finalize"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/nemesis/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "added",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+       "build_number": 14,
+       "cloud_setup": null,
+       "config_files": [
+        "test-cases/longevity-100gb-12h-test.yaml"
+       ],
+       "end_time": "2026-10-13T12:34:01.786Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "investigation_status": "not_investigated",
+       "junit_reports": [],
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+       "packages": [
+        {
+         "build_id": "1",
+         "date": "20261001",
+         "name": "scylla-server",
+         "revision_id": "abc",
+         "version": "6.2.0"
+        }
+       ],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": "2025.1.4",
+       "region_name": [
+        "us-east-1"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "0c32bacab063aae9",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": "6.1.9",
+       "start_time": "2026-10-13T11:00:01.786Z",
+       "started_by": "dev-user",
+       "status": "passed",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": "longevity-100gb-12h-test",
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "packages-submit",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "packages": [
+       {
+        "build_id": "1",
+        "date": "20261001",
+        "name": "scylla-server",
+        "revision_id": "abc",
+        "version": "6.2.0"
+       }
+      ]
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/packages/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "instance_info": {
+         "creation_time": "<now>",
+         "dc_name": null,
+         "instance_type": null,
+         "private_ip": "10.0.0.1",
+         "provider": "aws",
+         "public_ip": "1.2.3.4",
+         "rack_name": null,
+         "region": "eu-west-1",
+         "shards_amount": 1,
+         "termination_reason": "",
+         "termination_time": 0
+        },
+        "name": "stage2-node-1",
+        "resource_type": "db-node",
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "state": "running"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "instance_info": {
+        "creation_time": "<now>",
+        "dc_name": null,
+        "instance_type": null,
+        "private_ip": "10.0.0.1",
+        "provider": "aws",
+        "public_ip": "1.2.3.4",
+        "rack_name": null,
+        "region": "eu-west-1",
+        "shards_amount": 1,
+        "termination_reason": "",
+        "termination_time": 0
+       },
+       "name": "stage2-node-1",
+       "resource_type": "db-node",
+       "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "state": "running"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "terminated",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "instance_info": {
+        "creation_time": "<now>",
+        "dc_name": null,
+        "instance_type": null,
+        "private_ip": "10.0.0.1",
+        "provider": "aws",
+        "public_ip": "1.2.3.4",
+        "rack_name": null,
+        "region": "eu-west-1",
+        "shards_amount": 1,
+        "termination_reason": "done",
+        "termination_time": "<now>"
+       },
+       "name": "stage2-node-1",
+       "resource_type": "db-node",
+       "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "state": "terminated"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "resource-cycle",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "resource": {
+       "instance_details": {
+        "creation_time": 1793534400,
+        "private_ip": "10.0.0.1",
+        "provider": "aws",
+        "public_ip": "1.2.3.4",
+        "region": "eu-west-1",
+        "shards_amount": 1,
+        "termination_reason": "",
+        "termination_time": 0
+       },
+       "name": "stage2-node-1",
+       "resource_type": "db-node",
+       "state": "running"
+      }
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/resource/create"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/resource/all"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/resource/stage2-node-1/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "reason": "done"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/resource/stage2-node-1/terminate"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/resource/stage2-node-1/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "No SCTResource found matching {'run_id': UUID('4978044e-c5ad-4b3c-8323-c11a57b4e909'), 'name': 'no-such-node'}"
+       ],
+       "exception": "DocumentNotFound",
+       "message": "No SCTResource found matching {'run_id': UUID('4978044e-c5ad-4b3c-8323-c11a57b4e909'), 'name': 'no-such-node'}",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "resource-unknown",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/resource/no-such-node/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "added",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "cmd": "cassandra-stress write n=1",
+        "log_name": "stress.log",
+        "node_name": "loader-1",
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "ts": "<now>"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "stress-cmd",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "cmd": "cassandra-stress write n=1",
+      "loader_name": "loader-1",
+      "log_name": "stress.log"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/stress_cmd/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/stress_cmd/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "similar-events",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/similar_events"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "metadata": {},
+       "versions": {}
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "kernels",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/release/seed-release/kernels"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/43",
+        "build_number": 43,
+        "id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+        "packages": null,
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "scylla_version": "6.0.3",
+        "start_time": "2026-10-06T15:00:01.786Z",
+        "test_name": "longevity-100gb-12h-test"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "performance-history",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/performance/history"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "updated",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [
+        {
+         "instance_info": {
+          "creation_time": "<now>",
+          "dc_name": null,
+          "instance_type": null,
+          "private_ip": "10.0.0.2",
+          "provider": "aws",
+          "public_ip": "1.2.3.4",
+          "rack_name": null,
+          "region": "eu-west-1",
+          "shards_amount": 0,
+          "termination_reason": "",
+          "termination_time": 0
+         },
+         "name": "runner",
+         "resource_type": "sct-runner",
+         "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "state": "running"
+        }
+       ],
+       "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+       "build_number": 14,
+       "cloud_setup": null,
+       "config_files": [
+        "test-cases/longevity-100gb-12h-test.yaml"
+       ],
+       "end_time": "2026-10-13T12:34:01.786Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "investigation_status": "not_investigated",
+       "junit_reports": [],
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": "2025.1.4",
+       "region_name": [
+        "us-east-1"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "0c32bacab063aae9",
+       "screenshots": [],
+       "sct_runner_host": {
+        "creation_time": "<now>",
+        "dc_name": null,
+        "instance_type": null,
+        "private_ip": "10.0.0.2",
+        "provider": "aws",
+        "public_ip": "1.2.3.4",
+        "rack_name": null,
+        "region": "eu-west-1",
+        "shards_amount": 0,
+        "termination_reason": "",
+        "termination_time": 0
+       },
+       "scylla_version": "6.1.9",
+       "start_time": "2026-10-13T11:00:01.786Z",
+       "started_by": "dev-user",
+       "status": "passed",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": "longevity-100gb-12h-test",
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "sct-runner-set",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "backend": "aws",
+      "name": "runner",
+      "private_ip": "10.0.0.2",
+      "public_ip": "1.2.3.4",
+      "region": "eu-west-1"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/sct_runner/set"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "d3f4d155-3724-41a8-991e-9e55a3632865",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "ERROR [shard 2] storage_service - Decommission failed: node 10.0.3.196 unreachable",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.3.196",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "ERROR",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:31:01.786Z"
+       },
+       {
+        "duplicate_id": null,
+        "duration": null,
+        "event_id": "cc0bed45-6da2-4cb3-8481-dbffcc943510",
+        "event_type": "DatabaseLogEvent",
+        "known_issue": null,
+        "message": "WARN  [shard 0] compaction - Compaction is slow, took 8299ms for 219MB",
+        "nemesis_name": null,
+        "nemesis_status": null,
+        "node": "10.0.1.114",
+        "received_timestamp": null,
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "severity": "WARNING",
+        "summary": null,
+        "target_node": null,
+        "ts": "2026-10-13T12:52:01.786Z"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "events-before",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/sct/4978044e-c5ad-4b3c-8323-c11a57b4e909/events/get",
+     "query": {
+      "before": "1893456000",
+      "limit": "2"
+     }
+    }
+   ]
+  }
+ ],
+ "group": "G10",
+ "name": "sct-plugin"
+}

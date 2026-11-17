@@ -1,0 +1,47 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/leaderboard/TeamLeaderboardEntry.java (changed against State A) ===
+@@
+34  | import me.zodac.folding.api.tc.Team;
+35  | import me.zodac.folding.rest.api.tc.TeamSummary;
+36  | 
+   -| /**
+   -|  * POJO for the {@link Team} leaderboard, summarising the stats for a {@link Team}.
+   -|  *
+   -|  * <p>
+   -|  * Available at the <code>folding/stats/leaderboard</code> REST endpoint.
+   -|  */
+37 +| 
+38  | @NoArgsConstructor
+39  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+40  | @Getter
+@@
+55  |     private long diffToLeader;
+56  |     private long diffToNext;
+57  | 
+   -|     /**
+   -|      * Creates the {@link TeamLeaderboardEntry} for a {@link Team}.
+   -|      *
+   -|      * @param teamSummary  the {@link TeamSummary} for the {@link Team}
+   -|      * @param rank         the rank of the {@link Team}
+   -|      * @param diffToLeader the number of points between this {@link Team} and the one in first place
+   -|      * @param diffToNext   the number of points between this {@link Team} and the one a single place above
+   -|      * @return the created {@link TeamLeaderboardEntry}
+   -|      */
+58 +|     
+59  |     public static TeamLeaderboardEntry create(final TeamSummary teamSummary, final int rank, final long diffToLeader, final long diffToNext) {
+60  |         return new TeamLeaderboardEntry(
+61  |             teamSummary.getTeam(),
+@@
+68  |         );
+69  |     }
+70  | 
+   -|     /**
+   -|      * Creates the {@link TeamLeaderboardEntry} for the {@link Team} in first place. The rank and diff
+   -|      * values are constant in this case.
+   -|      *
+   -|      * @param teamSummary the {@link TeamSummary} for the {@link Team} in first
+   -|      * @return the created {@link TeamLeaderboardEntry}
+   -|      */
+71 +|     
+72  |     public static TeamLeaderboardEntry createLeader(final TeamSummary teamSummary) {
+73  |         return create(teamSummary, DEFAULT_RANK, DEFAULT_DIFF, DEFAULT_DIFF);
+74  |     }

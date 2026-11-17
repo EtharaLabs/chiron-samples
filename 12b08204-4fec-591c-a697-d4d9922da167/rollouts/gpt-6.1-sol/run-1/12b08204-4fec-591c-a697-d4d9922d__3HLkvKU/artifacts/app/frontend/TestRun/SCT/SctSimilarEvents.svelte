@@ -1,0 +1,244 @@
+<script lang="ts" module>
+    import type { SCTEvent } from "./SctEvents.svelte";
+    import type { Issue } from "../../Common/IssueTypes";
+
+    export interface SimilarEventExtended extends SCTEvent {
+        build_id?: string;
+        start_time?: string;
+        version?: string;
+        issues?: Issue[];
+    }
+</script>
+
+<script lang="ts">
+    import { faCheckCircle, faDotCircle, faExclamationTriangle, faPlus } from "@fortawesome/free-solid-svg-icons";
+    import Fa from "svelte-fa";
+    import { sendMessage } from "../../Stores/AlertStore";
+    import ModalWindow from "../../Common/ModalWindow.svelte";
+    import { timestampToISODate } from "../../Common/DateUtils";
+    import IssueBadge from "../../Common/IssueBadge.svelte";
+    import { getUrl } from "../../Common/IssueTypes";
+
+    interface Props {
+        event: SCTEvent;
+        runId: string;
+        issueAttach?: (url: string) => void;
+    }
+
+    let { event, runId, issueAttach }: Props = $props();
+    let showModal = $state(false);
+    let similarEvents: SimilarEventExtended[] = $state([]);
+    let originalSimilarEventsCount = $state(0);
+    let loadingSimilars = $state(false);
+    let fetchingRunInfo = $state(false);
+
+    const fetchSimilarEvents = async function () {
+        loadingSimilars = true;
+        try {
+            const response = await fetch(`/api/v1/client/sct/${runId}/event/similar`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    severity: event.severity,
+                    ts: event.ts,
+                    limit: 50
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch similar events: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            if (data.status === "ok") {
+                similarEvents = data.response || [];
+                originalSimilarEventsCount = similarEvents.length;
+                // Fetch run info for all similar events
+                if (similarEvents.length > 0) {
+                    await fetchRunsInfo();
+                }
+            } else {
+                throw new Error(data.response || "Unknown error");
+            }
+        } catch (error) {
+            console.error("Error fetching similar events:", error);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            sendMessage("error", `Failed to fetch similar events: ${errorMessage}`, "SctEventSimilars::fetchSimilarEvents");
+        } finally {
+            loadingSimilars = false;
+        }
+    };
+
+    const fetchRunsInfo = async function () {
+        fetchingRunInfo = true;
+        try {
+            const runIds = similarEvents.map(e => e.run_id);
+            const response = await fetch("/api/v1/client/sct/similar_runs_info", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    run_ids: runIds,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.status === "ok") {
+                    const runsInfo = data.response;
+                    // Merge run info into similar events and filter out events without run info
+                    similarEvents = similarEvents
+                        .map(event => ({
+                            ...event,
+                            build_id: runsInfo[event.run_id]?.build_id,
+                            start_time: runsInfo[event.run_id]?.start_time,
+                            version: runsInfo[event.run_id]?.version,
+                            issues: runsInfo[event.run_id]?.issues || [],
+                        }))
+                        .filter(event => runsInfo[event.run_id] !== undefined);
+                } else {
+                    console.error("Error fetching similar runs info:", data);
+                }
+            } else {
+                console.error("Failed to fetch similar runs info:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error fetching similar runs info:", error);
+            sendMessage("error", "Error fetching similar runs info", "SctEventSimilars::fetchRunsInfo");
+        } finally {
+            fetchingRunInfo = false;
+        }
+    };
+
+    const toggleModal = async function () {
+        if (!showModal && similarEvents.length === 0) {
+            await fetchSimilarEvents();
+        }
+        showModal = !showModal;
+    };
+
+    const closeModal = function () {
+        showModal = false;
+    };
+
+    const canShowSimilars = $derived(event.severity === "ERROR" || event.severity === "CRITICAL");
+</script>
+
+{#if canShowSimilars}
+    <button
+        class="ms-2 btn btn-sm btn-warning"
+        onclick={toggleModal}
+        disabled={loadingSimilars}
+    >
+        <Fa icon={faExclamationTriangle}/>
+        {#if loadingSimilars}
+            <span class="spinner-border spinner-border-sm"></span>
+        {:else if originalSimilarEventsCount > 0}
+            Found {originalSimilarEventsCount} Similar Events
+        {:else}
+            Find Similar Events
+        {/if}
+    </button>
+{/if}
+
+{#if showModal}
+    <ModalWindow widthClass="w-75" on:modalClose={closeModal}>
+        {#snippet title()}
+            Similar Events {#if similarEvents.length > 0}({similarEvents.length}){/if}
+        {/snippet}
+        {#snippet body()}
+            {#if loadingSimilars || fetchingRunInfo}
+                <div class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading similar events...</span>
+                    </div>
+                    <span class="ms-3">
+                        {#if loadingSimilars}
+                            Loading similar events...
+                        {:else}
+                            Loading run information...
+                        {/if}
+                    </span>
+                </div>
+            {:else if similarEvents.length === 0}
+                <div class="text-center text-muted p-4">
+                    <p class="fs-5">No similar events found</p>
+                    <p class="small">This event doesn't have any similar patterns in other test runs.</p>
+                </div>
+            {:else}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Build ID</th>
+                                <th>Start Time</th>
+                                <th>Version</th>
+                                <th>Issues</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each similarEvents as similarEvent}
+                                <tr>
+                                    <td>
+                                        <a
+                                            href="/tests/scylla-cluster-tests/{similarEvent.run_id}"
+                                            target="_blank"
+                                            title={similarEvent.run_id}
+                                        >
+                                            {#if similarEvent.build_id}
+                                                {similarEvent.build_id}
+                                            {:else}
+                                                {similarEvent.run_id.slice(0, 8)}...
+                                            {/if}
+                                        </a>
+                                    </td>
+                                    <td class="date-column">
+                                        {#if similarEvent.start_time}
+                                            {timestampToISODate(similarEvent.start_time)}
+                                        {:else}
+                                            -
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        {#if similarEvent.version}
+                                            <span class="badge bg-secondary">{similarEvent.version}</span>
+                                        {:else}
+                                            -
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        {#if similarEvent.issues && similarEvent.issues.length > 0}
+                                            {#each similarEvent.issues as issue}
+                                                <div class="mb-1 d-flex align-items-center">
+                                                        <button
+                                                            class="btn btn-sm btn-primary me-2"
+                                                            title="Add this issue to the current run"
+                                                            onclick={() => issueAttach?.(getUrl(issue))}
+                                                        >
+                                                            <Fa icon={faPlus}/>
+                                                        </button>
+                                                        <IssueBadge {issue} />
+                                                </div>
+                                            {/each}
+                                        {:else}
+                                            <span class="text-muted small">No issues</span>
+                                        {/if}
+                                    </td>
+                                </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
+            {/if}
+        {/snippet}
+    </ModalWindow>
+{/if}
+
+<style>
+    .date-column {
+        white-space: nowrap;
+    }
+</style>

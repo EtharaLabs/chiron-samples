@@ -1,0 +1,121 @@
+{
+ "id": "s3_family_63",
+ "cases": [
+  {
+   "case": "lars_update_field_mapping",
+   "request": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.2112179,
+    1773572407.4227831
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "hardware_after_mapping",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1828394345\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "content-type": "application/json",
+     "content-length": "178",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"Intel Xeon Phi 7120\",\n  \"displayName\": \"Xeon Phi\",\n  \"hardwareMake\": \"INTEL\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 5000\n}"
+   },
+   "clock_window": [
+    1773572407.4228325,
+    1773572407.4386148
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "lookup_by_model_info",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=Intel%20Xeon%20Phi%207120"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1828394345\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "content-type": "application/json",
+     "content-length": "178",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"Intel Xeon Phi 7120\",\n  \"displayName\": \"Xeon Phi\",\n  \"hardwareMake\": \"INTEL\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 5000\n}"
+   },
+   "clock_window": [
+    1773572407.4386723,
+    1773572407.445059
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "lookup_by_display_name_fails",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=Xeon%20Phi"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.4451063,
+    1773572407.4481964
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

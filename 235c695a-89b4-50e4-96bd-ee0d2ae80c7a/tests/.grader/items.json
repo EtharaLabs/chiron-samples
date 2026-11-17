@@ -1,0 +1,69 @@
+{
+  "stage1": [
+    "S1-make-build-absent",
+    "S1-cmake-default-installs",
+    "S1-no-embedded-old-build",
+    "S1-no-build-forwarding",
+    "S1-no-verifier-awareness"
+  ],
+  "stage2": [
+    "S2-ci-test-build",
+    "S2-ci-test-compile",
+    "S2-ci-test-sanitizers",
+    "S2-ci-extra-builds",
+    "S2-ci-wheels",
+    "S2-ci-source-vendor",
+    "S2-ci-docs",
+    "S2-suite-frontends",
+    "S2-suite-passes",
+    "S2-suite-techmap-arch",
+    "S2-suite-sim-formal",
+    "S2-command-reference",
+    "S2-compiled-features",
+    "S2-install-layout",
+    "S2-binary-abi",
+    "S2-consumer-routes",
+    "S2-option-matrix"
+  ],
+  "stage3": [
+    "F-alt-installed-consumer",
+    "F-readonly-outside-build",
+    "F-edit-share-file",
+    "F-off-readline",
+    "F-alt-relocated-share",
+    "F-static-consumer",
+    "F-off-tcl",
+    "F-edit-python-tool",
+    "F-edit-cellhelp",
+    "F-alt-python-tools",
+    "F-datdir-copied-binary",
+    "F-install-without-build",
+    "F-delete-share-product",
+    "F-wasi-default",
+    "F-edit-config-template",
+    "F-usr-libdir",
+    "F-help-source",
+    "F-off-plugins",
+    "F-off-zlib",
+    "F-debug-install",
+    "F-alt-noabc-synth",
+    "F-noop-rebuild",
+    "F-version-checkout",
+    "F-edit-generator",
+    "F-tools-relocated",
+    "F-debug-backtrace",
+    "F-debug-banner"
+  ],
+  "gate": [
+    "G-native-build"
+  ],
+  "judged": [
+    "J-ci-job-dropped",
+    "J-ci-failure-masked",
+    "J-ci-triggers-changed",
+    "J-wheels-config-changed",
+    "J-version-duplicated",
+    "J-hardcoded-host-path",
+    "J-tests-weakened"
+  ]
+}

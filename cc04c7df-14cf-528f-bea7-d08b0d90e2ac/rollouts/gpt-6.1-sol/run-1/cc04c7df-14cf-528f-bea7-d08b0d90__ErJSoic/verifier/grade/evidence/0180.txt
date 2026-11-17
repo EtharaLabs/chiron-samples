@@ -1,0 +1,7 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/RequiredRoles.java (added against State A) ===
+1 +| package me.zodac.folding.rest;
+2 +| import java.lang.annotation.*;
+3 +| /** Application roles required by a controller operation. */
+4 +| @Retention(RetentionPolicy.RUNTIME)
+5 +| @Target(ElementType.METHOD)
+6 +| public @interface RequiredRoles { String[] value(); }

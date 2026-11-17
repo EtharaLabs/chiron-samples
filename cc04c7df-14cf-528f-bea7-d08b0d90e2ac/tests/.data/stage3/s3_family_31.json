@@ -1,0 +1,218 @@
+{
+ "id": "s3_family_31",
+ "source": "f047_double_formatting_in_hardware_output",
+ "steps": [
+  {
+   "case": "setup_hardware_one",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "FmtHwOne",
+     "displayName": "FmtHwOne",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "setup_hardware_two",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "FmtHwTwo",
+     "displayName": "FmtHwTwo",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 2.5,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "setup_hardware_three",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "FmtHwThree",
+     "displayName": "FmtHwThree",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 125.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "hardware_collection_number_forms",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   }
+  },
+  {
+   "case": "hardware_two_by_id",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/2"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "FmtHwOne",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "FmtHwOne",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"FmtHwOne\",\n  \"displayName\": \"FmtHwOne\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "167",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "setup_hardware_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "FmtHwTwo",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "FmtHwTwo",
+     "hardwareType": "GPU",
+     "multiplier": 2.5
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"FmtHwTwo\",\n  \"displayName\": \"FmtHwTwo\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.5,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "167",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "setup_hardware_three",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "FmtHwThree",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "FmtHwThree",
+     "hardwareType": "GPU",
+     "multiplier": 125.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 3,\n  \"hardwareName\": \"FmtHwThree\",\n  \"displayName\": \"FmtHwThree\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 125.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "173",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/3"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "hardware_collection_number_forms",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"FmtHwOne\",\n    \"displayName\": \"FmtHwOne\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"FmtHwTwo\",\n    \"displayName\": \"FmtHwTwo\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.5,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 3,\n    \"hardwareName\": \"FmtHwThree\",\n    \"displayName\": \"FmtHwThree\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 125.0,\n    \"averagePpd\": 100\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "569",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "etag": "\"633871054\"",
+     "x-total-count": "3"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_two_by_id",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/2"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"FmtHwTwo\",\n  \"displayName\": \"FmtHwTwo\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.5,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "167",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "etag": "\"202711210\""
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Three multipliers whose textual form differs between JSON writers (1.0, 2.5 written as 2.50, 125.0 written as 1.25e2) must come back in Gson's spelling in the collection read."
+}

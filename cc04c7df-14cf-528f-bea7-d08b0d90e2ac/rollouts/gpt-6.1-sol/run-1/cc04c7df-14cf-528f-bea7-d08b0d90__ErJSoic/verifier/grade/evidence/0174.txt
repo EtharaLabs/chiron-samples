@@ -1,0 +1,29 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/stats/http/response/UnitsApiInstance.java (changed against State A) ===
+@@
+31  | import lombok.Setter;
+32  | import lombok.ToString;
+33  | 
+   -| /**
+   -|  * Response returned from {@link me.zodac.folding.stats.http.request.UnitsUrlBuilder} for a user/passkey.
+   -|  *
+   -|  * <p>
+   -|  * Expected response:
+   -|  * <pre>
+   -|  *     [
+   -|  *         {
+   -|  *             "finished":21260, (Value we are interested in)
+   -|  *             "expired":60,
+   -|  *             "active":1
+   -|  *         },
+   -|  *         {
+   -|  *             "finished":512,
+   -|  *             "expired":4,
+   -|  *             "active":0
+   -|  *         }
+   -|  *     ]
+   -|  * </pre>
+   -|  */
+34 +| 
+35  | @NoArgsConstructor
+36  | @Getter
+37  | @Setter

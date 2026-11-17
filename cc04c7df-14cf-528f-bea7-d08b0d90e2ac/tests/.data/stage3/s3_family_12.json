@@ -1,0 +1,155 @@
+{
+ "id": "s3_family_12",
+ "source": "f020_head_on_stats_reads",
+ "steps": [
+  {
+   "case": "head_competition_stats",
+   "http": {
+    "method": "HEAD",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "head_team_leaderboard",
+   "http": {
+    "method": "HEAD",
+    "path": "/stats/leaderboard"
+   }
+  },
+  {
+   "case": "head_category_leaderboard",
+   "http": {
+    "method": "HEAD",
+    "path": "/stats/category"
+   }
+  },
+  {
+   "case": "head_monthly_result",
+   "http": {
+    "method": "HEAD",
+    "path": "/results/result/2026/3"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "head_historic_unknown_user",
+   "http": {
+    "method": "HEAD",
+    "path": "/historic/users/1/2026"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "head_competition_stats",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "86",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "head_team_leaderboard",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/stats/leaderboard"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "x-total-count": "0"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "head_category_leaderboard",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/stats/category"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "57",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "head_monthly_result",
+   "compare": "status",
+   "request": {
+    "method": "HEAD",
+    "path": "/results/result/2026/3"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "323",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "head_historic_unknown_user",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/historic/users/1/2026"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "HEAD on the stats reads that do not use cachedOk and on the monthly result: these must answer 200 with a JSON Content-Type but no ETag and no Cache-Control."
+}

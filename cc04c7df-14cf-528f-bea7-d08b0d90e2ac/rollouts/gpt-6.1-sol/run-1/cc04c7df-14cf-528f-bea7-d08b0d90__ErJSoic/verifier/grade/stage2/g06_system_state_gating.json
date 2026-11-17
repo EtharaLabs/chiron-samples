@@ -1,0 +1,1101 @@
+{
+ "id": "g06_system_state_gating",
+ "cases": [
+  {
+   "case": "read_hardware_allowed_in_normal_state",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.6316586,
+    1773572407.637704
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_users_allowed_in_normal_state",
+   "request": {
+    "method": "GET",
+    "path": "/users"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.6377652,
+    1773572407.6425228
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_teams_allowed_in_normal_state",
+   "request": {
+    "method": "GET",
+    "path": "/teams"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.6425614,
+    1773572407.6466975
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_competition_stats_allowed_when_empty",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "86",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}"
+   },
+   "clock_window": [
+    1773572407.6467319,
+    1773572407.6579735
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_leaderboard_allowed_when_empty",
+   "request": {
+    "method": "GET",
+    "path": "/stats/leaderboard"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572407.6579962,
+    1773572407.6640973
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_category_leaderboard_allowed_when_empty",
+   "request": {
+    "method": "GET",
+    "path": "/stats/category"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "57",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"AMD_GPU\": [],\n  \"NVIDIA_GPU\": [],\n  \"WILDCARD\": []\n}"
+   },
+   "clock_window": [
+    1773572407.6641288,
+    1773572407.6702416
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_login_is_read_required_and_permitted",
+   "request": {
+    "method": "POST",
+    "path": "/login/admin",
+    "json": {
+     "encodedUserNameAndPassword": "Basic cm9vdDpzaHJvb3Q="
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.670276,
+    1773572407.7407842
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "write_hardware_allowed_in_normal_state",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "StateHardware1",
+     "displayName": "State Hardware 1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "179",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"StateHardware1\",\n  \"displayName\": \"State Hardware 1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572407.7408373,
+    1773572407.7976568
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_recomputed_after_write",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "86",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}"
+   },
+   "clock_window": [
+    1773572407.7977114,
+    1773572407.8081977
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_second_read_served_from_cache",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "86",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}"
+   },
+   "clock_window": [
+    1773572407.8082385,
+    1773572407.8255916
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "write_team_allowed_in_normal_state",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "StateTeamOne",
+     "teamDescription": "state team",
+     "forumLink": "https://example.com/forum"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/1",
+     "content-type": "application/json",
+     "content-length": "122",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"StateTeamOne\",\n  \"teamDescription\": \"state team\",\n  \"forumLink\": \"https://example.com/forum\"\n}"
+   },
+   "clock_window": [
+    1773572407.825632,
+    1773572407.844797
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_recomputed_after_team_write",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "414",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"StateTeamOne\",\n        \"teamDescription\": \"state team\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 1,\n      \"activeUsers\": [],\n      \"retiredUsers\": []\n    }\n  ]\n}"
+   },
+   "clock_window": [
+    1773572407.8448522,
+    1773572407.8603518
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_cached_read_ignores_database_change",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "414",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"StateTeamOne\",\n        \"teamDescription\": \"state team\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 1,\n      \"activeUsers\": [],\n      \"retiredUsers\": []\n    }\n  ]\n}"
+   },
+   "clock_window": [
+    1773572407.8874524,
+    1773572407.8905628
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "write_hardware_again_to_leave_available_state",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "StateHardware2",
+     "displayName": "State Hardware 2",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 3.0,
+     "averagePpd": 5
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/2",
+     "content-type": "application/json",
+     "content-length": "176",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"StateHardware2\",\n  \"displayName\": \"State Hardware 2\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 3.0,\n  \"averagePpd\": 5\n}"
+   },
+   "clock_window": [
+    1773572407.8906097,
+    1773572407.915818
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_recomputed_after_write_still_uses_team_cache",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "414",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"StateTeamOne\",\n        \"teamDescription\": \"state team\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 1,\n      \"activeUsers\": [],\n      \"retiredUsers\": []\n    }\n  ]\n}"
+   },
+   "clock_window": [
+    1773572407.9158611,
+    1773572407.9391468
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "team_read_after_database_change_uses_cache",
+   "request": {
+    "method": "GET",
+    "path": "/teams/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-1076127760\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "content-type": "application/json",
+     "content-length": "122",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"StateTeamOne\",\n  \"teamDescription\": \"state team\",\n  \"forumLink\": \"https://example.com/forum\"\n}"
+   },
+   "clock_window": [
+    1773572407.939191,
+    1773572407.94502
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "debug_caches_is_not_state_gated",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.9450693,
+    1773572407.967441
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "debug_lars_is_not_state_gated",
+   "request": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.9674897,
+    1773572408.0856235
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_update_without_auth",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update"
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.0856695,
+    1773572408.087679
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_update_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.0877068,
+    1773572408.0957732
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_update_synchronous_returns_to_write_executed",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.095801,
+    1773572408.1271245
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_update_async_true",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=true",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.12717,
+    1773572408.1415033
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_update_async_upper_case_true",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=TRUE",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.1415493,
+    1773572408.1523964
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_update_async_invalid_value",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=notaboolean",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 500,
+    "headers": {
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "47",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Internal Server Error</body></html>"
+   },
+   "clock_window": [
+    1773572408.152441,
+    1773572408.1622949
+   ],
+   "problems": [
+    "status 500 != recorded 200",
+    "content-type 'text/html;charset=UTF-8' != recorded None",
+    "header access-control-allow-origin None != recorded '*'",
+    "header access-control-allow-methods None != recorded 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD'",
+    "header access-control-allow-headers None != recorded 'origin, content-type, accept, Authorization'",
+    "header access-control-allow-credentials None != recorded 'true'",
+    "body differs: got '<html><body>Internal Server Error</body></html>' recorded ''"
+   ],
+   "agrees": false
+  },
+  {
+   "case": "manual_update_async_empty_value",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 500,
+    "headers": {
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "47",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Internal Server Error</body></html>"
+   },
+   "clock_window": [
+    1773572408.1623392,
+    1773572408.1704938
+   ],
+   "problems": [
+    "status 500 != recorded 200",
+    "content-type 'text/html;charset=UTF-8' != recorded None",
+    "header access-control-allow-origin None != recorded '*'",
+    "header access-control-allow-methods None != recorded 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD'",
+    "header access-control-allow-headers None != recorded 'origin, content-type, accept, Authorization'",
+    "header access-control-allow-credentials None != recorded 'true'",
+    "body differs: got '<html><body>Internal Server Error</body></html>' recorded ''"
+   ],
+   "agrees": false
+  },
+  {
+   "case": "read_hardware_allowed_after_manual_update",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"1751323078\"",
+     "cache-control": "no-transform, max-age=1429191",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "397",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"StateHardware1\",\n    \"displayName\": \"State Hardware 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"StateHardware2\",\n    \"displayName\": \"State Hardware 2\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 3.0,\n    \"averagePpd\": 5\n  }\n]"
+   },
+   "clock_window": [
+    1773572408.1705356,
+    1773572408.1732795
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_reset_without_auth",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/reset"
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.1733348,
+    1773572408.174697
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_reset_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/reset",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.1747203,
+    1773572408.182197
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_reset_as_admin_returns_to_write_executed",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/reset",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.1822248,
+    1773572408.2201228
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "read_hardware_allowed_immediately_after_reset",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"1751323078\"",
+     "cache-control": "no-transform, max-age=1429191",
+     "x-total-count": "2",
+     "content-type": "application/json",
+     "content-length": "397",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"StateHardware1\",\n    \"displayName\": \"State Hardware 1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"StateHardware2\",\n    \"displayName\": \"State Hardware 2\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 3.0,\n    \"averagePpd\": 5\n  }\n]"
+   },
+   "clock_window": [
+    1773572408.2201674,
+    1773572408.236243
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "write_allowed_immediately_after_reset",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "StateTeamTwo"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/2",
+     "content-type": "application/json",
+     "content-length": "43",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"StateTeamTwo\"\n}"
+   },
+   "clock_window": [
+    1773572408.2363122,
+    1773572408.2496817
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "stats_recomputed_after_reset",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "649",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"StateTeamOne\",\n        \"teamDescription\": \"state team\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 1,\n      \"activeUsers\": [],\n      \"retiredUsers\": []\n    },\n    {\n      \"team\": {\n        \"id\": 2,\n        \"teamName\": \"StateTeamTwo\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 1,\n      \"activeUsers\": [],\n      \"retiredUsers\": []\n    }\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.2497087,
+    1773572408.2554104
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_reset_trailing_slash_variant",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/reset/",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.255452,
+    1773572408.267789
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_save_monthly_result_is_write_required",
+   "request": {
+    "method": "POST",
+    "path": "/results/manual/save",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.2678227,
+    1773572408.2749157
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "monthly_result_read_is_allowed",
+   "request": {
+    "method": "GET",
+    "path": "/results/result/2026/3"
+   },
+   "compare": "status",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "323",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"NVIDIA_GPU\": [],\n    \"WILDCARD\": [],\n    \"AMD_GPU\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 3,\n      \"day\": 15\n    },\n    \"time\": {\n      \"hour\": 11,\n      \"minute\": 0,\n      \"second\": 8,\n      \"nano\": 287495354\n    }\n  }\n}"
+   },
+   "clock_window": [
+    1773572408.2749403,
+    1773572408.2899024
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "historic_stats_read_is_allowed_for_unknown_user",
+   "request": {
+    "method": "GET",
+    "path": "/historic/users/9999/2026/3/15"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.2899144,
+    1773572408.2959986
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "unknown_path_is_not_state_gated_and_redirects",
+   "request": {
+    "method": "GET",
+    "path": "/nosuchpath"
+   },
+   "compare": "full",
+   "response": {
+    "status": 303,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://frontend.example",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.2960255,
+    1773572408.308912
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": false
+}

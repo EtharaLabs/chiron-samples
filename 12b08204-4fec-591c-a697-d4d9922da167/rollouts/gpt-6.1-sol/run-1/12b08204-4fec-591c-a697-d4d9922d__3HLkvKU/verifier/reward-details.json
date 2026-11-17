@@ -1,0 +1,785 @@
+{
+  "reward": {
+    "kind": "group",
+    "score": 0.0,
+    "aggregation": "weighted-mean",
+    "components": [
+      {
+        "name": "judge",
+        "weight": 1.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "Q01",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "Q01: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q02",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "Q02: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q03",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "Q03: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q04",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "Q04: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q05",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "Q05: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q06",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "Q06: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q07",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "Q07: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q08",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "Q08: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q09",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "Q09: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q11",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "Q11: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            },
+            {
+              "name": "Q12",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "Q12: not judged, the Stage I or Stage II veto failed on G03, G14, G15"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      },
+      {
+        "name": "test_output",
+        "weight": 4.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "S1",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S1 holds"
+            },
+            {
+              "name": "S2",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S2 is not committed"
+            },
+            {
+              "name": "S3",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S3 is not committed"
+            },
+            {
+              "name": "S4",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S4 is not committed"
+            },
+            {
+              "name": "S5",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S5 holds"
+            },
+            {
+              "name": "S6",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S6 is not committed"
+            },
+            {
+              "name": "S7",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S7 is not committed"
+            },
+            {
+              "name": "S8",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S8 is not committed"
+            },
+            {
+              "name": "S9",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S9 holds"
+            },
+            {
+              "name": "S10",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "S10 holds"
+            },
+            {
+              "name": "G01",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G01 holds"
+            },
+            {
+              "name": "G02",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G02 holds"
+            },
+            {
+              "name": "G03",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G03 holds"
+            },
+            {
+              "name": "G04",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G04 holds"
+            },
+            {
+              "name": "G05",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G05 holds"
+            },
+            {
+              "name": "G06",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G06 holds"
+            },
+            {
+              "name": "G07",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G07 holds"
+            },
+            {
+              "name": "G08",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G08 holds"
+            },
+            {
+              "name": "G09",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G09 holds"
+            },
+            {
+              "name": "G10",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G10 holds"
+            },
+            {
+              "name": "G11",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G11 holds"
+            },
+            {
+              "name": "G12",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G12 holds"
+            },
+            {
+              "name": "G13",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G13 holds"
+            },
+            {
+              "name": "G14",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G14 holds"
+            },
+            {
+              "name": "G15",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G15 holds"
+            },
+            {
+              "name": "G16",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G16 holds"
+            },
+            {
+              "name": "G17",
+              "value": 0.0,
+              "raw": false,
+              "weight": 5.0,
+              "description": "G17 holds"
+            },
+            {
+              "name": "F001",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F001 holds"
+            },
+            {
+              "name": "F002",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F002 holds"
+            },
+            {
+              "name": "F003",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F003 holds"
+            },
+            {
+              "name": "F004",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F004 holds"
+            },
+            {
+              "name": "F005",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F005 holds"
+            },
+            {
+              "name": "F006",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F006 holds"
+            },
+            {
+              "name": "F007",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F007 holds"
+            },
+            {
+              "name": "F008",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F008 holds"
+            },
+            {
+              "name": "F009",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F009 holds"
+            },
+            {
+              "name": "F010",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F010 holds"
+            },
+            {
+              "name": "F011",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F011 holds"
+            },
+            {
+              "name": "F012",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F012 holds"
+            },
+            {
+              "name": "F013",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F013 holds"
+            },
+            {
+              "name": "F014",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F014 holds"
+            },
+            {
+              "name": "F015",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F015 holds"
+            },
+            {
+              "name": "F016",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F016 holds"
+            },
+            {
+              "name": "F017",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F017 holds"
+            },
+            {
+              "name": "F018",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F018 holds"
+            },
+            {
+              "name": "F019",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F019 holds"
+            },
+            {
+              "name": "F020",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F020 holds"
+            },
+            {
+              "name": "F021",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F021 holds"
+            },
+            {
+              "name": "F022",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F022 holds"
+            },
+            {
+              "name": "F023",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F023 holds"
+            },
+            {
+              "name": "F024",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F024 holds"
+            },
+            {
+              "name": "F025",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F025 holds"
+            },
+            {
+              "name": "F026",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F026 holds"
+            },
+            {
+              "name": "F027",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F027 holds"
+            },
+            {
+              "name": "F028",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F028 holds"
+            },
+            {
+              "name": "F029",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F029 holds"
+            },
+            {
+              "name": "F030",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F030 holds"
+            },
+            {
+              "name": "F031",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F031 holds"
+            },
+            {
+              "name": "F032",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F032 holds"
+            },
+            {
+              "name": "F033",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F033 holds"
+            },
+            {
+              "name": "F034",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F034 holds"
+            },
+            {
+              "name": "F035",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F035 holds"
+            },
+            {
+              "name": "F036",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F036 holds"
+            },
+            {
+              "name": "F037",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F037 holds"
+            },
+            {
+              "name": "F038",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F038 holds"
+            },
+            {
+              "name": "F039",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F039 holds"
+            },
+            {
+              "name": "F040",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F040 holds"
+            },
+            {
+              "name": "F041",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F041 holds"
+            },
+            {
+              "name": "F042",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F042 holds"
+            },
+            {
+              "name": "F043",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F043 holds"
+            },
+            {
+              "name": "F044",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F044 holds"
+            },
+            {
+              "name": "F045",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F045 holds"
+            },
+            {
+              "name": "F046",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F046 holds"
+            },
+            {
+              "name": "F047",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F047 holds"
+            },
+            {
+              "name": "F048",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F048 holds"
+            },
+            {
+              "name": "F049",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F049 holds"
+            },
+            {
+              "name": "F050",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F050 holds"
+            },
+            {
+              "name": "F051",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F051 holds"
+            },
+            {
+              "name": "F052",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F052 holds"
+            },
+            {
+              "name": "F053",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F053 holds"
+            },
+            {
+              "name": "F054",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F054 holds"
+            },
+            {
+              "name": "F055",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F055 holds"
+            },
+            {
+              "name": "F056",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F056 holds"
+            },
+            {
+              "name": "F057",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F057 holds"
+            },
+            {
+              "name": "F058",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F058 holds"
+            },
+            {
+              "name": "F059",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F059 holds"
+            },
+            {
+              "name": "F060",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F060 holds"
+            },
+            {
+              "name": "F061",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F061 holds"
+            },
+            {
+              "name": "F062",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F062 holds"
+            },
+            {
+              "name": "F063",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F063 holds"
+            },
+            {
+              "name": "F064",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F064 holds"
+            },
+            {
+              "name": "F065",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "F065 holds"
+            },
+            {
+              "name": "K1",
+              "value": 0.0,
+              "raw": false,
+              "weight": 1.0,
+              "description": "K1 holds"
+            },
+            {
+              "name": "K2",
+              "value": 0.0,
+              "raw": false,
+              "weight": 1.0,
+              "description": "K2 holds"
+            },
+            {
+              "name": "K3",
+              "value": 0.0,
+              "raw": false,
+              "weight": 3.0,
+              "description": "K3 holds"
+            },
+            {
+              "name": "K4",
+              "value": 0.0,
+              "raw": false,
+              "weight": 1.0,
+              "description": "K4 holds"
+            },
+            {
+              "name": "K5",
+              "value": 0.0,
+              "raw": false,
+              "weight": 1.0,
+              "description": "K5 holds"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      }
+    ]
+  }
+}

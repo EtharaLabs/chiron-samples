@@ -1,0 +1,1227 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "0a11ce00-0000-4000-8000-000000000002",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.invalid/job/1",
+       "build_number": 1,
+       "cloud_setup": {
+        "backend": "aws",
+        "db_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        },
+        "loader_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        },
+        "monitor_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        }
+       },
+       "config_files": [],
+       "end_time": "1970-01-01T00:00:00.000Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "<id1>",
+       "investigation_status": "not_investigated",
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "http://git.invalid/sct.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": null,
+       "region_name": [
+        "undefined_region"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "cafef00d",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": null,
+       "start_time": "<now>",
+       "started_by": "stage2",
+       "status": "created",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": null,
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "activity": {
+        "events": {},
+        "raw_events": [],
+        "run_id": "<id1>"
+       },
+       "comments": [],
+       "plugin_name": "scylla-cluster-tests",
+       "test_info": {
+        "group": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests",
+         "description": null,
+         "enabled": true,
+         "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "name": "longevity-tests",
+         "pretty_name": "Longevity Tests",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        },
+        "release": {
+         "assignee": [
+          "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         ],
+         "description": "Synthetic data for local development",
+         "dormant": false,
+         "enabled": true,
+         "github_repo_url": null,
+         "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "name": "seed-release",
+         "perpetual": false,
+         "picture_id": null,
+         "pretty_name": "Seed Release",
+         "valid_version_regex": null
+        },
+        "test": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+         "description": null,
+         "enabled": true,
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "name": "longevity-100gb-12h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 100GB 12h",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        }
+       },
+       "test_run": {
+        "allocated_resources": [],
+        "assignee": "0a11ce00-0000-4000-8000-000000000002",
+        "branch_name": "master",
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.invalid/job/1",
+        "build_number": 1,
+        "cloud_setup": {
+         "backend": "aws",
+         "db_node": {
+          "image_id": null,
+          "instance_type": null,
+          "node_amount": null,
+          "post_behaviour": null
+         },
+         "loader_node": {
+          "image_id": null,
+          "instance_type": null,
+          "node_amount": null,
+          "post_behaviour": null
+         },
+         "monitor_node": {
+          "image_id": null,
+          "instance_type": null,
+          "node_amount": null,
+          "post_behaviour": null
+         }
+        },
+        "config_files": [],
+        "end_time": "1970-01-01T00:00:00.000Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "<id1>",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": "http://git.invalid/sct.git",
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [
+         "undefined_region"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": "cafef00d",
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "<now>",
+        "started_by": "stage2",
+        "status": "created",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "submit-get",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/5eed0000-0000-4000-8000-00000000c001/info"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "submit-duplicate",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "running",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "running",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "status-cycle",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/get_status"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "new_status": "running"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/set_status"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/get_status"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "<now>",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "heartbeat",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/heartbeat"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Submitted",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "0a11ce00-0000-4000-8000-000000000002",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.invalid/job/1",
+       "build_number": 1,
+       "cloud_setup": {
+        "backend": "aws",
+        "db_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        },
+        "loader_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        },
+        "monitor_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        }
+       },
+       "config_files": [],
+       "end_time": "1970-01-01T00:00:00.000Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "<id1>",
+       "investigation_status": "not_investigated",
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "http://git.invalid/sct.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": null,
+       "region_name": [
+        "undefined_region"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "cafef00d",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": "2025.1.1",
+       "start_time": "<now>",
+       "started_by": "stage2",
+       "status": "created",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": null,
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "product-version",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "product_version": "2025.1.1"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/update_product_version"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Submitted",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "0a11ce00-0000-4000-8000-000000000002",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.invalid/job/1",
+       "build_number": 1,
+       "cloud_setup": {
+        "backend": "aws",
+        "db_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        },
+        "loader_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        },
+        "monitor_node": {
+         "image_id": null,
+         "instance_type": null,
+         "node_amount": null,
+         "post_behaviour": null
+        }
+       },
+       "config_files": [],
+       "end_time": "1970-01-01T00:00:00.000Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "<id1>",
+       "investigation_status": "not_investigated",
+       "logs": [
+        [
+         "db-log.tar.zst",
+         "https://logs.invalid/db-log.tar.zst"
+        ]
+       ],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "http://git.invalid/sct.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": null,
+       "region_name": [
+        "undefined_region"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "cafef00d",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": null,
+       "start_time": "<now>",
+       "started_by": "stage2",
+       "status": "created",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": null,
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "logs-submit",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "logs": [
+       {
+        "log_link": "https://logs.invalid/db-log.tar.zst",
+        "log_name": "db-log.tar.zst"
+       }
+      ]
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/logs/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Finalized",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "finalize",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/finalize"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/get_status"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "scylla-server package not found in packages - cannot determine SUT timestamp"
+       ],
+       "exception": "ValueError",
+       "message": "scylla-server package not found in packages - cannot determine SUT timestamp",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "status": "ok",
+      "tables": []
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "submit-results",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "meta": {
+       "columns_meta": [
+        {
+         "higher_is_better": true,
+         "name": "ops",
+         "type": "FLOAT",
+         "unit": "op/s"
+        }
+       ],
+       "description": "Stage II table",
+       "name": "stage2-table",
+       "rows_meta": [
+        "write"
+       ],
+       "sut_package_name": "",
+       "validation_rules": {}
+      },
+      "results": [
+       {
+        "column": "ops",
+        "row": "write",
+        "status": "UNSET",
+        "value": 1234.5
+       }
+      ],
+      "sut_timestamp": 0
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/5eed0000-0000-4000-8000-00000000c001/submit_results"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/3ed77c66-c3b8-404f-8f43-266b75771178/5eed0000-0000-4000-8000-00000000c001/fetch_results"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Incorrect padding"
+       ],
+       "exception": "Error",
+       "message": "Incorrect padding",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "config-submit-all",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "content": "a: 1\n",
+      "name": "test.yaml"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/5eed0000-0000-4000-8000-00000000c001/config/submit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/5eed0000-0000-4000-8000-00000000c001/config/all"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Authorization required",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    }
+   ],
+   "id": "submit-no-auth",
+   "steps": [
+    {
+     "client": "anon",
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c001",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "submit-unknown-job",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "branch_name": "master",
+      "commit_id": "cafef00d",
+      "job_name": "no/such/job",
+      "job_url": "http://jenkins.invalid/job/1",
+      "origin_url": "http://git.invalid/sct.git",
+      "run_id": "5eed0000-0000-4000-8000-00000000c002",
+      "schema_version": "v8",
+      "sct_config": {
+       "cluster_backend": "aws"
+      },
+      "started_by": "stage2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/scylla-cluster-tests/submit"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "Created",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "driver-matrix-submit",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+      "job_url": "http://jenkins.invalid/job/2",
+      "run_id": "5eed0000-0000-4000-8000-00000000c002",
+      "schema_version": "v2"
+     },
+     "method": "POST",
+     "path": "/api/v1/client/testrun/driver-matrix-tests/submit"
+    }
+   ]
+  }
+ ],
+ "group": "G09",
+ "name": "client-run-submission"
+}

@@ -1,0 +1,89 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+timeout = 600
+reasoning_effort = "high"
+files = ["/logs/verifier/grade/evidence"]
+prompt_template = "judge-prompt.md"
+
+[scoring]
+aggregation = "weighted-mean"
+[[criterion]]
+id = "q_collaborators_injected"
+name = "q_collaborators_injected"
+description = "Every collaborator that State A's container supplied to a class by @EJB or @Inject injection reaches the migrated class from the Spring container, through constructor, setter or field injection or through construction inside Spring configuration from injected beans."
+weight = 5
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_hand_written_singleton"
+name = "q_hand_written_singleton"
+description = "A component that State A ran as a singleton or stateless session bean is held in the migrated code as a hand-written singleton: a static field or static accessor in the migrated code constructs and holds its one instance."
+weight = 3
+negate = true
+type = "binary"
+
+[[criterion]]
+id = "q_authentication_single_point"
+name = "q_authentication_single_point"
+description = "The authentication and role check that State A applied to requests in its SecurityInterceptor request filter is applied in one place for every request, through a Spring web extension point: a servlet filter, a handler interceptor or Spring Security configuration."
+weight = 5
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_state_gating_single_point"
+name = "q_state_gating_single_point"
+description = "The system-state gating that State A applied to requests in its StateInterceptor request filter is applied in one place for every request, through a Spring web extension point: a servlet filter or a handler interceptor."
+weight = 3
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_cors_single_point"
+name = "q_cors_single_point"
+description = "The cross-origin response headers that State A's CorsFilter response filter added to every response are added in one place, through a Spring web extension point or Spring's own cross-origin configuration."
+weight = 1
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_scheduling_support"
+name = "q_scheduling_support"
+description = "The recurring and calendar work that State A ran on EJB timers (statistics parsing, start-of-month and end-of-month processing, and the LARS hardware update) is scheduled through Spring's scheduling support: @Scheduled, a TaskScheduler or a SchedulingConfigurer."
+weight = 3
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_async_execution"
+name = "q_async_execution"
+description = "The statistics parsing that State A ran asynchronously through an EJB @Asynchronous method runs asynchronously under Spring's asynchronous execution support: an @Async method with asynchronous execution enabled, or a Spring-managed task executor."
+weight = 3
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_startup_lifecycle"
+name = "q_startup_lifecycle"
+description = "The cache warm-up and system-state initialisation that State A ran in its @Startup singleton runs once at application start through Spring's application lifecycle: an application runner, an application event listener or a bean initialisation callback."
+weight = 3
+negate = false
+type = "binary"
+
+[[criterion]]
+id = "q_hand_maintained_route_table"
+name = "q_hand_maintained_route_table"
+description = "A filter, interceptor or controller in the migrated code decides whether a request matches an endpoint by comparing the request path against a hand-maintained list of paths or patterns."
+weight = 1
+negate = true
+type = "binary"
+
+[[criterion]]
+id = "q_request_state_in_shared_field"
+name = "q_request_state_in_shared_field"
+description = "A migrated endpoint class that the Spring container holds as one shared instance stores request-specific data (the request URI, headers, parameters or credentials) in an instance field that a later request overwrites."
+weight = 5
+negate = true
+type = "binary"

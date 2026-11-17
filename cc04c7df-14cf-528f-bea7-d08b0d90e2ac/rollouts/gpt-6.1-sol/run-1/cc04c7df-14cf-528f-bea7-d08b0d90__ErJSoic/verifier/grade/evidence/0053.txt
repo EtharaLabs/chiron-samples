@@ -1,0 +1,30 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/IntegerRankingCollector.java (changed against State A) ===
+@@
+38  | import java.util.function.Supplier;
+39  | import java.util.stream.Collector;
+40  | 
+   -| /**
+   -|  * Ranking logic for teams/users to rank by a specified function (getting points, or units, etc.).
+   -|  *
+   -|  * @param <T> the type of the {@link Object}
+   -|  * @see <a href="https://stackoverflow.com/a/41608187/2000246">How to rank collection of objects</a>
+   -|  */
+41 +| 
+42  | final class IntegerRankingCollector<T> implements Collector<T, List<T>, List<T>> {
+43  | 
+44  |     private static final Set<Characteristics> COLLECTOR_CHARACTERISTICS = Collections.unmodifiableSet(EnumSet.of(Characteristics.IDENTITY_FINISH));
+@@
+46  |     private final BiFunction<T, Integer, T> creator;
+47  |     private final Function<T, Integer> ranker;
+48  | 
+   -|     /**
+   -|      * Constructs an {@link IntegerRankingCollector}.
+   -|      *
+   -|      * @param comparator a {@link Comparator} defining what value to be compared
+   -|      * @param ranker     the existing rank of the object being ranked
+   -|      * @param creator    the {@link BiFunction} defining the output rank of the object
+   -|      */
+49 +|     
+50  |     IntegerRankingCollector(final Comparator<? super T> comparator, final Function<T, Integer> ranker, final BiFunction<T, Integer, T> creator) {
+51  |         this.comparator = comparator;
+52  |         this.ranker = ranker;

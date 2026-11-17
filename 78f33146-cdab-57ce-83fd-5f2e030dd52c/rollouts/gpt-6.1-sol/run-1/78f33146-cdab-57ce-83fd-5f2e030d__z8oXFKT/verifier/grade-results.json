@@ -1,0 +1,431 @@
+{
+ "families": {
+  "S3-a2-cfg-backup-assign-testing": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a2-cfg-backup-defaults-testing": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a2-cfg-cache-min-only-config-file": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a2-collection-synthesis-relationship-order": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a3-datetime-isoformat-offset-response": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a3-info-types-samples-schema-defaults": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a4-settings-cache-age-default-max": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a4-settings-cache-age-int-order": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a4-settings-list-json-from-env": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a5-cache-age-env-inverted": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a5-dotenv-syntax": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a5-testing-backups-from-config-file": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a5-update-testing-then-backups": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a6-compare-versions-objectid-validation": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-a6-legacy-collection-without-collection-id": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-collection-last-modified-utc-offset": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-collection-null-collection-id-accepted": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-item-create-nested-group-display-name-dict": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-legacy-item-null-refcode-read": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-new-sample-underscore-id-null": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-settings-deployment-default-port": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b1-settings-deployment-scheme-case": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-collection-immutable-id-null-create": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-collection-relationship-objectid-json": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-constituent-objectid-json": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-group-immutable-id-null-patch": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-group-members-null-patch": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-relationship-objectid-json": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b2-stored-item-id-null-get-by-refcode": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-cache-age-config-min-env-max": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-deployment-homepage-trailing-slash": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-deployment-issue-tracker-host-case": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-deployment-source-repo-default-port": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-dotenv-null-clears-config-deployment-metadata": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-dotenv-null-email-domain-allow-list": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-dotenv-remote-filesystems-json": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-dotenv-secret-key-only": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-dotenv-smtp-json": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-dotenv-testing-backups-prefix": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-env-null-clears-config-email-domain-list": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b3-update-deployment-metadata-url": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-create-collection-null-collection-id-with-oid": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-new-sample-member-of-collection-without-collection-id": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-patch-collection-string-type-output": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-restore-version-missing-field-errors-body": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-restore-version-restored-data-invalid-output": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-save-item-constituent-none-not-allowed-message": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-save-item-int-parsing-wire-message": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-save-item-stored-collection-without-collection-id": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b4-stored-item-invalid-500-message": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-admin-groups-null-objectid-doc": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-admin-users-legacy-display-name-list": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-group-managers-nested-display-name-list": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-group-members-nested-null-objectid": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-group-patch-display-name-dict": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-nmr-block-metadata-dict-deprecation": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b5-remote-file-xrd-block-dict-deprecation": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-collection-create-string-type-error-text": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-collection-save-int-parsing-error-text": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-collection-save-string-type-error-text": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-restore-version-extra-key-wire": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-restore-version-missing-field-wire": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-restore-version-nonstring-field-wire": {
+   "reason": "differs from State A",
+   "status": "fail"
+  },
+  "S3-b6-restore-version-null-field-wire": {
+   "reason": "differs from State A",
+   "status": "fail"
+  },
+  "S3-b6-restore-version-value-error-wire": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-save-item-aliased-float-error-loc": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-save-item-int-parsing-error-text": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-settings-deployment-metadata-url-exact": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-settings-deployment-metadata-url-from-dotenv": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S3-b6-settings-testing-false-string-keeps-backups": {
+   "reason": "ok",
+   "status": "pass"
+  }
+ },
+ "groups": {
+  "S2-auth-keys": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-blocks": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-collections": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-equipment-cells": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-errors": {
+   "reason": "4 of 225 cases differ: ['harvest:test_info_and_health#76', 'harvest:test_info_and_health#81', 'harvest:test_info_and_health#86', 'harvest:test_item_versions#545']",
+   "samples": [
+    {
+     "expected": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"version\":",
+     "observed": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"versi",
+     "step": "harvest:test_info_and_health#76"
+    },
+    {
+     "expected": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"version\":",
+     "observed": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"versi",
+     "step": "harvest:test_info_and_health#81"
+    },
+    {
+     "expected": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"version\":",
+     "observed": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"versi",
+     "step": "harvest:test_info_and_health#86"
+    }
+   ],
+   "status": "fail"
+  },
+  "S2-export": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-files": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-groups-admin": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-health-remotes": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-info": {
+   "reason": "2 of 70 cases differ: ['harvest:test_blocks#128', 'harvest:test_info_and_health#71']",
+   "samples": [
+    {
+     "expected": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"version\":",
+     "observed": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"versi",
+     "step": "harvest:test_blocks#128"
+    },
+    {
+     "expected": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [], \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"version\":",
+     "observed": "{\"json\": {\"data\": [{\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"Add a rich text comment to the document.\", \"multi_file\": false, \"name\": \"Comment\", \"version\": \"0.1.0\"}, \"id\": \"comment\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".png\", \".jpeg\", \".jpg\", \".tif\", \".tiff\", \".mp4\", \".mov\", \".webm\", \".pdf\", \".svg\"], \"description\": \"Display an image or a video of a supported format.\", \"multi_file\": false, \"name\": \"Media\", \"version\": \"0.1.0\"}, \"id\": \"media\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": null, \"description\": \"A placeholder block type when the requested block is not supported by the current version of the server.\", \"multi_file\": false, \"name\": \"Not Supported\", \"version\": \"0.1.0\"}, \"id\": \"notsupported\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".csv\", \".txt\", \".tsv\", \".dat\", \".xls\", \".xlsx\", \".xlsm\", \".xlsb\", \".odf\", \".ods\", \".odt\"], \"description\": \"This block will load tabular data from common plain text files and Excel-like spreadsheets and allow you to create simple scatter plots of the columns within.\", \"multi_file\": false, \"name\": \"Tabular Data Block\", \"version\": \"0.1.0\"}, \"id\": \"tabular\", \"type\": \"block_type\"}, {\"attributes\": {\"accepted_file_extensions\": [\".mpr\", \".txt\"], \"description\": \"This block can plot CV data from:\\n\\n- .mpr files from Biologic potentiostats\\n- .txt files from CH Instruments potentiostats\\n\", \"multi_file\": false, \"name\": \"Cyclic Voltammetry\", \"versi",
+     "step": "harvest:test_info_and_health#71"
+    }
+   ],
+   "status": "fail"
+  },
+  "S2-item-create": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-item-read": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-item-save": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-listing-search": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-relationships": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-settings": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-users-roles": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S2-versioning": {
+   "reason": "ok",
+   "status": "pass"
+  }
+ },
+ "items": {
+  "S1-build": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-default-path": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-deprecated-aliases": {
+   "reason": "0 deprecated v1-alias sites (limit 5 of State A's 117)",
+   "sites": [],
+   "status": "pass"
+  },
+  "S1-installed": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-lockfile": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-manifest": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-shim": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-transplant": {
+   "reason": "retired-source share 0.0005 (threshold 0.01)",
+   "share": 0.0005,
+   "status": "pass"
+  },
+  "S1-v1-namespace": {
+   "reason": "ok",
+   "status": "pass"
+  },
+  "S1-verifier-isolation": {
+   "reason": "ok",
+   "status": "pass"
+  }
+ }
+}

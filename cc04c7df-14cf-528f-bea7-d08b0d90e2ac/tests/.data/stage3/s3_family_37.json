@@ -1,0 +1,231 @@
+{
+ "id": "s3_family_37",
+ "source": "f056_credentials_sent_to_endpoints_that_need_none",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "hardware_by_name_with_admin_auth",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=ProbeHw",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "stats_with_readonly_auth",
+   "http": {
+    "method": "GET",
+    "path": "/stats",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "monthly_result_with_unparseable_auth",
+   "http": {
+    "method": "GET",
+    "path": "/results/result/2026/3",
+    "auth": {
+     "raw": "Basic !!!!"
+    }
+   },
+   "compare": "status"
+  },
+  {
+   "case": "teams_with_bare_scheme",
+   "http": {
+    "method": "GET",
+    "path": "/teams",
+    "auth": {
+     "raw": "Basic "
+    }
+   }
+  },
+  {
+   "case": "historic_with_bearer_token",
+   "http": {
+    "method": "GET",
+    "path": "/historic/users/1/2026",
+    "auth": {
+     "raw": "Bearer abc"
+    }
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "hardware_by_name_with_admin_auth",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "auth": "admin",
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=ProbeHw"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-1602355971\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_with_readonly_auth",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "86",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "monthly_result_with_unparseable_auth",
+   "compare": "status",
+   "request": {
+    "auth": {
+     "raw": "Basic !!!!"
+    },
+    "method": "GET",
+    "path": "/results/result/2026/3"
+   },
+   "response": {
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"NVIDIA_GPU\": [],\n    \"AMD_GPU\": [],\n    \"WILDCARD\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 3,\n      \"day\": 15\n    },\n    \"time\": {\n      \"hour\": 11,\n      \"minute\": 0,\n      \"second\": 8,\n      \"nano\": 701986000\n    }\n  }\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "323",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "teams_with_bare_scheme",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "auth": {
+     "raw": "Basic "
+    },
+    "method": "GET",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"0\"",
+     "x-total-count": "0"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "historic_with_bearer_token",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Bearer abc"
+    },
+    "method": "GET",
+    "path": "/historic/users/1/2026"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "@PermitAll reads must ignore whatever Authorization header arrives: admin, read-only, an unparseable Basic value and a Bearer token must all produce exactly the anonymous response."
+}

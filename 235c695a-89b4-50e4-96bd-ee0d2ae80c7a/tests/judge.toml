@@ -1,0 +1,73 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+mode = "individual"
+timeout = 600
+reasoning_effort = "high"
+prompt_template = "judge-prompt.md"
+
+[scoring]
+aggregation = "weighted-mean"
+
+[[criterion]]
+id = "J-ci-job-dropped"
+name = "J-ci-job-dropped"
+description = "A job of the original CI that needs macOS, Windows, Nix, a self-hosted runner, Verific, CodeQL or cibuildwheel was deleted, still builds Yosys or ABC with make, or no longer builds the project. Removing the Visual Studio source-preparation job vs-prep and its vcxsrc artifact does not count."
+type = "binary"
+weight = 3
+negate = true
+files = ["/logs/verifier/grader/packet/ci-migrated", "/logs/verifier/grader/packet/ci-original"]
+
+[[criterion]]
+id = "J-ci-failure-masked"
+name = "J-ci-failure-masked"
+description = "A migrated workflow step hides a failure its original step would have reported: it adds an `|| true`, a continue-on-error, a set +e or an ignored exit status, drops a build, test or check command the original step ran, or passes sanitizer, warning or test options weaker than the original's."
+type = "binary"
+weight = 5
+negate = true
+files = ["/logs/verifier/grader/packet/ci-migrated", "/logs/verifier/grader/packet/ci-original"]
+
+[[criterion]]
+id = "J-ci-triggers-changed"
+name = "J-ci-triggers-changed"
+description = "A migrated workflow changes when or whether a job runs for a reason the new build does not require: its on triggers, a job or step if condition, its concurrency, its permissions or its duplicate-run skipping differ from the original's."
+type = "binary"
+weight = 3
+negate = true
+files = ["/logs/verifier/grader/packet/ci-migrated", "/logs/verifier/grader/packet/ci-original"]
+
+[[criterion]]
+id = "J-wheels-config-changed"
+name = "J-wheels-config-changed"
+description = "The migrated wheel packaging changes what the wheel jobs build or test beyond replacing the build commands: the cibuildwheel version, its build or skip selectors, the Python versions, the runner matrix, the manylinux images, the dependencies prepared before the build or the wheel test command differ from the original's."
+type = "binary"
+weight = 3
+negate = true
+files = ["/logs/verifier/grader/packet/packaging-migrated", "/logs/verifier/grader/packet/packaging-original"]
+
+[[criterion]]
+id = "J-version-duplicated"
+name = "J-version-duplicated"
+description = "The Python package version is written as a literal in the packaging files instead of being read from the place the CMake build defines the Yosys version."
+type = "binary"
+weight = 1
+negate = true
+files = ["/logs/verifier/grader/packet/packaging-migrated", "/logs/verifier/grader/packet/build"]
+
+[[criterion]]
+id = "J-hardcoded-host-path"
+name = "J-hardcoded-host-path"
+description = "A CMake file, or a script the CMake build runs, hard-codes an absolute path of one machine or installation, such as a compiler, interpreter, library, include directory or prefix, where the build should find the tool or use CMake's own variables. A #!/usr/bin/env shebang does not count."
+type = "binary"
+weight = 3
+negate = true
+files = ["/logs/verifier/grader/packet/build"]
+
+[[criterion]]
+id = "J-tests-weakened"
+name = "J-tests-weakened"
+description = "The migrated test harness under tests/ removes, skips or weakens an original test: a test directory or script no longer runs, an expected output or reference file changed, a comparison was loosened, or a test now runs only under a condition the original did not have. Changes that only point the harness at the new build directory and tool names do not count."
+type = "binary"
+weight = 5
+negate = true
+files = ["/logs/verifier/grader/packet/harness-migrated", "/logs/verifier/grader/packet/harness-original"]
+

@@ -1,0 +1,219 @@
+{
+ "id": "s3_family_15",
+ "source": "f023_options_on_specific_resources",
+ "steps": [
+  {
+   "case": "setup_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   }
+  },
+  {
+   "case": "setup_team",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "ProbeTeam"
+    }
+   }
+  },
+  {
+   "case": "options_hardware_by_id",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/hardware/1"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_hardware_fields",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/hardware/fields"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_user_passkey",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/users/1/passkey"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_historic_user_daily",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/historic/users/1/2026/3"
+   },
+   "compare": "status+headers"
+  }
+ ],
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 100,
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ProbeHw",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "165",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "setup_team",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "ProbeTeam"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"ProbeTeam\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "40",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "options_hardware_by_id",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "HEAD, DELETE, GET, OPTIONS, PUT",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, DELETE, GET, OPTIONS, PUT",
+     "connection": "close",
+     "content-length": "31",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_hardware_fields",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/hardware/fields"
+   },
+   "response": {
+    "body": "HEAD, DELETE, GET, OPTIONS, PUT",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, DELETE, GET, OPTIONS, PUT",
+     "connection": "close",
+     "content-length": "31",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_user_passkey",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "HEAD, GET, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, GET, OPTIONS",
+     "connection": "close",
+     "content-length": "18",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_historic_user_daily",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/historic/users/1/2026/3"
+   },
+   "response": {
+    "body": "HEAD, GET, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, GET, OPTIONS",
+     "connection": "close",
+     "content-length": "18",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "OPTIONS on individual resources rather than collections: RESTEasy answers them itself, and CorsFilter still adds the four Access-Control-Allow-* headers with its fixed values."
+}

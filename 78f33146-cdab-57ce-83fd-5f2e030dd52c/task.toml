@@ -1,0 +1,65 @@
+schema_version = "1.4"
+reward_type = "bounded_continuous"
+artifacts = ["/app/pydatalab"]
+
+[task]
+name = "ethara/78f33146-cdab-57ce-83fd-5f2e030dd52c"
+version = "0.1.0"
+description = "Upgrade the datalab research data management server from pydantic 1 to pydantic 2 with every served behaviour unchanged, offline against a fixed wheel set."
+authors = [{ name = "elhaan.daud", email = "elhaan.daud@ethara.ai" }]
+keywords = ["dependency-upgrade", "pydantic", "framework-rewrite", "flask", "mongodb", "migration"]
+
+[metadata]
+platforms = ["linux/amd64", "linux/arm64"]
+category = "dependency-upgrade"
+license = "MIT"
+upstream = "https://github.com/datalab-org/datalab"
+state_a = "the datalab server on Pydantic 1, with Flask and MongoDB"
+state_b = "the same server on Pydantic 2 (2.13.4, pydantic-core 2.46.4, pydantic-settings 2.15.0) with every served behaviour unchanged, offline against a fixed wheel set"
+scale = "117 deprecated Pydantic 1 alias sites in the original; the reference migration changes 63 files (+7,027 -3,955 lines)"
+tags = ["behaviour-preserving", "offline", "single-turn"]
+
+[verifier]
+timeout_sec = 2400
+environment_mode = "separate"
+user = "root"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+
+[verifier.environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:78f33146-verifier@sha256:c707ee99926febe4650f2daeff265834ba1de704c4d6789e1a0ef607877ab553"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+
+[verifier.env]
+ANTHROPIC_BASE_URL = "${ANTHROPIC_BASE_URL:-https://api.anthropic.com}"
+ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY:-}"
+OPENAI_BASE_URL = "${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+LITELLM_LOCAL_MODEL_COST_MAP = "True"
+
+[agent]
+timeout_sec = 86400
+network_mode = "no-network"
+user = "10001"
+
+[environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:78f33146-environment@sha256:5d6df6f4da23bb9147cd1f3904e602e5daa9fb863c22dc31bd9b5124c4a9486a"
+network_mode = "no-network"
+build_timeout_sec = 1800
+cpus = 4
+memory_mb = 8192
+storage_mb = 20480
+gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-11-01"
+source_kind = "public_repository"
+license = "MIT"
+
+[upstream_provenance.source]
+canonical_repo = "github.com/datalab-org/datalab"
+fork_ancestry_digest = "sha256:3048cddf5e74d6294c40173cd278f9e298c19339d846e0971cd97274cd20c245"
+base_commit = "d153f80a71b411c074896f6559c775a91c531e4a"
+event_timestamp = "2026-06-07T22:54:24Z"

@@ -1,0 +1,1258 @@
+{
+ "id": "g19_persistence_across_restart",
+ "source": "g19_persistence_across_restart",
+ "steps": [
+  {
+   "case": "hardware_create",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "PersistHardware",
+     "displayName": "Persist Hardware",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 2.0,
+     "averagePpd": 2
+    }
+   },
+   "capture": {
+    "hwId": "json:id"
+   }
+  },
+  {
+   "case": "team_create",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "PersistTeam",
+     "teamDescription": "team that must survive a restart",
+     "forumLink": "https://example.com/forum"
+    }
+   },
+   "capture": {
+    "teamId": "json:id"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=PersistUser&passkey=PersistPasskey123456789012345678&units=1"
+   }
+  },
+  {
+   "case": "user_create_captain",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "PersistUser",
+     "displayName": "Persist User",
+     "passkey": "PersistPasskey123456789012345678",
+     "category": "NVIDIA_GPU",
+     "profileLink": "https://example.com/profile",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": true
+    }
+   },
+   "capture": {
+    "userId": "json:id"
+   }
+  },
+  {
+   "sleep": 3
+  },
+  {
+   "case": "offset_patch_without_auth",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userId}",
+    "json": {
+     "pointsOffset": 1000,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 5
+    }
+   }
+  },
+  {
+   "case": "offset_patch_as_read_only",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userId}",
+    "auth": "readonly",
+    "json": {
+     "pointsOffset": 1000,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 5
+    }
+   }
+  },
+  {
+   "case": "offset_patch_unknown_user",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/9999",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 1000,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 5
+    }
+   }
+  },
+  {
+   "case": "offset_patch_empty_payload",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userId}",
+    "auth": "admin",
+    "json": {}
+   }
+  },
+  {
+   "case": "offset_patch_derives_multiplied_points",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userId}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 1000,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 5
+    }
+   }
+  },
+  {
+   "case": "stats_before_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "leaderboard_before_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/leaderboard"
+   }
+  },
+  {
+   "case": "category_leaderboard_before_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/category"
+   }
+  },
+  {
+   "case": "user_stats_before_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userId}"
+   }
+  },
+  {
+   "case": "user_no_change_update_before_restart",
+   "http": {
+    "method": "PUT",
+    "path": "/users/${userId}",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "PersistUser",
+     "displayName": "Persist User",
+     "passkey": "PersistPasskey123456789012345678",
+     "category": "NVIDIA_GPU",
+     "profileLink": "https://example.com/profile",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": true
+    }
+   }
+  },
+  {
+   "sql": "INSERT INTO monthly_results (utc_timestamp, json_result) VALUES ('2026-02-28 23:30:00', '{\"teamLeaderboard\":[],\"userCategoryLeaderboard\":{},\"utcTimestamp\":{\"date\":{\"year\":2026,\"month\":2,\"day\":28},\"time\":{\"hour\":23,\"minute\":30,\"second\":0,\"nano\":0}}}')"
+  },
+  {
+   "case": "monthly_result_before_restart",
+   "http": {
+    "method": "GET",
+    "path": "/results/result/2026/2"
+   }
+  },
+  {
+   "restart": true
+  },
+  {
+   "case": "hardware_get_after_restart",
+   "compare": "full",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/${hwId}"
+   }
+  },
+  {
+   "case": "hardware_conflict_after_restart",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "PersistHardware",
+     "displayName": "Different Display Name",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "case": "team_conflict_after_restart",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "PersistTeam"
+    }
+   }
+  },
+  {
+   "case": "user_conflict_after_restart",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "PersistUser",
+     "displayName": "Different Display Name",
+     "passkey": "PersistPasskey123456789012345678",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "case": "user_no_change_update_after_restart",
+   "http": {
+    "method": "PUT",
+    "path": "/users/${userId}",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "PersistUser",
+     "displayName": "Persist User",
+     "passkey": "PersistPasskey123456789012345678",
+     "category": "NVIDIA_GPU",
+     "profileLink": "https://example.com/profile",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": true
+    }
+   }
+  },
+  {
+   "case": "user_get_all_after_restart",
+   "compare": "full",
+   "http": {
+    "method": "GET",
+    "path": "/users"
+   }
+  },
+  {
+   "case": "stats_after_restart_first_read_uncached",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "stats_after_restart_second_read_cached",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "leaderboard_after_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/leaderboard"
+   }
+  },
+  {
+   "case": "category_leaderboard_after_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/category"
+   }
+  },
+  {
+   "case": "user_stats_after_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userId}"
+   }
+  },
+  {
+   "case": "monthly_result_after_restart",
+   "http": {
+    "method": "GET",
+    "path": "/results/result/2026/2"
+   }
+  },
+  {
+   "case": "monthly_result_unknown_month",
+   "compare": "status",
+   "http": {
+    "method": "GET",
+    "path": "/results/result/2026/1"
+   }
+  },
+  {
+   "case": "offset_patch_accumulates_after_restart",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userId}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 500,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 0
+    }
+   }
+  },
+  {
+   "case": "stats_after_accumulated_offset",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "user_stats_after_accumulated_offset",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userId}"
+   }
+  },
+  {
+   "restart": true
+  },
+  {
+   "case": "stats_after_second_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "user_stats_after_second_restart",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userId}"
+   }
+  },
+  {
+   "case": "monthly_result_after_second_restart",
+   "http": {
+    "method": "GET",
+    "path": "/results/result/2026/2"
+   }
+  },
+  {
+   "case": "user_no_change_update_after_second_restart",
+   "http": {
+    "method": "PUT",
+    "path": "/users/${userId}",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "PersistUser",
+     "displayName": "Persist User",
+     "passkey": "PersistPasskey123456789012345678",
+     "category": "NVIDIA_GPU",
+     "profileLink": "https://example.com/profile",
+     "hardwareId": 1,
+     "teamId": 1,
+     "userIsCaptain": true
+    }
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "hardware_create",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 2,
+     "displayName": "Persist Hardware",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "PersistHardware",
+     "hardwareType": "GPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"PersistHardware\",\n  \"displayName\": \"Persist Hardware\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.0,\n  \"averagePpd\": 2\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "180",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_create",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "forumLink": "https://example.com/forum",
+     "teamDescription": "team that must survive a restart",
+     "teamName": "PersistTeam"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"PersistTeam\",\n  \"teamDescription\": \"team that must survive a restart\",\n  \"forumLink\": \"https://example.com/forum\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "143",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "user_create_captain",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Persist User",
+     "foldingUserName": "PersistUser",
+     "hardwareId": 1,
+     "passkey": "PersistPasskey123456789012345678",
+     "profileLink": "https://example.com/profile",
+     "teamId": 1,
+     "userIsCaptain": true
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"PersistUser\",\n  \"displayName\": \"Persist User\",\n  \"passkey\": \"PersistPasskey123456789012345678\",\n  \"category\": \"NVIDIA_GPU\",\n  \"profileLink\": \"https://example.com/profile\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"PersistHardware\",\n    \"displayName\": \"Persist Hardware\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 2\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"PersistTeam\",\n    \"teamDescription\": \"team that must survive a restart\",\n    \"forumLink\": \"https://example.com/forum\"\n  },\n  \"userIsCaptain\": true\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "609",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "offset_patch_without_auth",
+   "compare": "full",
+   "request": {
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 1000,
+     "unitsOffset": 5
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "offset_patch_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 1000,
+     "unitsOffset": 5
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "offset_patch_unknown_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 1000,
+     "unitsOffset": 5
+    },
+    "method": "PATCH",
+    "path": "/stats/users/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "offset_patch_empty_payload",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {},
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Payload is null\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "32",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "offset_patch_derives_multiplied_points",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 1000,
+     "unitsOffset": 5
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_before_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 1000,\n  \"totalMultipliedPoints\": 2000,\n  \"totalUnits\": 5,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"PersistTeam\",\n        \"teamDescription\": \"team that must survive a restart\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"captainName\": \"Persist User\",\n      \"teamPoints\": 1000,\n      \"teamMultipliedPoints\": 2000,\n      \"teamUnits\": 5,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"PersistUser\",\n            \"displayName\": \"Persist User\",\n            \"passkey\": \"PersistP************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"profileLink\": \"https://example.com/profile\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"PersistHardware\",\n              \"displayName\": \"Persist Hardware\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 2\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"PersistTeam\",\n              \"teamDescription\": \"team that must survive a restart\",\n              \"forumLink\": \"https://example.com/forum\"\n            },\n            \"userIsCaptain\": true\n          },\n          \"points\": 1000,\n          \"multipliedPoints\": 2000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1480",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "leaderboard_before_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/leaderboard"
+   },
+   "response": {
+    "body": "[\n  {\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"teamPoints\": 1000,\n    \"teamMultipliedPoints\": 2000,\n    \"teamUnits\": 5,\n    \"rank\": 1,\n    \"diffToLeader\": 0,\n    \"diffToNext\": 0\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "324",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "category_leaderboard_before_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/category"
+   },
+   "response": {
+    "body": "{\n  \"AMD_GPU\": [],\n  \"NVIDIA_GPU\": [\n    {\n      \"user\": {\n        \"id\": 1,\n        \"foldingUserName\": \"PersistUser\",\n        \"displayName\": \"Persist User\",\n        \"passkey\": \"PersistP************************\",\n        \"category\": \"NVIDIA_GPU\",\n        \"profileLink\": \"https://example.com/profile\",\n        \"hardware\": {\n          \"id\": 1,\n          \"hardwareName\": \"PersistHardware\",\n          \"displayName\": \"Persist Hardware\",\n          \"hardwareMake\": \"NVIDIA\",\n          \"hardwareType\": \"GPU\",\n          \"multiplier\": 2.0,\n          \"averagePpd\": 2\n        },\n        \"team\": {\n          \"id\": 1,\n          \"teamName\": \"PersistTeam\",\n          \"teamDescription\": \"team that must survive a restart\",\n          \"forumLink\": \"https://example.com/forum\"\n        },\n        \"userIsCaptain\": true\n      },\n      \"points\": 1000,\n      \"multipliedPoints\": 2000,\n      \"units\": 5,\n      \"rank\": 1,\n      \"diffToLeader\": 0,\n      \"diffToNext\": 0\n    }\n  ],\n  \"WILDCARD\": []\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "971",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_stats_before_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"PersistUser\",\n    \"displayName\": \"Persist User\",\n    \"passkey\": \"PersistP************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"profileLink\": \"https://example.com/profile\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"PersistHardware\",\n      \"displayName\": \"Persist Hardware\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 2\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"userIsCaptain\": true\n  },\n  \"points\": 1000,\n  \"multipliedPoints\": 2000,\n  \"units\": 5,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "748",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_no_change_update_before_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Persist User",
+     "foldingUserName": "PersistUser",
+     "hardwareId": 1,
+     "passkey": "PersistPasskey123456789012345678",
+     "profileLink": "https://example.com/profile",
+     "teamId": 1,
+     "userIsCaptain": true
+    },
+    "method": "PUT",
+    "path": "/users/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"PersistUser\",\n  \"displayName\": \"Persist User\",\n  \"passkey\": \"PersistP************************\",\n  \"category\": \"NVIDIA_GPU\",\n  \"profileLink\": \"https://example.com/profile\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"PersistHardware\",\n    \"displayName\": \"Persist Hardware\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 2\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"PersistTeam\",\n    \"teamDescription\": \"team that must survive a restart\",\n    \"forumLink\": \"https://example.com/forum\"\n  },\n  \"userIsCaptain\": true\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "609",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "monthly_result_before_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/results/result/2026/2"
+   },
+   "response": {
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"AMD_GPU\": [],\n    \"NVIDIA_GPU\": [],\n    \"WILDCARD\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 2,\n      \"day\": 28\n    },\n    \"time\": {\n      \"hour\": 23,\n      \"minute\": 30,\n      \"second\": 0,\n      \"nano\": 0\n    }\n  }\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "316",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_get_after_restart",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"PersistHardware\",\n  \"displayName\": \"Persist Hardware\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.0,\n  \"averagePpd\": 2\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "180",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-1079988255\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_conflict_after_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Different Display Name",
+     "hardwareMake": "AMD",
+     "hardwareName": "PersistHardware",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"PersistHardware\",\n    \"displayName\": \"Different Display Name\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"PersistHardware\",\n      \"displayName\": \"Persist Hardware\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 2\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "543",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "team_conflict_after_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "PersistTeam"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"PersistTeam\"\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [teamName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "339",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "user_conflict_after_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Different Display Name",
+     "foldingUserName": "PersistUser",
+     "hardwareId": 1,
+     "passkey": "PersistPasskey123456789012345678",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"PersistUser\",\n    \"displayName\": \"Different Display Name\",\n    \"passkey\": \"PersistPasskey123456789012345678\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 1,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"foldingUserName\": \"PersistUser\",\n      \"displayName\": \"Persist User\",\n      \"passkey\": \"PersistPasskey123456789012345678\",\n      \"category\": \"NVIDIA_GPU\",\n      \"profileLink\": \"https://example.com/profile\",\n      \"hardware\": {\n        \"id\": 1,\n        \"hardwareName\": \"PersistHardware\",\n        \"displayName\": \"Persist Hardware\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 2.0,\n        \"averagePpd\": 2\n      },\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"PersistTeam\",\n        \"teamDescription\": \"team that must survive a restart\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"userIsCaptain\": true\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [foldingUserName, passkey]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1092",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "user_no_change_update_after_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Persist User",
+     "foldingUserName": "PersistUser",
+     "hardwareId": 1,
+     "passkey": "PersistPasskey123456789012345678",
+     "profileLink": "https://example.com/profile",
+     "teamId": 1,
+     "userIsCaptain": true
+    },
+    "method": "PUT",
+    "path": "/users/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"PersistUser\",\n  \"displayName\": \"Persist User\",\n  \"passkey\": \"PersistP************************\",\n  \"category\": \"NVIDIA_GPU\",\n  \"profileLink\": \"https://example.com/profile\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"PersistHardware\",\n    \"displayName\": \"Persist Hardware\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 2\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"PersistTeam\",\n    \"teamDescription\": \"team that must survive a restart\",\n    \"forumLink\": \"https://example.com/forum\"\n  },\n  \"userIsCaptain\": true\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "609",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_get_all_after_restart",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/users"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"foldingUserName\": \"PersistUser\",\n    \"displayName\": \"Persist User\",\n    \"passkey\": \"PersistP************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"profileLink\": \"https://example.com/profile\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"PersistHardware\",\n      \"displayName\": \"Persist Hardware\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 2\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"userIsCaptain\": true\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "661",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-689639042\"",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_after_restart_first_read_uncached",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 1000,\n  \"totalMultipliedPoints\": 2000,\n  \"totalUnits\": 5,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"PersistTeam\",\n        \"teamDescription\": \"team that must survive a restart\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"captainName\": \"Persist User\",\n      \"teamPoints\": 1000,\n      \"teamMultipliedPoints\": 2000,\n      \"teamUnits\": 5,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"PersistUser\",\n            \"displayName\": \"Persist User\",\n            \"passkey\": \"PersistP************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"profileLink\": \"https://example.com/profile\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"PersistHardware\",\n              \"displayName\": \"Persist Hardware\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 2\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"PersistTeam\",\n              \"teamDescription\": \"team that must survive a restart\",\n              \"forumLink\": \"https://example.com/forum\"\n            },\n            \"userIsCaptain\": true\n          },\n          \"points\": 1000,\n          \"multipliedPoints\": 2000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1480",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_after_restart_second_read_cached",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 1000,\n  \"totalMultipliedPoints\": 2000,\n  \"totalUnits\": 5,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"PersistTeam\",\n        \"teamDescription\": \"team that must survive a restart\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"captainName\": \"Persist User\",\n      \"teamPoints\": 1000,\n      \"teamMultipliedPoints\": 2000,\n      \"teamUnits\": 5,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"PersistUser\",\n            \"displayName\": \"Persist User\",\n            \"passkey\": \"PersistP************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"profileLink\": \"https://example.com/profile\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"PersistHardware\",\n              \"displayName\": \"Persist Hardware\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 2\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"PersistTeam\",\n              \"teamDescription\": \"team that must survive a restart\",\n              \"forumLink\": \"https://example.com/forum\"\n            },\n            \"userIsCaptain\": true\n          },\n          \"points\": 1000,\n          \"multipliedPoints\": 2000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1480",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "leaderboard_after_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/leaderboard"
+   },
+   "response": {
+    "body": "[\n  {\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"teamPoints\": 1000,\n    \"teamMultipliedPoints\": 2000,\n    \"teamUnits\": 5,\n    \"rank\": 1,\n    \"diffToLeader\": 0,\n    \"diffToNext\": 0\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "324",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "category_leaderboard_after_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/category"
+   },
+   "response": {
+    "body": "{\n  \"AMD_GPU\": [],\n  \"NVIDIA_GPU\": [\n    {\n      \"user\": {\n        \"id\": 1,\n        \"foldingUserName\": \"PersistUser\",\n        \"displayName\": \"Persist User\",\n        \"passkey\": \"PersistP************************\",\n        \"category\": \"NVIDIA_GPU\",\n        \"profileLink\": \"https://example.com/profile\",\n        \"hardware\": {\n          \"id\": 1,\n          \"hardwareName\": \"PersistHardware\",\n          \"displayName\": \"Persist Hardware\",\n          \"hardwareMake\": \"NVIDIA\",\n          \"hardwareType\": \"GPU\",\n          \"multiplier\": 2.0,\n          \"averagePpd\": 2\n        },\n        \"team\": {\n          \"id\": 1,\n          \"teamName\": \"PersistTeam\",\n          \"teamDescription\": \"team that must survive a restart\",\n          \"forumLink\": \"https://example.com/forum\"\n        },\n        \"userIsCaptain\": true\n      },\n      \"points\": 1000,\n      \"multipliedPoints\": 2000,\n      \"units\": 5,\n      \"rank\": 1,\n      \"diffToLeader\": 0,\n      \"diffToNext\": 0\n    }\n  ],\n  \"WILDCARD\": []\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "971",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_stats_after_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"PersistUser\",\n    \"displayName\": \"Persist User\",\n    \"passkey\": \"PersistP************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"profileLink\": \"https://example.com/profile\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"PersistHardware\",\n      \"displayName\": \"Persist Hardware\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 2\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"userIsCaptain\": true\n  },\n  \"points\": 1000,\n  \"multipliedPoints\": 2000,\n  \"units\": 5,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "748",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "monthly_result_after_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/results/result/2026/2"
+   },
+   "response": {
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"NVIDIA_GPU\": [],\n    \"WILDCARD\": [],\n    \"AMD_GPU\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 2,\n      \"day\": 28\n    },\n    \"time\": {\n      \"hour\": 23,\n      \"minute\": 30,\n      \"second\": 0,\n      \"nano\": 0\n    }\n  }\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "316",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "monthly_result_unknown_month",
+   "compare": "status",
+   "request": {
+    "method": "GET",
+    "path": "/results/result/2026/1"
+   },
+   "response": {
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"NVIDIA_GPU\": [],\n    \"WILDCARD\": [],\n    \"AMD_GPU\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 3,\n      \"day\": 15\n    },\n    \"time\": {\n      \"hour\": 11,\n      \"minute\": 0,\n      \"second\": 8,\n      \"nano\": 984969000\n    }\n  }\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "323",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_patch_accumulates_after_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 500,
+     "unitsOffset": 0
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_after_accumulated_offset",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 1500,\n  \"totalMultipliedPoints\": 3000,\n  \"totalUnits\": 5,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"PersistTeam\",\n        \"teamDescription\": \"team that must survive a restart\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"captainName\": \"Persist User\",\n      \"teamPoints\": 1500,\n      \"teamMultipliedPoints\": 3000,\n      \"teamUnits\": 5,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"PersistUser\",\n            \"displayName\": \"Persist User\",\n            \"passkey\": \"PersistP************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"profileLink\": \"https://example.com/profile\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"PersistHardware\",\n              \"displayName\": \"Persist Hardware\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 2\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"PersistTeam\",\n              \"teamDescription\": \"team that must survive a restart\",\n              \"forumLink\": \"https://example.com/forum\"\n            },\n            \"userIsCaptain\": true\n          },\n          \"points\": 1500,\n          \"multipliedPoints\": 3000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1480",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_stats_after_accumulated_offset",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"PersistUser\",\n    \"displayName\": \"Persist User\",\n    \"passkey\": \"PersistP************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"profileLink\": \"https://example.com/profile\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"PersistHardware\",\n      \"displayName\": \"Persist Hardware\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 2\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"userIsCaptain\": true\n  },\n  \"points\": 1500,\n  \"multipliedPoints\": 3000,\n  \"units\": 5,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "748",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_after_second_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 1000,\n  \"totalMultipliedPoints\": 2000,\n  \"totalUnits\": 5,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"PersistTeam\",\n        \"teamDescription\": \"team that must survive a restart\",\n        \"forumLink\": \"https://example.com/forum\"\n      },\n      \"captainName\": \"Persist User\",\n      \"teamPoints\": 1000,\n      \"teamMultipliedPoints\": 2000,\n      \"teamUnits\": 5,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"PersistUser\",\n            \"displayName\": \"Persist User\",\n            \"passkey\": \"PersistP************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"profileLink\": \"https://example.com/profile\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"PersistHardware\",\n              \"displayName\": \"Persist Hardware\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 2\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"PersistTeam\",\n              \"teamDescription\": \"team that must survive a restart\",\n              \"forumLink\": \"https://example.com/forum\"\n            },\n            \"userIsCaptain\": true\n          },\n          \"points\": 1000,\n          \"multipliedPoints\": 2000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1480",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_stats_after_second_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"PersistUser\",\n    \"displayName\": \"Persist User\",\n    \"passkey\": \"PersistP************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"profileLink\": \"https://example.com/profile\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"PersistHardware\",\n      \"displayName\": \"Persist Hardware\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 2\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"PersistTeam\",\n      \"teamDescription\": \"team that must survive a restart\",\n      \"forumLink\": \"https://example.com/forum\"\n    },\n    \"userIsCaptain\": true\n  },\n  \"points\": 1000,\n  \"multipliedPoints\": 2000,\n  \"units\": 5,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "748",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "monthly_result_after_second_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/results/result/2026/2"
+   },
+   "response": {
+    "body": "{\n  \"teamLeaderboard\": [],\n  \"userCategoryLeaderboard\": {\n    \"AMD_GPU\": [],\n    \"WILDCARD\": [],\n    \"NVIDIA_GPU\": []\n  },\n  \"utcTimestamp\": {\n    \"date\": {\n      \"year\": 2026,\n      \"month\": 2,\n      \"day\": 28\n    },\n    \"time\": {\n      \"hour\": 23,\n      \"minute\": 30,\n      \"second\": 0,\n      \"nano\": 0\n    }\n  }\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "316",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_no_change_update_after_second_restart",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Persist User",
+     "foldingUserName": "PersistUser",
+     "hardwareId": 1,
+     "passkey": "PersistPasskey123456789012345678",
+     "profileLink": "https://example.com/profile",
+     "teamId": 1,
+     "userIsCaptain": true
+    },
+    "method": "PUT",
+    "path": "/users/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"PersistUser\",\n  \"displayName\": \"Persist User\",\n  \"passkey\": \"PersistP************************\",\n  \"category\": \"NVIDIA_GPU\",\n  \"profileLink\": \"https://example.com/profile\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"PersistHardware\",\n    \"displayName\": \"Persist Hardware\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 2\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"PersistTeam\",\n    \"teamDescription\": \"team that must survive a restart\",\n    \"forumLink\": \"https://example.com/forum\"\n  },\n  \"userIsCaptain\": true\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "609",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "capability": "State written through the API (hardware, teams, users and their captaincy, offset stats, derived hourly stats) and SQL-seeded monthly results survive a restart against the same database, and the first (cold-cache) read after a restart agrees with the later cached reads."
+}

@@ -1,0 +1,37 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/DatabaseType.java (changed against State A) ===
+@@
+29  | import java.util.Collection;
+30  | import java.util.stream.Stream;
+31  | 
+   -| /**
+   -|  * Lists the supported databases for the system. Should be set by the environment variable <b>DEPLOYED_DATABASE</b>.
+   -|  */
+32 +| 
+33  | public enum DatabaseType {
+34  | 
+   -|     /**
+   -|      * The system is using a <b>PostgreSQL</b> database.
+   -|      */
+35 +|     
+36  |     POSTGRESQL,
+37  | 
+   -|     /**
+   -|      * Not a valid {@link DatabaseType}.
+   -|      */
+38 +|     
+39  |     INVALID;
+40  | 
+41  |     private static final Collection<DatabaseType> ALL_VALUES = Stream.of(values())
+42  |         .filter(value -> value != INVALID)
+43  |         .collect(toUnmodifiableList());
+44  | 
+   -|     /**
+   -|      * Retrieve a {@link DatabaseType} based on the input {@link String}. The search is case-insensitive.
+   -|      *
+   -|      * @param input the {@link DatabaseType} as a {@link String}
+   -|      * @return the matching {@link DatabaseType}, or {@link DatabaseType#INVALID} if none is found
+   -|      */
+45 +|     
+46  |     public static DatabaseType get(final String input) {
+47  |         return ALL_VALUES
+48  |             .stream()

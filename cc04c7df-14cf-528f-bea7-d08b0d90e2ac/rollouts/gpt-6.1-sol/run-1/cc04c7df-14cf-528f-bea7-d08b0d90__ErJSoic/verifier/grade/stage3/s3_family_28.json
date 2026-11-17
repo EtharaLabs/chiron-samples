@@ -1,0 +1,171 @@
+{
+ "id": "s3_family_28",
+ "cases": [
+  {
+   "case": "array_to_create_team",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "[]"
+   },
+   "compare": "status",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "37",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Bad Request</body></html>"
+   },
+   "clock_window": [
+    1773572406.6696181,
+    1773572406.7202287
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "single_element_array_to_create_user",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "[{\"foldingUserName\":\"ArrUser\",\"displayName\":\"Arr User\",\"passkey\":\"ProbePasskey12345678901234567890\",\"category\":\"NVIDIA_GPU\",\"hardwareId\":1,\"teamId\":1,\"userIsCaptain\":false}]"
+   },
+   "compare": "status",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "37",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Bad Request</body></html>"
+   },
+   "clock_window": [
+    1773572406.7202525,
+    1773572406.730547
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "object_to_teams_batch",
+   "request": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{\"teamName\":\"ObjBatchTeam\"}"
+   },
+   "compare": "status",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "37",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Bad Request</body></html>"
+   },
+   "clock_window": [
+    1773572406.730567,
+    1773572406.7408957
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "object_to_users_batch",
+   "request": {
+    "method": "POST",
+    "path": "/users/batch",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "{}"
+   },
+   "compare": "status",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "37",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Bad Request</body></html>"
+   },
+   "clock_window": [
+    1773572406.7409143,
+    1773572406.7503726
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "scalar_to_create_team",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "auth": "admin",
+    "body": "\"TeamName\""
+   },
+   "compare": "status",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "text/html;charset=UTF-8",
+     "content-length": "37",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "<html><body>Bad Request</body></html>"
+   },
+   "clock_window": [
+    1773572406.7503898,
+    1773572406.75972
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

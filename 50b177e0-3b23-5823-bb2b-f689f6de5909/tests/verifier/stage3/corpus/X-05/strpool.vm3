@@ -1,0 +1,28 @@
+new
+arr r1
+root r1
+strcpy r2 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aapp r1 r2
+strcpy r3 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+aapp r1 r3
+strcpy r4 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+aapp r1 r4
+strcpy r5 dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+aapp r1 r5
+strcpy r6 eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+aapp r1 r6
+strcpy r7 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+aapp r1 r7
+strcpy r8 gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+aapp r1 r8
+strcpy r9 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+aapp r1 r9
+strcpy r2 iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+aapp r1 r2
+strcpy r3 jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+aapp r1 r3
+strcpy r4 kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+aapp r1 r4
+strcpy r5 llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
+aapp r1 r5
+write

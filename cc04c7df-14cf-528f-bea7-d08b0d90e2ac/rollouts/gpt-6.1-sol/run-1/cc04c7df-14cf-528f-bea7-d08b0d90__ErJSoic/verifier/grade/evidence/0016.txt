@@ -1,0 +1,15 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/state/ReadRequired.java (changed against State A) ===
+@@
+30  | import java.lang.annotation.RetentionPolicy;
+31  | import java.lang.annotation.Target;
+32  | 
+   -| /**
+   -|  * Marker annotation defining a function that will perform {@link OperationType#READ} operations on the system.
+   -|  *
+   -|  * <p>
+   -|  * To be used to check against a {@link SystemState}.
+   -|  */
+33 +| 
+34  | @Documented
+35  | @Retention(RetentionPolicy.RUNTIME)
+36  | @Target(ElementType.METHOD)

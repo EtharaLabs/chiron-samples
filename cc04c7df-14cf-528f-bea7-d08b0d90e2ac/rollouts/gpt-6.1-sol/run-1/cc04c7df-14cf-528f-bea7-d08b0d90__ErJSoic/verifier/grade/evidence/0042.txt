@@ -1,0 +1,88 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/EncodingUtils.java (changed against State A) ===
+@@
+28  | import java.util.Base64;
+29  | import java.util.Map;
+30  | 
+   -| /**
+   -|  * Utility class to assist with encoding or decoding {@link String}s for authentication.
+   -|  */
+31 +| 
+32  | public final class EncodingUtils {
+33  | 
+   -|     /**
+   -|      * Key for the <code>username</code> value returned by {@link #decodeAuthentication(String)} and {@link #decodeBasicAuthentication(String)}.
+   -|      */
+34 +|     
+35  |     public static final String DECODED_USERNAME_KEY = "userName";
+36  | 
+   -|     /**
+   -|      * Key for the <code>password</code> value returned by {@link #decodeAuthentication(String)} and {@link #decodeBasicAuthentication(String)}.
+   -|      */
+37 +|     
+38  |     public static final String DECODED_PASSWORD_KEY = "password";
+39  | 
+   -|     /**
+   -|      * Prefix defining the <b>Basic</b> authentication scheme.
+   -|      */
+40 +|     
+41  |     public static final String BASIC_AUTHENTICATION_SCHEME = "Basic ";
+42  | 
+43  |     private static final String DECODED_USERNAME_PASSWORD_DELIMITER = ":";
+@@
+46  | 
+47  |     }
+48  | 
+   -|     /**
+   -|      * Encodes the provided {@code userName} and {@code password} for basic authentication. Takes the {@code userName}
+   -|      * and {@code password}, concatenates them with a <b>:</b> as separator, then encodes in {@link Base64}. This is then
+   -|      * prefixed by the {@link String} "Basic " (note the trailing space).
+   -|      *
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link Base64}-encoded authentication {@link String}
+   -|      */
+49 +|     
+50  |     public static String encodeBasicAuthentication(final String userName, final String password) {
+51  |         final byte[] usernameAndPassword = (userName + DECODED_USERNAME_PASSWORD_DELIMITER + password).getBytes(StandardCharsets.ISO_8859_1);
+52  |         return BASIC_AUTHENTICATION_SCHEME + Base64
+@@
+54  |             .encodeToString(usernameAndPassword);
+55  |     }
+56  | 
+   -|     /**
+   -|      * Checks if the authorization payload contains the {@value BASIC_AUTHENTICATION_SCHEME} authentication scheme.
+   -|      *
+   -|      * @param authorizationPayload the value to check
+   -|      * @return <code>true</code> if the value is <b>not</b> a basic authentication payload
+   -|      */
+57 +|     
+58  |     public static boolean isInvalidBasicAuthentication(final String authorizationPayload) {
+59  |         return authorizationPayload == null || !authorizationPayload.contains(BASIC_AUTHENTICATION_SCHEME);
+60  |     }
+61  | 
+   -|     /**
+   -|      * Decodes the authorization payload for the {@value #BASIC_AUTHENTICATION_SCHEME} authentication scheme.
+   -|      *
+   -|      * @param authorizationPayload the authorization value to decode
+   -|      * @return a {@link Map} with two keys, the {@link #DECODED_USERNAME_KEY} and {@link #DECODED_PASSWORD_KEY}
+   -|      * @throws IllegalArgumentException thrown if the input is not a valid {@link Base64} {@link String}
+   -|      */
+62 +|     
+63  |     public static Map<String, String> decodeBasicAuthentication(final String authorizationPayload) {
+64  |         if (authorizationPayload == null) {
+65  |             throw new IllegalArgumentException("Cannot decode null");
+@@
+73  |         return decodeAuthentication(encodedUserNameAndPassword);
+74  |     }
+75  | 
+   -|     /**
+   -|      * Decodes the encoded username and password.
+   -|      *
+   -|      * @param encodedUserNameAndPassword the encoded username and password to decode
+   -|      * @return a {@link Map} with two keys, the {@link #DECODED_USERNAME_KEY} and {@link #DECODED_PASSWORD_KEY}
+   -|      * @throws IllegalArgumentException thrown if the input is not a valid {@link Base64} {@link String}
+   -|      */
+76 +|     
+77  |     public static Map<String, String> decodeAuthentication(final String encodedUserNameAndPassword) {
+78  |         if (encodedUserNameAndPassword == null) {
+79  |             throw new IllegalArgumentException("Cannot decode null");

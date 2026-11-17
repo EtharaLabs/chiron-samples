@@ -1,0 +1,8 @@
+iparse 0 {%22a%22:[1,2,3]}
+mutcopy 0
+strcpy r1 newvalue_aaaaaaaa
+padd /b r1 0
+pset /a/0 r1 0
+prep r2 /a/1 r1
+pdel r3 /a/2
+write

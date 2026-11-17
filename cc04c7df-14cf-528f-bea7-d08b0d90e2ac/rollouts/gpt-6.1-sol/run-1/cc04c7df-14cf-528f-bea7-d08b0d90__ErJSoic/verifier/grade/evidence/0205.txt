@@ -1,0 +1,104 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/scheduled/EndOfMonthScheduler.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc.scheduled;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import java.util.Calendar;
+32 +| import me.zodac.folding.state.ParsingStateManager;
+33 +| import me.zodac.folding.state.SystemStateManager;
+34 +| import me.zodac.folding.api.state.ParsingState;
+35 +| import me.zodac.folding.api.state.SystemState;
+36 +| import me.zodac.folding.service.tc.lars.LarsHardwareUpdater;
+37 +| import me.zodac.folding.service.tc.user.UserStatsResetter;
+38 +| import me.zodac.folding.service.tc.user.UserStatsStorer;
+39 +| import org.apache.logging.log4j.LogManager;
+40 +| import org.apache.logging.log4j.Logger;
+41 +| 
+42 +| @Service
+43 +| public class EndOfMonthScheduler {
+44 +| 
+45 +|     private static final Logger LOGGER = LogManager.getLogger();
+46 +|     @org.springframework.beans.factory.annotation.Value("${ENABLE_STATS_MONTHLY_RESET:false}")
+47 +|     private boolean monthlyResetEnabled;
+48 +|     @org.springframework.beans.factory.annotation.Value("${ENABLE_MONTHLY_RESULT_STORAGE:false}")
+49 +|     private boolean monthlyResultEnabled;
+50 +|     @org.springframework.beans.factory.annotation.Value("${ENABLE_LARS_HARDWARE_UPDATE:false}")
+51 +|     private boolean larsUpdateEnabled;
+52 +| 
+53 +|     @Autowired
+54 +|     @Lazy
+55 +|     private LarsHardwareUpdater larsHardwareUpdater;
+56 +| 
+57 +|     @Autowired
+58 +|     @Lazy
+59 +|     private UserStatsResetter userStatsResetter;
+60 +| 
+61 +|     @Autowired
+62 +|     @Lazy
+63 +|     private UserStatsStorer userStatsStorer;
+64 +| 
+65 +|     @org.springframework.scheduling.annotation.Scheduled(cron = "#{@schedules.end}", zone = "UTC")
+66 +|     public void endOfTeamCompetition() {
+67 +|         try {
+68 +| 
+69 +|             // Because we cannot set up a cron schedule with last day, we use the range '28-31'.
+70 +|             // We then check if the current day in the month is the last day of the month.
+71 +|             // If not, we skip the reset.
+72 +|             if (!isLastDayInMonth()) {
+73 +|                 LOGGER.warn("End of month reset triggered, but not actually end of the month, skipping");
+74 +|                 return;
+75 +|             }
+76 +| 
+77 +|             if (monthlyResultEnabled) {
+78 +|                 LOGGER.info("Storing TC stats for new month");
+79 +|                 userStatsStorer.storeMonthlyResult();
+80 +|             }
+81 +| 
+82 +|             if (monthlyResetEnabled) {
+83 +|                 LOGGER.warn("Resetting TC stats for end of month");
+84 +|                 ParsingStateManager.next(ParsingState.DISABLED);
+85 +|                 SystemStateManager.next(SystemState.RESETTING_STATS);
+86 +|                 userStatsResetter.resetTeamCompetitionStats();
+87 +|                 SystemStateManager.next(SystemState.WRITE_EXECUTED);
+88 +|             }
+89 +| 
+90 +|             if (larsUpdateEnabled) {
+91 +|                 LOGGER.info("Updating hardware from LARS DB");
+92 +|                 larsHardwareUpdater.retrieveHardwareAndPersist();
+93 +|             }
+94 +|         } catch (final Exception e) {
+95 +|             LOGGER.error("Error with end of team schedule", e);
+96 +|         }
+97 +|     }
+98 +| 
+99 +|     private static boolean isLastDayInMonth() {
+100 +|         final Calendar calendar = Calendar.getInstance();
+101 +|         return calendar.get(Calendar.DATE) == calendar.getActualMaximum(Calendar.DATE);
+102 +|     }
+103 +| }

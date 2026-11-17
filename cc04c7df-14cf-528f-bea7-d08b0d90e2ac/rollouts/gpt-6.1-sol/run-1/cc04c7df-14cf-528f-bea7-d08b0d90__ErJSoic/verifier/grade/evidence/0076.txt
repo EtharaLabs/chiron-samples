@@ -1,0 +1,60 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/response/TeamCompetitionStatsResponseParser.java (changed against State A) ===
+@@
+37  | import me.zodac.folding.rest.api.tc.leaderboard.UserCategoryLeaderboardEntry;
+38  | import me.zodac.folding.rest.util.RestUtilConstants;
+39  | 
+   -| /**
+   -|  * Utility class used to parse a {@link HttpResponse} returned from {@link TeamCompetitionStatsRequestSender}.
+   -|  */
+40 +| 
+41  | public final class TeamCompetitionStatsResponseParser {
+42  | 
+43  |     private TeamCompetitionStatsResponseParser() {
+44  | 
+45  |     }
+46  | 
+   -|     /**
+   -|      * Returns the {@link CompetitionSummary} retrieved by {@link TeamCompetitionStatsRequestSender#getStats()}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link CompetitionSummary}
+   -|      */
+47 +|     
+48  |     public static CompetitionSummary getStats(final HttpResponse<String> response) {
+49  |         return RestUtilConstants.GSON.fromJson(response.body(), CompetitionSummary.class);
+50  |     }
+51  | 
+   -|     /**
+   -|      * Returns the {@link UserSummary} retrieved by {@link TeamCompetitionStatsRequestSender#getStatsForUser(int)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link UserSummary}
+   -|      */
+52 +|     
+53  |     public static UserSummary getStatsForUser(final HttpResponse<String> response) {
+54  |         return RestUtilConstants.GSON.fromJson(response.body(), UserSummary.class);
+55  |     }
+56  | 
+   -|     /**
+   -|      * Returns the {@link TeamLeaderboardEntry}s retrieved by {@link TeamCompetitionStatsRequestSender#getTeamLeaderboard()}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link TeamLeaderboardEntry}s
+   -|      */
+57 +|     
+58  |     public static Collection<TeamLeaderboardEntry> getTeamLeaderboard(final HttpResponse<String> response) {
+59  |         final Type collectionType = new TypeToken<Collection<TeamLeaderboardEntry>>() {
+60  |         }.getType();
+61  |         return RestUtilConstants.GSON.fromJson(response.body(), collectionType);
+62  |     }
+63  | 
+   -|     /**
+   -|      * Returns the {@link UserCategoryLeaderboardEntry}s retrieved by {@link TeamCompetitionStatsRequestSender#getCategoryLeaderboard()}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link UserCategoryLeaderboardEntry}s
+   -|      */
+64 +|     
+65  |     public static Map<String, List<UserCategoryLeaderboardEntry>> getCategoryLeaderboard(final HttpResponse<String> response) {
+66  |         final Type collectionType = new TypeToken<Map<String, List<UserCategoryLeaderboardEntry>>>() {
+67  |         }.getType();

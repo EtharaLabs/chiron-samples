@@ -1,0 +1,108 @@
+schema_version = "1.4"
+reward_type = "bounded_continuous"
+
+[[artifacts]]
+source = "/app"
+destination = "D1_migrated-app"
+exclude = [
+    ".git",
+    "target",
+    ".m2",
+    ".idea",
+    ".vscode",
+    ".settings",
+    ".gradle",
+    "node_modules",
+    "logs",
+    "*.class",
+    "*.jar",
+    "*.war",
+    "*.ear",
+    "*.log",
+]
+
+[task]
+name = "ethara/cc04c7df-14cf-528f-bea7-d08b0d90e2ac"
+version = "1.0.0"
+description = """
+Migrate the folding-stats application, a multi-module Maven service that runs on
+Java EE 8 inside WildFly 24 (JAX-RS resources, EJB singletons and timers, CDI
+injection), onto Spring Boot from an offline target dependency set, so that it
+builds from clean as one executable jar on JDK 17 and preserves the recorded HTTP
+behaviour of the original against the same PostgreSQL schema.
+"""
+authors = [{ name = "elhaan.daud", email = "elhaan.daud@ethara.ai" }]
+keywords = [
+    "framework-rewrite",
+    "enterprise-framework-application-migration",
+    "java",
+    "java-ee",
+    "wildfly",
+    "jax-rs",
+    "ejb",
+    "cdi",
+    "spring-boot",
+    "maven",
+    "postgresql",
+    "offline",
+]
+
+[metadata]
+platforms = ["linux/amd64", "linux/arm64"]
+category = "framework-rewrite"
+license = "MIT"
+upstream = "https://github.com/zodac-personal/folding-stats"
+state_a = "folding-stats, a multi-module Maven service on Java EE 8 inside WildFly 24 (JAX-RS, EJB singletons and timers, CDI) with PostgreSQL"
+state_b = "the same service on Spring Boot as one executable jar on JDK 17, built from an offline dependency set, with the recorded HTTP behaviour kept"
+scale = "the reference migration changes 258 files (+4,019 -5,701 lines)"
+tags = ["behaviour-preserving", "offline", "single-turn"]
+
+[agent]
+timeout_sec = 86400.0
+network_mode = "no-network"
+user = 1000
+
+[environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:cc04c7df-environment@sha256:0b44206e92972cefb5ddda9b781ee79659b98553665bfa74cbf4ea940d270a1c"
+build_timeout_sec = 1800.0
+network_mode = "public"
+cpus = 4
+memory_mb = 8192
+storage_mb = 20480
+gpus = 0
+workdir = "/app"
+
+[verifier]
+timeout_sec = 6000.0
+user = "root"
+environment_mode = "separate"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+
+[verifier.env]
+ANTHROPIC_BASE_URL = "${ANTHROPIC_BASE_URL:-https://api.anthropic.com}"
+ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY:-}"
+OPENAI_BASE_URL = "${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+LITELLM_LOCAL_MODEL_COST_MAP = "True"
+
+[verifier.environment]
+docker_image = "public.ecr.aws/d4u1d3p6/chiron:cc04c7df-verifier@sha256:6c587af835c618454fe0c3c5f3eb7311101eb9a9175c7521a28c2f6fffea5933"
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com", "api.openai.com"]
+cpus = 4
+memory_mb = 6144
+storage_mb = 20480
+gpus = 0
+build_timeout_sec = 1800.0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-11-01"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "github-repository-id:349863105"
+fork_ancestry_digest = "sha256:19689dec119637966c87712bb8282198298cac4f4e84c03bdce6e4155b91e825"
+base_commit = "03b2650225ee8926b62ecffc4b01bed305c0bf5f"
+event_timestamp = "2022-02-04T03:42:22Z"

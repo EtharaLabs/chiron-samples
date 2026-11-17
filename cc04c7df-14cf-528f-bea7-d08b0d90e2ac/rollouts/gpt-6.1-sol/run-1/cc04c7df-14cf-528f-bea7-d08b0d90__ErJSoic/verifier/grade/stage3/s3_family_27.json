@@ -1,0 +1,128 @@
+{
+ "id": "s3_family_27",
+ "cases": [
+  {
+   "case": "empty_object_hardware",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "395",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"multiplier\": 0.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'hardwareName' must not be empty\",\n    \"Field 'displayName' must not be empty\",\n    \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n    \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n    \"Field 'multiplier' must be 1.00 or higher\",\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572406.7113638,
+    1773572406.7744758
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "empty_object_team",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "85",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {},\n  \"errors\": [\n    \"Field 'teamName' must not be empty\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572406.7745144,
+    1773572406.786602
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "empty_object_user",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {}
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "186",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareId\": 0,\n    \"teamId\": 0,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"No hardware exist on the system\",\n    \"No teams exist on the system\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572406.7866297,
+    1773572406.8013182
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "empty_object_batch_hardware",
+   "request": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {}
+    ]
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "427",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"multiplier\": 0.0,\n      \"averagePpd\": 0\n    },\n    \"errors\": [\n      \"Field 'hardwareName' must not be empty\",\n      \"Field 'displayName' must not be empty\",\n      \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n      \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n      \"Field 'multiplier' must be 1.00 or higher\",\n      \"Field 'averagePpd' must be 1 or higher\"\n    ]\n  }\n]"
+   },
+   "clock_window": [
+    1773572406.8013487,
+    1773572406.8258247
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

@@ -1,0 +1,213 @@
+{
+ "error": null,
+ "stage1": {
+  "S1-cmake-default-installs": {
+   "evidence": [
+    "configure exit 0",
+    "build exit 0",
+    "unit exit 0",
+    "install exit 0",
+    "installed bin/yosys -V exit 0"
+   ],
+   "pass": true
+  },
+  "S1-make-build-absent": {
+   "evidence": [],
+   "pass": true
+  },
+  "S1-no-build-forwarding": {
+   "evidence": [],
+   "pass": true
+  },
+  "S1-no-embedded-old-build": {
+   "evidence": [],
+   "pass": true
+  },
+  "S1-no-verifier-awareness": {
+   "evidence": [],
+   "pass": true
+  }
+ },
+ "stage2": {
+  "S2-binary-abi": {
+   "cases": 63,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 3.9
+  },
+  "S2-ci-docs": {
+   "cases": 40,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 0.0
+  },
+  "S2-ci-extra-builds": {
+   "cases": 21,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 339.5
+  },
+  "S2-ci-source-vendor": {
+   "cases": 7,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 219.6
+  },
+  "S2-ci-test-build": {
+   "cases": 115,
+   "failed": [
+    "test-yosys/vanilla-test-exit",
+    "test-yosys/various",
+    "test-yosys/xprop"
+   ],
+   "failed_count": 3,
+   "notes": [],
+   "pass": false,
+   "run": true,
+   "seconds": 262.5
+  },
+  "S2-ci-test-compile": {
+   "cases": 22,
+   "failed": [
+    "gcc-11/banner"
+   ],
+   "failed_count": 1,
+   "notes": [],
+   "pass": false,
+   "run": true,
+   "seconds": 464.5
+  },
+  "S2-ci-test-sanitizers": {
+   "cases": 67,
+   "failed": [
+    "vanilla-test-exit",
+    "vanilla/various",
+    "vanilla/xprop"
+   ],
+   "failed_count": 3,
+   "notes": [],
+   "pass": false,
+   "run": true,
+   "seconds": 1631.6
+  },
+  "S2-ci-wheels": {
+   "cases": 387,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 456.2
+  },
+  "S2-command-reference": {
+   "cases": 552,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 5.0
+  },
+  "S2-compiled-features": {
+   "cases": 304,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 5.0
+  },
+  "S2-consumer-routes": {
+   "cases": 25,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 4.7
+  },
+  "S2-install-layout": {
+   "cases": 340,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 3.9
+  },
+  "S2-option-matrix": {
+   "cases": 78,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [],
+   "pass": true,
+   "run": true,
+   "seconds": 455.0
+  },
+  "S2-suite-frontends": {
+   "cases": 12,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [
+    "vanilla-test exit 0"
+   ],
+   "pass": true,
+   "run": true,
+   "seconds": 176.5
+  },
+  "S2-suite-passes": {
+   "cases": 9,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [
+    "vanilla-test exit 0"
+   ],
+   "pass": true,
+   "run": true,
+   "seconds": 176.5
+  },
+  "S2-suite-sim-formal": {
+   "cases": 9,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [
+    "vanilla-test exit 0"
+   ],
+   "pass": true,
+   "run": true,
+   "seconds": 176.5
+  },
+  "S2-suite-techmap-arch": {
+   "cases": 23,
+   "failed": [],
+   "failed_count": 0,
+   "notes": [
+    "vanilla-test exit 0"
+   ],
+   "pass": true,
+   "run": true,
+   "seconds": 176.5
+  }
+ },
+ "stage3": {},
+ "veto": {
+  "failed": [
+   "S2-ci-test-build",
+   "S2-ci-test-compile",
+   "S2-ci-test-sanitizers"
+  ],
+  "fired": true
+ }
+}

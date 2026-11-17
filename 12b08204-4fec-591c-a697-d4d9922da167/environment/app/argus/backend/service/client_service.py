@@ -1,0 +1,309 @@
+import base64
+import json
+import logging
+from dataclasses import asdict
+from datetime import UTC, datetime
+from typing import Any
+from uuid import UUID
+
+
+from coodie.exceptions import DocumentNotFound
+
+from argus.backend.db import ScyllaCluster
+from argus.backend.error_handlers import DataValidationError
+from argus.backend.models.pytest import PytestResultTable, PytestSubmitData, PytestUserField
+from argus.backend.models.result import ArgusGenericResultMetadata, ArgusGenericResultData
+from argus.backend.models.run_config import RunConfigParam, RunConfiguration
+from argus.backend.models.web import ArgusEvent, ArgusTestRunComment, ArgusTest, ArgusGroup, ArgusRelease
+from argus.backend.plugins.core import PluginModelBase
+from argus.backend.plugins.generic.model import GenericRun
+from argus.backend.plugins.loader import AVAILABLE_PLUGINS
+from argus.backend.events.event_processors import EVENT_PROCESSORS
+from argus.backend.service.results_service import ResultsService, Cell
+from argus.common.enums import TestStatus
+
+LOGGER = logging.getLogger(__name__)
+
+
+class ClientException(Exception):
+    pass
+
+
+class ClientService:
+    PLUGINS = {name: plugin.model for name, plugin in AVAILABLE_PLUGINS.items()}
+
+    def __init__(self) -> None:
+        self.cluster = ScyllaCluster.get()
+
+    def get_model(self, run_type: str) -> PluginModelBase:
+        cls = self.PLUGINS.get(run_type)
+        if not cls:
+            raise ClientException(f"Unsupported run type: {run_type}", run_type)
+        return cls
+
+    def submit_run(self, run_type: str, request_data: dict) -> str:
+        model = self.get_model(run_type)
+        run = model.submit_run(request_data=request_data)
+        return "Created"
+
+    def submit_pytest_result(self, request_data: PytestSubmitData) -> dict[str, str | UUID]:
+
+        new_result = PytestResultTable()
+        new_result.name = request_data["name"]
+        new_result.id = datetime.fromtimestamp(request_data["timestamp"], tz=UTC)
+        new_result.status = request_data["status"]
+        new_result.test_type = request_data["test_type"]
+        new_result.run_id = UUID(request_data["run_id"]) if isinstance(request_data["run_id"], str) else request_data["run_id"]
+        new_result.message = request_data.get("message", "")
+        new_result.duration = request_data.get("duration")
+        new_result.test_timestamp = datetime.fromtimestamp(request_data["timestamp"])
+        new_result.session_timestamp = datetime.fromtimestamp(request_data["session_timestamp"])
+        new_result.markers = request_data["markers"]
+        fields: list[PytestUserField] = []
+        for field, value in request_data.get("user_fields", {}).items():
+            f = PytestUserField()
+            f.name = new_result.name
+            f.id = new_result.id
+            f.field_name = field
+            f.field_value = value
+            fields.append(f)
+
+        try:
+            run: GenericRun = AVAILABLE_PLUGINS.get("generic").model.find(id=new_result.run_id).only("id", "release_id", "test_id").first()
+            if run is None:
+                raise DocumentNotFound(f"Run {new_result.run_id} not found")
+            new_result.release_id = run.release_id
+            new_result.test_id = run.test_id
+        except DocumentNotFound:
+            LOGGER.warning("RunId %s does not exist - result will be not be indexed for a release/view", new_result.run_id)
+
+        new_result.save()
+        [f.save() for f in fields]
+        return {
+            "name": new_result.name,
+            "id": new_result.id,
+        }
+
+    def get_run(self, run_type: str, run_id: str):
+        run_id = UUID(run_id) if isinstance(run_id, str) else run_id
+        model = self.get_model(run_type)
+        try:
+            run = model.get(id=run_id)
+        except DocumentNotFound:
+            return None
+        return run
+
+    def heartbeat(self, run_type: str, run_id: str) -> int:
+        model = self.get_model(run_type)
+        run = model.load_test_run(UUID(run_id))
+        run.update_heartbeat()
+        run.save()
+        return run.heartbeat
+
+    def get_run_status(self, run_type: str, run_id: str) -> str:
+        model = self.get_model(run_type)
+        run = model.load_test_run(UUID(run_id))
+        return run.status
+
+    def update_run_status(self, run_type: str, run_id: str, new_status: str) -> str:
+        model = self.get_model(run_type)
+        run = model.load_test_run(UUID(run_id))
+        run.change_status(new_status=TestStatus(new_status))
+        run.save()
+
+        return run.status
+
+    def submit_product_version(self, run_type: str, run_id: str, version: str) -> str:
+        model = self.get_model(run_type)
+        run = model.load_test_run(UUID(run_id))
+        run.submit_product_version(version)
+        run.save()
+
+        return "Submitted"
+
+    def submit_logs(self, run_type: str, run_id: str, logs: list[dict]) -> str:
+        model = self.get_model(run_type)
+        run = model.load_test_run(UUID(run_id))
+        run.submit_logs(logs)
+        run.save()
+
+        return "Submitted"
+
+    def finish_run(self, run_type: str, run_id: str, payload: dict | None = None) -> str:
+        model = self.get_model(run_type)
+        run = model.load_test_run(UUID(run_id))
+        run.finish_run(payload)
+        run.save()
+
+
+        return "Finalized"
+
+    def submit_results(self, run_type: str, run_id: str, results: dict) -> dict[str, str]:
+        model = self.get_model(run_type)
+        try:
+            run = model.load_test_run(UUID(run_id))
+        except DocumentNotFound:
+            return {"status": "error", "response": {
+                "exception": "DoesNotExist",
+                "arguments": [run_id]
+            }}
+        table_name = results["meta"]["name"]
+        results_service = ResultsService()
+        cells = [Cell(**cell) for cell in results["results"]]
+        table_metadata = results_service.get_table_metadata(test_id=run.test_id, table_name=table_name)
+        if table_metadata:
+            table_metadata = table_metadata.update_if_changed(results["meta"])
+        else:
+            table_metadata = ArgusGenericResultMetadata(test_id=run.test_id, **results["meta"])
+            table_metadata.save()
+        if results.get("sut_timestamp", 0) == 0:
+            results["sut_timestamp"] = run.sut_timestamp(results.get(
+                'sut_package_name', 'scylla-server'))  # automatic sut_timestamp
+        results["sut_timestamp"] = datetime.fromtimestamp(results["sut_timestamp"])
+        best_results = results_service.update_best_results(test_id=run.test_id, table_name=table_name, table_metadata=table_metadata,
+                                                           cells=cells, run_id=run_id)
+        table_name = results["meta"]["name"]
+        sut_timestamp = results["sut_timestamp"]
+        result_failed = False
+        for cell in cells:
+            cell.update_cell_status_based_on_rules(table_metadata, best_results)
+            if cell.status == "ERROR":
+                result_failed = True
+            ArgusGenericResultData(test_id=run.test_id,
+                                   run_id=run.id,
+                                   name=table_name,
+                                   sut_timestamp=sut_timestamp,
+                                   **asdict(cell)
+                                   ).save()
+        if result_failed:
+            raise DataValidationError()
+        return {"status": "ok", "message": "Results submitted"}
+
+    def get_run_info(self, run_id: str) -> dict:
+        """Search all plugin models for a test run by run_id and return full details.
+
+        Returns the test run itself, test info (test, group, release), comments, and activity.
+        """
+        run_uuid = UUID(run_id)
+        run = None
+        plugin_name = None
+
+        for name, plugin in AVAILABLE_PLUGINS.items():
+            model = plugin.model
+            try:
+                run = model.get(id=run_uuid)
+                plugin_name = name
+                break
+            except DocumentNotFound:
+                continue
+
+        if not run:
+            raise ClientException(f"Test run {run_id} not found in any plugin model")
+
+        run_data = run.model_dump()
+
+        test_info = {}
+        if run.test_id:
+            try:
+                test = ArgusTest.get(id=run.test_id)
+                group = ArgusGroup.get(id=test.group_id)
+                release = ArgusRelease.get(id=test.release_id)
+                test_info = {
+                    "test": test.model_dump(),
+                    "group": group.model_dump(),
+                    "release": release.model_dump(),
+                }
+            except Exception:
+                LOGGER.warning("Failed to fetch test info for run %s (test_id=%s)", run_id, run.test_id)
+
+        comments = sorted(ArgusTestRunComment.find(test_run_id=run_uuid).all(), key=lambda c: c.posted_at)
+        comments_data = [c.model_dump() for c in comments]
+
+        all_events = sorted(ArgusEvent.find(run_id=run_uuid).all(), key=lambda ev: ev.created_at)
+        activity = {
+            "run_id": run_uuid,
+            "raw_events": [event.model_dump() for event in all_events],
+            "events": {
+                str(event.id): EVENT_PROCESSORS.get(event.kind)(json.loads(event.body))
+                for event in all_events
+            },
+        }
+
+        return {
+            "plugin_name": plugin_name,
+            "test_run": run_data,
+            "test_info": test_info,
+            "comments": comments_data,
+            "activity": activity,
+        }
+
+    @staticmethod
+    def get_config_property(name: str, value: Any | str, run_id: str = None) -> list[RunConfigParam]:
+        dml = RunConfigParam.find(name=name, value=str(value))
+        if run_id:
+            dml.filter(run_id=run_id)
+
+        return list(dml.all())
+
+    @staticmethod
+    def get_config_store(run_id: str, config_name: str) -> RunConfiguration:
+        run_id = UUID(run_id) if isinstance(run_id, str) else run_id
+        try:
+            config_store = RunConfiguration.get(run_id=run_id, name=config_name)
+        except DocumentNotFound:
+            config_store = RunConfiguration()
+            config_store.run_id = run_id
+            config_store.name = config_name
+
+        return config_store
+
+    @staticmethod
+    def get_all_configs(run_id: str) -> list[RunConfiguration]:
+        run_id = UUID(run_id) if isinstance(run_id, str) else run_id
+        config_store = RunConfiguration.find(run_id=run_id).all()
+        return list(config_store)
+
+    @staticmethod
+    def parse_config_values(name: str, config: str, run_id: str):
+        def is_scalar(value: Any):
+            match (value):
+                case list():
+                    return False
+                case dict():
+                    return False
+                case _:
+                    return True
+        try:
+            loaded: dict = json.loads(config)
+        except json.JSONDecodeError:
+            LOGGER.info("Received a non-json config for run %s, skipping param parsing...", run_id)
+            return
+
+        if not isinstance(loaded, dict):
+            LOGGER.warning("JSON Config for run %s does not begin with a top-level mapping, cannot continue parsing...", run_id)
+            return
+
+        loaded_items = [[f"{name.replace(".", "_").replace(" ", "_")}.", k, v] for k, v in list(loaded.items())]
+        # Store flattened keys to a separate table for comparison purposes
+        for level, key, value in loaded_items:
+            if is_scalar(value):
+                param = RunConfigParam()
+                param.name = f"{level}{key}"
+                param.value = str(value) or "null"
+                param.run_id = run_id
+                param.save()
+            else:
+                if isinstance(value, dict):
+                    loaded_items.extend([f"{level}{key}.", inner_key, value] for inner_key, value in value.items())
+                elif isinstance(value, list):
+                    loaded_items.extend([f"{level}{key}.", str(idx), value] for idx, value in enumerate(value))
+
+    @classmethod
+    def submit_config(cls, run_id: str, config_name: str, config_content: str) -> bool:
+        config_store = cls.get_config_store(run_id, config_name)
+        decoded_config = str(base64.decodebytes(bytes(config_content, encoding="utf-8")), encoding="utf-8")
+
+        config_store.content = decoded_config
+        cls.parse_config_values(config_name, decoded_config, run_id)
+        config_store.save()
+        return True

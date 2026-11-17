@@ -1,0 +1,10 @@
+COPYING
+README.md
+pyproject.toml
+setup.py
+pyosys/__init__.py
+pyosys/generator.py
+pyosys.egg-info/PKG-INFO
+pyosys.egg-info/SOURCES.txt
+pyosys.egg-info/dependency_links.txt
+pyosys.egg-info/top_level.txt

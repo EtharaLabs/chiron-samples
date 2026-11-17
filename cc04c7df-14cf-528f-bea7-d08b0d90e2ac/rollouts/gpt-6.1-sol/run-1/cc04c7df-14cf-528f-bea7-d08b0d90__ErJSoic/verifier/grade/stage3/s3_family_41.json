@@ -1,0 +1,159 @@
+{
+ "id": "s3_family_41",
+ "cases": [
+  {
+   "case": "create_hardware_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "readonly",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.863652,
+    1773572406.9075582
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "teams_batch_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/teams/batch",
+    "auth": "readonly",
+    "json": [
+     {
+      "teamName": "RoTeam"
+     }
+    ]
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.9075994,
+    1773572406.9165845
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "manual_reset_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/reset",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.9166136,
+    1773572406.92524
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "debug_lars_as_read_only",
+   "request": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.9252656,
+    1773572406.9340265
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "user_passkey_as_read_only",
+   "request": {
+    "method": "GET",
+    "path": "/users/1/passkey",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.9340494,
+    1773572406.9429224
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

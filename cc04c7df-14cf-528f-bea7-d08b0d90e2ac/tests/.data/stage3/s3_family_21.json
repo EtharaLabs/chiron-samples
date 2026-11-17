@@ -1,0 +1,141 @@
+{
+ "id": "s3_family_21",
+ "source": "f031_body_without_content_type",
+ "steps": [
+  {
+   "case": "create_hardware_body_no_content_type",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"NoCtHw\",\"displayName\":\"NoCtHw\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":1.0,\"averagePpd\":100}"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "create_team_body_no_content_type",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "body": "{\"teamName\":\"NoCtTeam\"}"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "update_hardware_body_no_content_type",
+   "http": {
+    "method": "PUT",
+    "path": "/hardware/1",
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"NoCtHw\",\"displayName\":\"NoCtHw\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":1.0,\"averagePpd\":100}"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "offset_stats_body_no_content_type",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/1",
+    "auth": "admin",
+    "body": "{\"pointsOffset\":1,\"multipliedPointsOffset\":1,\"unitsOffset\":1}"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "create_hardware_body_no_content_type",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"NoCtHw\",\"displayName\":\"NoCtHw\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":1.0,\"averagePpd\":100}",
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "create_team_body_no_content_type",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"teamName\":\"NoCtTeam\"}",
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "update_hardware_body_no_content_type",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"hardwareName\":\"NoCtHw\",\"displayName\":\"NoCtHw\",\"hardwareMake\":\"NVIDIA\",\"hardwareType\":\"GPU\",\"multiplier\":1.0,\"averagePpd\":100}",
+    "method": "PUT",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "offset_stats_body_no_content_type",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "body": "{\"pointsOffset\":1,\"multipliedPointsOffset\":1,\"unitsOffset\":1}",
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 415
+   }
+  }
+ ],
+ "probe": "A request that has a body but no Content-Type header at all: the container has no media type to match @Consumes against and must refuse it."
+}

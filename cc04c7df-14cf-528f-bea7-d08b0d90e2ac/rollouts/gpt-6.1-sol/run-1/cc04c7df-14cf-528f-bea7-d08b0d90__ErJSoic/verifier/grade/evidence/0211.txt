@@ -1,0 +1,65 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/user/UserStatsResetter.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc.user;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import me.zodac.folding.api.util.ProcessingType;
+32 +| import me.zodac.folding.service.api.FoldingStatsCore;
+33 +| import me.zodac.folding.service.tc.scheduled.StatsScheduler;
+34 +| import org.apache.logging.log4j.LogManager;
+35 +| import org.apache.logging.log4j.Logger;
+36 +| 
+37 +| @Service
+38 +| public class UserStatsResetter {
+39 +| 
+40 +|     private static final Logger LOGGER = LogManager.getLogger();
+41 +| 
+42 +|     @Autowired
+43 +|     @Lazy
+44 +|     private FoldingStatsCore foldingStatsCore;
+45 +| 
+46 +|     @Autowired
+47 +|     @Lazy
+48 +|     private StatsScheduler statsScheduler;
+49 +| 
+50 +|     public void resetTeamCompetitionStats() {
+51 +|         try {
+52 +|             // Pull stats one more time to get the latest values
+53 +|             statsScheduler.manualTeamCompetitionStatsParsing(ProcessingType.SYNCHRONOUS);
+54 +| 
+55 +|             LOGGER.info("Resetting Team Competition stats");
+56 +|             foldingStatsCore.resetAllTeamCompetitionUserStats();
+57 +| 
+58 +|             // Pull stats for new month
+59 +|             statsScheduler.manualTeamCompetitionStatsParsing(ProcessingType.SYNCHRONOUS);
+60 +|         } catch (final Exception e) {
+61 +|             LOGGER.warn("Unexpected error manually resetting TC stats", e);
+62 +|         }
+63 +|     }
+64 +| }

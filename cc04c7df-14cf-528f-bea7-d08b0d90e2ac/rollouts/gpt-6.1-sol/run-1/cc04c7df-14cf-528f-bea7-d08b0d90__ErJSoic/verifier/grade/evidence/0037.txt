@@ -1,0 +1,19 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/validation/ValidationFailure.java (changed against State A) ===
+@@
+26  | 
+27  | import java.util.Collection;
+28  | 
+   -| /**
+   -|  * Simple interface defining the errors for a {@link ValidationFailure}.
+   -|  */
+29 +| 
+30  | public interface ValidationFailure {
+31  | 
+   -|     /**
+   -|      * The errors for a failed {@link ValidationFailure}.
+   -|      *
+   -|      * @return a {@link Collection} of the validation error {@link String}s
+   -|      */
+32 +|     
+33  |     Collection<String> getErrors();
+34  | }

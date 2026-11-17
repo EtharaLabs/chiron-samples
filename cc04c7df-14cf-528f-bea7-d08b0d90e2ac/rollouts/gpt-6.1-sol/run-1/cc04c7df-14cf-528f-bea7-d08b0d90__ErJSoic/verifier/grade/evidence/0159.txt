@@ -1,0 +1,25 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/lars/HardwareNameComparator.java (changed against State A) ===
+@@
+28  | import java.util.Comparator;
+29  | import me.zodac.folding.api.tc.Hardware;
+30  | 
+   -| /**
+   -|  * Custom {@link Comparator} that allows for sorting of {@link Hardware}s by only comparing the value of {@link Hardware#getHardwareName()}.
+   -|  */
+31 +| 
+32  | final class HardwareNameComparator implements Comparator<Hardware>, Serializable {
+33  | 
+34  |     private static final long serialVersionUID = -7988652908218460899L;
+@@
+37  | 
+38  |     }
+39  | 
+   -|     /**
+   -|      * Creates an instance of {@link HardwareNameComparator}.
+   -|      *
+   -|      * @return the created {@link HardwareNameComparator}
+   -|      */
+40 +|     
+41  |     static HardwareNameComparator create() {
+42  |         return new HardwareNameComparator();
+43  |     }

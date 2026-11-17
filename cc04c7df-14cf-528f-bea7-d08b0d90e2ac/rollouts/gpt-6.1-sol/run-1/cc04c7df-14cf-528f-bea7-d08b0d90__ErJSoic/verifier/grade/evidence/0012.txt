@@ -1,0 +1,53 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/exception/ExternalConnectionException.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.api.exception;
+26  | 
+   -| /**
+   -|  * {@link Exception} for errors when connecting to an external service, or when an unexpected response is returned.
+   -|  */
+27 +| 
+28  | public class ExternalConnectionException extends Exception {
+29  | 
+30  |     private static final long serialVersionUID = 2084075114898438910L;
+31  | 
+   -|     /**
+   -|      * The URL that was unable to be connected to.
+   -|      */
+32 +|     
+33  |     private final String url;
+34  | 
+   -|     /**
+   -|      * Constructor taking in the failing URL and an error message.
+   -|      *
+   -|      * @param url     the URL which was unable to be connected to
+   -|      * @param message the error message
+   -|      */
+35 +|     
+36  |     public ExternalConnectionException(final String url, final String message) {
+37  |         super(message);
+38  |         this.url = url;
+39  |     }
+40  | 
+   -|     /**
+   -|      * Constructor taking in the failing URL, an error message and a cause {@link Throwable}.
+   -|      *
+   -|      * @param url       the URL which was unable to be connected to
+   -|      * @param message   the error message
+   -|      * @param throwable the cause {@link Throwable}
+   -|      */
+41 +|     
+42  |     public ExternalConnectionException(final String url, final String message, final Throwable throwable) {
+43  |         super(message, throwable);
+44  |         this.url = url;
+45  |     }
+46  | 
+   -|     /**
+   -|      * The URL that could not be connected to, causing the {@link ExternalConnectionException} to be thrown.
+   -|      *
+   -|      * @return the failing URL
+   -|      */
+47 +|     
+48  |     public String getUrl() {
+49  |         return url;
+50  |     }

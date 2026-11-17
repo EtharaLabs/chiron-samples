@@ -1,0 +1,84 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/stats/UserTcStats.java (changed against State A) ===
+@@
+31  | import me.zodac.folding.api.tc.User;
+32  | import me.zodac.folding.api.util.DateTimeUtils;
+33  | 
+   -| /**
+   -|  * POJO that extends {@link UserStats} adding multiplied points for a <code>Team Competition</code>
+   -|  * {@link me.zodac.folding.api.tc.User}, based on a hardware multiplier.
+   -|  */
+34 +| 
+35  | @Getter
+36  | @EqualsAndHashCode(callSuper = true)
+37  | @ToString(doNotUseGetters = true, callSuper = true)
+@@
+41  | 
+42  |     private final long multipliedPoints;
+43  | 
+   -|     /**
+   -|      * Constructor for {@link UserTcStats}.
+   -|      *
+   -|      * @param userId           the {@link me.zodac.folding.api.tc.User} ID
+   -|      * @param timestamp        the {@link Timestamp} the stats were retrieved
+   -|      * @param points           the points
+   -|      * @param multipliedPoints the multiplied points
+   -|      * @param units            the units
+   -|      */
+44 +|     
+45  |     protected UserTcStats(final int userId, final Timestamp timestamp, final long points, final long multipliedPoints, final int units) {
+46  |         super(userId, timestamp, points, units);
+47  |         this.multipliedPoints = multipliedPoints;
+48  |     }
+49  | 
+   -|     /**
+   -|      * Creates an instance of {@link UserTcStats}.
+   -|      *
+   -|      * @param userId           the ID of the {@link me.zodac.folding.api.tc.User}
+   -|      * @param timestamp        the {@link Timestamp} the {@link UserTcStats} were retrieved
+   -|      * @param points           the points
+   -|      * @param multipliedPoints the multiplied points
+   -|      * @param units            the units
+   -|      * @return the created {@link UserTcStats}
+   -|      */
+50 +|     
+51  |     public static UserTcStats create(final int userId, final Timestamp timestamp, final long points, final long multipliedPoints, final int units) {
+52  |         return new UserTcStats(userId, timestamp, points, multipliedPoints, units);
+53  |     }
+54  | 
+   -|     /**
+   -|      * Creates an empty instance of {@link UserTcStats}, with no values. Can be used where no stats are necessary, but
+   -|      * an {@link java.util.Optional} is not clean enough.
+   -|      *
+   -|      * @param userId the ID of the {@link me.zodac.folding.api.tc.User}
+   -|      * @return the empty {@link UserTcStats}
+   -|      */
+55 +|     
+56  |     public static UserTcStats empty(final int userId) {
+57  |         return create(userId, DateTimeUtils.currentUtcTimestamp(), Stats.DEFAULT_POINTS, DEFAULT_MULTIPLIED_POINTS, Stats.DEFAULT_UNITS);
+58  |     }
+59  | 
+   -|     /**
+   -|      * Creates an empty instance of {@link UserTcStats}, with no values.
+   -|      *
+   -|      * @return the empty {@link UserTcStats}
+   -|      */
+60 +|     
+61  |     public static UserTcStats empty() {
+62  |         return empty(User.EMPTY_USER_ID);
+63  |     }
+64  | 
+   -|     /**
+   -|      * Creates a new instance of {@link UserTcStats} with {@link OffsetTcStats}. Can be used when retrieving a current
+   -|      * {@link me.zodac.folding.api.tc.User}'s {@link UserTcStats} and wanted to make an offset.
+   -|      *
+   -|      * <p>
+   -|      * In case the {@link OffsetTcStats} values are greater than the {@link UserTcStats}, the values will not be negative
+   -|      * and will be set to <b>0L</b>
+   -|      *
+   -|      * @param offsetTcStats the {@link OffsetTcStats} to apply
+   -|      * @return the new {@link UserTcStats} instances with {@link OffsetTcStats} applied
+   -|      */
+65 +|     
+66  |     public UserTcStats updateWithOffsets(final OffsetTcStats offsetTcStats) {
+67  |         final long offsetPoints = Math.max(getPoints() + offsetTcStats.getPointsOffset(), Stats.DEFAULT_POINTS);
+68  |         final long offsetMultipliedPoints = Math.max(multipliedPoints + offsetTcStats.getMultipliedPointsOffset(), DEFAULT_MULTIPLIED_POINTS);

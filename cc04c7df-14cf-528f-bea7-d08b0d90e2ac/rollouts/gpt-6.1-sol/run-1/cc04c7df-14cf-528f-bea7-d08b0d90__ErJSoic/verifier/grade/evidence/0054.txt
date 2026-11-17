@@ -1,0 +1,63 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/RetiredUserSummary.java (changed against State A) ===
+@@
+33  | import lombok.ToString;
+34  | import me.zodac.folding.api.tc.stats.RetiredUserTcStats;
+35  | 
+   -| /**
+   -|  * Summary of the stats of a retired {@link me.zodac.folding.api.tc.User} in the <code>Team Competition</code>.
+   -|  */
+36 +| 
+37  | @NoArgsConstructor
+38  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+39  | @Getter
+@@
+52  |     private int units;
+53  |     private int rankInTeam;
+54  | 
+   -|     /**
+   -|      * Creates a {@link RetiredUserSummary}, summarising the stats for a now retired {@link me.zodac.folding.api.tc.User}.
+   -|      *
+   -|      * <p>
+   -|      * The {@link RetiredUserSummary} is not ranked to begin with, since it is not aware of the other
+   -|      * {@link RetiredUserSummary}s or {@link UserSummary}s. The rank can be updated later using
+   -|      * {@link RetiredUserSummary#updateWithRankInTeam(RetiredUserSummary, int)}.
+   -|      *
+   -|      * @param retiredUserTcStats the {@link RetiredUserTcStats} for the {@link me.zodac.folding.api.tc.User}
+   -|      * @param rankInTeam         the rank of the {@link RetiredUserTcStats} in the {@link me.zodac.folding.api.tc.Team}
+   -|      * @return the created {@link RetiredUserSummary}
+   -|      */
+55 +|     
+56  |     public static RetiredUserSummary create(final RetiredUserTcStats retiredUserTcStats, final int rankInTeam) {
+57  |         return new RetiredUserSummary(
+58  |             retiredUserTcStats.getUserId(),
+@@
+64  |         );
+65  |     }
+66  | 
+   -|     /**
+   -|      * Creates a {@link RetiredUserSummary}, summarising the stats for a now retired {@link me.zodac.folding.api.tc.User}.
+   -|      *
+   -|      * <p>
+   -|      * The {@link RetiredUserSummary} is not ranked to begin with, since it is not aware of the other
+   -|      * {@link RetiredUserSummary}s or {@link UserSummary}s. The rank can be updated later using
+   -|      * {@link RetiredUserSummary#updateWithRankInTeam(RetiredUserSummary, int)}.
+   -|      *
+   -|      * @param retiredUserTcStats the {@link RetiredUserTcStats} for the {@link me.zodac.folding.api.tc.User}
+   -|      * @return the created {@link RetiredUserSummary}
+   -|      */
+67 +|     
+68  |     public static RetiredUserSummary createWithDefaultRank(final RetiredUserTcStats retiredUserTcStats) {
+69  |         return create(retiredUserTcStats, DEFAULT_USER_RANK);
+70  |     }
+71  | 
+   -|     /**
+   -|      * Updates a {@link RetiredUserSummary} with a rank, after it has been calculated.
+   -|      *
+   -|      * @param retiredUserSummary the {@link RetiredUserSummary} to update
+   -|      * @param rankInTeam         the rank within the {@link TeamSummary}
+   -|      * @return the updated {@link RetiredUserSummary}
+   -|      */
+72 +|     
+73  |     public static RetiredUserSummary updateWithRankInTeam(final RetiredUserSummary retiredUserSummary, final int rankInTeam) {
+74  |         return new RetiredUserSummary(
+75  |             retiredUserSummary.id,

@@ -1,0 +1,1449 @@
+==> .github/actions/setup-build-env/action.yml <==
+    1| name: Build environment setup
+    2| description: Configure build env for Yosys builds
+    3| 
+    4| inputs:
+    5|   runs-on:
+    6|     required: true
+    7|     type: string
+    8|   get-build-deps:
+    9|     description: 'Install Yosys build dependencies'
+   10|     default: false
+   11|     required: false
+   12|     type: boolean
+   13|   get-docs-deps:
+   14|     description: 'Install Yosys docs dependencies'
+   15|     default: false
+   16|     required: false
+   17|     type: boolean
+   18|   get-test-deps:
+   19|     description: 'Install Yosys test dependencies'
+   20|     default: false
+   21|     required: false
+   22|     type: boolean
+   23|   get-iverilog:
+   24|     description: 'Install iverilog'
+   25|     default: false
+   26|     required: false
+   27|     type: boolean
+   28| 
+   29| runs:
+   30|   using: composite
+   31|   steps:
+   32|     # if updating common/build/docs dependencies, make sure to update README.md
+   33|     # and docs/source/getting_started/installation.rst to match.
+   34|     - name: Linux common dependencies
+   35|       if: runner.os == 'Linux'
+   36|       uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+   37|       with:
+   38|         packages: gawk git make python3 cmake ninja-build
+   39|         version: ${{ inputs.runs-on }}-commonys
+   40| 
+   41|     - name: Linux build dependencies
+   42|       if: runner.os == 'Linux' && inputs.get-build-deps == 'true'
+   43|       uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+   44|       with:
+   45|         packages: bison clang flex libffi-dev libfl-dev libreadline-dev pkg-config tcl-dev zlib1g-dev libgtest-dev libgmock-dev
+   46|         version: ${{ inputs.runs-on }}-buildys
+   47| 
+   48|     - name: Linux docs dependencies
+   49|       if: runner.os == 'Linux' && inputs.get-docs-deps == 'true'
+   50|       uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+   51|       with:
+   52|         packages: graphviz xdot
+   53|         version: ${{ inputs.runs-on }}-docsys
+   54| 
+   55|     - name: Install macOS Dependencies
+   56|       if: runner.os == 'macOS'
+   57|       shell: bash
+   58|       run: |
+   59|         brew bundle
+   60| 
+   61|     - name: Linux runtime environment
+   62|       if: runner.os == 'Linux'
+   63|       shell: bash
+   64|       run: |
+   65|         echo "${{ github.workspace }}/.local/bin" >> $GITHUB_PATH
+   66|         echo "procs=$(nproc)" >> $GITHUB_ENV
+   67| 
+   68|     - name: macOS runtime environment
+   69|       if: runner.os == 'macOS'
+   70|       shell: bash
+   71|       run: |
+   72|         echo "${{ github.workspace }}/.local/bin" >> $GITHUB_PATH
+   73|         echo "$(brew --prefix llvm@20)/bin" >> $GITHUB_PATH
+   74|         echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
+   75|         echo "$(brew --prefix flex)/bin" >> $GITHUB_PATH
+   76|         echo "procs=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
+   77| 
+   78|     - name: Setup iverilog
+   79|       if: inputs.get-iverilog == 'true'
+   80|       uses: ./.github/actions/setup-iverilog
+   81|       with:
+   82|         runs-on: ${{ inputs.runs-on }}
+
+==> .github/actions/setup-iverilog/action.yml <==
+    1| name: iverilog setup
+    2| description: Cached build and install of iverilog
+    3| 
+    4| inputs:
+    5|   runs-on:
+    6|     required: true
+    7|     type: string
+    8| 
+    9| runs:
+   10|   using: composite
+   11|   steps:
+   12|     - name: iverilog Linux deps
+   13|       if: steps.restore-iverilog.outputs.cache-hit != 'true' && runner.os == 'Linux'
+   14|       uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+   15|       with:
+   16|         packages: autoconf gperf make gcc g++ bison flex libbz2-dev
+   17|         version: ${{ inputs.runs-on }}-iverilog
+   18| 
+   19|     - name: iverilog macOS deps
+   20|       if: steps.restore-iverilog.outputs.cache-hit != 'true' && runner.os == 'macOS'
+   21|       shell: bash
+   22|       run: |
+   23|         brew install autoconf
+   24| 
+   25|     - name: Get iverilog
+   26|       id: get-iverilog
+   27|       shell: bash
+   28|       run: |
+   29|         git clone https://github.com/steveicarus/iverilog.git
+   30|         cd iverilog
+   31|         echo "IVERILOG_GIT=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+   32| 
+   33|     - name: Get vcd2fst
+   34|       shell: bash
+   35|       run: |
+   36|         git clone https://github.com/mmicko/libwave.git
+   37|         mkdir -p ${{ github.workspace }}/.local/
+   38|         cd libwave
+   39|         cmake . -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/.local
+   40|         make -j$procs
+   41|         make install
+   42| 
+   43|     - uses: actions/cache/restore@v4
+   44|       id: restore-iverilog
+   45|       with:
+   46|         path: .local/
+   47|         key: ${{ inputs.runs-on }}-${{ steps.get-iverilog.outputs.IVERILOG_GIT }}
+   48| 
+   49|     - name: Build iverilog
+   50|       if: steps.restore-iverilog.outputs.cache-hit != 'true'
+   51|       shell: bash
+   52|       run: |
+   53|         mkdir -p ${{ github.workspace }}/.local/
+   54|         cd iverilog
+   55|         autoconf
+   56|         CC=gcc CXX=g++ ./configure --prefix=${{ github.workspace }}/.local
+   57|         make -j$procs
+   58|         make install
+   59| 
+   60|     - name: Check iverilog
+   61|       shell: bash
+   62|       run: |
+   63|         iverilog -V
+   64| 
+   65|     - uses: actions/cache/save@v4
+   66|       id: save-iverilog
+   67|       if: steps.restore-iverilog.outputs.cache-hit != 'true'
+   68|       with:
+   69|         path: .local/
+   70|         key: ${{ steps.restore-iverilog.outputs.cache-primary-key }}
+
+==> .github/workflows/codeql.yml <==
+    1| name: "CodeQL"
+    2| 
+    3| on:
+    4|   workflow_dispatch:
+    5|   schedule:
+    6|     - cron: '0 3 * * *'
+    7| 
+    8| jobs:
+    9|   analyze:
+   10|     name: Analyze
+   11|     runs-on: ubuntu-latest
+   12|     steps:
+   13|     - name: Checkout repository
+   14|       uses: actions/checkout@v5
+   15|       with:
+   16|         submodules: true
+   17|         persist-credentials: false
+   18| 
+   19|     - name: Setup environment
+   20|       uses: ./.github/actions/setup-build-env
+   21|       with:
+   22|         runs-on: ubuntu-latest
+   23|         get-build-deps: true
+   24| 
+   25|     - name: Initialize CodeQL
+   26|       uses: github/codeql-action/init@v4
+   27|       with:
+   28|         languages: cpp
+   29|         queries: security-extended,security-and-quality
+   30| 
+   31|     - name: Build
+   32|       run: |
+   33|         cmake -B build -G Ninja .
+   34|         cmake --build build --target yosys -j6
+   35| 
+   36|     - name: Perform CodeQL Analysis
+   37|       uses: github/codeql-action/analyze@v4
+
+==> .github/workflows/extra-builds.yml <==
+    1| name: Test extra build flows
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   #push:
+    7|   #  branches: [ main ]
+    8|   workflow_dispatch:
+    9| 
+   10| jobs:
+   11|   pre_job:
+   12|     runs-on: ubuntu-latest
+   13|     outputs:
+   14|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   15|     steps:
+   16|       - id: skip_check
+   17|         if: ${{ github.event_name != 'merge_group' }}
+   18|         uses: fkirc/skip-duplicate-actions@v5
+   19|         with:
+   20|           # don't run on documentation changes
+   21|           paths_ignore: '["**/README.md", "docs/**", "guidelines/**"]'
+   22|           # cancel previous builds if a new commit is pushed
+   23|           # but never cancel main
+   24|           cancel_others: ${{ github.ref != 'refs/heads/main' }}
+   25| 
+   26|       - id: set_output
+   27|         run: |
+   28|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   29|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   30|           else
+   31|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   32|           fi
+   33| 
+   34|   vs-build:
+   35|     name: Visual Studio build
+   36|     runs-on: windows-latest
+   37|     needs: [pre_job]
+   38|     if: (github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch') && needs.pre_job.outputs.should_skip != 'true'
+   39|     steps:
+   40|       - uses: actions/checkout@v5
+   41|         with:
+   42|           submodules: true
+   43|           persist-credentials: false
+   44|       - name: Build dependencies
+   45|         run: |
+   46|           choco install winflexbison3 -y
+   47|           vcpkg install zlib:x64-windows-static
+   48|       - name: Configure
+   49|         run: >-
+   50|           cmake -B build -T v142 -DCMAKE_SYSTEM_VERSION=10.0.26100.0
+   51|           -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+   52|           -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+   53|           -DFLEX_INCLUDE_DIR="$env:ChocolateyInstall/lib/winflexbison3/tools"
+   54|           -DBUILD_TESTING=OFF -DYOSYS_WITHOUT_TCL=ON -DYOSYS_WITHOUT_READLINE=ON
+   55|           -DYOSYS_WITHOUT_PLUGINS=ON -DYOSYS_ABC_EXTERNAL=yosys-abc.exe .
+   56|       - name: Build
+   57|         run: cmake --build build --target yosys --config Release --parallel
+   58| 
+   59|   wasi-build:
+   60|     name: WASI build
+   61|     needs: pre_job
+   62|     if: (github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch') && needs.pre_job.outputs.should_skip != 'true'
+   63|     runs-on: ubuntu-latest
+   64|     steps:
+   65|       - uses: actions/checkout@v5
+   66|         with:
+   67|           submodules: true
+   68|           persist-credentials: false
+   69|       - name: Build
+   70|         run: |
+   71|           WASI_SDK=wasi-sdk-33.0-x86_64-linux
+   72|           WASI_SDK_URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-33/wasi-sdk-33.0-x86_64-linux.tar.gz
+   73|           if ! [ -d ${WASI_SDK} ]; then curl -L ${WASI_SDK_URL} | tar xzf -; fi
+   74| 
+   75|           FLEX_VER=2.6.4
+   76|           FLEX=flex-${FLEX_VER}
+   77|           FLEX_URL=https://github.com/westes/flex/releases/download/v${FLEX_VER}/${FLEX}.tar.gz
+   78|           if ! [ -d ${FLEX} ]; then curl -L ${FLEX_URL} | tar xzf -; fi
+   79| 
+   80|           mkdir -p flex-build
+   81|           (cd flex-build &&
+   82|             ../${FLEX}/configure --prefix=$(pwd)/../flex-prefix &&
+   83|             make &&
+   84|             make install)
+   85| 
+   86|           export PATH="$(pwd)/${WASI_SDK}/bin:$PATH"
+   87|           cmake -B build -G Ninja -DCMAKE_TOOLCHAIN_FILE="$(pwd)/${WASI_SDK}/share/cmake/wasi-sdk-p1.cmake" -DCMAKE_INSTALL_PREFIX=/ -DYOSYS_WITHOUT_TCL=ON -DYOSYS_WITHOUT_READLINE=ON -DYOSYS_WITHOUT_PLUGINS=ON -DYOSYS_WITHOUT_ZLIB=ON -DCMAKE_CXX_FLAGS="-I$(pwd)/flex-prefix/include" "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-z,stack-size=8388608 -Wl,--stack-first -Wl,--strip-all" .
+   88|           cmake --build build -j$(nproc)
+   89| 
+   90|   nix-build:
+   91|     name: "Build nix flake"
+   92|     needs: pre_job
+   93|     if: (github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch') && needs.pre_job.outputs.should_skip != 'true'
+   94|     runs-on: ${{ matrix.os }}
+   95|     strategy:
+   96|       matrix:
+   97|         os: [ubuntu-latest, macos-latest]
+   98|       fail-fast: false
+   99|     steps:
+  100|       - uses: actions/checkout@v5
+  101|         with:
+  102|           submodules: true
+  103|           persist-credentials: false
+  104|       - uses: cachix/install-nix-action@v31
+  105|         with:
+  106|           install_url: https://releases.nixos.org/nix/nix-2.30.0/install
+  107|       - run: nix build .?submodules=1 -L
+  108| 
+  109|   extra-builds-result:
+  110|     runs-on: ubuntu-latest
+  111|     needs:
+  112|       - vs-build
+  113|       - wasi-build
+  114|       - nix-build
+  115|     if: always()
+  116|     steps:
+  117|       - name: Check results
+  118|         run: |
+  119|           echo "Needs results: ${{ join(needs.*.result, ',') }}"
+  120|           if [[ "${{ join(needs.*.result, ',') }}" == *failure* ]] || \
+  121|             [[ "${{ join(needs.*.result, ',') }}" == *cancelled* ]]; then
+  122|             echo "Some jobs failed or were cancelled"
+  123|             exit 1
+  124|           fi
+  125|       - run: echo "All good"
+
+==> .github/workflows/prepare-docs.yml <==
+    1| name: Build docs artifact with Verific
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   push:
+    7|     branches: [ main, "docs-preview/**", "docs-preview*" ]
+    8|     tags: [ "*" ]
+    9|   workflow_dispatch:
+   10| 
+   11| jobs:
+   12|   check_docs_rebuild:
+   13|     runs-on: ubuntu-latest
+   14|     outputs:
+   15|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   16|       docs_export: ${{ steps.docs_var.outputs.docs_export }}
+   17|     env:
+   18|       docs_export: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/docs-preview') || startsWith(github.ref, 'refs/tags/') }}
+   19|     steps:
+   20|       - id: skip_check
+   21|         uses: fkirc/skip-duplicate-actions@v5
+   22|         with:
+   23|           paths_ignore: '["**/README.md"]'
+   24|           # don't cancel in case we're updating docs
+   25|           cancel_others: 'false'
+   26|           # push filtering means we only want to skip duplicates for PRs
+   27|           do_not_skip: '["workflow_dispatch", "merge_group", "push"]'
+   28|           concurrent_skipping: 'same_content_newer'
+   29| 
+   30|       - id: docs_var
+   31|         run: echo "docs_export=${docs_export}" >> $GITHUB_OUTPUT
+   32| 
+   33|       - id: set_output
+   34|         run: |
+   35|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   36|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   37|           else
+   38|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   39|           fi
+   40| 
+   41|   prepare-docs:
+   42|     # docs builds are needed for anything on main, any tagged versions, and any tag
+   43|     # or branch starting with docs-preview
+   44|     needs: check_docs_rebuild
+   45|     if: ${{ needs.check_docs_rebuild.outputs.should_skip != 'true' && github.repository_owner == 'YosysHQ' }}
+   46|     runs-on: [self-hosted, linux, x64, fast]
+   47|     steps:
+   48|       - name: Checkout Yosys
+   49|         uses: actions/checkout@v4
+   50|         with:
+   51|           persist-credentials: false
+   52|           submodules: true
+   53| 
+   54|       - name: Runtime environment
+   55|         run: |
+   56|           echo "procs=$(nproc)" >> $GITHUB_ENV
+   57| 
+   58|       - name: Build Yosys
+   59|         run: |
+   60|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_EDIF=ON -DYOSYS_ENABLE_VERIFIC_LIBERTY=ON -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=ON -DYOSYS_ENABLE_CCACHE=ON -DYOSYS_ENABLE_HELP_SOURCE=ON
+   61|           cmake --build build -j$procs
+   62| 
+   63|       - name: Prepare docs
+   64|         shell: bash
+   65|         run:
+   66|           cmake --build build --target docs-prep -j$procs
+   67| 
+   68|       - name: Upload artifact
+   69|         uses: actions/upload-artifact@v4
+   70|         with:
+   71|           name: cmd-ref-${{ github.sha }}
+   72|           path: |
+   73|             docs/source/generated
+   74|             docs/source/_images
+   75|             docs/source/code_examples
+   76| 
+   77|       - name: Install doc prereqs
+   78|         shell: bash
+   79|         run: |
+   80|           make -C docs reqs
+   81| 
+   82|       - name: Test build docs
+   83|         shell: bash
+   84|         run: |
+   85|           make -C docs html -j$procs TARGETS= EXTRA_TARGETS=
+   86| 
+   87|       - name: Trigger RTDs build
+   88|         if: ${{ needs.check_docs_rebuild.outputs.docs_export == 'true' && github.repository == 'YosysHQ/yosys' }}
+   89|         uses: dfm/rtds-action@v1.1.0
+   90|         with:
+   91|           webhook_url: ${{ secrets.RTDS_WEBHOOK_URL }}
+   92|           webhook_token: ${{ secrets.RTDS_WEBHOOK_TOKEN }}
+   93|           commit_ref: ${{ github.ref }}
+
+==> .github/workflows/source-vendor.yml <==
+    1| name: Create source archive with vendored dependencies
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   push:
+    7|     branches: [ main ]
+    8|   workflow_dispatch:
+    9| 
+   10| jobs:
+   11|   vendor-sources:
+   12|     runs-on: ubuntu-latest
+   13|     steps:
+   14|       - name: Checkout repository with submodules
+   15|         uses: actions/checkout@v5
+   16|         with:
+   17|           submodules: 'recursive'
+   18|           persist-credentials: false
+   19| 
+   20|       - name: Create clean tarball
+   21|         run: |
+   22|           git archive --format=tar HEAD -o yosys-src-vendored.tar
+   23|           git submodule foreach '
+   24|             git archive --format=tar --prefix="${sm_path}/" HEAD --output=${toplevel}/vendor-${name}.tar
+   25|           '
+   26| 
+   27|           # 2008 bug https://lists.gnu.org/archive/html/bug-tar/2008-08/msg00002.html
+   28|           for file in vendor-*.tar; do
+   29|               tar --concatenate --file=yosys-src-vendored.tar "$file"
+   30|           done
+   31| 
+   32|           gzip yosys-src-vendored.tar
+   33| 
+   34|       - name: Store tarball artifact
+   35|         uses: actions/upload-artifact@v7
+   36|         with:
+   37|           name: vendored-sources
+   38|           path: yosys-src-vendored.tar.gz
+   39|           retention-days: 1
+
+==> .github/workflows/test-build.yml <==
+    1| name: Build and run tests
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   #push:
+    7|   #  branches: [ main ]
+    8|   workflow_dispatch:
+    9| 
+   10| jobs:
+   11|   pre_job:
+   12|     runs-on: ubuntu-latest
+   13|     outputs:
+   14|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   15|     steps:
+   16|       - id: skip_check
+   17|         if: ${{ github.event_name != 'merge_group' }}
+   18|         uses: fkirc/skip-duplicate-actions@v5
+   19|         with:
+   20|           # don't run on documentation changes
+   21|           paths_ignore: '["**/README.md", "docs/**", "guidelines/**"]'
+   22|           # cancel previous builds if a new commit is pushed
+   23|           # but never cancel main
+   24|           cancel_others: ${{ github.ref != 'refs/heads/main' }}
+   25| 
+   26|       - id: set_output
+   27|         run: |
+   28|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   29|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   30|           else
+   31|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   32|           fi
+   33| 
+   34|   pre_docs_job:
+   35|     runs-on: ubuntu-latest
+   36|     outputs:
+   37|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   38|     steps:
+   39|       - id: skip_check
+   40|         if: ${{ github.event_name != 'merge_group' }}
+   41|         uses: fkirc/skip-duplicate-actions@v5
+   42|         with:
+   43|           # don't run on readme changes
+   44|           paths_ignore: '["**/README.md"]'
+   45|           # cancel previous builds if a new commit is pushed
+   46|           # but never cancel main
+   47|           cancel_others: ${{ github.ref != 'refs/heads/main' }}
+   48| 
+   49|       - id: set_output
+   50|         run: |
+   51|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   52|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   53|           else
+   54|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   55|           fi
+   56| 
+   57|   build-yosys:
+   58|     name: Reusable build
+   59|     runs-on: ${{ matrix.os }}
+   60|     # pre_job is a subset of pre_docs_job, so we can always build for pre_docs_job
+   61|     needs: pre_docs_job
+   62|     if: needs.pre_docs_job.outputs.should_skip != 'true'
+   63|     env:
+   64|       CC: clang
+   65|     strategy:
+   66|       matrix:
+   67|         os: [ubuntu-latest, macos-latest]
+   68|       fail-fast: false
+   69|     steps:
+   70|       - name: Checkout Yosys
+   71|         uses: actions/checkout@v5
+   72|         with:
+   73|           submodules: true
+   74|           persist-credentials: false
+   75| 
+   76|       - name: Setup environment
+   77|         uses: ./.github/actions/setup-build-env
+   78|         with:
+   79|           runs-on: ${{ matrix.os }}
+   80|           get-build-deps: true
+   81| 
+   82|       - name: Build
+   83|         shell: bash
+   84|         run: |
+   85|           mkdir build
+   86|           cd build
+   87|           cmake -S .. -B . -G Ninja -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=${CXX:-clang++} 
+   88|           cmake --build . -j$procs
+   89|           ctest --test-dir tests/unit --output-on-failure
+   90| 
+   91|       - name: Log yosys-config output
+   92|         run: |
+   93|           ./build/yosys-config || true
+   94| 
+   95|       - name: Compress build
+   96|         shell: bash
+   97|         run: |
+   98|           cd build
+   99|           tar -cvf ../build.tar share/ yosys yosys-* libyosys.so
+  100| 
+  101|       - name: Store build artifact
+  102|         uses: actions/upload-artifact@v7
+  103|         with:
+  104|           name: build-${{ matrix.os }}
+  105|           path: build.tar
+  106|           retention-days: 1
+  107| 
+  108|   test-yosys:
+  109|     name: Run tests
+  110|     runs-on: ${{ matrix.os }}
+  111|     needs: [build-yosys, pre_job]
+  112|     if: needs.pre_job.outputs.should_skip != 'true'
+  113|     env:
+  114|       CC: clang
+  115|     strategy:
+  116|       matrix:
+  117|         os: [ubuntu-latest, macos-latest]
+  118|       fail-fast: false
+  119|     steps:
+  120|       - name: Checkout Yosys
+  121|         uses: actions/checkout@v5
+  122|         with:
+  123|           persist-credentials: false
+  124| 
+  125|       - name: Setup environment
+  126|         uses: ./.github/actions/setup-build-env
+  127|         with:
+  128|           runs-on: ${{ matrix.os }}
+  129|           get-test-deps: true
+  130|           get-iverilog: true
+  131| 
+  132|       - name: Download build artifact
+  133|         uses: actions/download-artifact@v8
+  134|         with:
+  135|           name: build-${{ matrix.os }}
+  136| 
+  137|       - name: Uncompress build
+  138|         shell: bash
+  139|         run:
+  140|           tar -xvf build.tar
+  141| 
+  142|       - name: Log yosys-config output
+  143|         run: |
+  144|           ./yosys-config || true
+  145| 
+  146|       - name: Run tests
+  147|         shell: bash
+  148|         run: |
+  149|           make -C tests -j$procs vanilla-test
+  150| 
+  151|       - name: Report errors
+  152|         if: ${{ failure() }}
+  153|         shell: bash
+  154|         run: |
+  155|           find tests/**/*.err -print -exec cat {} \;
+  156| 
+  157|   test-cells:
+  158|     name: Run test_cell
+  159|     runs-on: ${{ matrix.os }}
+  160|     needs: [build-yosys, pre_job]
+  161|     if: needs.pre_job.outputs.should_skip != 'true'
+  162|     env:
+  163|       CC: clang
+  164|     strategy:
+  165|       matrix:
+  166|         os: [ubuntu-latest]
+  167|     steps:
+  168|       - name: Checkout Yosys
+  169|         uses: actions/checkout@v5
+  170|         with:
+  171|           persist-credentials: false
+  172| 
+  173|       - name: Setup environment
+  174|         uses: ./.github/actions/setup-build-env
+  175|         with:
+  176|           runs-on: ${{ matrix.os }}
+  177| 
+  178|       - name: Download build artifact
+  179|         uses: actions/download-artifact@v8
+  180|         with:
+  181|           name: build-${{ matrix.os }}
+  182| 
+  183|       - name: Uncompress build
+  184|         shell: bash
+  185|         run:
+  186|           tar -xvf build.tar
+  187| 
+  188|       - name: test_cell
+  189|         shell: bash
+  190|         run: |
+  191|           ./yosys -p 'test_cell -n 20 -s 1 all'
+  192|           ./yosys -p 'test_cell -n 20 -s 1 -nosat -aigmap $pow $pmux'
+  193|           ./yosys -p 'test_cell -n 20 -s 1 -nosat -aigmap $eqx $nex $bweqx'
+  194|           ./yosys -p 'test_cell -n 20 -s 1 -aigmap $buf'
+  195| 
+  196|   test-docs:
+  197|     name: Run docs tests
+  198|     runs-on: ${{ matrix.os }}
+  199|     needs: [build-yosys, pre_docs_job]
+  200|     if: needs.pre_docs_job.outputs.should_skip != 'true'
+  201|     env:
+  202|       CC: clang
+  203|     strategy:
+  204|       matrix:
+  205|         os: [ubuntu-latest]
+  206|       fail-fast: false
+  207|     steps:
+  208|       - name: Checkout Yosys
+  209|         uses: actions/checkout@v5
+  210|         with:
+  211|           persist-credentials: false
+  212| 
+  213|       - name: Setup environment
+  214|         uses: ./.github/actions/setup-build-env
+  215|         with:
+  216|           runs-on: ${{ matrix.os }}
+  217|           get-build-deps: true
+  218|           get-docs-deps: true
+  219| 
+  220|       - name: Download build artifact
+  221|         uses: actions/download-artifact@v8
+  222|         with:
+  223|           name: build-${{ matrix.os }}
+  224| 
+  225|       - name: Uncompress build
+  226|         shell: bash
+  227|         run:
+  228|           tar -xvf build.tar
+  229| 
+  230|       - name: Log yosys-config output
+  231|         run: |
+  232|           ./yosys-config || true
+  233| 
+  234|       - name: Run tests
+  235|         shell: bash
+  236|         run: |
+  237|           make -C docs test -j$procs
+  238| 
+  239|   test-docs-build:
+  240|     name: Try build docs
+  241|     runs-on: [self-hosted, linux, x64, fast]
+  242|     needs: [pre_docs_job]
+  243|     if: ${{ needs.pre_docs_job.outputs.should_skip != 'true' && github.repository_owner == 'YosysHQ' }}
+  244|     strategy:
+  245|       matrix:
+  246|         docs-target: [html, latexpdf]
+  247|       fail-fast: false
+  248|     steps:
+  249|       - name: Checkout Yosys
+  250|         uses: actions/checkout@v4
+  251|         with:
+  252|           submodules: true
+  253|           persist-credentials: false
+  254| 
+  255|       - name: Runtime environment
+  256|         run: |
+  257|           echo "procs=$(nproc)" >> $GITHUB_ENV
+  258| 
+  259|       - name: Build Yosys
+  260|         run: |
+  261|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_CCACHE=ON -DYOSYS_ENABLE_HELP_SOURCE=ON
+  262|           cmake --build build -j$procs
+  263| 
+  264|       - name: Install doc prereqs
+  265|         shell: bash
+  266|         run: |
+  267|           make -C docs reqs
+  268| 
+  269|       - name: Build docs
+  270|         shell: bash
+  271|         run: |
+  272|           cmake --build build --target docs-prep -j$procs
+  273|           make -C docs ${{ matrix.docs-target }} -j$procs
+  274| 
+  275|       - name: Store docs build artifact
+  276|         uses: actions/upload-artifact@v4
+  277|         with:
+  278|           name: docs-build-${{ matrix.docs-target }}
+  279|           path: docs/build/
+  280|           retention-days: 7
+  281| 
+  282|   test-build-result:
+  283|     runs-on: ubuntu-latest
+  284|     needs:
+  285|       - test-yosys
+  286|       - test-cells
+  287|       - test-docs
+  288|       - test-docs-build
+  289|     if: always()
+  290|     steps:
+  291|       - name: Check results
+  292|         run: |
+  293|           echo "Needs results: ${{ join(needs.*.result, ',') }}"
+  294|           if [[ "${{ join(needs.*.result, ',') }}" == *failure* ]] || \
+  295|             [[ "${{ join(needs.*.result, ',') }}" == *cancelled* ]]; then
+  296|             echo "Some jobs failed or were cancelled"
+  297|             exit 1
+  298|           fi
+  299|       - run: echo "All good"
+
+==> .github/workflows/test-compile.yml <==
+    1| name: Compiler testing
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   #push:
+    7|   #  branches: [ main ]
+    8|   workflow_dispatch:
+    9| 
+   10| jobs:
+   11|   pre_job:
+   12|     runs-on: ubuntu-latest
+   13|     outputs:
+   14|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   15|     steps:
+   16|       - id: skip_check
+   17|         if: ${{ github.event_name != 'merge_group' }}
+   18|         uses: fkirc/skip-duplicate-actions@v5
+   19|         with:
+   20|           # don't run on documentation changes
+   21|           paths_ignore: '["**/README.md", "docs/**", "guidelines/**"]'
+   22|           # cancel previous builds if a new commit is pushed
+   23|           # but never cancel main
+   24|           cancel_others: ${{ github.ref != 'refs/heads/main' }}
+   25| 
+   26|       - id: set_output
+   27|         run: |
+   28|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   29|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   30|           else
+   31|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   32|           fi
+   33| 
+   34|   test-compile:
+   35|     runs-on: ${{ matrix.os }}
+   36|     needs: pre_job
+   37|     if: (github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch') && needs.pre_job.outputs.should_skip != 'true'
+   38|     env:
+   39|       CXXFLAGS: ${{ startsWith(matrix.compiler, 'gcc') && '-Wp,-D_GLIBCXX_ASSERTIONS' || ''}}
+   40|       CC_SHORT: ${{ startsWith(matrix.compiler, 'gcc') && 'gcc' || 'clang' }}
+   41|     strategy:
+   42|       matrix:
+   43|         os:
+   44|           - ubuntu-latest
+   45|         compiler:
+   46|           # oldest supported
+   47|           - 'clang-14'
+   48|           - 'gcc-11'
+   49|           # newest, make sure to update maximum standard step to match
+   50|           - 'clang-22'
+   51|           - 'gcc-15'
+   52|         include:
+   53|           # macOS x86
+   54|           - os: macos-15-intel
+   55|             compiler: 'clang-22'
+   56|           # macOS arm
+   57|           - os: macos-latest
+   58|             compiler: 'clang-22'
+   59|       fail-fast: false
+   60|     steps:
+   61|       - name: Checkout Yosys
+   62|         uses: actions/checkout@v5
+   63|         with:
+   64|           submodules: true
+   65|           persist-credentials: false
+   66| 
+   67|       - name: Setup environment
+   68|         uses: ./.github/actions/setup-build-env
+   69|         with:
+   70|           runs-on: ${{ matrix.os }}
+   71|           get-build-deps: true
+   72| 
+   73|       - name: Setup Cpp
+   74|         uses: aminya/setup-cpp@v1
+   75|         with:
+   76|           compiler: ${{ matrix.compiler }}
+   77|           gcc: ${{ (matrix.os == 'ubuntu-latest' && matrix.compiler == 'clang-14') && '12' || '' }}
+   78| 
+   79|       - name: Tool versions
+   80|         shell: bash
+   81|         run: |
+   82|           $CC --version
+   83|           $CXX --version
+   84| 
+   85|       - name: Fix clang-14 toolchain
+   86|         if: matrix.os == 'ubuntu-latest' && matrix.compiler == 'clang-14'
+   87|         run: |
+   88|           echo 'CXXFLAGS=--gcc-toolchain=/usr -isystem /usr/include/c++/12 -isystem /usr/include/x86_64-linux-gnu/c++/12' >> $GITHUB_ENV
+   89| 
+   90|       # minimum standard
+   91|       - name: Build C++20
+   92|         shell: bash
+   93|         run: |
+   94|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX 
+   95|           cmake -B build -DCMAKE_CXX_STANDARD=20 .
+   96|           cmake --build build --target yosys -j$procs
+   97| 
+   98|       # maximum standard, only on newest compilers
+   99|       - name: Build C++26
+  100|         if: ${{ matrix.compiler == 'clang-22' || matrix.compiler == 'gcc-15' }}
+  101|         shell: bash
+  102|         run: |
+  103|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX 
+  104|           cmake -B build -DCMAKE_CXX_STANDARD=26 .
+  105|           cmake --build build --target yosys -j$procs
+  106| 
+  107|   test-compile-result:
+  108|     runs-on: ubuntu-latest
+  109|     needs:
+  110|       - test-compile
+  111|     if: always()
+  112|     steps:
+  113|       - name: Check results
+  114|         run: |
+  115|           echo "Needs results: ${{ join(needs.*.result, ',') }}"
+  116|           if [[ "${{ join(needs.*.result, ',') }}" == *failure* ]] || \
+  117|             [[ "${{ join(needs.*.result, ',') }}" == *cancelled* ]]; then
+  118|             echo "Some jobs failed or were cancelled"
+  119|             exit 1
+  120|           fi
+  121|       - run: echo "All good"
+
+==> .github/workflows/test-sanitizers.yml <==
+    1| name: Check clang sanitizers
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   #push:
+    7|   #  branches: [ main ]
+    8|   workflow_dispatch:
+    9| 
+   10| jobs:
+   11|   pre_job:
+   12|     runs-on: ubuntu-latest
+   13|     outputs:
+   14|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   15|     steps:
+   16|       - id: skip_check
+   17|         if: ${{ github.event_name != 'merge_group' }}
+   18|         uses: fkirc/skip-duplicate-actions@v5
+   19|         with:
+   20|           # don't run on documentation changes
+   21|           paths_ignore: '["**/README.md", "docs/**", "guidelines/**"]'
+   22|           # cancel previous builds if a new commit is pushed
+   23|           # but never cancel main
+   24|           cancel_others: ${{ github.ref != 'refs/heads/main' }}
+   25| 
+   26|       - id: set_output
+   27|         run: |
+   28|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   29|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   30|           else
+   31|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   32|           fi
+   33| 
+   34|   run_san:
+   35|     name: Build and run tests
+   36|     runs-on: ${{ matrix.os }}
+   37|     needs: pre_job
+   38|     if: (github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch') && needs.pre_job.outputs.should_skip != 'true'
+   39|     env:
+   40|       CC: clang
+   41|       ASAN_OPTIONS: halt_on_error=1
+   42|       UBSAN_OPTIONS: halt_on_error=1
+   43|     strategy:
+   44|       matrix:
+   45|         os: [ubuntu-latest, macos-latest]
+   46|         sanitizer: ['undefined,address']
+   47|       fail-fast: false
+   48|     steps:
+   49|       - name: Checkout Yosys
+   50|         uses: actions/checkout@v5
+   51|         with:
+   52|           submodules: true
+   53|           persist-credentials: false
+   54| 
+   55|       - name: Setup environment
+   56|         uses: ./.github/actions/setup-build-env
+   57|         with:
+   58|           runs-on: ${{ matrix.os }}
+   59|           get-build-deps: true
+   60|           get-test-deps: true
+   61|           get-iverilog: true
+   62| 
+   63|       - name: Build
+   64|         shell: bash
+   65|         run: |
+   66|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=${CXX:-clang++} -DCMAKE_BUILD_TYPE=Sanitize -DSANITIZE=${{ matrix.sanitizer }}
+   67|           cmake --build build -j$procs
+   68| 
+   69|       - name: Log yosys-config output
+   70|         run: |
+   71|           ./yosys-config || true
+   72| 
+   73|       - name: Run tests
+   74|         shell: bash
+   75|         run: |
+   76|           make -C tests -j$procs vanilla-test
+   77| 
+   78|       - name: Report errors
+   79|         if: ${{ failure() }}
+   80|         shell: bash
+   81|         run: |
+   82|           find tests/**/*.err -print -exec cat {} \;
+   83| 
+   84|   test-sanitizers-result:
+   85|     runs-on: ubuntu-latest
+   86|     needs:
+   87|       - run_san
+   88|     if: always()
+   89|     steps:
+   90|       - name: Check results
+   91|         run: |
+   92|           echo "Needs results: ${{ join(needs.*.result, ',') }}"
+   93|           if [[ "${{ join(needs.*.result, ',') }}" == *failure* ]] || \
+   94|             [[ "${{ join(needs.*.result, ',') }}" == *cancelled* ]]; then
+   95|             echo "Some jobs failed or were cancelled"
+   96|             exit 1
+   97|           fi
+   98|       - run: echo "All good"
+
+==> .github/workflows/test-verific-cfg.yml <==
+    1| name: Build various Verific configurations
+    2| 
+    3| on:
+    4|   workflow_dispatch:
+    5| 
+    6| jobs:
+    7|   test-verific-cfg:
+    8|     if: github.repository_owner == 'YosysHQ'
+    9|     runs-on: [self-hosted, linux, x64, fast]
+   10|     steps:
+   11|       - name: Checkout Yosys
+   12|         uses: actions/checkout@v4
+   13|         with:
+   14|           persist-credentials: false
+   15|           submodules: true
+   16|       - name: Runtime environment
+   17|         run: |
+   18|           echo "procs=$(nproc)" >> $GITHUB_ENV
+   19| 
+   20|       - name: verific [SV]
+   21|         run: |
+   22|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=ON -DYOSYS_ENABLE_VERIFIC_VHDL=OFF -DYOSYS_ENABLE_VERIFIC_HIER_TREE=OFF -DYOSYS_ENABLE_VERIFIC_EDIF=OFF -DYOSYS_ENABLE_VERIFIC_LIBERTY=OFF -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   23|           cmake --build build -j$procs
+   24| 
+   25|       - name: verific [VHDL]
+   26|         run: |
+   27|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=OFF -DYOSYS_ENABLE_VERIFIC_VHDL=ON -DYOSYS_ENABLE_VERIFIC_HIER_TREE=OFF -DYOSYS_ENABLE_VERIFIC_EDIF=OFF -DYOSYS_ENABLE_VERIFIC_LIBERTY=OFF -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   28|           cmake --build build -j$procs
+   29| 
+   30|       - name: verific [SV + VHDL]
+   31|         run: |
+   32|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=ON -DYOSYS_ENABLE_VERIFIC_VHDL=ON -DYOSYS_ENABLE_VERIFIC_HIER_TREE=OFF -DYOSYS_ENABLE_VERIFIC_EDIF=OFF -DYOSYS_ENABLE_VERIFIC_LIBERTY=OFF -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   33|           cmake --build build -j$procs
+   34| 
+   35|       - name: verific [SV + HIER]
+   36|         run: |
+   37|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=ON -DYOSYS_ENABLE_VERIFIC_VHDL=OFF -DYOSYS_ENABLE_VERIFIC_HIER_TREE=ON -DYOSYS_ENABLE_VERIFIC_EDIF=OFF -DYOSYS_ENABLE_VERIFIC_LIBERTY=OFF -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   38|           cmake --build build -j$procs
+   39| 
+   40|       - name: verific [VHDL + HIER]
+   41|         run: |
+   42|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=OFF -DYOSYS_ENABLE_VERIFIC_VHDL=ON -DYOSYS_ENABLE_VERIFIC_HIER_TREE=ON -DYOSYS_ENABLE_VERIFIC_EDIF=OFF -DYOSYS_ENABLE_VERIFIC_LIBERTY=OFF -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   43|           cmake --build build -j$procs
+   44| 
+   45|       - name: verific [SV + VHDL + HIER]
+   46|         run: |
+   47|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=ON -DYOSYS_ENABLE_VERIFIC_VHDL=ON -DYOSYS_ENABLE_VERIFIC_HIER_TREE=ON -DYOSYS_ENABLE_VERIFIC_EDIF=OFF -DYOSYS_ENABLE_VERIFIC_LIBERTY=OFF -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   48|           cmake --build build -j$procs
+   49| 
+   50|       - name: verific [SV + VHDL + HIER + EDIF + LIBERTY]
+   51|         run: |
+   52|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_SYSTEMVERILOG=ON -DYOSYS_ENABLE_VERIFIC_VHDL=ON -DYOSYS_ENABLE_VERIFIC_HIER_TREE=ON -DYOSYS_ENABLE_VERIFIC_EDIF=ON -DYOSYS_ENABLE_VERIFIC_LIBERTY=ON -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=OFF -DYOSYS_ENABLE_CCACHE=ON
+   53|           cmake --build build -j$procs
+
+==> .github/workflows/test-verific.yml <==
+    1| name: Build and run tests with Verific (Linux)
+    2| 
+    3| on:
+    4|   pull_request:
+    5|   merge_group:
+    6|   #push:
+    7|   #  branches: [ main ]
+    8|   workflow_dispatch:
+    9| 
+   10| jobs:
+   11|   pre_job:
+   12|     runs-on: ubuntu-latest
+   13|     outputs:
+   14|       should_skip: ${{ steps.set_output.outputs.should_skip }}
+   15|     steps:
+   16|       - id: skip_check
+   17|         if: ${{ github.event_name != 'merge_group' }}
+   18|         uses: fkirc/skip-duplicate-actions@v5
+   19|         with:
+   20|           # don't run on documentation changes
+   21|           paths_ignore: '["**/README.md", "docs/**", "guidelines/**"]'
+   22|           # cancel previous builds if a new commit is pushed
+   23|           # but never cancel main
+   24|           cancel_others: ${{ github.ref != 'refs/heads/main' }}
+   25| 
+   26|       - id: set_output
+   27|         run: |
+   28|           if [ "${{ github.event_name }}" = "merge_group" ]; then
+   29|             echo "should_skip=false" >> $GITHUB_OUTPUT
+   30|           else
+   31|             echo "should_skip=${{ steps.skip_check.outputs.should_skip }}" >> $GITHUB_OUTPUT
+   32|           fi
+   33| 
+   34|   test-verific:
+   35|     needs: pre_job
+   36|     if: ${{ needs.pre_job.outputs.should_skip != 'true' && github.repository_owner == 'YosysHQ' }}
+   37|     runs-on: [self-hosted, linux, x64, fast]
+   38|     steps:
+   39|       - name: Checkout Yosys
+   40|         uses: actions/checkout@v4
+   41|         with:
+   42|           persist-credentials: false
+   43|           submodules: true
+   44|       - name: Runtime environment
+   45|         run: |
+   46|           echo "procs=$(nproc)" >> $GITHUB_ENV
+   47|           mkdir -p "${GITHUB_WORKSPACE}/coverage"
+   48|           echo "LLVM_PROFILE_FILE=${GITHUB_WORKSPACE}/coverage/coverage_%p.profraw" >> $GITHUB_ENV
+   49|           echo "LLVM_PROFILE_FILE_BUFFER_SIZE=0" >> $GITHUB_ENV
+   50| 
+   51|       - name: Skip generating files
+   52|         if: ${{ github.event_name != 'merge_group' && github.event_name != 'workflow_dispatch' }}
+   53|         run: |
+   54|           echo "LLVM_PROFILE_FILE=/dev/null" >> $GITHUB_ENV
+   55| 
+   56|       - name: Build Yosys
+   57|         run: |
+   58|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_EDIF=ON -DYOSYS_ENABLE_VERIFIC_LIBERTY=ON -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=ON -DYOSYS_ENABLE_CCACHE=ON -DYOSYS_ENABLE_FUNCTIONAL_TESTS=ON -DYOSYS_ENABLE_GCOV=ON -DCMAKE_BUILD_TYPE=Debug
+   59|           cmake -B build -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON .
+   60|           cmake --build build -j$procs
+   61| 
+   62|       - name: Install Yosys
+   63|         run: |
+   64|           DESTDIR=${GITHUB_WORKSPACE}/.local cmake --install build --prefix /
+   65| 
+   66|       - name: Checkout SBY
+   67|         uses: actions/checkout@v4
+   68|         with:
+   69|           repository: 'YosysHQ/sby'
+   70|           path: 'sby'
+   71|           persist-credentials: false
+   72| 
+   73|       - name: Build SBY
+   74|         run: |
+   75|           make -C sby install DESTDIR=${GITHUB_WORKSPACE}/.local PREFIX=
+   76| 
+   77|       - name: Run Yosys tests
+   78|         run: |
+   79|           make -C tests -j$procs vanilla-test
+   80| 
+   81|       - name: Run Verific specific Yosys tests
+   82|         run: |
+   83|           make -C tests/sva
+   84|           make -C tests/svtypes
+   85| 
+   86|       - name: Run SBY tests
+   87|         if: ${{ github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch' }}
+   88|         run: |
+   89|           make -C sby run_ci
+   90| 
+   91|       - name: Run coverage
+   92|         if: ${{ github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch' }}
+   93|         run: |
+   94|           cmake --build build --target coverage
+   95|           cmake --build build --target clean-coverage
+   96| 
+   97|       - name: Push coverage
+   98|         if: ${{ github.event_name == 'merge_group' || github.event_name == 'workflow_dispatch' }}
+   99|         run: |
+  100|           git clone https://x-access-token:${{ secrets.REPORTS_TOKEN }}@github.com/YosysHQ/reports.git out
+  101|           rm -rf out/coverage/main
+  102|           mkdir -p out/coverage/main
+  103|           cp -r coverage_html/* out/coverage/main/
+  104|           cd out
+  105|           # find . -name "*.html" -type f -print0 | xargs -0 sed -i -z 's#\(<td class="headerItem">Date:</td>[[:space:]]*<td class="headerValue">\)[^<]*\(</td>\)#\1\2#g'
+  106|           git config user.name "yosyshq-ci"
+  107|           git config user.email "105224853+yosyshq-ci@users.noreply.github.com"
+  108|           git add .
+  109|           if ! git diff --cached --quiet; then
+  110|             git commit -m "Update coverage"
+  111|             git push
+  112|           else
+  113|             echo "No changes to commit"
+  114|           fi
+  115| 
+  116|   test-pyosys:
+  117|     needs: pre_job
+  118|     if: ${{ needs.pre_job.outputs.should_skip != 'true' && github.repository_owner == 'YosysHQ' }}
+  119|     runs-on: [self-hosted, linux, x64, fast]
+  120|     steps:
+  121|       - name: Checkout Yosys
+  122|         uses: actions/checkout@v4
+  123|         with:
+  124|           persist-credentials: false
+  125|           submodules: true
+  126|       - name: Install UV
+  127|         run: |
+  128|           curl -LsSf https://astral.sh/uv/install.sh | sh
+  129|       - name: Runtime environment
+  130|         run: |
+  131|           echo "procs=$(nproc)" >> $GITHUB_ENV
+  132|           echo "${{ github.workspace }}/.local/bin" >> $GITHUB_PATH
+  133| 
+  134|       - name: Build pyosys
+  135|         run: |
+  136|           cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYOSYS_ENABLE_VERIFIC=ON -DYOSYS_ENABLE_VERIFIC_EDIF=ON -DYOSYS_ENABLE_VERIFIC_LIBERTY=ON -DYOSYS_ENABLE_VERIFIC_YOSYSHQ_EXTENSIONS=ON -DYOSYS_ENABLE_CCACHE=ON -DYOSYS_ENABLE_PYOSYS=ON -DYOSYS_PYTHON_DESTDIR=/usr/lib/python3/site-packages
+  137|           cmake --build build -j$procs
+  138| 
+  139|       - name: Install pyosys
+  140|         run: |
+  141|           DESTDIR=${GITHUB_WORKSPACE}/.local cmake --install build --prefix /
+  142| 
+  143|       - name: Run pyosys tests
+  144|         run: |
+  145|           export PYTHONPATH=${GITHUB_WORKSPACE}/.local/usr/lib/python3/site-packages:$PYTHONPATH
+  146|           python3 tests/pyosys/run_tests.py
+  147| 
+  148|   test-verific-result:
+  149|     runs-on: ubuntu-latest
+  150|     needs:
+  151|       - test-verific
+  152|       - test-pyosys
+  153|     if: always()
+  154|     steps:
+  155|       - name: Check results
+  156|         run: |
+  157|           echo "Needs results: ${{ join(needs.*.result, ',') }}"
+  158|           if [[ "${{ join(needs.*.result, ',') }}" == *failure* ]] || \
+  159|             [[ "${{ join(needs.*.result, ',') }}" == *cancelled* ]]; then
+  160|             echo "Some jobs failed or were cancelled"
+  161|             exit 1
+  162|           fi
+  163|       - run: echo "All good"
+
+==> .github/workflows/wheels.yml <==
+    1| name: Build Wheels for PyPI
+    2| 
+    3| # run every Sunday at 10 AM
+    4| on:
+    5|   workflow_dispatch:
+    6|   schedule:
+    7|     - cron: "0 10 * * 0"
+    8| 
+    9| jobs:
+   10|   build_wheels:
+   11|     strategy:
+   12|       fail-fast: false
+   13|       matrix:
+   14|         os: [
+   15|             {
+   16|               name: "Ubuntu 22.04",
+   17|               family: "linux",
+   18|               runner: "ubuntu-22.04",
+   19|               archs: "x86_64",
+   20|             },
+   21|             {
+   22|               name: "Ubuntu 22.04",
+   23|               family: "linux",
+   24|               runner: "ubuntu-22.04-arm",
+   25|               archs: "aarch64",
+   26|             },
+   27|             {
+   28|               name: "macOS 15 x64",
+   29|               family: "macos",
+   30|               runner: "macos-15-intel",
+   31|               archs: "x86_64",
+   32|             },
+   33|             {
+   34|               name: "macOS 15 arm64",
+   35|               family: "macos",
+   36|               runner: "macos-15",
+   37|               archs: "arm64",
+   38|             },
+   39|             ## Windows is disabled because of an issue with compiling FFI as
+   40|             ## under MinGW in the GitHub Actions environment (SHELL variable has
+   41|             ## whitespace.)
+   42|             # {
+   43|             #   name: "Windows Server 2019",
+   44|             #   family: "windows",
+   45|             #   runner: "windows-2019",
+   46|             #   archs: "AMD64",
+   47|             # },
+   48|           ]
+   49|     name: Build Wheels | ${{ matrix.os.name }} | ${{ matrix.os.archs }}
+   50|     runs-on: ${{ matrix.os.runner }}
+   51|     steps:
+   52|       - uses: actions/checkout@v5
+   53|         with:
+   54|           fetch-depth: 0
+   55|           submodules: true
+   56|           persist-credentials: false
+   57|       - uses: actions/setup-python@v5
+   58|       - name: Get FFI
+   59|         shell: bash
+   60|         run: |
+   61|           mkdir -p ffi
+   62|           curl -L https://github.com/libffi/libffi/releases/download/v3.4.8/libffi-3.4.8.tar.gz | tar --strip-components=1 -xzC ffi
+   63|       - if: ${{ matrix.os.family == 'linux' }}
+   64|         name: "[Linux] Bison 3.8.2"
+   65|         shell: bash
+   66|         run: |
+   67|           mkdir -p bison
+   68|           curl -L https://ftpmirror.gnu.org/gnu/bison/bison-3.8.2.tar.gz | tar --strip-components=1 -xzC bison
+   69|           sed -i 's/-Werror=unused//g' CMakeLists.txt
+   70|       ## Software installed by default in GitHub Action Runner VMs:
+   71|       ##  https://github.com/actions/runner-images
+   72|       - if: ${{ matrix.os.family == 'macos' }}
+   73|         name: "[macOS] Flex/Bison"
+   74|         run: |
+   75|           brew install flex bison
+   76|           echo "PATH=$(brew --prefix flex)/bin:$(brew --prefix bison)/bin:$PATH" >> $GITHUB_ENV
+   77|       - if: ${{ matrix.os.family == 'windows' }}
+   78|         name: "[Windows] Flex/Bison"
+   79|         run: |
+   80|           choco install winflexbison3
+   81|       - if: ${{ matrix.os.family == 'macos' && matrix.os.archs == 'arm64' }}
+   82|         name: "[macOS/arm64] Install Python 3.8 (see: https://cibuildwheel.pypa.io/en/stable/faq/#macos-building-cpython-38-wheels-on-arm64)"
+   83|         uses: actions/setup-python@v5
+   84|         with:
+   85|           python-version: 3.8
+   86|       - name: Build wheels
+   87|         uses: pypa/cibuildwheel@v2.21.1
+   88|         env:
+   89|           # * APIs not supported by PyPy
+   90|           # * Musllinux disabled because it increases build time from 48m to ~3h
+   91|           CIBW_SKIP: >
+   92|             pp*
+   93|             *musllinux*
+   94|           CIBW_ARCHS: ${{ matrix.os.archs }}
+   95|           CIBW_BUILD_VERBOSITY: "1"
+   96|           # manylinux2014 (default) does not have a modern enough C++ compiler for Yosys
+   97|           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+   98|           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+   99|           CIBW_BEFORE_ALL: bash ./.github/workflows/wheels/cibw_before_all.sh
+  100|           CIBW_ENVIRONMENT: >
+  101|             OPTFLAGS=-O3
+  102|             PKG_CONFIG_PATH=./ffi/pfx/lib/pkgconfig
+  103|             PATH="$PWD/bison/src:$PATH"
+  104|           CIBW_ENVIRONMENT_MACOS: >
+  105|             OPTFLAGS=-O3
+  106|             PKG_CONFIG_PATH=./ffi/pfx/lib/pkgconfig
+  107|             MACOSX_DEPLOYMENT_TARGET=11
+  108|             CC=clang CXX=clang++
+  109|             PATH="$PWD/bison/src:$PATH"
+  110|           CIBW_BEFORE_BUILD: bash ./.github/workflows/wheels/cibw_before_build.sh
+  111|           CIBW_TEST_COMMAND: python3 {project}/tests/pyosys/run_tests.py
+  112|       - uses: actions/upload-artifact@v7
+  113|         with:
+  114|           name: python-wheels-${{ matrix.os.runner }}
+  115|           path: ./wheelhouse/*.whl
+  116|   upload_wheels:
+  117|     name: Upload Wheels
+  118|     if: (github.repository == 'YosysHQ/yosys') && (github.event_name == 'workflow_dispatch')
+  119|     runs-on: ubuntu-latest
+  120|     # Specifying a GitHub environment is optional, but strongly encouraged
+  121|     environment: pypi
+  122|     permissions:
+  123|       # IMPORTANT: this permission is mandatory for Trusted Publishing
+  124|       id-token: write
+  125|     needs: build_wheels
+  126|     steps:
+  127|       - uses: actions/download-artifact@v8
+  128|         with:
+  129|           path: "."
+  130|           pattern: python-wheels-*
+  131|           merge-multiple: true
+  132|       - run: |
+  133|           ls
+  134|           mkdir -p ./dist
+  135|           mv *.whl ./dist
+  136|       - name: Publish
+  137|         uses: pypa/gh-action-pypi-publish@release/v1
+
+==> .github/workflows/wheels/_run_cibw_linux.py <==
+    1| #!/usr/bin/env python3
+    2| # Copyright (C) 2024 Efabless Corporation
+    3| #
+    4| # Permission to use, copy, modify, and/or distribute this software for any
+    5| # purpose with or without fee is hereby granted, provided that the above
+    6| # copyright notice and this permission notice appear in all copies.
+    7| #
+    8| # THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+    9| # WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+   10| # MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+   11| # ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+   12| # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+   13| # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+   14| # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+   15| """
+   16| This runs the cibuildwheel step from the wheels workflow locally.
+   17| """
+   18| 
+   19| import os
+   20| import yaml
+   21| import platform
+   22| import subprocess
+   23| from pathlib import Path
+   24| 
+   25| __yosys_root__ = Path(__file__).absolute().parents[3]
+   26| 
+   27| for source in ["ffi", "bison"]:
+   28|     if not (__yosys_root__ / source).is_dir():
+   29|         print(
+   30|             "You need to download ffi and bison in a similar manner to wheels.yml first."
+   31|         )
+   32|         exit(-1)
+   33| 
+   34| with open(__yosys_root__ / ".github" / "workflows" / "wheels.yml") as f:
+   35|     workflow = yaml.safe_load(f)
+   36| 
+   37| env = os.environ.copy()
+   38| 
+   39| steps = workflow["jobs"]["build_wheels"]["steps"]
+   40| cibw_step = None
+   41| for step in steps:
+   42|     if (step.get("uses") or "").startswith("pypa/cibuildwheel"):
+   43|         cibw_step = step
+   44|         break
+   45| 
+   46| for key, value in cibw_step["env"].items():
+   47|     if key.endswith("WIN") or key.endswith("MAC"):
+   48|         continue
+   49|     env[key] = value
+   50| 
+   51| env["CIBW_ARCHS"] = os.getenv("CIBW_ARCHS", platform.machine())
+   52| subprocess.check_call(["cibuildwheel"], env=env)
+
+==> .github/workflows/wheels/cibw_before_all.sh <==
+    1| #!/usr/bin/env bash
+    2| set -e -x
+    3| 
+    4| # Build-time dependencies
+    5| ## Linux Docker Images
+    6| if command -v yum &> /dev/null; then
+    7|     yum install -y flex # manylinux's bison versions are hopelessly out of date
+    8| fi
+    9| 
+   10| if command -v apk &> /dev/null; then
+   11|     apk add flex bison
+   12| fi
+   13| 
+   14| if ! printf '%s\n' '%require "3.8"' '%%' 'start: ;' | bison -o /dev/null /dev/stdin ; then
+   15| 	(
+   16| 		set -e -x
+   17| 		cd bison
+   18| 		./configure
+   19| 		make clean
+   20| 		make install -j$(getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu)
+   21| 	)
+   22| fi
+   23| 
+   24| ## macOS/Windows -- installed in GitHub Action itself, not container
+   25| 
+   26| # Runtime Dependencies
+   27| ## Build Static FFI (platform-dependent but not Python version dependent)
+   28| (
+   29| 	set -e -x
+   30| 	cd ffi
+   31| 	## Ultimate libyosys.so will be shared, so we need fPIC for the static libraries
+   32| 	CFLAGS=-fPIC CXXFLAGS=-fPIC ./configure --prefix=$PWD/pfx
+   33| 	make clean
+   34| 	make install -j$(getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu)
+   35| 	## Forces static library to be used in all situations
+   36| 	sed -i.bak 's@-L${toolexeclibdir} -lffi@${toolexeclibdir}/libffi.a@' ./pfx/lib/pkgconfig/libffi.pc
+   37| )
+
+==> .github/workflows/wheels/cibw_before_build.sh <==
+    1| set -e
+    2| set -x
+    3| 
+    4| # Don't use Python objects from previous compiles
+    5| rm -rf build/temp.*
+    6| 
+    7| # DEBUG: show python3 and python3-config outputs
+    8| if [ "$(uname)" != "Linux" ]; then
+    9|     # https://github.com/pypa/cibuildwheel/issues/2021
+   10|     ln -s $(dirname $(readlink -f $(which python3)))/python3-config $(dirname $(which python3))/python3-config
+   11| fi
+   12| python3 --version
+   13| python3-config --includes
+

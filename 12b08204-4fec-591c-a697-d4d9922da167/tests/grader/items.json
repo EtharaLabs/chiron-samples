@@ -1,0 +1,639 @@
+{
+ "items": [
+  {
+   "id": "S1",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "S2",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": true
+  },
+  {
+   "id": "S3",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": true
+  },
+  {
+   "id": "S4",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": true
+  },
+  {
+   "id": "S5",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "S6",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": true
+  },
+  {
+   "id": "S7",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": true
+  },
+  {
+   "id": "S8",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": true
+  },
+  {
+   "id": "S9",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "S10",
+   "stage": "stage_I",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G01",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G02",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G03",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G04",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G05",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G06",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G07",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G08",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G09",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G10",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G11",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G12",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G13",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G14",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G15",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G16",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "G17",
+   "stage": "stage_II",
+   "weight": 5,
+   "negate": false
+  },
+  {
+   "id": "F001",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F002",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F003",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F004",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F005",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F006",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F007",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F008",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F009",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F010",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F011",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F012",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F013",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F014",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F015",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F016",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F017",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F018",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F019",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F020",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F021",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F022",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F023",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F024",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F025",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F026",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F027",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F028",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F029",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F030",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F031",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F032",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F033",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F034",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F035",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F036",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F037",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F038",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F039",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F040",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F041",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F042",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F043",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F044",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F045",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F046",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F047",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F048",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F049",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F050",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F051",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F052",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F053",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F054",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F055",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F056",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F057",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F058",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F059",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F060",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F061",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F062",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F063",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F064",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "F065",
+   "stage": "stage_III",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "K1",
+   "stage": "compiled_quality",
+   "weight": 1,
+   "negate": false
+  },
+  {
+   "id": "K2",
+   "stage": "compiled_quality",
+   "weight": 1,
+   "negate": false
+  },
+  {
+   "id": "K3",
+   "stage": "compiled_quality",
+   "weight": 3,
+   "negate": false
+  },
+  {
+   "id": "K4",
+   "stage": "compiled_quality",
+   "weight": 1,
+   "negate": false
+  },
+  {
+   "id": "K5",
+   "stage": "compiled_quality",
+   "weight": 1,
+   "negate": false
+  }
+ ],
+ "q": [
+  {
+   "id": "Q01",
+   "weight": 3
+  },
+  {
+   "id": "Q02",
+   "weight": 3
+  },
+  {
+   "id": "Q03",
+   "weight": 5
+  },
+  {
+   "id": "Q04",
+   "weight": 3
+  },
+  {
+   "id": "Q05",
+   "weight": 1
+  },
+  {
+   "id": "Q06",
+   "weight": 1
+  },
+  {
+   "id": "Q07",
+   "weight": 1
+  },
+  {
+   "id": "Q08",
+   "weight": 1
+  },
+  {
+   "id": "Q09",
+   "weight": 3
+  },
+  {
+   "id": "Q11",
+   "weight": 3
+  },
+  {
+   "id": "Q12",
+   "weight": 5
+  }
+ ],
+ "gates": [
+  "J0"
+ ],
+ "cheat_checks": [
+  "S7",
+  "S8"
+ ]
+}

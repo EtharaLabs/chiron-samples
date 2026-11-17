@@ -1,0 +1,1390 @@
+{
+ "id": "g02_team_lifecycle",
+ "cases": [
+  {
+   "case": "list_empty",
+   "request": {
+    "method": "GET",
+    "path": "/teams"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"0\"",
+     "cache-control": "no-transform, max-age=1429191",
+     "x-total-count": "0",
+     "content-type": "application/json",
+     "content-length": "2",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "[]"
+   },
+   "clock_window": [
+    1773572408.0920756,
+    1773572408.0975637
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_without_auth",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "json": {
+     "teamName": "NoAuthTeam"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.097618,
+    1773572408.10387
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_valid",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/1",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DummyTeam1\"\n}"
+   },
+   "clock_window": [
+    1773572408.1039157,
+    1773572408.2430146
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_with_all_fields",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2",
+     "teamDescription": "The second dummy team",
+     "forumLink": "http://google.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/2",
+     "content-type": "application/json",
+     "content-length": "123",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\",\n  \"teamDescription\": \"The second dummy team\",\n  \"forumLink\": \"http://google.com\"\n}"
+   },
+   "clock_window": [
+    1773572408.243057,
+    1773572408.2596054
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_empty_optional_strings",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam3",
+     "teamDescription": "",
+     "forumLink": ""
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/3",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"teamName\": \"DummyTeam3\"\n}"
+   },
+   "clock_window": [
+    1773572408.2596357,
+    1773572408.2755566
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_blank_whitespace_optionals",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam4",
+     "teamDescription": "   ",
+     "forumLink": "  "
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/4",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 4,\n  \"teamName\": \"DummyTeam4\"\n}"
+   },
+   "clock_window": [
+    1773572408.2755787,
+    1773572408.2911701
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_https_forum_link_with_query",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam5",
+     "teamDescription": "Has an https link",
+     "forumLink": "https://example.com/forum?threadId=1&page=2"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/5",
+     "content-type": "application/json",
+     "content-length": "145",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 5,\n  \"teamName\": \"DummyTeam5\",\n  \"teamDescription\": \"Has an https link\",\n  \"forumLink\": \"https://example.com/forum?threadId=1&page=2\"\n}"
+   },
+   "clock_window": [
+    1773572408.2911928,
+    1773572408.3217523
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_duplicate_name_conflict",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1",
+     "teamDescription": "Duplicate"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 409,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "264",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"DummyTeam1\",\n    \"teamDescription\": \"Duplicate\"\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [teamName]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3217905,
+    1773572408.3528178
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_duplicate_name_other_case_conflict",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "dummyteam1",
+     "teamDescription": "Duplicate"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 409,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "264",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"dummyteam1\",\n    \"teamDescription\": \"Duplicate\"\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [teamName]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3528614,
+    1773572408.3625524
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_missing_team_name",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamDescription": "No name at all"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "128",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamDescription\": \"No name at all\"\n  },\n  \"errors\": [\n    \"Field 'teamName' must not be empty\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3625813,
+    1773572408.37192
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_blank_team_name",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "   ",
+     "teamDescription": "Blank name"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "147",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"   \",\n    \"teamDescription\": \"Blank name\"\n  },\n  \"errors\": [\n    \"Field 'teamName' must not be empty\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3719442,
+    1773572408.3804796
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_invalid_forum_link",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "InvalidLinkTeam",
+     "forumLink": "invalidLink"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "172",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"InvalidLinkTeam\",\n    \"forumLink\": \"invalidLink\"\n  },\n  \"errors\": [\n    \"Field 'forumLink' is not a valid link: 'invalidLink'\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3805063,
+    1773572408.3894715
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_non_http_forum_link",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "FtpLinkTeam",
+     "forumLink": "ftp://example.com/forum"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "192",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"FtpLinkTeam\",\n    \"forumLink\": \"ftp://example.com/forum\"\n  },\n  \"errors\": [\n    \"Field 'forumLink' is not a valid link: 'ftp://example.com/forum'\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3895087,
+    1773572408.3984807
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_name_and_link_both_invalid",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "",
+     "forumLink": "invalidLink"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "199",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"\",\n    \"forumLink\": \"invalidLink\"\n  },\n  \"errors\": [\n    \"Field 'teamName' must not be empty\",\n    \"Field 'forumLink' is not a valid link: 'invalidLink'\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.3985214,
+    1773572408.431712
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_null_json_payload",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "null"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "43",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"errors\": [\n    \"Payload is null\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.431756,
+    1773572408.441151
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_trailing_slash",
+   "request": {
+    "method": "POST",
+    "path": "/teams/",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam6"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/teams/6",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 6,\n  \"teamName\": \"DummyTeam6\"\n}"
+   },
+   "clock_window": [
+    1773572408.4411876,
+    1773572408.4583473
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_by_id",
+   "request": {
+    "method": "GET",
+    "path": "/teams/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-323462988\"",
+     "cache-control": "no-transform, max-age=1429191",
+     "content-type": "application/json",
+     "content-length": "41",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DummyTeam1\"\n}"
+   },
+   "clock_window": [
+    1773572408.4583843,
+    1773572408.463304
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_by_id_not_found",
+   "request": {
+    "method": "GET",
+    "path": "/teams/9999"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.4633553,
+    1773572408.4677813
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_by_id_out_of_range",
+   "request": {
+    "method": "GET",
+    "path": "/teams/-1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572408.4678109,
+    1773572408.4706933
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_by_id_malformed",
+   "request": {
+    "method": "GET",
+    "path": "/teams/id"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572408.4707124,
+    1773572408.47291
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_by_id_above_integer_range",
+   "request": {
+    "method": "GET",
+    "path": "/teams/99999999999"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "59",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '99999999999' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572408.4729276,
+    1773572408.4750378
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_fields_by_name",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=DummyTeam2"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"1042421536\"",
+     "cache-control": "no-transform, max-age=1429191",
+     "content-type": "application/json",
+     "content-length": "123",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\",\n  \"teamDescription\": \"The second dummy team\",\n  \"forumLink\": \"http://google.com\"\n}"
+   },
+   "clock_window": [
+    1773572408.4750547,
+    1773572408.480262
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_fields_missing_query_param",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "59",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: 'null'\"\n}"
+   },
+   "clock_window": [
+    1773572408.4803011,
+    1773572408.4825773
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_fields_blank_query_param",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName="
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "55",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Input 'teamName' must not be blank: ''\"\n}"
+   },
+   "clock_window": [
+    1773572408.4825928,
+    1773572408.4845946
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_fields_unknown_name",
+   "request": {
+    "method": "GET",
+    "path": "/teams/fields?teamName=nonExistingName"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.484611,
+    1773572408.486544
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_without_auth",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "json": {
+     "teamName": "DummyTeam2"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.486568,
+    1773572408.488116
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_no_change",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2",
+     "teamDescription": "The second dummy team",
+     "forumLink": "http://google.com"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "123",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\",\n  \"teamDescription\": \"The second dummy team\",\n  \"forumLink\": \"http://google.com\"\n}"
+   },
+   "clock_window": [
+    1773572408.488139,
+    1773572408.4964998
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_changed_fields",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2",
+     "teamDescription": "An updated description",
+     "forumLink": "https://example.com/new"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "130",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\",\n  \"teamDescription\": \"An updated description\",\n  \"forumLink\": \"https://example.com/new\"\n}"
+   },
+   "clock_window": [
+    1773572408.4965205,
+    1773572408.5317738
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_clears_forum_link",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2",
+     "teamDescription": "An updated description",
+     "forumLink": ""
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "88",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\",\n  \"teamDescription\": \"An updated description\"\n}"
+   },
+   "clock_window": [
+    1773572408.5318134,
+    1773572408.5445418
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_rename_to_existing_name_conflict",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1",
+     "teamDescription": "An updated description"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 409,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "277",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"DummyTeam1\",\n    \"teamDescription\": \"An updated description\"\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [teamName]\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.5445776,
+    1773572408.5544078
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_invalid_forum_link",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2",
+     "forumLink": "invalidLink"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "167",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"teamName\": \"DummyTeam2\",\n    \"forumLink\": \"invalidLink\"\n  },\n  \"errors\": [\n    \"Field 'forumLink' is not a valid link: 'invalidLink'\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572408.5544448,
+    1773572408.563859
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_null_json_payload",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/2",
+    "auth": "admin",
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "null"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "32",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"Payload is null\"\n}"
+   },
+   "clock_window": [
+    1773572408.5638893,
+    1773572408.572261
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_not_found",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/9999",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam9999"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.5722897,
+    1773572408.5820718
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_out_of_range_id",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/-1",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeamNeg"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572408.5821102,
+    1773572408.5912127
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "update_malformed_id",
+   "request": {
+    "method": "PUT",
+    "path": "/teams/id",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeamId"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572408.5912423,
+    1773572408.603652
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_not_found",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/9999",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.6036851,
+    1773572408.643467
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_out_of_range_id",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/-1",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "44",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}"
+   },
+   "clock_window": [
+    1773572408.64351,
+    1773572408.6529377
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_malformed_id",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/id",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 400,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "50",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}"
+   },
+   "clock_window": [
+    1773572408.6529744,
+    1773572408.6617086
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_valid",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/5",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.6617405,
+    1773572408.6760983
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "get_after_delete",
+   "request": {
+    "method": "GET",
+    "path": "/teams/5"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572408.6761377,
+    1773572408.679896
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_hardware_for_user",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "177",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}"
+   },
+   "clock_window": [
+    1773572408.6806004,
+    1773572408.6979942
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_user_on_team_four",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser1",
+     "displayName": "DummyUser1",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": 4
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/users/1",
+     "content-type": "application/json",
+     "content-length": "450",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"DummyUser1\",\n  \"displayName\": \"DummyUser1\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"DummyHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 4,\n    \"teamName\": \"DummyTeam4\"\n  },\n  \"userIsCaptain\": false\n}"
+   },
+   "clock_window": [
+    1773572408.6980414,
+    1773572409.0867832
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_team_used_by_user_conflict",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/4",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 409,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-type": "application/json",
+     "content-length": "699",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"invalidObject\": {\n    \"id\": 4,\n    \"teamName\": \"DummyTeam4\"\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"foldingUserName\": \"DummyUser1\",\n      \"displayName\": \"DummyUser1\",\n      \"passkey\": \"DummyPas************************\",\n      \"category\": \"NVIDIA_GPU\",\n      \"hardware\": {\n        \"id\": 1,\n        \"hardwareName\": \"DummyHardware1\",\n        \"displayName\": \"DummyHardware1\",\n        \"hardwareMake\": \"NVIDIA\",\n        \"hardwareType\": \"GPU\",\n        \"multiplier\": 1.0,\n        \"averagePpd\": 1\n      },\n      \"team\": {\n        \"id\": 4,\n        \"teamName\": \"DummyTeam4\"\n      },\n      \"userIsCaptain\": false\n    }\n  ],\n  \"errors\": [\n    \"Payload is used by an existing object\"\n  ]\n}"
+   },
+   "clock_window": [
+    1773572411.0869164,
+    1773572411.0971498
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_team_not_used_by_user",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/3",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572411.0971973,
+    1773572411.121946
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

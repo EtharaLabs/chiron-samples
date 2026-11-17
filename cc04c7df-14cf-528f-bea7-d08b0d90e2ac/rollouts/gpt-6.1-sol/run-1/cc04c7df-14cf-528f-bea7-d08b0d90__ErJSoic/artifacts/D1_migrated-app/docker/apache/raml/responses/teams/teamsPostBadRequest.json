@@ -1,0 +1,11 @@
+{
+  "invalidObject": {
+    "id": 0,
+    "teamDescription": "Test team with no name",
+    "forumLink": "invalidUrl"
+  },
+  "errors": [
+    "Field 'teamName' must not be empty",
+    "Field 'forumLink' is not a valid link: 'invalidUrl'"
+  ]
+}

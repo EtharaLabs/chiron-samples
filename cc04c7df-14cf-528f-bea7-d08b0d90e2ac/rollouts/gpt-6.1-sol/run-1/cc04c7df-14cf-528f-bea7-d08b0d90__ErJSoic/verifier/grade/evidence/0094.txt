@@ -1,0 +1,171 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/RecordConverter.java (changed against State A) ===
+@@
+59  | import me.zodac.folding.rest.util.LocalDateTimeGsonTypeAdapter;
+60  | import org.jooq.Record;
+61  | 
+   -| /**
+   -|  * Utility class that converts a {@link Record} into another POJO for {@link PostgresDbManager}.
+   -|  */
+62 +| 
+63  | final class RecordConverter {
+64  | 
+65  |     // We don't try and reuse the GSON instance available in RestUtilConstants
+@@
+73  | 
+74  |     }
+75  | 
+   -|     /**
+   -|      * Convert a {@link HardwareRecord} into a {@link Hardware}.
+   -|      *
+   -|      * @param hardwareRecord the {@link HardwareRecord} to convert
+   -|      * @return the converted {@link Hardware}
+   -|      */
+76 +|     
+77  |     static Hardware toHardware(final HardwareRecord hardwareRecord) {
+78  |         return Hardware.create(
+79  |             hardwareRecord.getHardwareId(),
+@@
+86  |         );
+87  |     }
+88  | 
+   -|     /**
+   -|      * Convert a {@link TeamsRecord} into a {@link Team}.
+   -|      *
+   -|      * @param teamRecord the {@link TeamsRecord} to convert
+   -|      * @return the converted {@link Team}
+   -|      */
+89 +|     
+90  |     static Team toTeam(final TeamsRecord teamRecord) {
+91  |         return Team.create(
+92  |             teamRecord.getTeamId(),
+@@
+96  |         );
+97  |     }
+98  | 
+   -|     /**
+   -|      * Convert a {@link Record} into a {@link User}. The {@link Record} should contain info for the {@link User} and also the {@link Hardware} and
+   -|      * {@link Team}.
+   -|      *
+   -|      * @param joinedRecord the {@link Record} to convert
+   -|      * @return the converted {@link Hardware}
+   -|      * @see #toHardware(HardwareRecord)
+   -|      * @see #toTeam(TeamsRecord)
+   -|      */
+99 +|     
+100  |     static User toUser(final Record joinedRecord) {
+101  |         final UsersRecord userRecord = joinedRecord.into(USERS);
+102  |         return User.create(
+@@
+113  |         );
+114  |     }
+115  | 
+   -|     /**
+   -|      * Convert a {@link UserTcStatsHourlyRecord} into a {@link UserTcStats}.
+   -|      *
+   -|      * @param userTcStatsHourlyRecord the {@link UserTcStatsHourlyRecord} to convert
+   -|      * @return the converted {@link UserTcStats}
+   -|      */
+116 +|     
+117  |     static UserTcStats toUserTcStats(final UserTcStatsHourlyRecord userTcStatsHourlyRecord) {
+118  |         return UserTcStats.create(
+119  |             userTcStatsHourlyRecord.getUserId(),
+@@
+124  |         );
+125  |     }
+126  | 
+   -|     /**
+   -|      * Convert a {@link UserTcStatsHourlyRecord} into a {@link HistoricStats}.
+   -|      *
+   -|      * @param userTcStatsHourlyRecord the {@link UserTcStatsHourlyRecord} to convert
+   -|      * @return the converted {@link HistoricStats}
+   -|      */
+127 +|     
+128  |     static HistoricStats toHistoricStats(final UserTcStatsHourlyRecord userTcStatsHourlyRecord) {
+129  |         return HistoricStats.create(
+130  |             userTcStatsHourlyRecord.getUtcTimestamp(),
+@@
+134  |         );
+135  |     }
+136  | 
+   -|     /**
+   -|      * Convert a {@link UserTotalStatsRecord} into a {@link UserStats}.
+   -|      *
+   -|      * @param userTotalStatsRecord the {@link UserTotalStatsRecord} to convert
+   -|      * @return the converted {@link UserStats}
+   -|      */
+137 +|     
+138  |     static UserStats toUserStats(final UserTotalStatsRecord userTotalStatsRecord) {
+139  |         return UserStats.create(
+140  |             userTotalStatsRecord.getUserId(),
+@@
+144  |         );
+145  |     }
+146  | 
+   -|     /**
+   -|      * Convert a {@link UserInitialStatsRecord} into a {@link UserStats}.
+   -|      *
+   -|      * @param userInitialStatsRecord the {@link UserInitialStatsRecord} to convert
+   -|      * @return the converted {@link UserStats}
+   -|      */
+147 +|     
+148  |     static UserStats toUserStats(final UserInitialStatsRecord userInitialStatsRecord) {
+149  |         return UserStats.create(
+150  |             userInitialStatsRecord.getUserId(),
+@@
+154  |         );
+155  |     }
+156  | 
+   -|     /**
+   -|      * Convert a {@link UserOffsetTcStatsRecord} into a {@link OffsetTcStats}.
+   -|      *
+   -|      * @param userOffsetTcStatsRecord the {@link UserOffsetTcStatsRecord} to convert
+   -|      * @return the converted {@link OffsetTcStats}
+   -|      */
+157 +|     
+158  |     static OffsetTcStats toOffsetStats(final UserOffsetTcStatsRecord userOffsetTcStatsRecord) {
+159  |         return OffsetTcStats.create(
+160  |             userOffsetTcStatsRecord.getOffsetPoints(),
+@@
+163  |         );
+164  |     }
+165  | 
+   -|     /**
+   -|      * Convert a {@link RetiredUserStatsRecord} into a {@link RetiredUserTcStats}.
+   -|      *
+   -|      * @param retiredUserStatsRecord the {@link RetiredUserStatsRecord} to convert
+   -|      * @return the converted {@link RetiredUserTcStats}
+   -|      */
+166 +|     
+167  |     static RetiredUserTcStats toRetiredUserStats(final RetiredUserStatsRecord retiredUserStatsRecord) {
+168  |         return RetiredUserTcStats.create(
+169  |             retiredUserStatsRecord.getRetiredUserId(),
+@@
+179  |         );
+180  |     }
+181  | 
+   -|     /**
+   -|      * Convert a {@link MonthlyResultsRecord} into a {@link MonthlyResult}.
+   -|      *
+   -|      * @param monthlyResultsRecord the {@link MonthlyResultsRecord} to convert
+   -|      * @return the converted {@link MonthlyResult}
+   -|      */
+182 +|     
+183  |     static MonthlyResult toMonthlyResult(final MonthlyResultsRecord monthlyResultsRecord) {
+184  |         final MonthlyResult monthlyResult = MONTHLY_RESULT_GSON.fromJson(monthlyResultsRecord.getJsonResult(), MonthlyResult.class);
+185  |         return MonthlyResult.updateWithEmptyCategories(monthlyResult);
+186  |     }
+187  | 
+   -|     /**
+   -|      * Convert a {@link Record} into an appropriate {@link UserAuthenticationResult}.
+   -|      *
+   -|      * <p>
+   -|      * Expects a field called <code>is_password_match</code> as a {@link Boolean} value determining whether
+   -|      * a supplied password matches the hashed value in the DB.
+   -|      *
+   -|      * @param systemUsersRecord the {@link Record} to convert
+   -|      * @return {@link UserAuthenticationResult#getUserRoles()} for a valid password, else {@link UserAuthenticationResult#invalidPassword()}
+   -|      */
+188 +|     
+189  |     static UserAuthenticationResult toSystemUserAuthentication(final Record systemUsersRecord) {
+190  |         final boolean isPasswordMatch = getPasswordMatchValue(systemUsersRecord);
+191  | 

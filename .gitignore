@@ -1,0 +1,18 @@
+# Logs, caches and editor or OS metadata are never part of a bundle.
+*.log
+__pycache__/
+*.py[cod]
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.ipynb_checkpoints/
+.coverage
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

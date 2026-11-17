@@ -1,0 +1,8 @@
+# original set: uv export --frozen --extra web-backend --extra dev --no-emit-project of the State A 8a03674 uv.lock
+# packages published as sdist only
+multi-key-dict==2.0.3 \
+    --hash=sha256:deebdec17aa30a1c432cb3f437e81f8621e1c0542a0c0617a74f71e232e9939e
+    # via python-jenkins
+uwsgi==2.0.31 \
+    --hash=sha256:e8f8b350ccc106ff93a65247b9136f529c14bf96b936ac5b264c6ff9d0c76257
+    # via argus-alm

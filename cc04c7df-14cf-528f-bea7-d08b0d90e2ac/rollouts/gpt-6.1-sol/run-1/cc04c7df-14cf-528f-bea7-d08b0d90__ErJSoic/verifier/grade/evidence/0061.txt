@@ -1,0 +1,12 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/request/TeamRequest.java (changed against State A) ===
+@@
+34  | import lombok.ToString;
+35  | import me.zodac.folding.api.RequestPojo;
+36  | 
+   -| /**
+   -|  * REST request to create/update a {@link me.zodac.folding.api.tc.Team}.
+   -|  */
+37 +| 
+38  | @NoArgsConstructor
+39  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+40  | @Builder

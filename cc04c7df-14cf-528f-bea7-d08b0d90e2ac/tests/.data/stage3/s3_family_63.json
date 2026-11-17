@@ -1,0 +1,146 @@
+{
+ "id": "s3_family_63",
+ "source": "f095_lars_field_mapping_and_fixed_hardware_type",
+ "steps": [
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Xeon Phi",
+      "manufacturer": "Intel",
+      "modelInfo": "Intel Xeon Phi 7120",
+      "rank": 1,
+      "averagePpd": 5000
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_field_mapping",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_after_mapping",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1"
+   }
+  },
+  {
+   "case": "lookup_by_model_info",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=Intel%20Xeon%20Phi%207120"
+   }
+  },
+  {
+   "case": "lookup_by_display_name_fails",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=Xeon%20Phi"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "lars_update_field_mapping",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_after_mapping",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"Intel Xeon Phi 7120\",\n  \"displayName\": \"Xeon Phi\",\n  \"hardwareMake\": \"INTEL\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 5000\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "178",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"270227008\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "lookup_by_model_info",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=Intel%20Xeon%20Phi%207120"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"Intel Xeon Phi 7120\",\n  \"displayName\": \"Xeon Phi\",\n  \"hardwareMake\": \"INTEL\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 5000\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "178",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"270227008\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "lookup_by_display_name_fails",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=Xeon%20Phi"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "Which LARS column becomes which hardware field: modelInfo becomes hardwareName, the model-name span becomes displayName, the manufacturer maps through HardwareMake.get, and hardwareType is always GPU regardless of the model name."
+}

@@ -1,0 +1,19 @@
+{% extends "base.html.j2" %}
+
+{% block title %}
+Views
+{% endblock %}
+
+{% block javascripts %}
+{{ super() }}
+<script defer>
+    globalThis.ARGUS_VIEWS = {{ views | tojson | safe }}
+</script>
+<script defer type="module" src="/s/dist/viewsPage.bundle.js"></script>
+{% endblock javascripts %}
+
+{% block body %}
+    <div id="viewContainer">
+
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+new
+iparse 0 {%22a%22:1}
+mutcopy 0
+patch 0 [{%22op%22:%22ad%22,%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22op%22:%22addx%22,%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22op%22:%22remov%22,%22path%22:%22/a%22}]
+patch 0 [{%22op%22:%22removex%22,%22path%22:%22/a%22}]
+patch 0 [{%22op%22:%22replac%22,%22path%22:%22/a%22,%22value%22:1}]
+patch 0 [{%22op%22:%22tes%22,%22path%22:%22/a%22,%22value%22:1}]
+patch 0 [{%22op%22:%22mov%22,%22from%22:%22/a%22,%22path%22:%22/b%22}]
+patch 0 [{%22op%22:%22cop%22,%22from%22:%22/a%22,%22path%22:%22/b%22}]
+patch 0 [{%22op%22:%22adx%22,%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22op%22:%22movx%22,%22from%22:%22/a%22,%22path%22:%22/b%22}]
+patch 0 [{%22op%22:%22copx%22,%22from%22:%22/a%22,%22path%22:%22/b%22}]
+patch 0 [{%22op%22:%22tesx%22,%22path%22:%22/a%22,%22value%22:1}]
+patch 0 [{%22op%22:%22removx%22,%22path%22:%22/a%22}]
+patch 0 [{%22op%22:%22replacx%22,%22path%22:%22/a%22,%22value%22:1}]
+patch 0 [{%22op%22:%22addd%22,%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22op%22:%22remov%00%22,%22path%22:%22/a%22}]
+patch 0 [{%22op%22:%22ADD%22,%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22op%22:1,%22path%22:%22/x%22,%22value%22:1}]
+patch 0 [{%22op%22:%22add%22,%22value%22:1}]
+patch 0 [{%22op%22:%22add%22,%22path%22:1,%22value%22:1}]
+patch 0 [{%22op%22:%22add%22,%22path%22:%22/x%22}]
+patch 0 {%22op%22:%22add%22,%22path%22:%22/x%22,%22value%22:1}
+patch 0 []
+write

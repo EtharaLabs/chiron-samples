@@ -1,0 +1,44 @@
+{
+ "traces": {
+  "spawn": [],
+  "connect": [],
+  "open": [],
+  "observed": [
+   "g01_hardware_lifecycle.1.strace: an exec strace could not decode",
+   "g02_team_lifecycle.1.strace: an exec strace could not decode",
+   "g03_user_lifecycle.1.strace: an exec strace could not decode",
+   "g04_batch_create.1.strace: an exec strace could not decode",
+   "g05_authn_authz.1.strace: an exec strace could not decode",
+   "g06_system_state_gating.1.strace: an exec strace could not decode",
+   "g07_cache_validation_headers.1.strace: an exec strace could not decode",
+   "g08_cors.1.strace: an exec strace could not decode",
+   "g09_invalid_url_redirect.1.strace: an exec strace could not decode",
+   "g10_competition_user_stats.1.strace: an exec strace could not decode",
+   "g11_leaderboards.1.strace: an exec strace could not decode",
+   "g12_historic_stats.1.strace: an exec strace could not decode",
+   "g13_monthly_results.1.strace: an exec strace could not decode",
+   "g14_lars_hardware_sync.1.strace: an exec strace could not decode",
+   "g15_external_stats_parsing.1.strace: an exec strace could not decode",
+   "g15_external_stats_parsing.2.strace: an exec strace could not decode",
+   "g16_reset_and_rollover.1.strace: an exec strace could not decode",
+   "g17_configuration_binding.1.strace: an exec strace could not decode",
+   "g17_configuration_binding.2.strace: an exec strace could not decode",
+   "g17_configuration_binding.3.strace: an exec strace could not decode",
+   "g17_configuration_binding.4.strace: an exec strace could not decode",
+   "g17_configuration_binding.5.strace: an exec strace could not decode",
+   "g17_configuration_binding.6.strace: an exec strace could not decode",
+   "g17_configuration_binding.7.strace: an exec strace could not decode",
+   "g17_configuration_binding.8.strace: an exec strace could not decode",
+   "g17_configuration_binding.9.strace: an exec strace could not decode",
+   "g18_request_error_representation.1.strace: an exec strace could not decode",
+   "g19_persistence_across_restart.1.strace: an exec strace could not decode",
+   "g19_persistence_across_restart.2.strace: an exec strace could not decode",
+   "g19_persistence_across_restart.3.strace: an exec strace could not decode"
+  ]
+ },
+ "probe": {
+  "serves": [],
+  "foreign": [],
+  "retired_loaded": []
+ }
+}

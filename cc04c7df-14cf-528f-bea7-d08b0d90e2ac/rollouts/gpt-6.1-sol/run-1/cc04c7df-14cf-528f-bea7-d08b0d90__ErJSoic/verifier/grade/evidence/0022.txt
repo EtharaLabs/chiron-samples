@@ -1,0 +1,135 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/Hardware.java (changed against State A) ===
+@@
+35  | import me.zodac.folding.rest.api.tc.request.HardwareRequest;
+36  | 
+37  | 
+   -| /**
+   -|  * POJO defining a piece of {@link Hardware} for use in the <code>Team Competition</code>.
+   -|  *
+   -|  * <p>
+   -|  * Each {@link Hardware} will have a multiplier which is calculated from the LARS PPD database, where the best piece of {@link Hardware} has a
+   -|  * multiplier of <b>1.0</b>, and each other piece of {@link Hardware}'s multiplier is:
+   -|  * <pre>
+   -|  *     Best PPD / PPD for given {@link Hardware} (to 2 decimal places)
+   -|  * </pre>
+   -|  *
+   -|  * @see <a href="https://https://folding.lar.systems/">LARS PPD database</a>
+   -|  */
+38 +| 
+39  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+40  | @Builder
+41  | @Getter
+@@
+43  | @ToString(doNotUseGetters = true)
+44  | public class Hardware implements ResponsePojo {
+45  | 
+   -|     /**
+   -|      * The default {@link Hardware} ID. Since the REST request would not know the ID until the DB has created the object,
+   -|      * we use this and update the ID later.
+   -|      */
+46 +|     
+47  |     public static final int EMPTY_HARDWARE_ID = 0;
+48  | 
+49  |     private final int id;
+@@
+54  |     private final double multiplier;
+55  |     private final long averagePpd;
+56  | 
+   -|     /**
+   -|      * Creates a {@link Hardware}.
+   -|      *
+   -|      * <p>
+   -|      * Since the DB auto-generates the ID, this function should be used when creating a {@link Hardware} from the DB response.
+   -|      *
+   -|      * @param hardwareId   the ID
+   -|      * @param hardwareName the LARS DB name
+   -|      * @param displayName  the display name for the <code>Team Competition</code>
+   -|      * @param hardwareMake the {@link HardwareMake} of the {@link Hardware}
+   -|      * @param hardwareType the {@link HardwareType} of the {@link Hardware}
+   -|      * @param multiplier   the calculated multiplier
+   -|      * @param averagePpd   the average PPD of the {@link Hardware}
+   -|      * @return the created {@link Hardware}
+   -|      */
+57 +|     
+58  |     public static Hardware create(final int hardwareId,
+59  |                                   final String hardwareName,
+60  |                                   final String displayName,
+@@
+65  |         return new Hardware(hardwareId, hardwareName, displayName, hardwareMake, hardwareType, multiplier, averagePpd);
+66  |     }
+67  | 
+   -|     /**
+   -|      * Creates a {@link Hardware}.
+   -|      *
+   -|      * <p>
+   -|      * Since we do not know the ID until the DB has persisted the {@link Hardware}, the {@link #EMPTY_HARDWARE_ID} will be used instead.
+   -|      *
+   -|      * @param hardwareName the LARS DB name
+   -|      * @param displayName  the display name for the <code>Team Competition</code>
+   -|      * @param hardwareMake the {@link HardwareMake} of the {@link Hardware}
+   -|      * @param hardwareType the {@link HardwareType} of the {@link Hardware}
+   -|      * @param multiplier   the calculated multiplier
+   -|      * @param averagePpd   the average PPD of the {@link Hardware}
+   -|      * @return the created {@link Hardware}
+   -|      */
+68 +|     
+69  |     public static Hardware createWithoutId(final String hardwareName,
+70  |                                            final String displayName,
+71  |                                            final HardwareMake hardwareMake,
+@@
+75  |         return create(EMPTY_HARDWARE_ID, hardwareName, displayName, hardwareMake, hardwareType, multiplier, averagePpd);
+76  |     }
+77  | 
+   -|     /**
+   -|      * Creates a {@link Hardware}.
+   -|      *
+   -|      * <p>
+   -|      * We assume the provided {@link HardwareRequest}'s {@link HardwareMake} and {@link HardwareType} have already been validated.
+   -|      *
+   -|      * <p>
+   -|      * Since we do not know the ID until the DB has persisted the {@link Hardware}, the {@link #EMPTY_HARDWARE_ID} will be used instead.
+   -|      *
+   -|      * @param hardwareRequest the input {@link HardwareRequest} from the REST endpoint
+   -|      * @return the created {@link Hardware}
+   -|      */
+78 +|     
+79  |     public static Hardware createWithoutId(final HardwareRequest hardwareRequest) {
+80  |         return createWithoutId(
+81  |             hardwareRequest.getHardwareName(),
+@@
+87  |         );
+88  |     }
+89  | 
+   -|     /**
+   -|      * Updates a {@link Hardware} with the given ID.
+   -|      *
+   -|      * <p>
+   -|      * Once the {@link Hardware} has been persisted in the DB, we will know its ID. We create a new {@link Hardware} instance with this ID,
+   -|      * which can be used to retrieval/referencing later.
+   -|      *
+   -|      * @param hardwareId the DB-generated ID
+   -|      * @param hardware   the {@link Hardware} to be updated with the ID
+   -|      * @return the updated {@link Hardware}
+   -|      */
+90 +|     
+91  |     public static Hardware updateWithId(final int hardwareId, final Hardware hardware) {
+92  |         return create(
+93  |             hardwareId,
+@@
+100  |         );
+101  |     }
+102  | 
+   -|     /**
+   -|      * Checks if the input {@link HardwareRequest} is equal to the {@link Hardware}.
+   -|      *
+   -|      * <p>
+   -|      * While the {@link HardwareRequest} will likely not be a complete match, there should be enough fields to verify
+   -|      * if it is the same as an existing {@link Hardware}.
+   -|      *
+   -|      * @param hardwareRequest input {@link HardwareRequest}
+   -|      * @return <code>true</code> if the input{@link HardwareRequest} is equal to the {@link Hardware}
+   -|      */
+103 +|     
+104  |     public boolean isEqualRequest(final HardwareRequest hardwareRequest) {
+105  |         return Double.compare(multiplier, hardwareRequest.getMultiplier()) == 0
+106  |             && Objects.equals(hardwareName, hardwareRequest.getHardwareName())

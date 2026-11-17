@@ -1,0 +1,95 @@
+from fastapi import Request
+from datetime import UTC, datetime
+import re
+from uuid import UUID
+from typing import ClassVar, Optional
+from pydantic import Field
+from coodie.exceptions import DocumentNotFound
+from argus.backend.db import ScyllaCluster
+from argus.backend.models.web import ArgusRelease
+from argus.backend.plugins.core import PluginModelBase
+from argus.backend.plugins.generic.types import GenericRunFinishRequest, GenericRunSubmitRequest
+from argus.backend.util.common import get_build_number
+from argus.common.enums import TestStatus
+
+class GenericPluginException(Exception):
+    pass
+
+class GenericRun(PluginModelBase):
+    _plugin_name: ClassVar[str] = 'generic'
+
+    class Settings:
+        name = 'generic_run'
+    logs: dict[str, str] = Field(default_factory=dict)
+    started_by: Optional[str] = None
+    sub_type: Optional[str] = None
+
+    @classmethod
+    def _stats_query(cls) -> str:
+        return f'SELECT id, test_id, group_id, release_id, status, start_time, build_job_url, build_id, assignee, end_time, investigation_status, heartbeat, build_number, scylla_version FROM {cls.table_name()} WHERE build_id IN ? PER PARTITION LIMIT 15'
+
+    @classmethod
+    def get_distinct_product_versions(cls, release: ArgusRelease, cluster: ScyllaCluster=None) -> list[str]:
+        if not cluster:
+            cluster = ScyllaCluster.get()
+        statement = cluster.prepare(f'SELECT scylla_version FROM {cls.table_name()} WHERE release_id = ?')
+        rows = cluster.session.execute(query=statement, parameters=(release.id,))
+        unique_versions = {r['scylla_version'] for r in rows if r['scylla_version']}
+        return sorted(list(unique_versions), reverse=True)
+
+    def submit_product_version(self, version: str, *, request: Request=None):
+        pattern = re.compile('((?P<short>[\\w.\\-~]+)-(?P<build>(0\\.)?(?P<date>[0-9]{8,8})\\.(?P<commit>\\w+).*))')
+        if (match := pattern.search(version)):
+            self.scylla_version = match.group('short')
+            try:
+                new_assignee = self.get_assignment(match.group('short'))
+            except DocumentNotFound:
+                new_assignee = None
+            if new_assignee:
+                self.assignee = new_assignee
+            self.set_full_version(version)
+            self.index_version(request=request)
+
+    @classmethod
+    def load_test_run(cls, run_id: UUID) -> 'GenericRun':
+        return cls.get(id=run_id)
+
+    @classmethod
+    def submit_run(cls, request_data: GenericRunSubmitRequest, *, request: Request=None) -> 'GenericRun':
+        try:
+            return cls.get(id=UUID(request_data['run_id']) if isinstance(request_data['run_id'], str) else request_data['run_id'])
+        except DocumentNotFound:
+            pass
+        run = cls()
+        run.start_time = datetime.now(UTC)
+        run.build_id = request_data['build_id']
+        run.started_by = request_data['started_by']
+        run.id = UUID(request_data['run_id']) if isinstance(request_data['run_id'], str) else request_data['run_id']
+        run.build_job_url = request_data['build_url']
+        run.build_number = get_build_number(request_data['build_url'])
+        run.sub_type = request_data.get('sub_type')
+        run.assign_categories()
+        try:
+            run.assignee = run.get_scheduled_assignee()
+        except DocumentNotFound:
+            run.assignee = None
+        if (version := request_data.get('scylla_version')):
+            run.submit_product_version(version, request=request)
+        run.status = TestStatus.RUNNING.value
+        run.save()
+        run.invalidate_release_snapshot()
+        return run
+
+    def finish_run(self, payload: GenericRunFinishRequest=None, *, request: Request=None):
+        payload = payload or {}
+        end_time = payload.get('end_time')
+        if end_time is not None:
+            self.end_time = datetime.fromtimestamp(end_time, UTC)
+        else:
+            self.end_time = datetime.now(UTC)
+        if (status := payload.get('status')):
+            self.status = TestStatus(status).value
+        if (version := payload.get('scylla_version')):
+            self.submit_product_version(version, request=request)
+        self.invalidate_release_snapshot()
+        self.index_version(request=request)

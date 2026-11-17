@@ -1,0 +1,316 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/endpoint/TeamEndpoint.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.rest.endpoint;
+26 +| 
+27 +| import org.springframework.web.bind.annotation.*;
+28 +| import org.springframework.http.ResponseEntity;
+29 +| import org.springframework.http.MediaType;
+30 +| import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+31 +| import org.springframework.web.util.UriComponentsBuilder;
+32 +| import javax.servlet.http.HttpServletRequest;
+33 +| import org.springframework.beans.factory.annotation.Autowired;
+34 +| import org.springframework.context.annotation.Lazy;
+35 +| import me.zodac.folding.rest.RequiredRoles;
+36 +| 
+37 +| import static me.zodac.folding.api.util.DateTimeUtils.untilNextMonthUtc;
+38 +| import static me.zodac.folding.rest.response.Responses.badRequest;
+39 +| import static me.zodac.folding.rest.response.Responses.cachedOk;
+40 +| import static me.zodac.folding.rest.response.Responses.created;
+41 +| import static me.zodac.folding.rest.response.Responses.notFound;
+42 +| import static me.zodac.folding.rest.response.Responses.nullRequest;
+43 +| import static me.zodac.folding.rest.response.Responses.ok;
+44 +| import static me.zodac.folding.rest.response.Responses.serverError;
+45 +| 
+46 +| import java.time.temporal.ChronoUnit;
+47 +| import java.util.ArrayList;
+48 +| import java.util.Collection;
+49 +| import java.util.List;
+50 +| import java.util.Optional;
+51 +| import me.zodac.folding.api.util.StringUtils;
+52 +| import me.zodac.folding.state.SystemStateManager;
+53 +| import me.zodac.folding.api.state.ReadRequired;
+54 +| import me.zodac.folding.api.state.SystemState;
+55 +| import me.zodac.folding.api.state.WriteRequired;
+56 +| import me.zodac.folding.api.tc.Team;
+57 +| import me.zodac.folding.service.api.FoldingStatsCore;
+58 +| import me.zodac.folding.rest.api.tc.request.TeamRequest;
+59 +| import me.zodac.folding.rest.endpoint.util.IdResult;
+60 +| import me.zodac.folding.rest.endpoint.util.IntegerParser;
+61 +| import me.zodac.folding.rest.endpoint.util.ValidationFailureResponseMapper;
+62 +| import me.zodac.folding.rest.response.BatchCreateResponse;
+63 +| import me.zodac.folding.api.tc.validation.TeamValidator;
+64 +| import me.zodac.folding.api.tc.validation.ValidationFailure;
+65 +| import me.zodac.folding.api.tc.validation.ValidationResult;
+66 +| import org.apache.logging.log4j.LogManager;
+67 +| import org.apache.logging.log4j.Logger;
+68 +| 
+69 +| @RestController
+70 +| @RequestMapping("/teams")
+71 +| public class TeamEndpoint {
+72 +| 
+73 +|     private static final Logger LOGGER = LogManager.getLogger();
+74 +| 
+75 +|     @Autowired
+76 +|     @Lazy
+77 +|     private FoldingStatsCore foldingStatsCore;
+78 +| 
+79 +|     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+80 +|     @WriteRequired
+81 +|     @RequiredRoles("admin")
+82 +|     public ResponseEntity<String> create(@RequestBody(required = false) final TeamRequest teamRequest) {
+83 +| 
+84 +|         final ValidationResult<Team> validationResult = validateCreate(teamRequest);
+85 +|         if (validationResult.isFailure()) {
+86 +|             return ValidationFailureResponseMapper.map(validationResult);
+87 +|         }
+88 +|         final Team validatedTeam = validationResult.getOutput();
+89 +| 
+90 +|         try {
+91 +|             final Team elementWithId = foldingStatsCore.createTeam(validatedTeam);
+92 +| 
+93 +|             final UriComponentsBuilder elementLocationBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
+94 +|                 .pathSegment(String.valueOf(elementWithId.getId()));
+95 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+96 +|             LOGGER.info("Created team with ID {}", elementWithId.getId());
+97 +|             return created(elementWithId, elementLocationBuilder);
+98 +|         } catch (final Exception e) {
+99 +|             LOGGER.error("Unexpected error creating team: {}", teamRequest, e);
+100 +|             return serverError();
+101 +|         }
+102 +|     }
+103 +|     @PostMapping(value = "/batch", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+104 +|     @WriteRequired
+105 +|     @RequiredRoles("admin")
+106 +|     public ResponseEntity<String> createBatchOf(@RequestBody(required = false) final Collection<TeamRequest> teamRequests) {
+107 +| 
+108 +|         final Collection<Team> validTeams = new ArrayList<>(teamRequests.size() / 2);
+109 +|         final Collection<ValidationFailure> failedValidationResponses = new ArrayList<>(teamRequests.size() / 2);
+110 +| 
+111 +|         for (final TeamRequest teamRequest : teamRequests) {
+112 +|             final ValidationResult<Team> validationResult = validateCreate(teamRequest);
+113 +| 
+114 +|             if (validationResult.isFailure()) {
+115 +|                 LOGGER.error("Found validation error for {}: {}", teamRequest, validationResult);
+116 +|                 failedValidationResponses.add(validationResult.getValidationFailure());
+117 +|             } else {
+118 +|                 validTeams.add(validationResult.getOutput());
+119 +|             }
+120 +|         }
+121 +| 
+122 +|         if (validTeams.isEmpty()) {
+123 +|             LOGGER.error("All teams contain validation errors: {}", failedValidationResponses);
+124 +|             return badRequest(failedValidationResponses);
+125 +|         }
+126 +| 
+127 +|         final List<Object> successful = new ArrayList<>();
+128 +|         final List<Object> unsuccessful = new ArrayList<>(failedValidationResponses);
+129 +| 
+130 +|         for (final Team validTeam : validTeams) {
+131 +|             try {
+132 +|                 final Team teamWithId = foldingStatsCore.createTeam(validTeam);
+133 +|                 successful.add(teamWithId);
+134 +|             } catch (final Exception e) {
+135 +|                 LOGGER.error("Unexpected error creating team: {}", validTeam, e);
+136 +|                 unsuccessful.add(validTeam);
+137 +|             }
+138 +|         }
+139 +| 
+140 +|         final BatchCreateResponse batchCreateResponse = BatchCreateResponse.create(successful, unsuccessful);
+141 +| 
+142 +|         if (successful.isEmpty()) {
+143 +|             return badRequest(batchCreateResponse);
+144 +|         }
+145 +| 
+146 +|         if (!unsuccessful.isEmpty()) {
+147 +|             LOGGER.error("{} teams successfully created, {} teams unsuccessful", successful.size(), unsuccessful.size());
+148 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+149 +|             return ok(batchCreateResponse);
+150 +|         }
+151 +| 
+152 +|         LOGGER.info("{} teams successfully created", successful.size());
+153 +|         SystemStateManager.next(SystemState.WRITE_EXECUTED);
+154 +|         return ok(batchCreateResponse.getSuccessful());
+155 +|     }
+156 +|     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+157 +|     @ReadRequired
+158 +|     public ResponseEntity<String> getAll(final HttpServletRequest request) {
+159 +| 
+160 +|         try {
+161 +|             final Collection<Team> elements = foldingStatsCore.getAllTeams();
+162 +|             return cachedOk(elements, request, untilNextMonthUtc(ChronoUnit.SECONDS));
+163 +|         } catch (final Exception e) {
+164 +|             LOGGER.error("Unexpected error getting all teams", e);
+165 +|             return serverError();
+166 +|         }
+167 +|     }
+168 +|     @GetMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+169 +|     @ReadRequired
+170 +|     public ResponseEntity<String> getById(@PathVariable("teamId") final String teamId, final HttpServletRequest request) {
+171 +| 
+172 +|         try {
+173 +|             final IdResult idResult = IntegerParser.parsePositive(teamId);
+174 +|             if (idResult.isFailure()) {
+175 +|                 return idResult.getFailureResponse();
+176 +|             }
+177 +|             final int parsedId = idResult.getId();
+178 +| 
+179 +|             final Optional<Team> optionalElement = foldingStatsCore.getTeam(parsedId);
+180 +|             if (optionalElement.isEmpty()) {
+181 +|                 LOGGER.error("No team found with ID {}", teamId);
+182 +|                 return notFound();
+183 +|             }
+184 +| 
+185 +|             final Team element = optionalElement.get();
+186 +|             return cachedOk(element, request, untilNextMonthUtc(ChronoUnit.SECONDS));
+187 +|         } catch (final Exception e) {
+188 +|             LOGGER.error("Unexpected error getting team with ID: {}", teamId, e);
+189 +|             return serverError();
+190 +|         }
+191 +|     }
+192 +|     @GetMapping(value = "/fields", produces = MediaType.APPLICATION_JSON_VALUE)
+193 +|     @ReadRequired
+194 +|     public ResponseEntity<String> getByHardwareName(@RequestParam(required = false, value = "teamName") final String teamName, final HttpServletRequest request) {
+195 +| 
+196 +|         try {
+197 +|             if (StringUtils.isBlank(teamName)) {
+198 +|                 final String errorMessage = String.format("Input 'teamName' must not be blank: '%s'", teamName);
+199 +|                 LOGGER.error(errorMessage);
+200 +|                 return badRequest(errorMessage);
+201 +|             }
+202 +| 
+203 +|             final Optional<Team> optionalTeam = foldingStatsCore.getAllTeams()
+204 +|                 .stream()
+205 +|                 .filter(team -> team.getTeamName().equalsIgnoreCase(teamName))
+206 +|                 .findAny();
+207 +| 
+208 +|             if (optionalTeam.isEmpty()) {
+209 +|                 LOGGER.error("No hardware found with 'hardwareName' '{}'", teamName);
+210 +|                 return notFound();
+211 +|             }
+212 +| 
+213 +|             final Team element = optionalTeam.get();
+214 +|             return cachedOk(element, request, untilNextMonthUtc(ChronoUnit.SECONDS));
+215 +|         } catch (final Exception e) {
+216 +|             LOGGER.error("Unexpected error getting team with 'hardwareName': '{}'", teamName, e);
+217 +|             return serverError();
+218 +|         }
+219 +|     }
+220 +|     @PutMapping(value = "/{teamId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+221 +|     @WriteRequired
+222 +|     @RequiredRoles("admin")
+223 +|     public ResponseEntity<String> updateById(@PathVariable("teamId") final String teamId, @RequestBody(required = false) final TeamRequest teamRequest) {
+224 +| 
+225 +|         if (teamRequest == null) {
+226 +|             LOGGER.error("No payload provided");
+227 +|             return nullRequest();
+228 +|         }
+229 +| 
+230 +|         try {
+231 +|             final IdResult idResult = IntegerParser.parsePositive(teamId);
+232 +|             if (idResult.isFailure()) {
+233 +|                 return idResult.getFailureResponse();
+234 +|             }
+235 +|             final int parsedId = idResult.getId();
+236 +| 
+237 +|             final Optional<Team> optionalElement = foldingStatsCore.getTeam(parsedId);
+238 +|             if (optionalElement.isEmpty()) {
+239 +|                 LOGGER.error("No team found with ID {}", teamId);
+240 +|                 return notFound();
+241 +|             }
+242 +|             final Team existingTeam = optionalElement.get();
+243 +| 
+244 +|             if (existingTeam.isEqualRequest(teamRequest)) {
+245 +|                 LOGGER.debug("No change necessary");
+246 +|                 return ok(existingTeam);
+247 +|             }
+248 +| 
+249 +|             final ValidationResult<Team> validationResult = validateUpdate(teamRequest, existingTeam);
+250 +|             if (validationResult.isFailure()) {
+251 +|                 return ValidationFailureResponseMapper.map(validationResult);
+252 +|             }
+253 +|             final Team validatedHardware = validationResult.getOutput();
+254 +| 
+255 +|             // The payload 'should' have the ID, but it's not guaranteed if the correct URL is used
+256 +|             final Team teamWithId = Team.updateWithId(existingTeam.getId(), validatedHardware);
+257 +|             final Team updatedTeamWithId = foldingStatsCore.updateTeam(teamWithId);
+258 +| 
+259 +|             final UriComponentsBuilder elementLocationBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
+260 +|                 .pathSegment(String.valueOf(updatedTeamWithId.getId()));
+261 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+262 +|             LOGGER.info("Updated team with ID {}", updatedTeamWithId.getId());
+263 +|             return ok(updatedTeamWithId, elementLocationBuilder);
+264 +|         } catch (final Exception e) {
+265 +|             LOGGER.error("Unexpected error updating team with ID: {}", teamId, e);
+266 +|             return serverError();
+267 +|         }
+268 +|     }
+269 +|     @DeleteMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+270 +|     @WriteRequired
+271 +|     @RequiredRoles("admin")
+272 +|     public ResponseEntity<String> deleteById(@PathVariable("teamId") final String teamId) {
+273 +| 
+274 +|         try {
+275 +|             final IdResult idResult = IntegerParser.parsePositive(teamId);
+276 +|             if (idResult.isFailure()) {
+277 +|                 return idResult.getFailureResponse();
+278 +|             }
+279 +|             final int parsedId = idResult.getId();
+280 +| 
+281 +|             final Optional<Team> optionalElement = foldingStatsCore.getTeam(parsedId);
+282 +|             if (optionalElement.isEmpty()) {
+283 +|                 LOGGER.error("No team found with ID {}", teamId);
+284 +|                 return notFound();
+285 +|             }
+286 +|             final Team team = optionalElement.get();
+287 +| 
+288 +|             final ValidationResult<Team> validationResult = validateDelete(team);
+289 +|             if (validationResult.isFailure()) {
+290 +|                 return ValidationFailureResponseMapper.map(validationResult);
+291 +|             }
+292 +|             final Team validatedTeam = validationResult.getOutput();
+293 +| 
+294 +|             foldingStatsCore.deleteTeam(validatedTeam);
+295 +|             SystemStateManager.next(SystemState.WRITE_EXECUTED);
+296 +|             LOGGER.info("Deleted team with ID {}", teamId);
+297 +|             return ok();
+298 +|         } catch (final Exception e) {
+299 +|             LOGGER.error("Unexpected error deleting team with ID: {}", teamId, e);
+300 +|             return serverError();
+301 +|         }
+302 +|     }
+303 +| 
+304 +|     private ValidationResult<Team> validateCreate(final TeamRequest teamRequest) {
+305 +|         return TeamValidator.validateCreate(teamRequest, foldingStatsCore.getAllTeams());
+306 +|     }
+307 +| 
+308 +|     private ValidationResult<Team> validateUpdate(final TeamRequest teamRequest, final Team existingTeam) {
+309 +|         return TeamValidator.validateUpdate(teamRequest, existingTeam, foldingStatsCore.getAllTeams());
+310 +|     }
+311 +| 
+312 +|     private ValidationResult<Team> validateDelete(final Team team) {
+313 +|         return TeamValidator.validateDelete(team, foldingStatsCore.getAllUsersWithoutPasskeys());
+314 +|     }
+315 +| }

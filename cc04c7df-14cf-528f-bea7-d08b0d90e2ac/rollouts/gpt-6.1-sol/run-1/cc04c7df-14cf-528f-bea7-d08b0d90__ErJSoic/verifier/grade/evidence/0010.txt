@@ -1,0 +1,330 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/db/DbManager.java (changed against State A) ===
+@@
+40  | import me.zodac.folding.api.tc.stats.UserTcStats;
+41  | import me.zodac.folding.rest.api.tc.historic.HistoricStats;
+42  | 
+   -| /**
+   -|  * Interface used to interact with the storage backend and perform CRUD operations.
+   -|  *
+   -|  * <p>
+   -|  * Any method can throw a {@link DatabaseConnectionException} if an error occurs connecting to the underlying DB.
+   -|  */
+43 +| 
+44  | public interface DbManager {
+45  | 
+   -|     /**
+   -|      * Creates a {@link Hardware} instance in the DB.
+   -|      *
+   -|      * @param hardware the {@link Hardware} to persist
+   -|      * @return the {@link Hardware} updated with an ID
+   -|      */
+46 +|     
+47  |     Hardware createHardware(final Hardware hardware);
+48  | 
+   -|     /**
+   -|      * Retrieves all {@link Hardware}s from the DB.
+   -|      *
+   -|      * @return all {@link Hardware}s
+   -|      */
+49 +|     
+50  |     Collection<Hardware> getAllHardware();
+51  | 
+   -|     /**
+   -|      * Retrieves a {@link Hardware} with the given ID from the DB.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to retrieve
+   -|      * @return an {@link Optional} of the retrieved {@link Hardware}
+   -|      */
+52 +|     
+53  |     Optional<Hardware> getHardware(final int hardwareId);
+54  | 
+   -|     /**
+   -|      * Updates an existing {@link Hardware} in the system, matching on ID.
+   -|      *
+   -|      * @param hardwareToUpdate the updated {@link Hardware} to be persisted in the DB
+   -|      * @return the updated {@link Hardware}
+   -|      */
+55 +|     
+56  |     Hardware updateHardware(final Hardware hardwareToUpdate);
+57  | 
+   -|     /**
+   -|      * Deletes an existing {@link Hardware} from the system.
+   -|      *
+   -|      * @param hardwareId the ID of the {@link Hardware} to delete
+   -|      */
+58 +|     
+59  |     void deleteHardware(final int hardwareId);
+60  | 
+   -|     /**
+   -|      * Creates a {@link Team} instance in the DB.
+   -|      *
+   -|      * @param team the {@link Team} to persist
+   -|      * @return the {@link Team} updated with an ID
+   -|      */
+61 +|     
+62  |     Team createTeam(final Team team);
+63  | 
+   -|     /**
+   -|      * Retrieves all {@link Team}s from the DB.
+   -|      *
+   -|      * @return all {@link Team}s
+   -|      */
+64 +|     
+65  |     Collection<Team> getAllTeams();
+66  | 
+   -|     /**
+   -|      * Retrieves a {@link Team} with the given ID from the DB.
+   -|      *
+   -|      * @param teamId the ID of the {@link Team} to retrieve
+   -|      * @return an {@link Optional} of the retrieved {@link Team}
+   -|      */
+67 +|     
+68  |     Optional<Team> getTeam(final int teamId);
+69  | 
+   -|     /**
+   -|      * Updates an existing {@link Team} in the system, matching on ID.
+   -|      *
+   -|      * @param teamToUpdate the updated {@link Team} to be persisted in the DB
+   -|      * @return the updated {@link Team}
+   -|      */
+70 +|     
+71  |     Team updateTeam(final Team teamToUpdate);
+72  | 
+   -|     /**
+   -|      * Deletes an existing {@link Team} from the system.
+   -|      *
+   -|      * @param teamId the ID of the {@link Team} to delete
+   -|      */
+73 +|     
+74  |     void deleteTeam(final int teamId);
+75  | 
+   -|     /**
+   -|      * Creates a {@link User} instance in the DB.
+   -|      *
+   -|      * @param user the {@link User} to persist
+   -|      * @return the {@link User} updated with an ID
+   -|      */
+76 +|     
+77  |     User createUser(final User user);
+78  | 
+   -|     /**
+   -|      * Retrieves all {@link User}s from the DB.
+   -|      *
+   -|      * @return all {@link User}s
+   -|      */
+79 +|     
+80  |     Collection<User> getAllUsers();
+81  | 
+   -|     /**
+   -|      * Retrieves a {@link User} with the given ID from the DB.
+   -|      *
+   -|      * @param userId the ID of the {@link User} to retrieve
+   -|      * @return an {@link Optional} of the retrieved {@link User}
+   -|      */
+82 +|     
+83  |     Optional<User> getUser(final int userId);
+84  | 
+   -|     /**
+   -|      * Updates an existing {@link User} in the system, matching on ID.
+   -|      *
+   -|      * @param userToUpdate the updated {@link User} to be persisted in the DB
+   -|      * @return the updated {@link User}
+   -|      */
+85 +|     
+86  |     User updateUser(final User userToUpdate);
+87  | 
+   -|     /**
+   -|      * Deletes an existing {@link User} from the system.
+   -|      *
+   -|      * @param userId the ID of the {@link User} to delete
+   -|      */
+88 +|     
+89  |     void deleteUser(final int userId);
+90  | 
+   -|     /**
+   -|      * Creates a {@link UserTcStats} for a {@link User}'s <code>Team Competition</code> stats for a specific hour.
+   -|      *
+   -|      * @param userTcStats the {@link UserTcStats} to be created
+   -|      * @return the created {@link UserTcStats}
+   -|      */
+91 +|     
+92  |     UserTcStats createHourlyTcStats(final UserTcStats userTcStats);
+93  | 
+   -|     /**
+   -|      * Retrieves the latest {@link UserTcStats} for the provided {@link User}.
+   -|      *
+   -|      * @param userId the ID of the {@link User} whose {@link UserTcStats} are to be retrieved
+   -|      * @return an {@link Optional} of the retrieved {@link UserTcStats}
+   -|      */
+94 +|     
+95  |     Optional<UserTcStats> getHourlyTcStats(final int userId);
+96  | 
+   -|     /**
+   -|      * Retrieves the first {@link UserTcStats} for any users in the system.
+   -|      *
+   -|      * @return an {@link Optional} of the first {@link UserTcStats}
+   -|      */
+97 +|     
+98  |     Optional<UserTcStats> getFirstHourlyTcStats();
+99  | 
+   -|     /**
+   -|      * Retrieves the {@link HistoricStats} for a given {@link User} ID for a specific {@code day}/{@link Month}/{@link Year}.
+   -|      *
+   -|      * @param userId the ID of the {@link User} whose {@link HistoricStats} are to be retrieved
+   -|      * @param year   the {@link Year} of the {@link HistoricStats}
+   -|      * @param month  the {@link Month} of the {@link HistoricStats}
+   -|      * @param day    the day of the {@link Month} of the {@link HistoricStats}
+   -|      * @return the hourly {@link HistoricStats} for the {@link User} for the given {@code day}
+   -|      */
+100 +|     
+101  |     Collection<HistoricStats> getHistoricStatsHourly(final int userId, final Year year, final Month month, final int day);
+102  | 
+   -|     /**
+   -|      * Retrieves the {@link HistoricStats} for a given {@link User} ID for a specific {@link Month}/{@link Year}.
+   -|      *
+   -|      * @param userId the ID of the {@link User} whose {@link HistoricStats} are to be retrieved
+   -|      * @param year   the {@link Year} of the {@link HistoricStats}
+   -|      * @param month  the {@link Month} of the {@link HistoricStats}
+   -|      * @return the daily {@link HistoricStats} for the {@link User} for the given {@link Month}
+   -|      */
+103 +|     
+104  |     Collection<HistoricStats> getHistoricStatsDaily(final int userId, final Year year, final Month month);
+105  | 
+   -|     /**
+   -|      * Retrieves the {@link HistoricStats} for a given {@link User} ID for a specific {@link Year}.
+   -|      *
+   -|      * @param userId the ID of the {@link User} whose {@link HistoricStats} are to be retrieved
+   -|      * @param year   the {@link Year} of the {@link HistoricStats}
+   -|      * @return the monthly {@link HistoricStats} for the {@link User} for the given {@link Year}
+   -|      */
+106 +|     
+107  |     Collection<HistoricStats> getHistoricStatsMonthly(final int userId, final Year year);
+108  | 
+   -|     /**
+   -|      * Creates a {@link UserStats} for the initial overall stats for the provided {@link User} at the start of the monitoring period.
+   -|      *
+   -|      * @param userStats the {@link UserStats} to be created
+   -|      * @return the created {@link UserStats}
+   -|      */
+109 +|     
+110  |     UserStats createInitialStats(final UserStats userStats);
+111  | 
+   -|     /**
+   -|      * Retrieves the initial {@link UserStats} for the provided {@link User} ID.
+   -|      *
+   -|      * @param userId the ID of the {@link User} whose {@link UserStats} are to be retrieved
+   -|      * @return an {@link Optional} of the retrieved {@link UserStats}
+   -|      */
+112 +|     
+113  |     Optional<UserStats> getInitialStats(final int userId);
+114  | 
+   -|     /**
+   -|      * Creates a {@link UserStats} for the total overall stats for a {@link User}.
+   -|      *
+   -|      * @param userStats the {@link UserStats} to be created
+   -|      * @return the created {@link UserStats}
+   -|      */
+115 +|     
+116  |     UserStats createTotalStats(final UserStats userStats);
+117  | 
+   -|     /**
+   -|      * Retrieves the {@link UserStats} for a {@link User} with the provided ID.
+   -|      *
+   -|      * @param userId the ID of the {@link User} to whose {@link UserStats} are to be retrieved
+   -|      * @return an {@link Optional} of the retrieved {@link UserStats}
+   -|      */
+118 +|     
+119  |     Optional<UserStats> getTotalStats(final int userId);
+120  | 
+   -|     /**
+   -|      * Creates an {@link OffsetTcStats}, defining the offset points/units for the provided {@link User}.
+   -|      *
+   -|      * <p>
+   -|      * If an {@link OffsetTcStats} already exists for the {@link User}, the existing values are updated to be the addition of both
+   -|      * {@link OffsetTcStats}.
+   -|      *
+   -|      * @param userId        the ID of the {@link User} for whom the {@link OffsetTcStats} are being created
+   -|      * @param offsetTcStats the {@link OffsetTcStats} to be created
+   -|      * @return the created/updated {@link OffsetTcStats}, or {@link OffsetTcStats#empty()}
+   -|      */
+121 +|     
+122  |     OffsetTcStats createOrUpdateOffsetStats(final int userId, final OffsetTcStats offsetTcStats);
+123  | 
+   -|     /**
+   -|      * Retrieves the {@link OffsetTcStats} for a {@link User} with the provided ID.
+   -|      *
+   -|      * @param userId the ID of the {@link User} to whose {@link OffsetTcStats} are to be retrieved
+   -|      * @return an {@link Optional} of the retrieved {@link OffsetTcStats}
+   -|      */
+124 +|     
+125  |     Optional<OffsetTcStats> getOffsetStats(final int userId);
+126  | 
+   -|     /**
+   -|      * Deletes the {@link OffsetTcStats} for a {@link User} with the provided ID.
+   -|      *
+   -|      * @param userId the ID of the {@link User} to whose {@link OffsetTcStats} are to be deleted
+   -|      */
+127 +|     
+128  |     void deleteOffsetStats(final int userId);
+129  | 
+   -|     /**
+   -|      * Deletes the {@link OffsetTcStats} in the DB.
+   -|      */
+130 +|     
+131  |     void deleteAllOffsetStats();
+132  | 
+   -|     /**
+   -|      * Creates a {@link RetiredUserTcStats}.
+   -|      *
+   -|      * @param retiredUserTcStats the {@link RetiredUserTcStats} for the deleted {@link User}
+   -|      * @return the {@link RetiredUserTcStats}
+   -|      */
+133 +|     
+134  |     RetiredUserTcStats createRetiredUserStats(final RetiredUserTcStats retiredUserTcStats);
+135  | 
+   -|     /**
+   -|      * Retrieves all {@link RetiredUserTcStats} from the DB.
+   -|      *
+   -|      * @return a {@link Collection} of the retrieved {@link RetiredUserTcStats}
+   -|      */
+136 +|     
+137  |     Collection<RetiredUserTcStats> getAllRetiredUserStats();
+138  | 
+   -|     /**
+   -|      * Deletes all {@link RetiredUserTcStats} in the DB.
+   -|      */
+139 +|     
+140  |     void deleteAllRetiredUserStats();
+141  | 
+   -|     /**
+   -|      * Creates a {@link MonthlyResult} for the <code>Team Competition</code> in the DB.
+   -|      *
+   -|      * @param monthlyResult a {@link MonthlyResult} for the <code>Team Competition</code>
+   -|      * @return the <code>Team Competition</code> {@link MonthlyResult}
+   -|      */
+142 +|     
+143  |     MonthlyResult createMonthlyResult(final MonthlyResult monthlyResult);
+144  | 
+   -|     /**
+   -|      * Retrieves the {@link MonthlyResult} of the <code>Team Competition</code> for the given {@link Month} and {@link Year} from the DB.
+   -|      *
+   -|      * @param month the {@link Month} of the {@link MonthlyResult} to be retrieved
+   -|      * @param year  the {@link Year} of the {@link MonthlyResult} to be retrieved
+   -|      * @return an {@link Optional} of the <code>Team Competition</code> {@link MonthlyResult}
+   -|      */
+145 +|     
+146  |     Optional<MonthlyResult> getMonthlyResult(final Month month, final Year year);
+147  | 
+   -|     /**
+   -|      * Authenticates a system user against the DB.
+   -|      *
+   -|      * <p>
+   -|      * The provided {@code password} will be hashed in the DB, so we verify the hashes match.
+   -|      *
+   -|      * @param userName the system user username
+   -|      * @param password the system user password
+   -|      * @return the {@link UserAuthenticationResult}
+   -|      */
+148 +|     
+149  |     UserAuthenticationResult authenticateSystemUser(final String userName, final String password);
+150  | }

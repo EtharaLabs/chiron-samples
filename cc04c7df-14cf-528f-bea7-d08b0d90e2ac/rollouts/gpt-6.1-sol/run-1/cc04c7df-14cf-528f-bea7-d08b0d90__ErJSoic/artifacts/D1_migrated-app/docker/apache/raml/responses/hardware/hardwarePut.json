@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "hardwareName": "Hardware1",
+  "displayName": "Hardware1 (updated)",
+  "hardwareMake": "NVIDIA",
+  "hardwareType": "GPU",
+  "multiplier": 21.33,
+  "averagePpd": 1
+}

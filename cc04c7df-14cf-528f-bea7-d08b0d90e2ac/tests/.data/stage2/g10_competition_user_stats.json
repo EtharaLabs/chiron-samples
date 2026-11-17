@@ -1,0 +1,1560 @@
+{
+ "id": "g10_competition_user_stats",
+ "source": "g10_competition_user_stats",
+ "steps": [
+  {
+   "case": "stats_empty_system",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "user_stats_non_existing_id",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/9999"
+   }
+  },
+  {
+   "case": "user_stats_out_of_range_id",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/-1"
+   }
+  },
+  {
+   "case": "user_stats_invalid_id",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/id"
+   }
+  },
+  {
+   "case": "user_stats_zero_id",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/0"
+   }
+  },
+  {
+   "case": "user_stats_encoded_space_id",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/%201"
+   }
+  },
+  {
+   "case": "manual_update_empty_system",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "manual_update_unauthenticated",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   }
+  },
+  {
+   "case": "manual_update_readonly_user",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false",
+    "auth": "readonly"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=DummyUser1&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "create_hardware_multiplier_one",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware1",
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "capture": {
+    "hardwareOne": "json:id"
+   }
+  },
+  {
+   "case": "create_team_one",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    }
+   },
+   "capture": {
+    "teamOne": "json:id"
+   }
+  },
+  {
+   "case": "create_user_one",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser1",
+     "displayName": "DummyUser1",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "${hardwareOne}",
+     "teamId": "${teamOne}"
+    }
+   },
+   "capture": {
+    "userOne": "json:id"
+   }
+  },
+  {
+   "case": "stats_after_user_created",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "user_one_stats_before_points",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userOne}"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/user/DummyUser1/stats?passkey=DummyPasskey12345678901234567890&points=10000"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=DummyUser1&passkey=DummyPasskey12345678901234567890&units=5"
+   }
+  },
+  {
+   "case": "manual_update_after_points",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "stats_after_points",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "user_one_stats_after_points",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userOne}"
+   }
+  },
+  {
+   "case": "manual_update_without_async_parameter",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update",
+    "auth": "admin"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=DummyUser2&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "create_hardware_multiplier_two",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DummyHardware2",
+     "displayName": "DummyHardware2",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 2.0,
+     "averagePpd": 1
+    }
+   },
+   "capture": {
+    "hardwareTwo": "json:id"
+   }
+  },
+  {
+   "case": "create_team_two",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2"
+    }
+   },
+   "capture": {
+    "teamTwo": "json:id"
+   }
+  },
+  {
+   "case": "create_user_two",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser2",
+     "displayName": "DummyUser2",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": "${hardwareTwo}",
+     "teamId": "${teamTwo}"
+    }
+   },
+   "capture": {
+    "userTwo": "json:id"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/user/DummyUser2/stats?passkey=DummyPasskey12345678901234567890&points=20000"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=DummyUser2&passkey=DummyPasskey12345678901234567890&units=20"
+   }
+  },
+  {
+   "case": "manual_update_with_multiplier",
+   "http": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "user_two_stats_multiplied",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userTwo}"
+   }
+  },
+  {
+   "case": "competition_stats_two_teams",
+   "http": {
+    "method": "GET",
+    "path": "/stats"
+   }
+  },
+  {
+   "case": "offset_user_one_points_and_multiplied",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userOne}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 1000,
+     "multipliedPointsOffset": 1000,
+     "unitsOffset": 0
+    }
+   }
+  },
+  {
+   "case": "user_one_stats_after_offset",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userOne}"
+   }
+  },
+  {
+   "case": "offset_user_one_accumulates",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userOne}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 250,
+     "multipliedPointsOffset": 250,
+     "unitsOffset": 2
+    }
+   }
+  },
+  {
+   "case": "user_one_stats_after_second_offset",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userOne}"
+   }
+  },
+  {
+   "case": "offset_user_two_multiplied_derived_from_points",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userTwo}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 100,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 0
+    }
+   }
+  },
+  {
+   "case": "user_two_stats_after_derived_multiplied_offset",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userTwo}"
+   }
+  },
+  {
+   "case": "offset_user_two_points_derived_from_multiplied",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userTwo}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 0,
+     "multipliedPointsOffset": 500,
+     "unitsOffset": 0
+    }
+   }
+  },
+  {
+   "case": "user_two_stats_after_derived_points_offset",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userTwo}"
+   }
+  },
+  {
+   "case": "offset_user_two_negative_beyond_current_stats",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userTwo}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": -50000,
+     "multipliedPointsOffset": -50000,
+     "unitsOffset": -400
+    }
+   }
+  },
+  {
+   "case": "user_two_stats_clamped_to_zero",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userTwo}"
+   }
+  },
+  {
+   "case": "offset_all_zero_payload_rejected",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userOne}",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 0,
+     "multipliedPointsOffset": 0,
+     "unitsOffset": 0
+    }
+   }
+  },
+  {
+   "case": "offset_missing_body",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userOne}",
+    "auth": "admin"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "offset_non_existing_user",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/9999",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 100,
+     "multipliedPointsOffset": 1000,
+     "unitsOffset": 10
+    }
+   }
+  },
+  {
+   "case": "offset_out_of_range_user",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/-1",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 100,
+     "multipliedPointsOffset": 1000,
+     "unitsOffset": 10
+    }
+   }
+  },
+  {
+   "case": "offset_invalid_user_id",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/id",
+    "auth": "admin",
+    "json": {
+     "pointsOffset": 100,
+     "multipliedPointsOffset": 1000,
+     "unitsOffset": 10
+    }
+   }
+  },
+  {
+   "case": "offset_unauthenticated",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userOne}",
+    "json": {
+     "pointsOffset": 100,
+     "multipliedPointsOffset": 1000,
+     "unitsOffset": 10
+    }
+   }
+  },
+  {
+   "case": "offset_readonly_user",
+   "http": {
+    "method": "PATCH",
+    "path": "/stats/users/${userOne}",
+    "auth": "readonly",
+    "json": {
+     "pointsOffset": 100,
+     "multipliedPointsOffset": 1000,
+     "unitsOffset": 10
+    }
+   }
+  },
+  {
+   "case": "stats_trailing_slash",
+   "http": {
+    "method": "GET",
+    "path": "/stats/"
+   }
+  },
+  {
+   "case": "user_stats_trailing_slash",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userOne}/"
+   }
+  },
+  {
+   "case": "stats_delete_not_allowed",
+   "http": {
+    "method": "DELETE",
+    "path": "/stats"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "stats_empty_system",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": []\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "86",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_stats_non_existing_id",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "user_stats_out_of_range_id",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/-1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "user_stats_invalid_id",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/id"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "user_stats_zero_id",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/0"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "user_stats_encoded_space_id",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/%201"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID ' 1' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "manual_update_empty_system",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "manual_update_unauthenticated",
+   "compare": "full",
+   "request": {
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "manual_update_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "create_hardware_multiplier_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardware1",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardware1",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DummyHardware1\",\n  \"displayName\": \"DummyHardware1\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_team_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DummyTeam1\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_user_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "DummyUser1",
+     "foldingUserName": "DummyUser1",
+     "hardwareId": "1",
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": "1"
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"DummyUser1\",\n  \"displayName\": \"DummyUser1\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"DummyHardware1\",\n    \"displayName\": \"DummyHardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"DummyTeam1\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "450",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "stats_after_user_created",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 0,\n  \"totalMultipliedPoints\": 0,\n  \"totalUnits\": 0,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"DummyTeam1\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"DummyUser1\",\n            \"displayName\": \"DummyUser1\",\n            \"passkey\": \"DummyPas************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"DummyHardware1\",\n              \"displayName\": \"DummyHardware1\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 1.0,\n              \"averagePpd\": 1\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"DummyTeam1\"\n            },\n            \"userIsCaptain\": false\n          },\n          \"points\": 0,\n          \"multipliedPoints\": 0,\n          \"units\": 0,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1122",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_one_stats_before_points",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"DummyUser1\",\n    \"displayName\": \"DummyUser1\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 0,\n  \"multipliedPoints\": 0,\n  \"units\": 0,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "577",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "manual_update_after_points",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_after_points",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 10000,\n  \"totalMultipliedPoints\": 10000,\n  \"totalUnits\": 5,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"DummyTeam1\"\n      },\n      \"teamPoints\": 10000,\n      \"teamMultipliedPoints\": 10000,\n      \"teamUnits\": 5,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"DummyUser1\",\n            \"displayName\": \"DummyUser1\",\n            \"passkey\": \"DummyPas************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"DummyHardware1\",\n              \"displayName\": \"DummyHardware1\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 1.0,\n              \"averagePpd\": 1\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"DummyTeam1\"\n            },\n            \"userIsCaptain\": false\n          },\n          \"points\": 10000,\n          \"multipliedPoints\": 10000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "1146",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_one_stats_after_points",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"DummyUser1\",\n    \"displayName\": \"DummyUser1\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 10000,\n  \"multipliedPoints\": 10000,\n  \"units\": 5,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "585",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "manual_update_without_async_parameter",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/stats/manual/update"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "create_hardware_multiplier_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "DummyHardware2",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "DummyHardware2",
+     "hardwareType": "GPU",
+     "multiplier": 2.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"DummyHardware2\",\n  \"displayName\": \"DummyHardware2\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "177",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_team_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam2"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"DummyTeam2\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_user_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "DummyUser2",
+     "foldingUserName": "DummyUser2",
+     "hardwareId": "2",
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": "2"
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"foldingUserName\": \"DummyUser2\",\n  \"displayName\": \"DummyUser2\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 2,\n    \"hardwareName\": \"DummyHardware2\",\n    \"displayName\": \"DummyHardware2\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"DummyTeam2\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "450",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "manual_update_with_multiplier",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/stats/manual/update?async=false"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_two_stats_multiplied",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 2,\n    \"foldingUserName\": \"DummyUser2\",\n    \"displayName\": \"DummyUser2\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"DummyHardware2\",\n      \"displayName\": \"DummyHardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 2,\n      \"teamName\": \"DummyTeam2\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 20000,\n  \"multipliedPoints\": 40000,\n  \"units\": 20,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "586",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "competition_stats_two_teams",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 30000,\n  \"totalMultipliedPoints\": 50000,\n  \"totalUnits\": 25,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 2,\n        \"teamName\": \"DummyTeam2\"\n      },\n      \"teamPoints\": 20000,\n      \"teamMultipliedPoints\": 40000,\n      \"teamUnits\": 20,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 2,\n            \"foldingUserName\": \"DummyUser2\",\n            \"displayName\": \"DummyUser2\",\n            \"passkey\": \"DummyPas************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"hardware\": {\n              \"id\": 2,\n              \"hardwareName\": \"DummyHardware2\",\n              \"displayName\": \"DummyHardware2\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 1\n            },\n            \"team\": {\n              \"id\": 2,\n              \"teamName\": \"DummyTeam2\"\n            },\n            \"userIsCaptain\": false\n          },\n          \"points\": 20000,\n          \"multipliedPoints\": 40000,\n          \"units\": 20,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    },\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"DummyTeam1\"\n      },\n      \"teamPoints\": 10000,\n      \"teamMultipliedPoints\": 10000,\n      \"teamUnits\": 5,\n      \"rank\": 2,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"DummyUser1\",\n            \"displayName\": \"DummyUser1\",\n            \"passkey\": \"DummyPas************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"DummyHardware1\",\n              \"displayName\": \"DummyHardware1\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 1.0,\n              \"averagePpd\": 1\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"DummyTeam1\"\n            },\n            \"userIsCaptain\": false\n          },\n          \"points\": 10000,\n          \"multipliedPoints\": 10000,\n          \"units\": 5,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "2199",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_user_one_points_and_multiplied",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 1000,
+     "pointsOffset": 1000,
+     "unitsOffset": 0
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_one_stats_after_offset",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"DummyUser1\",\n    \"displayName\": \"DummyUser1\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 11000,\n  \"multipliedPoints\": 11000,\n  \"units\": 5,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "585",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_user_one_accumulates",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 250,
+     "pointsOffset": 250,
+     "unitsOffset": 2
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_one_stats_after_second_offset",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"DummyUser1\",\n    \"displayName\": \"DummyUser1\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 11250,\n  \"multipliedPoints\": 11250,\n  \"units\": 7,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "585",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_user_two_multiplied_derived_from_points",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 100,
+     "unitsOffset": 0
+    },
+    "method": "PATCH",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_two_stats_after_derived_multiplied_offset",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 2,\n    \"foldingUserName\": \"DummyUser2\",\n    \"displayName\": \"DummyUser2\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"DummyHardware2\",\n      \"displayName\": \"DummyHardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 2,\n      \"teamName\": \"DummyTeam2\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 20100,\n  \"multipliedPoints\": 40200,\n  \"units\": 20,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "586",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_user_two_points_derived_from_multiplied",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 500,
+     "pointsOffset": 0,
+     "unitsOffset": 0
+    },
+    "method": "PATCH",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_two_stats_after_derived_points_offset",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 2,\n    \"foldingUserName\": \"DummyUser2\",\n    \"displayName\": \"DummyUser2\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"DummyHardware2\",\n      \"displayName\": \"DummyHardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 2,\n      \"teamName\": \"DummyTeam2\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 20350,\n  \"multipliedPoints\": 40700,\n  \"units\": 20,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "586",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:14 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_user_two_negative_beyond_current_stats",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": -50000,
+     "pointsOffset": -50000,
+     "unitsOffset": -400
+    },
+    "method": "PATCH",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_two_stats_clamped_to_zero",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/2"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 2,\n    \"foldingUserName\": \"DummyUser2\",\n    \"displayName\": \"DummyUser2\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 2,\n      \"hardwareName\": \"DummyHardware2\",\n      \"displayName\": \"DummyHardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 2,\n      \"teamName\": \"DummyTeam2\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 0,\n  \"multipliedPoints\": 0,\n  \"units\": 0,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "577",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "offset_all_zero_payload_rejected",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 0,
+     "pointsOffset": 0,
+     "unitsOffset": 0
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"Payload is null\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "32",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "offset_missing_body",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 415
+   }
+  },
+  {
+   "case": "offset_non_existing_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 1000,
+     "pointsOffset": 100,
+     "unitsOffset": 10
+    },
+    "method": "PATCH",
+    "path": "/stats/users/9999"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "offset_out_of_range_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 1000,
+     "pointsOffset": 100,
+     "unitsOffset": 10
+    },
+    "method": "PATCH",
+    "path": "/stats/users/-1"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID '-1' is out of range\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "offset_invalid_user_id",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "multipliedPointsOffset": 1000,
+     "pointsOffset": 100,
+     "unitsOffset": 10
+    },
+    "method": "PATCH",
+    "path": "/stats/users/id"
+   },
+   "response": {
+    "body": "{\n  \"error\": \"The ID 'id' is not a valid format\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "50",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "offset_unauthenticated",
+   "compare": "full",
+   "request": {
+    "json": {
+     "multipliedPointsOffset": 1000,
+     "pointsOffset": 100,
+     "unitsOffset": 10
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "offset_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "json": {
+     "multipliedPointsOffset": 1000,
+     "pointsOffset": 100,
+     "unitsOffset": 10
+    },
+    "method": "PATCH",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "stats_trailing_slash",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/"
+   },
+   "response": {
+    "body": "{\n  \"totalPoints\": 11250,\n  \"totalMultipliedPoints\": 11250,\n  \"totalUnits\": 7,\n  \"teams\": [\n    {\n      \"team\": {\n        \"id\": 1,\n        \"teamName\": \"DummyTeam1\"\n      },\n      \"teamPoints\": 11250,\n      \"teamMultipliedPoints\": 11250,\n      \"teamUnits\": 7,\n      \"rank\": 1,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 1,\n            \"foldingUserName\": \"DummyUser1\",\n            \"displayName\": \"DummyUser1\",\n            \"passkey\": \"DummyPas************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"hardware\": {\n              \"id\": 1,\n              \"hardwareName\": \"DummyHardware1\",\n              \"displayName\": \"DummyHardware1\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 1.0,\n              \"averagePpd\": 1\n            },\n            \"team\": {\n              \"id\": 1,\n              \"teamName\": \"DummyTeam1\"\n            },\n            \"userIsCaptain\": false\n          },\n          \"points\": 11250,\n          \"multipliedPoints\": 11250,\n          \"units\": 7,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    },\n    {\n      \"team\": {\n        \"id\": 2,\n        \"teamName\": \"DummyTeam2\"\n      },\n      \"teamPoints\": 0,\n      \"teamMultipliedPoints\": 0,\n      \"teamUnits\": 0,\n      \"rank\": 2,\n      \"activeUsers\": [\n        {\n          \"user\": {\n            \"id\": 2,\n            \"foldingUserName\": \"DummyUser2\",\n            \"displayName\": \"DummyUser2\",\n            \"passkey\": \"DummyPas************************\",\n            \"category\": \"NVIDIA_GPU\",\n            \"hardware\": {\n              \"id\": 2,\n              \"hardwareName\": \"DummyHardware2\",\n              \"displayName\": \"DummyHardware2\",\n              \"hardwareMake\": \"NVIDIA\",\n              \"hardwareType\": \"GPU\",\n              \"multiplier\": 2.0,\n              \"averagePpd\": 1\n            },\n            \"team\": {\n              \"id\": 2,\n              \"teamName\": \"DummyTeam2\"\n            },\n            \"userIsCaptain\": false\n          },\n          \"points\": 0,\n          \"multipliedPoints\": 0,\n          \"units\": 0,\n          \"rankInTeam\": 1\n        }\n      ],\n      \"retiredUsers\": []\n    }\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "2180",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "user_stats_trailing_slash",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1/"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"DummyUser1\",\n    \"displayName\": \"DummyUser1\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"DummyHardware1\",\n      \"displayName\": \"DummyHardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 11250,\n  \"multipliedPoints\": 11250,\n  \"units\": 7,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "585",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "stats_delete_not_allowed",
+   "compare": "status",
+   "request": {
+    "method": "DELETE",
+    "path": "/stats"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, GET, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 405
+   }
+  }
+ ],
+ "capability": "Team-competition stats for a single user: points and units taken from the Folding@Home stub, the manual (synchronous) stats-update endpoint, hardware multipliers applied to points but not units, and additive/negative/derived offset stats applied through PATCH /stats/users/{userId}."
+}

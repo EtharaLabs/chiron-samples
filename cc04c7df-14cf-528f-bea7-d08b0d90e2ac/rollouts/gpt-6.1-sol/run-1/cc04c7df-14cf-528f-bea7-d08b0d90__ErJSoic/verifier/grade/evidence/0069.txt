@@ -1,0 +1,129 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/request/MonthlyResultRequestSender.java (changed against State A) ===
+@@
+41  | import me.zodac.folding.rest.api.header.RestHeader;
+42  | import me.zodac.folding.rest.util.RestUtilConstants;
+43  | 
+   -| /**
+   -|  * Convenience class to send HTTP requests to the {@link me.zodac.folding.api.tc.result.MonthlyResult} REST endpoint.
+   -|  */
+44 +| 
+45  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+46  | public final class MonthlyResultRequestSender {
+47  | 
+48  |     private final String monthlyResultUrl;
+49  | 
+   -|     /**
+   -|      * Create an instance of {@link MonthlyResultRequestSender}.
+   -|      *
+   -|      * @param foldingUrl the root URL of the <code>/folding</code> endpoint, i.e:
+   -|      *                   <pre>http://127.0.0.1:8080/folding</pre>
+   -|      * @return the created {@link MonthlyResultRequestSender}
+   -|      */
+50 +|     
+51  |     public static MonthlyResultRequestSender createWithUrl(final String foldingUrl) {
+52  |         final String monthlyResultUrl = foldingUrl + "/results";
+53  |         return new MonthlyResultRequestSender(monthlyResultUrl);
+54  |     }
+55  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve {@link me.zodac.folding.api.tc.result.MonthlyResult} for the current year/month.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.api.tc.result.MonthlyResult} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyResult(Year, Month, String)
+   -|      */
+56 +|     
+57  |     public HttpResponse<String> getCurrentMonthlyResult() throws FoldingRestException {
+58  |         return getCurrentMonthlyResult(null);
+59  |     }
+60  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve {@link me.zodac.folding.api.tc.result.MonthlyResult} for the current year/month.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.api.tc.result.MonthlyResult} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.api.tc.result.MonthlyResult} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.api.tc.result.MonthlyResult}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyResult(Year, Month, String)
+   -|      */
+61 +|     
+62  |     public HttpResponse<String> getCurrentMonthlyResult(final String entityTag) throws FoldingRestException {
+63  |         return getMonthlyResult(DateTimeUtils.currentUtcYear(), DateTimeUtils.currentUtcMonth(), entityTag);
+64  |     }
+65  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve {@link me.zodac.folding.api.tc.result.MonthlyResult} for the given {@code year}/{@code month}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.api.tc.result.MonthlyResult} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * @param year  the {@link Year} of the {@link me.zodac.folding.api.tc.result.MonthlyResult}
+   -|      * @param month the {@link Month} of the {@link me.zodac.folding.api.tc.result.MonthlyResult}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyResult(Year, Month, String)
+   -|      */
+66 +|     
+67  |     public HttpResponse<String> getMonthlyResult(final Year year, final Month month) throws FoldingRestException {
+68  |         return getMonthlyResult(year, month, null);
+69  |     }
+70  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve {@link me.zodac.folding.api.tc.result.MonthlyResult} for the given {@code year}/{@code month}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link me.zodac.folding.api.tc.result.MonthlyResult} are based on {@link java.time.ZoneOffset#UTC}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached  {@link me.zodac.folding.api.tc.result.MonthlyResult} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param year      the {@link Year} of the {@link me.zodac.folding.api.tc.result.MonthlyResult}
+   -|      * @param month     the {@link Month} of the {@link me.zodac.folding.api.tc.result.MonthlyResult}
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.api.tc.result.MonthlyResult}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getMonthlyResult(Year, Month)
+   -|      */
+71 +|     
+72  |     public HttpResponse<String> getMonthlyResult(final Year year, final Month month, final String entityTag) throws FoldingRestException {
+73  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+74  |             .GET()
+@@
+91  |         }
+92  |     }
+93  | 
+   -|     /**
+   -|      * Sends a <b>POST</b> request to manually save the result of the <code>Team Competition</code> for the current month.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+94 +|     
+95  |     public HttpResponse<Void> manualSave() throws FoldingRestException {
+96  |         return manualSave(null, null);
+97  |     }
+98  | 
+   -|     /**
+   -|      * Sends a <b>POST</b> request to manually save the result of the <code>Team Competition</code> for the current month.
+   -|      *
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+99 +|     
+100  |     public HttpResponse<Void> manualSave(final String userName, final String password) throws FoldingRestException {
+101  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+102  |             .POST(HttpRequest.BodyPublishers.noBody())

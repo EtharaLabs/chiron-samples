@@ -1,0 +1,2874 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "body": "plain text payload",
+      "content_type": "text/plain",
+      "method": "POST",
+      "path": "/jobs/run",
+      "query": "dry=1"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "proxy-raw-body",
+   "steps": [
+    {
+     "client": "token",
+     "content_type": "text/plain",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "POST",
+     "path": "/api/v1/zeus/jobs/run",
+     "query": {
+      "dry": "1"
+     },
+     "raw": "plain text payload"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "body": "{\"job\": \"stage2\", \"retries\": 2}",
+      "content_type": "application/json",
+      "method": "POST",
+      "path": "/jobs/run",
+      "query": ""
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "proxy-json-body",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "job": "stage2",
+      "retries": 2
+     },
+     "method": "POST",
+     "path": "/api/v1/zeus/jobs/run"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "releases-all-flag",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/releases",
+     "query": {
+      "all": "1"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/releases",
+     "query": {
+      "all": ""
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests",
+        "description": null,
+        "enabled": true,
+        "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "name": "longevity-tests",
+        "pretty_name": "Longevity Tests",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/performance-tests",
+        "description": null,
+        "enabled": true,
+        "id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+        "name": "performance-tests",
+        "pretty_name": "Performance Tests",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests",
+        "description": null,
+        "enabled": true,
+        "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "name": "longevity-tests",
+        "pretty_name": "Longevity Tests",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/performance-tests",
+        "description": null,
+        "enabled": true,
+        "id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+        "name": "performance-tests",
+        "pretty_name": "Performance Tests",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "groups-by-release",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/groups",
+     "query": {
+      "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/groups",
+     "query": {
+      "all": "1",
+      "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+        "description": null,
+        "enabled": true,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "name": "longevity-100gb-12h-test",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 100GB 12h",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+        "description": null,
+        "enabled": true,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+        "name": "longevity-10gb-3h-test",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 10GB 3h",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       },
+       {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+        "description": null,
+        "enabled": true,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+        "name": "longevity-large-partition-test",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity Large Partition",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "tests-by-group",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/tests",
+     "query": {
+      "groupId": "34f73064-36d3-42e0-9bf8-17840d9eb352"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/38",
+        "build_number": 38,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-30T03:21:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "investigation_status": "in_progress",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-30T01:00:01.786Z",
+        "started_by": null,
+        "status": "failed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/23",
+        "build_number": 23,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-24T02:11:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-23T21:00:01.786Z",
+        "started_by": null,
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": "branch-2025.1",
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/38",
+        "build_number": 38,
+        "cloud_setup": null,
+        "config_files": [
+         "test-cases/longevity-100gb-12h-test.yaml"
+        ],
+        "end_time": "2026-10-30T03:21:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "investigation_status": "in_progress",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": "2025.1.1",
+        "region_name": [
+         "us-east-1"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": "778ef8b83313e10c",
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": "6.0.2",
+        "start_time": "2026-10-30T01:00:01.786Z",
+        "started_by": "test-automation",
+        "status": "failed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": "longevity-100gb-12h-test",
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "runs-limit",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/runs",
+     "query": {
+      "limit": "2"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/runs",
+     "query": {
+      "full": "true",
+      "limit": "1"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": null,
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/38",
+        "build_number": 38,
+        "cloud_setup": null,
+        "config_files": [],
+        "end_time": "2026-10-30T03:21:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+        "investigation_status": "in_progress",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": null,
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": null,
+        "region_name": [],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": null,
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": null,
+        "start_time": "2026-10-30T01:00:01.786Z",
+        "started_by": null,
+        "status": "failed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": null,
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": "enterprise",
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/23",
+        "build_number": 23,
+        "cloud_setup": null,
+        "config_files": [
+         "test-cases/longevity-100gb-12h-test.yaml"
+        ],
+        "end_time": "2026-10-24T02:11:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": "2025.1.2",
+        "region_name": [
+         "us-east-1"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": "8ba8dc9c4b558c3a",
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": "6.0.0",
+        "start_time": "2026-10-23T21:00:01.786Z",
+        "started_by": "jenkins-bot",
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": "longevity-100gb-12h-test",
+        "version_source": null,
+        "yaml_test_duration": null
+       },
+       {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": "master",
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+        "build_number": 14,
+        "cloud_setup": null,
+        "config_files": [
+         "test-cases/longevity-100gb-12h-test.yaml"
+        ],
+        "end_time": "2026-10-13T12:34:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": "2025.1.4",
+        "region_name": [
+         "us-east-1"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": "0c32bacab063aae9",
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": "6.1.9",
+        "start_time": "2026-10-13T11:00:01.786Z",
+        "started_by": "dev-user",
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": "longevity-100gb-12h-test",
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "runs-additional-repeated",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/runs",
+     "query": [
+      [
+       "limit",
+       "1"
+      ],
+      [
+       "additionalRuns[]",
+       "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      ],
+      [
+       "additionalRuns[]",
+       "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "events": {
+        "0a30146d-9610-4b76-a172-84b8c20c357b": "Investigation status changed to investigated",
+        "0ecaba0b-6d93-49e6-8747-87eae3d63cbc": "Status changed to passed",
+        "14953598-7aaa-4c87-855e-7bb8115e53bf": "Status changed to failed",
+        "173962d9-85ba-4a98-ad32-b39b9ed51bdc": "Investigation status changed to in_progress",
+        "207f15a9-284f-415a-b264-06ed845da92a": "Status changed to passed",
+        "299b4b67-4ada-48de-8805-61a2060244c9": "Investigation status changed to in_progress",
+        "36c1c791-f03a-42bc-ab07-b6fbbca20fff": "Investigation status changed to in_progress",
+        "3d5c4a5b-e562-4b41-bf87-9ad50d01d84b": "Investigation status changed to investigated",
+        "3edb0497-be40-4624-8944-55d29d14bba4": "Investigation status changed to investigated",
+        "44376361-5684-4077-83d3-2821a4142e52": "Investigation status changed to investigated",
+        "45ec9724-70f8-429b-8997-bd09f17d4741": "Status changed to failed",
+        "4e495648-ff55-425e-9333-4e1b2a762192": "Investigation status changed to investigated",
+        "523d8ac4-4ae4-4abf-8d5c-77966336aed2": "Status changed to error",
+        "58c0a52c-170f-4d35-975e-bce597d01c50": "Status changed to passed",
+        "5b62f041-7e4e-44c8-96d9-da2f34ba5ec7": "Status changed to error",
+        "5c42b8e0-d035-4c2e-b36a-bb8dc7ce464e": "Status changed to aborted",
+        "664b2af1-db8f-4818-803e-7c7151d8f135": "Status changed to failed",
+        "6b5e428b-5cac-4bc8-8ecf-bc734f5c86a6": "Investigation status changed to investigated",
+        "7434f891-9d89-4485-87b0-1252dece1e11": "Status changed to aborted",
+        "74402cf1-47c1-4a8f-9010-902830a5b921": "Status changed to passed",
+        "784c12cc-a3a7-4047-b66d-08e64b2bbf2d": "Status changed to passed",
+        "83518cb4-44fa-446e-877c-5ee6c0cad066": "Status changed to aborted",
+        "865b5506-6e75-494e-bd6e-8f16b7242ff9": "Investigation status changed to in_progress",
+        "92f5d68a-5039-4d75-970d-1ce78a1fa1e2": "Status changed to failed",
+        "9440ce0d-ff42-4129-b8dd-be5f1b22df3a": "Status changed to aborted",
+        "9b4eb6a4-310f-40b2-a26e-06e5fbe1dd2d": "Status changed to error",
+        "a12a5ead-b897-4a3f-9454-9e7f37f710cc": "Status changed to passed",
+        "a4fea886-6412-47c3-84f4-98039cb9d961": "Status changed to aborted",
+        "a5aa5f67-9513-4e50-b764-f160ca0ed873": "Status changed to error",
+        "a70b1208-a0c3-4b04-b109-fa1d4604fed6": "Status changed to passed",
+        "c5c9f95c-719e-4793-a813-2e6e4e1ae6ce": "Status changed to passed",
+        "ca8587b7-0d9c-472d-b514-bda70cdef953": "Investigation status changed to in_progress",
+        "ceb1ff3f-1627-4d95-8fd0-f315501de0e2": "Status changed to passed",
+        "d107a691-4875-4a73-90cd-08134fff23aa": "Status changed to passed",
+        "d166e3f2-ef26-4736-b790-22d8b469c6e5": "Status changed to passed",
+        "d292d427-5204-4eef-8036-9f3bda3bfe8d": "Status changed to aborted",
+        "d96647f9-70c6-4441-b697-b87022ff0a80": "Status changed to failed",
+        "d9cb6019-a1db-4097-baa2-1f802eba6fe2": "Status changed to error",
+        "da818bbe-32d4-4ea4-accc-a37aafe6d089": "Status changed to passed",
+        "dd1104aa-9369-4a51-96f3-80297b4c5822": "Status changed to error",
+        "e7886ec1-db3c-4911-ac98-dbd0f5d2d782": "Investigation status changed to in_progress",
+        "ffd64efb-33cc-4379-8f2e-a07d2d2b3d97": "Status changed to failed"
+       },
+       "raw_events": [
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-01T16:03:08.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "ceb1ff3f-1627-4d95-8fd0-f315501de0e2",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "55708022-e580-4ac1-ac21-4b3847627cb1",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-03T04:03:57.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "207f15a9-284f-415a-b264-06ed845da92a",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "d03d983d-0b76-45dc-8281-8d7509aa7a4f",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-03T21:02:18.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "784c12cc-a3a7-4047-b66d-08e64b2bbf2d",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "47f1dd3a-f61e-4f7d-b38c-dd0e84c368ed",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-05T03:02:53.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "d107a691-4875-4a73-90cd-08134fff23aa",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4cedb62c-ed99-490b-bc97-c01c9a0ea259",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to aborted\", \"old_status\": \"created\", \"new_status\": \"aborted\"}",
+         "created_at": "2026-10-05T16:04:07.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "7434f891-9d89-4485-87b0-1252dece1e11",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "7c0d857d-f3b3-40c4-b06b-73ecb33bedb3",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-06T00:02:38.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "0ecaba0b-6d93-49e6-8747-87eae3d63cbc",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "2e66f449-da49-48ea-b93a-c4d9ed8c43fc",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to aborted\", \"old_status\": \"created\", \"new_status\": \"aborted\"}",
+         "created_at": "2026-10-06T12:03:19.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "d292d427-5204-4eef-8036-9f3bda3bfe8d",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "bf5b7b98-60ac-41dc-ba51-6125fa1aacfd",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to error\", \"old_status\": \"created\", \"new_status\": \"error\"}",
+         "created_at": "2026-10-06T15:04:10.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "dd1104aa-9369-4a51-96f3-80297b4c5822",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to investigated\", \"old_status\": \"not_investigated\", \"new_status\": \"investigated\"}",
+         "created_at": "2026-10-06T15:57:01.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "44376361-5684-4077-83d3-2821a4142e52",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to failed\", \"old_status\": \"created\", \"new_status\": \"failed\"}",
+         "created_at": "2026-10-08T04:02:49.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "14953598-7aaa-4c87-855e-7bb8115e53bf",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "15f99936-e15d-4e39-bd61-d282df388af2",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to in_progress\", \"old_status\": \"not_investigated\", \"new_status\": \"in_progress\"}",
+         "created_at": "2026-10-08T04:26:01.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "173962d9-85ba-4a98-ad32-b39b9ed51bdc",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "15f99936-e15d-4e39-bd61-d282df388af2",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-09T01:02:15.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "a12a5ead-b897-4a3f-9454-9e7f37f710cc",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "d92082f8-3d6e-4433-85d9-a340182f31a5",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-09T16:03:36.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "d166e3f2-ef26-4736-b790-22d8b469c6e5",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4922f0a3-0ea3-49eb-982c-d4b2bb01b5bf",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to error\", \"old_status\": \"created\", \"new_status\": \"error\"}",
+         "created_at": "2026-10-11T13:02:10.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "a5aa5f67-9513-4e50-b764-f160ca0ed873",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "862e8783-10de-4a73-ab52-8619c09772e3",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to investigated\", \"old_status\": \"not_investigated\", \"new_status\": \"investigated\"}",
+         "created_at": "2026-10-11T13:41:01.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "6b5e428b-5cac-4bc8-8ecf-bc734f5c86a6",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "862e8783-10de-4a73-ab52-8619c09772e3",
+         "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to error\", \"old_status\": \"created\", \"new_status\": \"error\"}",
+         "created_at": "2026-10-12T09:03:49.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "d9cb6019-a1db-4097-baa2-1f802eba6fe2",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "75f1daa4-466e-46a3-b3c9-57a9983ccd97",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to investigated\", \"old_status\": \"not_investigated\", \"new_status\": \"investigated\"}",
+         "created_at": "2026-10-12T09:49:01.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "3edb0497-be40-4624-8944-55d29d14bba4",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "75f1daa4-466e-46a3-b3c9-57a9983ccd97",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-13T11:00:20.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "a70b1208-a0c3-4b04-b109-fa1d4604fed6",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-14T03:00:59.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "74402cf1-47c1-4a8f-9010-902830a5b921",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "8e98b95a-00f1-4c84-a60b-cbea17e380ca",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to aborted\", \"old_status\": \"created\", \"new_status\": \"aborted\"}",
+         "created_at": "2026-10-14T15:01:00.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "83518cb4-44fa-446e-877c-5ee6c0cad066",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "a162427d-c8c2-4364-b980-7cc1c355c6db",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-17T11:02:59.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "c5c9f95c-719e-4793-a813-2e6e4e1ae6ce",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "0f3cfe25-fbf8-4fd1-b8ee-797ae65876fb",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to aborted\", \"old_status\": \"created\", \"new_status\": \"aborted\"}",
+         "created_at": "2026-10-17T11:03:13.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "5c42b8e0-d035-4c2e-b36a-bb8dc7ce464e",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "f37d6705-0845-4ff8-8b58-a0b00ef0a58b",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to aborted\", \"old_status\": \"created\", \"new_status\": \"aborted\"}",
+         "created_at": "2026-10-18T00:00:52.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "9440ce0d-ff42-4129-b8dd-be5f1b22df3a",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "f63fbff4-ee9e-48ac-bfc4-cb4960520bb9",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to aborted\", \"old_status\": \"created\", \"new_status\": \"aborted\"}",
+         "created_at": "2026-10-18T05:01:23.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "a4fea886-6412-47c3-84f4-98039cb9d961",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "b94e428f-c2aa-4845-b48e-20e260883086",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to failed\", \"old_status\": \"created\", \"new_status\": \"failed\"}",
+         "created_at": "2026-10-18T05:03:41.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "92f5d68a-5039-4d75-970d-1ce78a1fa1e2",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to in_progress\", \"old_status\": \"not_investigated\", \"new_status\": \"in_progress\"}",
+         "created_at": "2026-10-18T05:05:01.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "e7886ec1-db3c-4911-ac98-dbd0f5d2d782",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-23T21:01:44.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "58c0a52c-170f-4d35-975e-bce597d01c50",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to failed\", \"old_status\": \"created\", \"new_status\": \"failed\"}",
+         "created_at": "2026-10-24T10:02:45.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "ffd64efb-33cc-4379-8f2e-a07d2d2b3d97",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "370c16e1-de0f-4837-8b77-ce118936f4c3",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to in_progress\", \"old_status\": \"not_investigated\", \"new_status\": \"in_progress\"}",
+         "created_at": "2026-10-24T10:18:01.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "ca8587b7-0d9c-472d-b514-bda70cdef953",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "370c16e1-de0f-4837-8b77-ce118936f4c3",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to error\", \"old_status\": \"created\", \"new_status\": \"error\"}",
+         "created_at": "2026-10-25T22:00:36.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "523d8ac4-4ae4-4abf-8d5c-77966336aed2",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "44aebc46-6fbb-4fc1-9c05-b85ab8f92451",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to investigated\", \"old_status\": \"not_investigated\", \"new_status\": \"investigated\"}",
+         "created_at": "2026-10-25T22:25:01.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "3d5c4a5b-e562-4b41-bf87-9ad50d01d84b",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "44aebc46-6fbb-4fc1-9c05-b85ab8f92451",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to failed\", \"old_status\": \"created\", \"new_status\": \"failed\"}",
+         "created_at": "2026-10-28T19:03:08.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "45ec9724-70f8-429b-8997-bd09f17d4741",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4ed315b6-fe05-476d-bc5f-665d401ef6f3",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to in_progress\", \"old_status\": \"not_investigated\", \"new_status\": \"in_progress\"}",
+         "created_at": "2026-10-28T20:00:01.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "36c1c791-f03a-42bc-ab07-b6fbbca20fff",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4ed315b6-fe05-476d-bc5f-665d401ef6f3",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to failed\", \"old_status\": \"created\", \"new_status\": \"failed\"}",
+         "created_at": "2026-10-29T22:02:39.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "664b2af1-db8f-4818-803e-7c7151d8f135",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "c259b20d-2617-438f-b66c-848279b470eb",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to in_progress\", \"old_status\": \"not_investigated\", \"new_status\": \"in_progress\"}",
+         "created_at": "2026-10-29T22:28:01.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "865b5506-6e75-494e-bd6e-8f16b7242ff9",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "c259b20d-2617-438f-b66c-848279b470eb",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to failed\", \"old_status\": \"created\", \"new_status\": \"failed\"}",
+         "created_at": "2026-10-30T01:02:32.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "d96647f9-70c6-4441-b697-b87022ff0a80",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to in_progress\", \"old_status\": \"not_investigated\", \"new_status\": \"in_progress\"}",
+         "created_at": "2026-10-30T01:32:01.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "299b4b67-4ada-48de-8805-61a2060244c9",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to error\", \"old_status\": \"created\", \"new_status\": \"error\"}",
+         "created_at": "2026-10-30T03:03:28.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "9b4eb6a4-310f-40b2-a26e-06e5fbe1dd2d",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "02933231-7a58-48e2-8847-aa2a26b869fa",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to investigated\", \"old_status\": \"not_investigated\", \"new_status\": \"investigated\"}",
+         "created_at": "2026-10-30T03:40:01.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "0a30146d-9610-4b76-a172-84b8c20c357b",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "02933231-7a58-48e2-8847-aa2a26b869fa",
+         "test_id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-30T15:03:13.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "da818bbe-32d4-4ea4-accc-a37aafe6d089",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "e8b0c1d2-500a-4846-a197-8c74625c41ef",
+         "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Status changed to error\", \"old_status\": \"created\", \"new_status\": \"error\"}",
+         "created_at": "2026-10-31T04:04:51.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "5b62f041-7e4e-44c8-96d9-da2f34ba5ec7",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "67015002-372a-43bf-b9ac-65e38a592c30",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        },
+        {
+         "body": "{\"message\": \"Investigation status changed to investigated\", \"old_status\": \"not_investigated\", \"new_status\": \"investigated\"}",
+         "created_at": "2026-10-31T04:57:01.786Z",
+         "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+         "id": "4e495648-ff55-425e-9333-4e1b2a762192",
+         "kind": "ARGUS_TEST_RUN_INVESTIGATION_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "67015002-372a-43bf-b9ac-65e38a592c30",
+         "test_id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        }
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "activity-param",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/activity",
+     "query": {
+      "releaseName": "seed-release"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "aborted": 6,
+       "created": 0,
+       "disabled": false,
+       "error": 0,
+       "failed": 0,
+       "groups": {
+        "34f73064-36d3-42e0-9bf8-17840d9eb352": {
+         "aborted": 3,
+         "created": 0,
+         "disabled": false,
+         "error": 0,
+         "failed": 0,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         "lastInvestigationStatus": "not_investigated",
+         "lastStatus": "aborted",
+         "not_investigated": {
+          "aborted": 3
+         },
+         "not_planned": 0,
+         "not_run": 0,
+         "passed": 0,
+         "running": 0,
+         "test_error": 0,
+         "tests": {
+          "3ed77c66-c3b8-404f-8f43-266b75771178": {
+           "buildId": "seed-release/longevity-tests/longevity-100gb-12h-test",
+           "buildNumber": 51,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 51,
+             "comments": [],
+             "end_time": "2026-10-17T17:00:01.786Z",
+             "id": "f37d6705-0845-4ff8-8b58-a0b00ef0a58b",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-17T11:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 43,
+             "comments": [],
+             "end_time": "2026-10-06T20:48:01.786Z",
+             "id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+               "issue_id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+               "key": "SEED-88888",
+               "labels": [
+                {
+                 "color": "d93f0b",
+                 "description": "Performance regression",
+                 "id": 11,
+                 "name": "perf-regression"
+                }
+               ],
+               "permalink": "https://fake-org.atlassian.net/browse/SEED-88888",
+               "project": "SEED",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+               "state": "open",
+               "subtype": "jira",
+               "summary": "Performance regression in write path after compaction refactor",
+               "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+               "type": "jira",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-06T15:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 38,
+             "comments": [],
+             "end_time": "2026-10-30T03:21:01.786Z",
+             "id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [
+                "fake-dev"
+               ],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+               "issue_id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+               "key": "SEED-99999",
+               "labels": [
+                {
+                 "color": "fbca04",
+                 "description": "Flaky test",
+                 "id": 10,
+                 "name": "flaky-test"
+                }
+               ],
+               "permalink": "https://fake-org.atlassian.net/browse/SEED-99999",
+               "project": "SEED",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+               "state": "in progress",
+               "subtype": "jira",
+               "summary": "Investigate flaky longevity test failures in CI",
+               "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+               "type": "jira",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-30T01:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 23,
+             "comments": [],
+             "end_time": "2026-10-24T02:11:01.786Z",
+             "id": "0f8778e9-7ebb-4f6d-8a92-401eeaa6911d",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-23T21:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-100gb-12h-test",
+             "build_number": 14,
+             "comments": [],
+             "end_time": "2026-10-13T12:34:01.786Z",
+             "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-13T11:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-17T11:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+            "name": "longevity-100gb-12h-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity 100GB 12h",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "437f882f-857e-4e8e-abf3-18a1e2d60bbd": {
+           "buildId": "seed-release/longevity-tests/longevity-10gb-3h-test",
+           "buildNumber": 50,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 50,
+             "comments": [],
+             "end_time": "2026-10-06T13:13:01.786Z",
+             "id": "bf5b7b98-60ac-41dc-ba51-6125fa1aacfd",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-06T12:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 48,
+             "comments": [],
+             "end_time": "2026-10-11T13:42:01.786Z",
+             "id": "862e8783-10de-4a73-ab52-8619c09772e3",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "816b0515-b20b-41b9-9513-8a19c828bd9f",
+               "issue_id": "816b0515-b20b-41b9-9513-8a19c828bd9f",
+               "labels": [
+                {
+                 "color": "e4e669",
+                 "description": "Test infrastructure issue",
+                 "id": 2,
+                 "name": "test-failure"
+                },
+                {
+                 "color": "0075ca",
+                 "description": "Longevity test related",
+                 "id": 3,
+                 "name": "longevity"
+                }
+               ],
+               "number": 5432,
+               "owner": "fake-org",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "repo": "fake-cluster-tests",
+               "run_id": "862e8783-10de-4a73-ab52-8619c09772e3",
+               "state": "open",
+               "subtype": "github",
+               "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+               "title": "Stress command timeout on large partitions",
+               "type": "issues",
+               "url": "https://github.com/fake-org/fake-cluster-tests/issues/5432",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-11T13:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 32,
+             "comments": [],
+             "end_time": "2026-10-08T05:18:01.786Z",
+             "id": "15f99936-e15d-4e39-bd61-d282df388af2",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [
+                {
+                 "html_url": "https://github.com/fake-dev",
+                 "login": "fake-dev"
+                }
+               ],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "715d3b1a-7dbc-4682-8c3e-3e78a1c49fda",
+               "issue_id": "715d3b1a-7dbc-4682-8c3e-3e78a1c49fda",
+               "labels": [
+                {
+                 "color": "d73a4a",
+                 "description": "Something isn't working",
+                 "id": 1,
+                 "name": "bug"
+                }
+               ],
+               "number": 19001,
+               "owner": "fake-org",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "repo": "fake-db",
+               "run_id": "15f99936-e15d-4e39-bd61-d282df388af2",
+               "state": "open",
+               "subtype": "github",
+               "test_id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+               "title": "Decommission fails intermittently under high load",
+               "type": "issues",
+               "url": "https://github.com/fake-org/fake-db/issues/19001",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-08T04:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 27,
+             "comments": [],
+             "end_time": "2026-10-05T04:54:01.786Z",
+             "id": "4cedb62c-ed99-490b-bc97-c01c9a0ea259",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-05T03:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-10gb-3h-test",
+             "build_number": 15,
+             "comments": [],
+             "end_time": "2026-10-01T19:53:01.786Z",
+             "id": "55708022-e580-4ac1-ac21-4b3847627cb1",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-01T16:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-06T12:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+            "name": "longevity-10gb-3h-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity 10GB 3h",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "9b79cfa4-33d6-49c2-bd27-30733cf19490": {
+           "buildId": "seed-release/longevity-tests/longevity-large-partition-test",
+           "buildNumber": 57,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 57,
+             "comments": [],
+             "end_time": "2026-10-18T03:40:01.786Z",
+             "id": "f63fbff4-ee9e-48ac-bfc4-cb4960520bb9",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-18T00:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 40,
+             "comments": [],
+             "end_time": "2026-10-25T23:01:01.786Z",
+             "id": "44aebc46-6fbb-4fc1-9c05-b85ab8f92451",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-25T22:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 34,
+             "comments": [],
+             "end_time": "2026-10-18T08:41:01.786Z",
+             "id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+             "issues": [
+              {
+               "added_on": "<now>",
+               "assignees": [
+                "fake-dev"
+               ],
+               "event_id": null,
+               "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+               "id": "19ab6fae-a205-4dff-8504-53d25896f2b9",
+               "issue_id": "19ab6fae-a205-4dff-8504-53d25896f2b9",
+               "key": "SEED-77777",
+               "labels": [
+                {
+                 "color": "0e8a16",
+                 "description": "Topology operations",
+                 "id": 12,
+                 "name": "topology"
+                },
+                {
+                 "color": "d73a4a",
+                 "description": "Something isn't working",
+                 "id": 1,
+                 "name": "bug"
+                }
+               ],
+               "permalink": "https://fake-org.atlassian.net/browse/SEED-77777",
+               "project": "SEED",
+               "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+               "run_id": "7a85def9-2e64-48a3-a76b-31018f761dbb",
+               "state": "in review",
+               "subtype": "jira",
+               "summary": "Node decommission timeout under mixed workloads",
+               "test_id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+               "type": "jira",
+               "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+              }
+             ],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-18T05:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 28,
+             "comments": [],
+             "end_time": "2026-10-30T16:55:01.786Z",
+             "id": "e8b0c1d2-500a-4846-a197-8c74625c41ef",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-30T15:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/longevity-tests/longevity-large-partition-test",
+             "build_number": 11,
+             "comments": [],
+             "end_time": "2026-10-14T05:19:01.786Z",
+             "id": "8e98b95a-00f1-4c84-a60b-cbea17e380ca",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-14T03:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-18T00:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+            "name": "longevity-large-partition-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity Large Partition",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          }
+         },
+         "total": 3
+        },
+        "d2bdc3c8-3303-44f5-b95b-50defbc2aa96": {
+         "aborted": 3,
+         "created": 0,
+         "disabled": false,
+         "error": 0,
+         "failed": 0,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/performance-tests",
+          "description": null,
+          "enabled": true,
+          "id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+          "name": "performance-tests",
+          "pretty_name": "Performance Tests",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         "lastInvestigationStatus": "not_investigated",
+         "lastStatus": "aborted",
+         "not_investigated": {
+          "aborted": 3
+         },
+         "not_planned": 0,
+         "not_run": 0,
+         "passed": 0,
+         "running": 0,
+         "test_error": 0,
+         "tests": {
+          "956122ec-45e2-441d-a87f-2df3e3d7ce70": {
+           "buildId": "seed-release/performance-tests/perf-regression-latency-test",
+           "buildNumber": 56,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-regression-latency-test",
+             "build_number": 56,
+             "comments": [],
+             "end_time": "2026-10-14T16:39:01.786Z",
+             "id": "a162427d-c8c2-4364-b980-7cc1c355c6db",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-14T15:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-regression-latency-test",
+             "build_number": 49,
+             "comments": [],
+             "end_time": "2026-10-30T08:00:01.786Z",
+             "id": "02933231-7a58-48e2-8847-aa2a26b869fa",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-30T03:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-regression-latency-test",
+             "build_number": 35,
+             "comments": [],
+             "end_time": "2026-10-24T14:37:01.786Z",
+             "id": "370c16e1-de0f-4837-8b77-ce118936f4c3",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-24T10:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-regression-latency-test",
+             "build_number": 20,
+             "comments": [],
+             "end_time": "2026-10-09T02:27:01.786Z",
+             "id": "d92082f8-3d6e-4433-85d9-a340182f31a5",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-09T01:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-regression-latency-test",
+             "build_number": 17,
+             "comments": [],
+             "end_time": "2026-10-03T06:21:01.786Z",
+             "id": "d03d983d-0b76-45dc-8281-8d7509aa7a4f",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-03T04:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-14T15:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/performance-tests/perf-regression-latency-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+            "id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+            "name": "perf-regression-latency-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Performance Regression Latency",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "ceee1421-79db-4f1f-9eee-573968bb4ee6": {
+           "buildId": "seed-release/performance-tests/perf-throughput-test",
+           "buildNumber": 58,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-throughput-test",
+             "build_number": 58,
+             "comments": [],
+             "end_time": "2026-10-05T19:54:01.786Z",
+             "id": "7c0d857d-f3b3-40c4-b06b-73ecb33bedb3",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-05T16:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-throughput-test",
+             "build_number": 40,
+             "comments": [],
+             "end_time": "2026-10-31T06:55:01.786Z",
+             "id": "67015002-372a-43bf-b9ac-65e38a592c30",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-31T04:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-throughput-test",
+             "build_number": 37,
+             "comments": [],
+             "end_time": "2026-10-30T01:05:01.786Z",
+             "id": "c259b20d-2617-438f-b66c-848279b470eb",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-29T22:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-throughput-test",
+             "build_number": 21,
+             "comments": [],
+             "end_time": "2026-10-09T17:17:01.786Z",
+             "id": "4922f0a3-0ea3-49eb-982c-d4b2bb01b5bf",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-09T16:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-throughput-test",
+             "build_number": 11,
+             "comments": [],
+             "end_time": "2026-10-06T04:07:01.786Z",
+             "id": "2e66f449-da49-48ea-b93a-c4d9ed8c43fc",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-06T00:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-05T16:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/performance-tests/perf-throughput-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+            "id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+            "name": "perf-throughput-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Performance Throughput",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "d62928bf-72ec-44c9-92ee-385ba917027c": {
+           "buildId": "seed-release/performance-tests/perf-large-partition-test",
+           "buildNumber": 56,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-large-partition-test",
+             "build_number": 56,
+             "comments": [],
+             "end_time": "2026-10-18T08:41:01.786Z",
+             "id": "b94e428f-c2aa-4845-b48e-20e260883086",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-18T05:00:01.786Z",
+             "status": "aborted"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-large-partition-test",
+             "build_number": 40,
+             "comments": [],
+             "end_time": "2026-10-12T14:31:01.786Z",
+             "id": "75f1daa4-466e-46a3-b3c9-57a9983ccd97",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-12T09:00:01.786Z",
+             "status": "error"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-large-partition-test",
+             "build_number": 37,
+             "comments": [],
+             "end_time": "2026-10-28T22:06:01.786Z",
+             "id": "4ed315b6-fe05-476d-bc5f-665d401ef6f3",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-28T19:00:01.786Z",
+             "status": "failed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-large-partition-test",
+             "build_number": 20,
+             "comments": [],
+             "end_time": "2026-10-03T21:39:01.786Z",
+             "id": "47f1dd3a-f61e-4f7d-b38c-dd0e84c368ed",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-03T21:00:01.786Z",
+             "status": "passed"
+            },
+            {
+             "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+             "build_job_name": "seed-release/performance-tests/perf-large-partition-test",
+             "build_number": 16,
+             "comments": [],
+             "end_time": "2026-10-17T12:49:01.786Z",
+             "id": "0f3cfe25-fbf8-4fd1-b8ee-797ae65876fb",
+             "issues": [],
+             "nemesis_stats": null,
+             "setup": null,
+             "start_time": "2026-10-17T11:00:01.786Z",
+             "status": "passed"
+            }
+           ],
+           "start_time": "2026-10-18T05:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/performance-tests/perf-large-partition-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+            "id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+            "name": "perf-large-partition-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Performance Large Partition",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          }
+         },
+         "total": 3
+        }
+       },
+       "hasBugReport": false,
+       "ignored": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "in_progress": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "investigated": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "lastInvestigationStatus": "not_investigated",
+       "lastStatus": "not_investigated",
+       "not_investigated": {
+        "aborted": 6,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "not_planned": 0,
+       "not_run": 0,
+       "passed": 0,
+       "perpetual": false,
+       "release": {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       },
+       "running": 0,
+       "test_error": 0,
+       "total": 6
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "aborted": 6,
+       "created": 0,
+       "disabled": false,
+       "error": 0,
+       "failed": 0,
+       "groups": {
+        "34f73064-36d3-42e0-9bf8-17840d9eb352": {
+         "aborted": 3,
+         "created": 0,
+         "disabled": false,
+         "error": 0,
+         "failed": 0,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/longevity-tests",
+          "description": null,
+          "enabled": true,
+          "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "name": "longevity-tests",
+          "pretty_name": "Longevity Tests",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         "lastInvestigationStatus": "not_investigated",
+         "lastStatus": "aborted",
+         "not_investigated": {
+          "aborted": 3
+         },
+         "not_planned": 0,
+         "not_run": 0,
+         "passed": 0,
+         "running": 0,
+         "test_error": 0,
+         "tests": {
+          "3ed77c66-c3b8-404f-8f43-266b75771178": {
+           "buildId": "seed-release/longevity-tests/longevity-100gb-12h-test",
+           "buildNumber": null,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [],
+           "start_time": "2026-10-17T11:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+            "name": "longevity-100gb-12h-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity 100GB 12h",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "437f882f-857e-4e8e-abf3-18a1e2d60bbd": {
+           "buildId": "seed-release/longevity-tests/longevity-10gb-3h-test",
+           "buildNumber": null,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [],
+           "start_time": "2026-10-06T12:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-10gb-3h-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-10gb-3h-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "437f882f-857e-4e8e-abf3-18a1e2d60bbd",
+            "name": "longevity-10gb-3h-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity 10GB 3h",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "9b79cfa4-33d6-49c2-bd27-30733cf19490": {
+           "buildId": "seed-release/longevity-tests/longevity-large-partition-test",
+           "buildNumber": null,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [],
+           "start_time": "2026-10-18T00:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/longevity-tests/longevity-large-partition-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-large-partition-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+            "id": "9b79cfa4-33d6-49c2-bd27-30733cf19490",
+            "name": "longevity-large-partition-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Longevity Large Partition",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          }
+         },
+         "total": 3
+        },
+        "d2bdc3c8-3303-44f5-b95b-50defbc2aa96": {
+         "aborted": 3,
+         "created": 0,
+         "disabled": false,
+         "error": 0,
+         "failed": 0,
+         "group": {
+          "assignee": [],
+          "build_system_id": "seed-release/performance-tests",
+          "description": null,
+          "enabled": true,
+          "id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+          "name": "performance-tests",
+          "pretty_name": "Performance Tests",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+         },
+         "lastInvestigationStatus": "not_investigated",
+         "lastStatus": "aborted",
+         "not_investigated": {
+          "aborted": 3
+         },
+         "not_planned": 0,
+         "not_run": 0,
+         "passed": 0,
+         "running": 0,
+         "test_error": 0,
+         "tests": {
+          "956122ec-45e2-441d-a87f-2df3e3d7ce70": {
+           "buildId": "seed-release/performance-tests/perf-regression-latency-test",
+           "buildNumber": null,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [],
+           "start_time": "2026-10-14T15:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/performance-tests/perf-regression-latency-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-regression-latency-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+            "id": "956122ec-45e2-441d-a87f-2df3e3d7ce70",
+            "name": "perf-regression-latency-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Performance Regression Latency",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "ceee1421-79db-4f1f-9eee-573968bb4ee6": {
+           "buildId": "seed-release/performance-tests/perf-throughput-test",
+           "buildNumber": null,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [],
+           "start_time": "2026-10-05T16:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/performance-tests/perf-throughput-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-throughput-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+            "id": "ceee1421-79db-4f1f-9eee-573968bb4ee6",
+            "name": "perf-throughput-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Performance Throughput",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          },
+          "d62928bf-72ec-44c9-92ee-385ba917027c": {
+           "buildId": "seed-release/performance-tests/perf-large-partition-test",
+           "buildNumber": null,
+           "hasBugReport": false,
+           "hasComments": false,
+           "investigation_status": "not_investigated",
+           "last_runs": [],
+           "start_time": "2026-10-18T05:00:01.786Z",
+           "status": "aborted",
+           "test": {
+            "assignee": [],
+            "build_system_id": "seed-release/performance-tests/perf-large-partition-test",
+            "build_system_url": "http://jenkins.localhost/job/seed-release/performance-tests/perf-large-partition-test",
+            "description": null,
+            "enabled": true,
+            "group_id": "d2bdc3c8-3303-44f5-b95b-50defbc2aa96",
+            "id": "d62928bf-72ec-44c9-92ee-385ba917027c",
+            "name": "perf-large-partition-test",
+            "plugin_name": "scylla-cluster-tests",
+            "plugin_subtype": null,
+            "pretty_name": "Performance Large Partition",
+            "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+           }
+          }
+         },
+         "total": 3
+        }
+       },
+       "hasBugReport": false,
+       "ignored": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "in_progress": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "investigated": {
+        "aborted": 0,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "lastInvestigationStatus": "not_investigated",
+       "lastStatus": "not_investigated",
+       "not_investigated": {
+        "aborted": 6,
+        "created": 0,
+        "error": 0,
+        "failed": 0,
+        "not_planned": 0,
+        "not_run": 0,
+        "passed": 0,
+        "running": 0,
+        "test_error": 0
+       },
+       "not_planned": 0,
+       "not_run": 0,
+       "passed": 0,
+       "perpetual": false,
+       "release": {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       },
+       "running": 0,
+       "test_error": 0,
+       "total": 6
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "stats-int-flags",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/stats/v2",
+     "query": {
+      "force": "1",
+      "limited": "0",
+      "release": "seed-release"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/stats/v2",
+     "query": {
+      "force": "0",
+      "includeNoVersion": "0",
+      "limited": "1",
+      "release": "seed-release"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "envelope_status": "error",
+     "exception": "RequestValidationError",
+     "status": 200
+    }
+   ],
+   "id": "json-without-content-type",
+   "profile": "validation",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "POST",
+     "path": "/api/v1/release/schedules/comment/update",
+     "raw": "{\"releaseId\": \"feb3dc2e-0397-418b-a980-ddd8061bb847\", \"groupId\": \"34f73064-36d3-42e0-9bf8-17840d9eb352\", \"testId\": \"3ed77c66-c3b8-404f-8f43-266b75771178\", \"newComment\": \"x\"}"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "groupId": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "newComment": "planner note",
+       "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "testId": "3ed77c66-c3b8-404f-8f43-266b75771178"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": "planner note",
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "json-body-planner-comment",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "groupId": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+      "newComment": "planner note",
+      "releaseId": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+      "testId": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     },
+     "method": "POST",
+     "path": "/api/v1/release/schedules/comment/update"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/planner/comment/get/test",
+     "query": {
+      "id": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/profile/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/profile/\">/profile/</a>. If not, click the link."
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "0a11ce00-0000-4000-8000-000000000001": {
+        "email": "alice@argus.test",
+        "full_name": "Alice Renamed",
+        "id": "0a11ce00-0000-4000-8000-000000000001",
+        "picture_id": null,
+        "username": "alice"
+       },
+       "0a11ce00-0000-4000-8000-000000000002": {
+        "email": "manny@argus.test",
+        "full_name": "Manny Manager",
+        "id": "0a11ce00-0000-4000-8000-000000000002",
+        "picture_id": null,
+        "username": "manny"
+       },
+       "f67d055a-dc67-49a9-b4c4-36760d5389e5": {
+        "email": "admin@localhost",
+        "full_name": "Admin User",
+        "id": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "picture_id": null,
+        "username": "admin"
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "form-post-profile-name",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "form": {
+      "new_name": "Alice Renamed"
+     },
+     "method": "POST",
+     "path": "/profile/update/name"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/api/v1/users"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "added_on": "<now>",
+        "assignees": [
+         "fake-dev"
+        ],
+        "id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+        "key": "SEED-99999",
+        "labels": [
+         {
+          "color": "fbca04",
+          "description": "Flaky test",
+          "id": 10,
+          "name": "flaky-test"
+         }
+        ],
+        "links": [
+         {
+          "added_on": "<now>",
+          "event_id": null,
+          "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "issue_id": "6229913a-7ccd-4f3e-bcb6-17affd35c8c4",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "run_id": "22145c0f-8c80-4774-86b8-2caa899590f1",
+          "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+          "type": "jira",
+          "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         }
+        ],
+        "permalink": "https://fake-org.atlassian.net/browse/SEED-99999",
+        "project": "SEED",
+        "state": "in progress",
+        "subtype": "jira",
+        "summary": "Investigate flaky longevity test failures in CI",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       },
+       {
+        "added_on": "<now>",
+        "assignees": [],
+        "id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+        "key": "SEED-88888",
+        "labels": [
+         {
+          "color": "d93f0b",
+          "description": "Performance regression",
+          "id": 11,
+          "name": "perf-regression"
+         }
+        ],
+        "links": [
+         {
+          "added_on": "<now>",
+          "event_id": null,
+          "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "issue_id": "a0ab4002-6a51-462f-8306-c7c59bcbed98",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "run_id": "cd580d2f-ffba-4b89-a3c6-5f2dc036ee09",
+          "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+          "type": "jira",
+          "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         }
+        ],
+        "permalink": "https://fake-org.atlassian.net/browse/SEED-88888",
+        "project": "SEED",
+        "state": "open",
+        "subtype": "jira",
+        "summary": "Performance regression in write path after compaction refactor",
+        "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "issues-get-filter",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/issues/get",
+     "query": {
+      "filterKey": "run_id",
+      "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/issues/get",
+     "query": {
+      "aggregateByIssue": "1",
+      "filterKey": "test_id",
+      "id": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "graph_views": [
+        {
+         "description": "Default graph view for throughput metrics",
+         "graphs": {
+          "mixed op_rate": "{\"table\": \"throughput\", \"column\": \"op_rate\", \"row\": \"mixed\"}",
+          "read op_rate": "{\"table\": \"throughput\", \"column\": \"op_rate\", \"row\": \"read\"}",
+          "write op_rate": "{\"table\": \"throughput\", \"column\": \"op_rate\", \"row\": \"write\"}"
+         },
+         "id": "68fdc49e-ba7e-4521-a29b-5039e0bb8da4",
+         "name": "Performance Large Partition \u2014 Overview",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c"
+        }
+       ],
+       "graphs": [],
+       "releases_filters": [],
+       "ticks": {}
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "graph_views": [
+        {
+         "description": "Default graph view for throughput metrics",
+         "graphs": {
+          "mixed op_rate": "{\"table\": \"throughput\", \"column\": \"op_rate\", \"row\": \"mixed\"}",
+          "read op_rate": "{\"table\": \"throughput\", \"column\": \"op_rate\", \"row\": \"read\"}",
+          "write op_rate": "{\"table\": \"throughput\", \"column\": \"op_rate\", \"row\": \"write\"}"
+         },
+         "id": "68fdc49e-ba7e-4521-a29b-5039e0bb8da4",
+         "name": "Performance Large Partition \u2014 Overview",
+         "test_id": "d62928bf-72ec-44c9-92ee-385ba917027c"
+        }
+       ],
+       "graphs": [],
+       "releases_filters": [],
+       "ticks": {}
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "test-results-dates",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test-results",
+     "query": {
+      "testId": "d62928bf-72ec-44c9-92ee-385ba917027c"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test-results",
+     "query": {
+      "endDate": "2026-11-01",
+      "startDate": "2026-10-01",
+      "testId": "d62928bf-72ec-44c9-92ee-385ba917027c"
+     }
+    }
+   ]
+  }
+ ],
+ "group": "G05",
+ "name": "request-parameter-parsing"
+}

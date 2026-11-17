@@ -1,0 +1,351 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/endpoint/HistoricStatsEndpoint.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.rest.endpoint;
+26 +| 
+27 +| import org.springframework.web.bind.annotation.*;
+28 +| import org.springframework.http.ResponseEntity;
+29 +| import org.springframework.http.MediaType;
+30 +| import javax.servlet.http.HttpServletRequest;
+31 +| import org.springframework.beans.factory.annotation.Autowired;
+32 +| import org.springframework.context.annotation.Lazy;
+33 +| 
+34 +| import static java.lang.Integer.parseInt;
+35 +| import static me.zodac.folding.rest.response.Responses.badRequest;
+36 +| import static me.zodac.folding.rest.response.Responses.cachedOk;
+37 +| import static me.zodac.folding.rest.response.Responses.notFound;
+38 +| import static me.zodac.folding.rest.response.Responses.serverError;
+39 +| 
+40 +| import java.time.DateTimeException;
+41 +| import java.time.Month;
+42 +| import java.time.Year;
+43 +| import java.time.YearMonth;
+44 +| import java.time.format.DateTimeParseException;
+45 +| import java.util.ArrayList;
+46 +| import java.util.Collection;
+47 +| import java.util.List;
+48 +| import java.util.Optional;
+49 +| import java.util.concurrent.TimeUnit;
+50 +| import me.zodac.folding.api.state.ReadRequired;
+51 +| import me.zodac.folding.api.tc.Team;
+52 +| import me.zodac.folding.api.tc.User;
+53 +| import me.zodac.folding.service.api.FoldingStatsCore;
+54 +| import me.zodac.folding.rest.api.tc.historic.HistoricStats;
+55 +| import me.zodac.folding.rest.endpoint.util.IdResult;
+56 +| import me.zodac.folding.rest.endpoint.util.IntegerParser;
+57 +| import org.apache.logging.log4j.LogManager;
+58 +| import org.apache.logging.log4j.Logger;
+59 +| 
+60 +| @RestController
+61 +| @RequestMapping("/historic")
+62 +| public class HistoricStatsEndpoint {
+63 +| 
+64 +|     private static final Logger LOGGER = LogManager.getLogger();
+65 +| 
+66 +|     // Stat updates occur every hour, so we must invalidate responses every hour
+67 +|     private static final int CACHE_EXPIRATION_TIME = (int) TimeUnit.HOURS.toSeconds(1);
+68 +| 
+69 +|     @Autowired
+70 +|     @Lazy
+71 +|     private FoldingStatsCore foldingStatsCore;
+72 +| 
+73 +|     @GetMapping(value = "/users/{userId}/{year}/{month}/{day}", produces = MediaType.APPLICATION_JSON_VALUE)
+74 +|     @ReadRequired
+75 +|     public ResponseEntity<String> getUserHistoricStatsHourly(@PathVariable("userId") final String userId,
+76 +|                                                @PathVariable("year") final String year,
+77 +|                                                @PathVariable("month") final String month,
+78 +|                                                @PathVariable("day") final String day,
+79 +|                                                final HttpServletRequest request) {
+80 +| 
+81 +|         try {
+82 +|             final int dayAsInt = parseInt(day);
+83 +|             final int monthAsInt = parseInt(month);
+84 +|             final int yearAsInt = Year.parse(year).getValue();
+85 +| 
+86 +|             final YearMonth date = YearMonth.of(yearAsInt, monthAsInt);
+87 +|             if (!date.isValidDay(dayAsInt)) {
+88 +|                 final String errorMessage = String.format("The day '%s' is not a valid day for %s/%s", day, year, month);
+89 +|                 LOGGER.error(errorMessage);
+90 +|                 return badRequest(errorMessage);
+91 +|             }
+92 +| 
+93 +|             final IdResult idResult = IntegerParser.parsePositive(userId);
+94 +|             if (idResult.isFailure()) {
+95 +|                 return idResult.getFailureResponse();
+96 +|             }
+97 +|             final int parsedId = idResult.getId();
+98 +| 
+99 +|             final Optional<User> user = foldingStatsCore.getUserWithPasskey(parsedId);
+100 +|             if (user.isEmpty()) {
+101 +|                 LOGGER.error("No user found with ID: {}", parsedId);
+102 +|                 return notFound();
+103 +|             }
+104 +| 
+105 +|             final Collection<HistoricStats> historicStats = foldingStatsCore.getHistoricStats(user.get(), Year.parse(year), Month.of(monthAsInt),
+106 +|                 dayAsInt);
+107 +|             return cachedOk(historicStats, request, CACHE_EXPIRATION_TIME);
+108 +|         } catch (final DateTimeParseException e) {
+109 +|             final String errorMessage = String.format("The year '%s' is not a valid format", year);
+110 +|             LOGGER.debug(errorMessage, e);
+111 +|             LOGGER.error(errorMessage);
+112 +|             return badRequest(errorMessage);
+113 +|         } catch (final DateTimeException e) {
+114 +|             final String errorMessage = String.format("The month '%s' is not a valid format", month);
+115 +|             LOGGER.debug(errorMessage, e);
+116 +|             LOGGER.error(errorMessage);
+117 +|             return badRequest(errorMessage);
+118 +|         } catch (final NumberFormatException e) {
+119 +|             final String errorMessage = String.format("The month '%s' or day '%s' is not a valid format", month, day);
+120 +|             LOGGER.debug(errorMessage, e);
+121 +|             LOGGER.error(errorMessage);
+122 +|             return badRequest(errorMessage);
+123 +|         } catch (final Exception e) {
+124 +|             LOGGER.error("Unexpected error getting user with ID: {}", userId, e);
+125 +|             return serverError();
+126 +|         }
+127 +|     }
+128 +|     @GetMapping(value = "/users/{userId}/{year}/{month}", produces = MediaType.APPLICATION_JSON_VALUE)
+129 +|     @ReadRequired
+130 +|     public ResponseEntity<String> getUserHistoricStatsDaily(@PathVariable("userId") final String userId,
+131 +|                                               @PathVariable("year") final String year,
+132 +|                                               @PathVariable("month") final String month,
+133 +|                                               final HttpServletRequest request) {
+134 +| 
+135 +|         try {
+136 +|             final IdResult idResult = IntegerParser.parsePositive(userId);
+137 +|             if (idResult.isFailure()) {
+138 +|                 return idResult.getFailureResponse();
+139 +|             }
+140 +|             final int parsedId = idResult.getId();
+141 +| 
+142 +|             final Optional<User> user = foldingStatsCore.getUserWithPasskey(parsedId);
+143 +|             if (user.isEmpty()) {
+144 +|                 LOGGER.error("No user found with ID: {}", parsedId);
+145 +|                 return notFound();
+146 +|             }
+147 +| 
+148 +|             final Collection<HistoricStats> historicStats =
+149 +|                 foldingStatsCore.getHistoricStats(user.get(), Year.parse(year), Month.of(parseInt(month)));
+150 +|             return cachedOk(historicStats, request, CACHE_EXPIRATION_TIME);
+151 +|         } catch (final DateTimeParseException e) {
+152 +|             final String errorMessage = String.format("The year '%s' is not a valid format", year);
+153 +|             LOGGER.debug(errorMessage, e);
+154 +|             LOGGER.error(errorMessage);
+155 +|             return badRequest(errorMessage);
+156 +|         } catch (final DateTimeException | NumberFormatException e) {
+157 +|             final String errorMessage = String.format("The month '%s' is not a valid format", month);
+158 +|             LOGGER.debug(errorMessage, e);
+159 +|             LOGGER.error(errorMessage);
+160 +|             return badRequest(errorMessage);
+161 +|         } catch (final Exception e) {
+162 +|             LOGGER.error("Unexpected error getting user with ID: {}", userId, e);
+163 +|             return serverError();
+164 +|         }
+165 +|     }
+166 +|     @GetMapping(value = "/users/{userId}/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
+167 +|     @ReadRequired
+168 +|     public ResponseEntity<String> getUserHistoricStatsMonthly(@PathVariable("userId") final String userId,
+169 +|                                                 @PathVariable("year") final String year,
+170 +|                                                 final HttpServletRequest request) {
+171 +| 
+172 +|         try {
+173 +|             final IdResult idResult = IntegerParser.parsePositive(userId);
+174 +|             if (idResult.isFailure()) {
+175 +|                 return idResult.getFailureResponse();
+176 +|             }
+177 +|             final int parsedId = idResult.getId();
+178 +| 
+179 +|             final Optional<User> user = foldingStatsCore.getUserWithPasskey(parsedId);
+180 +|             if (user.isEmpty()) {
+181 +|                 LOGGER.error("No user found with ID: {}", parsedId);
+182 +|                 return notFound();
+183 +|             }
+184 +| 
+185 +|             final Collection<HistoricStats> historicStats = foldingStatsCore.getHistoricStats(user.get(), Year.parse(year));
+186 +|             return cachedOk(historicStats, request, CACHE_EXPIRATION_TIME);
+187 +|         } catch (final DateTimeParseException e) {
+188 +|             final String errorMessage = String.format("The year '%s' is not a valid format", year);
+189 +|             LOGGER.debug(errorMessage, e);
+190 +|             LOGGER.error(errorMessage);
+191 +|             return badRequest(errorMessage);
+192 +|         } catch (final Exception e) {
+193 +|             LOGGER.error("Unexpected error getting user with ID: {}", userId, e);
+194 +|             return serverError();
+195 +|         }
+196 +|     }
+197 +|     @GetMapping(value = "/teams/{teamId}/{year}/{month}/{day}", produces = MediaType.APPLICATION_JSON_VALUE)
+198 +|     @ReadRequired
+199 +|     public ResponseEntity<String> getTeamHistoricStatsHourly(@PathVariable("teamId") final String teamId,
+200 +|                                                @PathVariable("year") final String year,
+201 +|                                                @PathVariable("month") final String month,
+202 +|                                                @PathVariable("day") final String day,
+203 +|                                                final HttpServletRequest request) {
+204 +| 
+205 +|         try {
+206 +|             final int dayAsInt = parseInt(day);
+207 +|             final int monthAsInt = parseInt(month);
+208 +|             final int yearAsInt = Year.parse(year).getValue();
+209 +| 
+210 +|             final YearMonth date = YearMonth.of(yearAsInt, monthAsInt);
+211 +|             if (!date.isValidDay(dayAsInt)) {
+212 +|                 final String errorMessage = String.format("The day '%s' is not a valid day for %s/%s", day, year, month);
+213 +|                 LOGGER.error(errorMessage);
+214 +|                 return badRequest(errorMessage);
+215 +|             }
+216 +| 
+217 +|             final IdResult idResult = IntegerParser.parsePositive(teamId);
+218 +|             if (idResult.isFailure()) {
+219 +|                 return idResult.getFailureResponse();
+220 +|             }
+221 +|             final int parsedId = idResult.getId();
+222 +| 
+223 +|             final Optional<Team> teamOptional = foldingStatsCore.getTeam(parsedId);
+224 +|             if (teamOptional.isEmpty()) {
+225 +|                 LOGGER.error("No team found with ID: {}", parsedId);
+226 +|                 return notFound();
+227 +|             }
+228 +|             final Team team = teamOptional.get();
+229 +| 
+230 +|             final Collection<User> teamUsers = foldingStatsCore.getUsersOnTeam(team);
+231 +|             final List<HistoricStats> teamHourlyStats = new ArrayList<>(teamUsers.size());
+232 +| 
+233 +|             for (final User user : teamUsers) {
+234 +|                 LOGGER.debug("Getting historic stats for user with ID: {}", user.getId());
+235 +|                 final Collection<HistoricStats> dailyStats =
+236 +|                     foldingStatsCore.getHistoricStats(user, Year.parse(year), Month.of(monthAsInt), dayAsInt);
+237 +|                 teamHourlyStats.addAll(dailyStats);
+238 +|             }
+239 +| 
+240 +|             final Collection<HistoricStats> combinedHistoricStats = HistoricStats.combine(teamHourlyStats);
+241 +|             return cachedOk(combinedHistoricStats, request, CACHE_EXPIRATION_TIME);
+242 +|         } catch (final DateTimeParseException e) {
+243 +|             final String errorMessage = String.format("The year '%s' is not a valid format", year);
+244 +|             LOGGER.debug(errorMessage, e);
+245 +|             LOGGER.error(errorMessage);
+246 +|             return badRequest(errorMessage);
+247 +|         } catch (final DateTimeException e) {
+248 +|             final String errorMessage = String.format("The month '%s' is not a valid format", month);
+249 +|             LOGGER.debug(errorMessage, e);
+250 +|             LOGGER.error(errorMessage);
+251 +|             return badRequest(errorMessage);
+252 +|         } catch (final NumberFormatException e) {
+253 +|             final String errorMessage = String.format("The month '%s' or day '%s' is not a valid format", month, day);
+254 +|             LOGGER.debug(errorMessage, e);
+255 +|             LOGGER.error(errorMessage);
+256 +|             return badRequest(errorMessage);
+257 +|         } catch (final Exception e) {
+258 +|             LOGGER.error("Unexpected error getting team with ID: {}", teamId, e);
+259 +|             return serverError();
+260 +|         }
+261 +|     }
+262 +|     @GetMapping(value = "/teams/{teamId}/{year}/{month}", produces = MediaType.APPLICATION_JSON_VALUE)
+263 +|     @ReadRequired
+264 +|     public ResponseEntity<String> getTeamHistoricStatsDaily(@PathVariable("teamId") final String teamId,
+265 +|                                               @PathVariable("year") final String year,
+266 +|                                               @PathVariable("month") final String month,
+267 +|                                               final HttpServletRequest request) {
+268 +| 
+269 +|         try {
+270 +|             final IdResult idResult = IntegerParser.parsePositive(teamId);
+271 +|             if (idResult.isFailure()) {
+272 +|                 return idResult.getFailureResponse();
+273 +|             }
+274 +|             final int parsedId = idResult.getId();
+275 +| 
+276 +|             final Optional<Team> teamOptional = foldingStatsCore.getTeam(parsedId);
+277 +|             if (teamOptional.isEmpty()) {
+278 +|                 LOGGER.error("No team found with ID: {}", parsedId);
+279 +|                 return notFound();
+280 +|             }
+281 +|             final Team team = teamOptional.get();
+282 +| 
+283 +|             final Collection<User> teamUsers = foldingStatsCore.getUsersOnTeam(team);
+284 +|             final List<HistoricStats> teamDailyStats = new ArrayList<>(teamUsers.size());
+285 +| 
+286 +|             for (final User user : teamUsers) {
+287 +|                 LOGGER.debug("Getting historic stats for user with ID: {}", user.getId());
+288 +|                 final Collection<HistoricStats> dailyStats = foldingStatsCore.getHistoricStats(user, Year.parse(year), Month.of(parseInt(month)));
+289 +|                 teamDailyStats.addAll(dailyStats);
+290 +|             }
+291 +| 
+292 +|             final Collection<HistoricStats> combinedHistoricStats = HistoricStats.combine(teamDailyStats);
+293 +|             return cachedOk(combinedHistoricStats, request, CACHE_EXPIRATION_TIME);
+294 +|         } catch (final DateTimeParseException e) {
+295 +|             final String errorMessage = String.format("The year '%s' is not a valid format", year);
+296 +|             LOGGER.debug(errorMessage, e);
+297 +|             LOGGER.error(errorMessage);
+298 +|             return badRequest(errorMessage);
+299 +|         } catch (final DateTimeException | NumberFormatException e) {
+300 +|             final String errorMessage = String.format("The month '%s' is not a valid format", month);
+301 +|             LOGGER.debug(errorMessage, e);
+302 +|             LOGGER.error(errorMessage);
+303 +|             return badRequest(errorMessage);
+304 +|         } catch (final Exception e) {
+305 +|             LOGGER.error("Unexpected error getting team with ID: {}", teamId, e);
+306 +|             return serverError();
+307 +|         }
+308 +|     }
+309 +|     @GetMapping(value = "/teams/{teamId}/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
+310 +|     @ReadRequired
+311 +|     public ResponseEntity<String> getTeamHistoricStatsMonthly(@PathVariable("teamId") final String teamId,
+312 +|                                                 @PathVariable("year") final String year,
+313 +|                                                 final HttpServletRequest request) {
+314 +| 
+315 +|         try {
+316 +|             final IdResult idResult = IntegerParser.parsePositive(teamId);
+317 +|             if (idResult.isFailure()) {
+318 +|                 return idResult.getFailureResponse();
+319 +|             }
+320 +|             final int parsedId = idResult.getId();
+321 +| 
+322 +|             final Optional<Team> teamOptional = foldingStatsCore.getTeam(parsedId);
+323 +|             if (teamOptional.isEmpty()) {
+324 +|                 LOGGER.error("No team found with ID: {}", parsedId);
+325 +|                 return notFound();
+326 +|             }
+327 +|             final Team team = teamOptional.get();
+328 +| 
+329 +|             final Collection<User> teamUsers = foldingStatsCore.getUsersOnTeam(team);
+330 +|             final List<HistoricStats> teamMonthlyStats = new ArrayList<>(teamUsers.size());
+331 +| 
+332 +|             for (final User user : teamUsers) {
+333 +|                 LOGGER.debug("Getting historic stats for user with ID: {}", user.getId());
+334 +|                 final Collection<HistoricStats> monthlyStats = foldingStatsCore.getHistoricStats(user, Year.parse(year));
+335 +|                 teamMonthlyStats.addAll(monthlyStats);
+336 +|             }
+337 +| 
+338 +|             final Collection<HistoricStats> combinedHistoricStats = HistoricStats.combine(teamMonthlyStats);
+339 +|             return cachedOk(combinedHistoricStats, request, CACHE_EXPIRATION_TIME);
+340 +|         } catch (final DateTimeParseException e) {
+341 +|             final String errorMessage = String.format("The year '%s' is not a valid format", year);
+342 +|             LOGGER.debug(errorMessage, e);
+343 +|             LOGGER.error(errorMessage);
+344 +|             return badRequest(errorMessage);
+345 +|         } catch (final Exception e) {
+346 +|             LOGGER.error("Unexpected error getting team with ID: {}", teamId, e);
+347 +|             return serverError();
+348 +|         }
+349 +|     }
+350 +| }

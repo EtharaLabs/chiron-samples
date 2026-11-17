@@ -1,0 +1,78 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2021-2022 zodac.me
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package me.zodac.folding.client.java.request;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import me.zodac.folding.api.tc.Hardware;
+import me.zodac.folding.api.util.EncodingUtils;
+import me.zodac.folding.rest.api.LoginCredentials;
+import me.zodac.folding.rest.api.exception.FoldingRestException;
+import me.zodac.folding.rest.api.header.ContentType;
+import me.zodac.folding.rest.api.header.RestHeader;
+import me.zodac.folding.rest.util.RestUtilConstants;
+
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public final class LoginRequestSender {
+
+    private final String loginUrl;
+
+    
+    public static LoginRequestSender createWithUrl(final String foldingUrl) {
+        final String loginUrl = foldingUrl + "/login";
+        return new LoginRequestSender(loginUrl);
+    }
+
+    
+    public HttpResponse<Void> loginAsAdmin(final String userName, final String password) throws FoldingRestException {
+        final String encodedUserNameAndPassword = EncodingUtils.encodeBasicAuthentication(userName, password);
+        return loginAsAdmin(encodedUserNameAndPassword);
+    }
+
+    
+    public HttpResponse<Void> loginAsAdmin(final String encodedUserNameAndPassword) throws FoldingRestException {
+        final LoginCredentials loginCredentials = LoginCredentials.createWithBasicAuthentication(encodedUserNameAndPassword);
+
+        final HttpRequest request = HttpRequest.newBuilder()
+            .POST(HttpRequest.BodyPublishers.ofString(RestUtilConstants.GSON.toJson(loginCredentials)))
+            .uri(URI.create(loginUrl + "/admin"))
+            .header(RestHeader.CONTENT_TYPE.headerName(), ContentType.JSON.contentType())
+            .build();
+
+        try {
+            return RestUtilConstants.HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.discarding());
+        } catch (final InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new FoldingRestException("Error sending HTTP request to login as admin", e);
+        } catch (final IOException e) {
+            throw new FoldingRestException("Error sending HTTP request to login as admin", e);
+        }
+    }
+}

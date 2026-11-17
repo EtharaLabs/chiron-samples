@@ -1,0 +1,662 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "id": "0a11ce00-0000-4000-8000-000000000010",
+       "leader": "0a11ce00-0000-4000-8000-000000000002",
+       "members": [
+        "0a11ce00-0000-4000-8000-000000000002",
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "motd": "Release freeze on Friday",
+       "name": "Core Team"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-get",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "id": "0a11ce00-0000-4000-8000-000000000010",
+        "leader": "0a11ce00-0000-4000-8000-000000000002",
+        "members": [
+         "0a11ce00-0000-4000-8000-000000000002",
+         "0a11ce00-0000-4000-8000-000000000001"
+        ],
+        "motd": "Release freeze on Friday",
+        "name": "Core Team"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "id": "0a11ce00-0000-4000-8000-000000000010",
+        "leader": "0a11ce00-0000-4000-8000-000000000002",
+        "members": [
+         "0a11ce00-0000-4000-8000-000000000002",
+         "0a11ce00-0000-4000-8000-000000000001"
+        ],
+        "motd": "Release freeze on Friday",
+        "name": "Core Team"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "user-teams",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/user/0a11ce00-0000-4000-8000-000000000001/teams"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/leader/0a11ce00-0000-4000-8000-000000000002/teams"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "user-jobs",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/user/0a11ce00-0000-4000-8000-000000000001/jobs"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "id": "<id1>",
+       "leader": "0a11ce00-0000-4000-8000-000000000002",
+       "members": [
+        "0a11ce00-0000-4000-8000-000000000002",
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "motd": null,
+       "name": "Stage Team"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "id": "<id1>",
+       "leader": "0a11ce00-0000-4000-8000-000000000002",
+       "members": [
+        "0a11ce00-0000-4000-8000-000000000002",
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "motd": null,
+       "name": "Stage Team"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-create-get",
+   "steps": [
+    {
+     "capture": {
+      "team": "response.id"
+     },
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "leader": "0a11ce00-0000-4000-8000-000000000002",
+      "members": [
+       "0a11ce00-0000-4000-8000-000000000001"
+      ],
+      "name": "Stage Team"
+     },
+     "method": "POST",
+     "path": "/api/v1/team/create"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/{{team}}/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "status": "updated",
+       "team": {
+        "id": "0a11ce00-0000-4000-8000-000000000010",
+        "leader": "0a11ce00-0000-4000-8000-000000000002",
+        "members": [
+         "0a11ce00-0000-4000-8000-000000000002"
+        ],
+        "motd": "Release freeze on Friday",
+        "name": "Core Team Two"
+       },
+       "team_id": "0a11ce00-0000-4000-8000-000000000010"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "id": "0a11ce00-0000-4000-8000-000000000010",
+       "leader": "0a11ce00-0000-4000-8000-000000000002",
+       "members": [
+        "0a11ce00-0000-4000-8000-000000000002"
+       ],
+       "motd": "Release freeze on Friday",
+       "name": "Core Team Two"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-edit",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a003"
+     },
+     "json": {
+      "id": "0a11ce00-0000-4000-8000-000000000010",
+      "leader": "0a11ce00-0000-4000-8000-000000000002",
+      "members": [
+       "0a11ce00-0000-4000-8000-000000000002"
+      ],
+      "name": "Core Team Two"
+     },
+     "method": "POST",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/edit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "status": "updated",
+       "team_id": "0a11ce00-0000-4000-8000-000000000010"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "id": "0a11ce00-0000-4000-8000-000000000010",
+       "leader": "0a11ce00-0000-4000-8000-000000000002",
+       "members": [
+        "0a11ce00-0000-4000-8000-000000000002",
+        "0a11ce00-0000-4000-8000-000000000001"
+       ],
+       "motd": "New motd",
+       "name": "Core Team"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-motd",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a003"
+     },
+     "json": {
+      "id": "0a11ce00-0000-4000-8000-000000000010",
+      "motd": "New motd"
+     },
+     "method": "POST",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/motd/edit"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "status": "deleted",
+       "team_id": "0a11ce00-0000-4000-8000-000000000010"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Team 0a11ce00-0000-4000-8000-000000000010 does not exist",
+        "0a11ce00-0000-4000-8000-000000000010"
+       ],
+       "exception": "TeamManagerException",
+       "message": "('Team 0a11ce00-0000-4000-8000-000000000010 does not exist', UUID('0a11ce00-0000-4000-8000-000000000010'))",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-delete",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a003"
+     },
+     "method": "DELETE",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/delete"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Teams </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/teams.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\"active nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid bg-white rounded shadow-sm min-vh-100 my-2\" id=\"teamsContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "teams-ui",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/teams/"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": 1,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "notifications-unread",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/api/v1/notifications/get_unread"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "created": -12219292783106.1,
+        "id": "0a11ce00-0000-1000-8000-000000000040",
+        "receiver": "0a11ce00-0000-4000-8000-000000000001",
+        "sender": "0a11ce00-0000-4000-8000-000000000002",
+        "state": 1,
+        "title": "Manny mentioned you"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "created": -12219292783106.1,
+        "id": "0a11ce00-0000-1000-8000-000000000040",
+        "receiver": "0a11ce00-0000-4000-8000-000000000001",
+        "sender": "0a11ce00-0000-4000-8000-000000000002",
+        "state": 1,
+        "title": "Manny mentioned you"
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "notifications-summary",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/api/v1/notifications/summary"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/api/v1/notifications/summary",
+     "query": {
+      "limit": "1"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "content": "Please look at the latest run",
+       "created": -12219292783106.1,
+       "id": "0a11ce00-0000-1000-8000-000000000040",
+       "receiver": "0a11ce00-0000-4000-8000-000000000001",
+       "sender": "0a11ce00-0000-4000-8000-000000000002",
+       "source": "COMMENT",
+       "source_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "state": 1,
+       "title": "Manny mentioned you",
+       "type": "TYPE_MENTION"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": true,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": 0,
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "notification-get-read",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/api/v1/notifications/get",
+     "query": {
+      "id": "0a11ce00-0000-1000-8000-000000000040"
+     }
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "json": {
+      "id": "0a11ce00-0000-1000-8000-000000000040"
+     },
+     "method": "POST",
+     "path": "/api/v1/notifications/read"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/api/v1/notifications/get_unread"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Notifications </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/profileNotifications.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\"active nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\" id=\"notificationsContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "notifications-ui",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/notifications/"
+    }
+   ]
+  }
+ ],
+ "group": "G13",
+ "name": "teams-and-notifications"
+}

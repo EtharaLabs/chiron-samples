@@ -1,0 +1,15 @@
+[package]
+name = "yyjson-port"
+version = "0.13.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "yyjson_port"
+crate-type = ["staticlib", "cdylib"]
+
+[profile.release]
+panic = "abort"
+overflow-checks = false
+codegen-units = 1
+lto = true

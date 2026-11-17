@@ -1,0 +1,33 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/ServiceConfiguration.java (added against State A) ===
+1 +| package me.zodac.folding;
+2 +| 
+3 +| import com.zaxxer.hikari.HikariDataSource;
+4 +| import com.zaxxer.hikari.HikariConfig;
+5 +| import me.zodac.folding.api.db.DbManager;
+6 +| import me.zodac.folding.api.stats.FoldingStatsRetriever;
+7 +| import me.zodac.folding.db.DatabaseType;
+8 +| import me.zodac.folding.db.postgres.PostgresDbManager;
+9 +| import me.zodac.folding.stats.HttpFoldingStatsRetriever;
+10 +| import org.springframework.context.annotation.Bean;
+11 +| import org.springframework.context.annotation.Configuration;
+12 +| import org.springframework.core.env.Environment;
+13 +| 
+14 +| @Configuration
+15 +| public class ServiceConfiguration {
+16 +|     @Bean(destroyMethod = "close")
+17 +|     public HikariDataSource dataSource(Environment environment) {
+18 +|         if (DatabaseType.get(environment.getRequiredProperty("DEPLOYED_DATABASE")) != DatabaseType.POSTGRESQL)
+19 +|             throw new IllegalStateException("Unsupported DEPLOYED_DATABASE");
+20 +|         HikariConfig config = new HikariConfig();
+21 +|         config.setJdbcUrl(environment.getRequiredProperty("JDBC_CONNECTION_URL"));
+22 +|         config.setUsername(environment.getRequiredProperty("JDBC_CONNECTION_USER"));
+23 +|         config.setPassword(environment.getRequiredProperty("JDBC_CONNECTION_PASSWORD"));
+24 +|         config.setDriverClassName(environment.getRequiredProperty("JDBC_CONNECTION_DRIVER"));
+25 +|         config.addDataSourceProperty("cachePrepStmts", "true");
+26 +|         config.addDataSourceProperty("prepStmtCacheSize", "250");
+27 +|         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+28 +|         return new HikariDataSource(config);
+29 +|     }
+30 +|     @Bean public DbManager dbManager(HikariDataSource source) { return PostgresDbManager.create(source); }
+31 +|     @Bean public FoldingStatsRetriever foldingStatsRetriever() { return HttpFoldingStatsRetriever.create(); }
+32 +| }

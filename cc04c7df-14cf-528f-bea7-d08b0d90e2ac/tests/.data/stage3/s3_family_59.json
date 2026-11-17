@@ -1,0 +1,122 @@
+{
+ "id": "s3_family_59",
+ "source": "f091_lars_model_names_differing_only_in_case",
+ "steps": [
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Alpha",
+      "manufacturer": "nVidia",
+      "modelInfo": "Gpu Alpha",
+      "rank": 1,
+      "averagePpd": 1000
+     },
+     {
+      "displayName": "AlphaToo",
+      "manufacturer": "nVidia",
+      "modelInfo": "GPU ALPHA",
+      "rank": 2,
+      "averagePpd": 500
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_with_case_duplicate",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "no_hardware_created",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   }
+  },
+  {
+   "case": "hardware_one_absent",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "lars_update_with_case_duplicate",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 500
+   }
+  },
+  {
+   "case": "no_hardware_created",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "2",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"0\"",
+     "x-total-count": "0"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_one_absent",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "Two LARS rows whose modelInfo differs only in letter case: HardwareSplitter.toUpdate keys a Map by the lower-cased name, so the duplicate key aborts the whole synchronisation before anything is created."
+}

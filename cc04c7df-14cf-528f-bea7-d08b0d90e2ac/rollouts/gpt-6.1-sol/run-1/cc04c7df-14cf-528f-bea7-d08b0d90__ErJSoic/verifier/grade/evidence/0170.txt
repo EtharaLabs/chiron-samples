@@ -1,0 +1,49 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/stats/http/request/UnitsUrlBuilder.java (changed against State A) ===
+@@
+27  | import me.zodac.folding.api.util.EnvironmentVariableUtils;
+28  | import me.zodac.folding.api.util.StringUtils;
+29  | 
+   -| /**
+   -|  * Utility class used to build the URL to request Folding Work Units for a user from the Stanford Folding@Home API.
+   -|  */
+30 +| 
+31  | public class UnitsUrlBuilder {
+32  | 
+33  |     private static final String STATS_URL_ROOT = EnvironmentVariableUtils.getOrDefault("STATS_URL_ROOT", "https://api2.foldingathome.org");
+@@
+36  |     private String user;
+37  |     private String passkey;
+38  | 
+   -|     /**
+   -|      * Update the {@link UnitsUrlBuilder} with the 'user' for the URL.
+   -|      *
+   -|      * @param user the user for the request
+   -|      * @return the updated {@link UnitsUrlBuilder}
+   -|      */
+39 +|     
+40  |     public UnitsUrlBuilder forUser(final String user) {
+41  |         this.user = user;
+42  |         return this;
+43  |     }
+44  | 
+   -|     /**
+   -|      * Update the {@link UnitsUrlBuilder} with the 'passkey' for the URL.
+   -|      *
+   -|      * @param passkey the passkey for the request
+   -|      * @return the updated {@link UnitsUrlBuilder}
+   -|      */
+45 +|     
+46  |     public UnitsUrlBuilder withPasskey(final String passkey) {
+47  |         this.passkey = passkey;
+48  |         return this;
+49  |     }
+50  | 
+   -|     /**
+   -|      * Build the Work Units REST request URL for a user/passkey.
+   -|      *
+   -|      * @return the URL to request units
+   -|      */
+51 +|     
+52  |     public StatsRequestUrl build() {
+53  |         if (StringUtils.isBlank(user)) {
+54  |             throw new IllegalArgumentException("'user' cannot be null or empty");

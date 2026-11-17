@@ -1,0 +1,82 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/stats/RetiredUserTcStats.java (changed against State A) ===
+@@
+30  | import me.zodac.folding.api.tc.Team;
+31  | import me.zodac.folding.api.tc.User;
+32  | 
+   -| /**
+   -|  * POJO that extends {@link UserTcStats} adding a retired user ID, team ID and a display name.When a
+   -|  * {@link me.zodac.folding.api.tc.User} is deleted, their stats are stored for the remainder of the <code>Team Competition</code>
+   -|  * period for their team.
+   -|  */
+33 +| 
+34  | @Getter
+35  | @EqualsAndHashCode(callSuper = true)
+36  | @ToString(doNotUseGetters = true, callSuper = true)
+@@
+44  |     private final int teamId;
+45  |     private final String displayName;
+46  | 
+   -|     /**
+   -|      * Constructor for {@link RetiredUserTcStats}.
+   -|      *
+   -|      * @param retiredUserId the retired user ID
+   -|      * @param teamId        the ID of the {@link Team} the stats will be contributing to
+   -|      * @param displayName   the {@link User}'s display name for the points
+   -|      * @param userTcStats   the {@link UserTcStats}
+   -|      */
+47 +|     
+48  |     protected RetiredUserTcStats(final int retiredUserId, final int teamId, final String displayName, final UserTcStats userTcStats) {
+49  |         super(userTcStats.getUserId(), userTcStats.getTimestamp(), userTcStats.getPoints(), userTcStats.getMultipliedPoints(),
+50  |             userTcStats.getUnits());
+@@
+53  |         this.displayName = displayName;
+54  |     }
+55  | 
+   -|     /**
+   -|      * Creates an instance of {@link RetiredUserTcStats} for a {@link User} within a {@link Team}.
+   -|      *
+   -|      * <p>
+   -|      * Since the DB auto-generates the ID, this function should be used when creating a {@link RetiredUserTcStats} from the DB response.
+   -|      *
+   -|      * @param retiredUserId  the retired user ID
+   -|      * @param teamId         the ID of the {@link Team} the stats will be contributing to
+   -|      * @param displayName    the {@link User}'s display name for the points
+   -|      * @param retiredTcStats the {@link UserTcStats}
+   -|      * @return the created {@link RetiredUserTcStats}
+   -|      */
+56 +|     
+57  |     public static RetiredUserTcStats create(final int retiredUserId, final int teamId, final String displayName, final UserTcStats retiredTcStats) {
+58  |         return new RetiredUserTcStats(retiredUserId, teamId, displayName, retiredTcStats);
+59  |     }
+60  | 
+   -|     /**
+   -|      * Creates an instance of {@link RetiredUserTcStats} for a {@link User} within a {@link Team}.
+   -|      *
+   -|      * <p>
+   -|      * Since we do not know the ID until the DB has persisted the {@link RetiredUserTcStats}, the {@link #EMPTY_RETIRED_USER_ID} will be used instead.
+   -|      *
+   -|      * @param teamId         the ID of the {@link Team} the stats will be contributing to
+   -|      * @param displayName    the {@link User}'s display name for the points
+   -|      * @param retiredTcStats the {@link UserTcStats}
+   -|      * @return the created {@link RetiredUserTcStats}
+   -|      */
+61 +|     
+62  |     public static RetiredUserTcStats createWithoutId(final int teamId, final String displayName, final UserTcStats retiredTcStats) {
+63  |         return create(EMPTY_RETIRED_USER_ID, teamId, displayName, retiredTcStats);
+64  |     }
+65  | 
+   -|     /**
+   -|      * Updates a {@link RetiredUserTcStats} with the given ID.
+   -|      *
+   -|      * <p>
+   -|      * Once the {@link RetiredUserTcStats} has been persisted in the DB, we will know its ID. We create a new {@link RetiredUserTcStats} instance with
+   -|      * this ID, which can be used to retrieval/referencing later.
+   -|      *
+   -|      * @param retiredUserId      the DB-generated ID
+   -|      * @param retiredUserTcStats the {@link RetiredUserTcStats} to be updated with the ID
+   -|      * @return the updated {@link RetiredUserTcStats}
+   -|      */
+66 +|     
+67  |     public static RetiredUserTcStats updateWithId(final int retiredUserId, final RetiredUserTcStats retiredUserTcStats) {
+68  |         return create(
+69  |             retiredUserId,

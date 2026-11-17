@@ -1,0 +1,29 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/lars/LarsGpuRetriever.java (changed against State A) ===
+@@
+40  | import org.jsoup.nodes.Element;
+41  | import org.jsoup.select.Elements;
+42  | 
+   -| /**
+   -|  * Utility class that retrieves {@link me.zodac.folding.api.tc.HardwareType#GPU} data from the LARS DB.
+   -|  */
+43 +| 
+44  | public final class LarsGpuRetriever {
+45  | 
+46  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+49  | 
+50  |     }
+51  | 
+   -|     /**
+   -|      * Will retrieve the {@link me.zodac.folding.api.tc.HardwareType#GPU} data from the supplied DB URL.
+   -|      *
+   -|      * <p>
+   -|      * If an error occurs retrieving any individual {@link LarsGpu}, it will be logged, and we continue processing the remainder.
+   -|      *
+   -|      * @param gpuDatabaseUrl the URL to the LARS GPU database
+   -|      * @return a {@link Collection} of parsed {@link LarsGpu}s sorted by {@link LarsGpu#getAveragePpd()}
+   -|      */
+52 +|     
+53  |     public static List<LarsGpu> retrieveGpus(final String gpuDatabaseUrl) {
+54  |         LOGGER.debug("Retrieving LARS GPU data from: '{}'", gpuDatabaseUrl);
+55  | 

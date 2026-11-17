@@ -1,0 +1,72 @@
+{
+  "allowed_unix_connect": [
+    "/var/run/nscd/socket",
+    "/run/nscd/socket"
+  ],
+  "grader_names": [
+    "rewardkit",
+    "reward-details.json",
+    "ctrf.json",
+    "GRADER_ROUTE",
+    "GATE_VERDICT",
+    "grader-probe"
+  ],
+  "grader_paths": [
+    "/tests",
+    "/logs/verifier",
+    "/var/lib/grader",
+    "/var/lib/grader-probe",
+    "/opt/grader-probe",
+    "/opt/grader-corpus",
+    "/grade"
+  ],
+  "retired_coordinates": [
+    "javax:javaee-api",
+    "javax:javaee-web-api",
+    "jakarta.platform:*",
+    "javax.ws.rs:*",
+    "jakarta.ws.rs:*",
+    "org.glassfish.jersey*:*",
+    "org.jboss.resteasy*:*",
+    "javax.ejb:*",
+    "jakarta.ejb:*",
+    "org.jboss.spec.javax.*:*",
+    "org.jboss.weld*:*",
+    "javax.enterprise:*",
+    "jakarta.enterprise:*",
+    "org.wildfly*:*",
+    "org.jboss.as*:*",
+    "org.jboss.ejb3*:*",
+    "org.jboss.logmanager:*",
+    "org.jboss.modules:*",
+    "org.jboss.msc:*",
+    "javax.inject:javax.inject",
+    "jakarta.inject:jakarta.inject-api"
+  ],
+  "retired_descriptors": [
+    "jboss-web.xml",
+    "jboss-deployment-structure.xml",
+    "beans.xml",
+    "ejb-jar.xml",
+    "standalone.xml",
+    "standalone.conf"
+  ],
+  "retired_packages": [
+    "javax.ws.rs",
+    "jakarta.ws.rs",
+    "javax.ejb",
+    "jakarta.ejb",
+    "javax.enterprise",
+    "jakarta.enterprise",
+    "javax.inject",
+    "jakarta.inject",
+    "org.jboss",
+    "org.wildfly",
+    "org.glassfish.jersey"
+  ],
+  "transplant": {
+    "k": 50,
+    "min_tokens": 200,
+    "threshold": 0.5
+  }
+}

@@ -1,0 +1,388 @@
+from pathlib import Path
+from typing import Any
+import os
+import tempfile
+import warnings
+
+import bokeh.embed
+import pandas as pd
+
+from pydatalab.apps.nmr.models import NMRMetadata, NMRModel
+from pydatalab.apps.nmr.utils import fish_for_bruker_data, read_bruker_1d, read_jcamp_dx_1d, read_jeol_jdf_1d
+from pydatalab.blocks.base import DataBlock
+from pydatalab.bokeh_plots import DATALAB_BOKEH_THEME, selectable_axes_plot
+from pydatalab.file_utils import get_file_info_by_id
+from pydatalab.validation import validation_message
+
+
+BRUKER_FILE_EXTENSIONS = (".zip",)
+JCAMP_FILE_EXTENSIONS = (".jdx", ".dx")
+JEOL_FILE_EXTENSIONS = (".jdf",)
+
+
+class NMRBlock(DataBlock):
+    blocktype = "nmr"
+    name = "NMR"
+    description = "A data block for loading and visualizing 1D NMR data from Bruker projects, JEOL files or JCAMP-DX files."
+    block_db_model = NMRModel
+
+    accepted_file_extensions = BRUKER_FILE_EXTENSIONS + JCAMP_FILE_EXTENSIONS + JEOL_FILE_EXTENSIONS
+    processed_data: dict | None = None
+    _supports_collections = False
+
+    @property
+    def plot_functions(self):
+        return (self.generate_nmr_plot,)
+
+    def read_bruker_nmr_data(
+        self,
+        filename: str | Path | None = None,
+        file_info: dict | None = None,
+    ) -> tuple[dict | None, dict]:
+        """Loads a Bruker project from the passed or attached zip file
+        and parses it into a serialized dataframe and metadata dictionary.
+
+        Parameters:
+            filename: Optional local file to use instead of the database lookup.
+            file_info: Optional file information dictionary to use for the database lookup.
+
+        Returns:
+            A tuple of the dataframe (serialized as dictionary) and the metadata
+                dictionary, or None if no compatible data is available.
+
+        """
+        location, name, ext = self._extract_file_info(filename, file_info)
+
+        if ext not in (".zip",):
+            raise RuntimeError(
+                f"Unsupported file extension for Bruker reader: {ext.lower()} (must be one of {BRUKER_FILE_EXTENSIONS})"
+            )
+
+        # unzip to tmp directory
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            experiment_paths = {e: str(e.name) for e in fish_for_bruker_data(location, tmpdirname)}
+
+            if not experiment_paths:
+                raise RuntimeError(
+                    f"No Bruker experiments found in the zip file {location} - no 'pdata' folder found."
+                )
+
+            # Sort numbers properly, e.g., "1", "2", "10" instead of "1", "10", "2",
+            # then defer to any non-numeric strings
+            self.data["available_experiments"] = sorted(
+                experiment_paths.values(), key=lambda x: (0, int(x)) if x.isdigit() else (1, x)
+            )
+
+            selected_experiment_path = None
+            if (
+                self.data.get("selected_experiment") is None
+                or self.data["selected_experiment"] not in self.data["available_experiments"]
+            ):
+                selected_experiment_path = list(experiment_paths)[0]
+                self.data["selected_experiment"] = experiment_paths[selected_experiment_path]
+
+            else:
+                for k in experiment_paths:
+                    if experiment_paths[k] == self.data["selected_experiment"]:
+                        selected_experiment_path = k
+                        break
+
+            if selected_experiment_path is None:
+                raise RuntimeError(
+                    f"Selected experiment {self.data['selected_experiment']} not found in available experiments {self.data['available_experiments']}."
+                )
+
+            try:
+                self.data["available_processes"] = sorted(
+                    os.listdir(selected_experiment_path / "pdata")
+                )
+            except FileNotFoundError:
+                raise RuntimeError(
+                    f"No 'pdata' directory found in the selected experiment {self.data['selected_experiment']}. Please check the structure of your Bruker project zip file."
+                )
+
+            if self.data.get("selected_process") not in self.data["available_processes"]:
+                self.data["selected_process"] = self.data["available_processes"][0]
+
+            df, a_dic, topspin_title, processed_data_shape = read_bruker_1d(
+                selected_experiment_path,
+                process_number=self.data["selected_process"],
+                verbose=False,
+            )
+
+        serialized_df = df.to_dict() if (df is not None) else None
+
+        metadata = {}
+        metadata["acquisition_parameters"] = a_dic.get("acqus")
+        metadata["processing_parameters"] = a_dic.get("procs")
+        metadata["pulse_program"] = a_dic.get("pprog", None)
+        metadata["nucleus"] = a_dic["acqus"]["NUC1"]
+        metadata["carrier_frequency_MHz"] = a_dic["acqus"]["SFO1"]
+        metadata["carrier_offset_Hz"] = a_dic["acqus"]["O1"]
+        metadata["recycle_delay"] = a_dic["acqus"]["D"][1]
+        metadata["nscans"] = a_dic["acqus"]["NS"]
+        metadata["CNST31"] = a_dic["acqus"]["CNST"][31]
+        metadata["processed_data_shape"] = processed_data_shape
+        metadata["probe_name"] = a_dic["acqus"]["PROBHD"]
+        metadata["pulse_program_name"] = a_dic["acqus"]["PULPROG"]
+        metadata["title"] = topspin_title
+
+        self.data["metadata"] = NMRMetadata(**metadata).model_dump()
+
+        return serialized_df, metadata
+
+    @classmethod
+    def _extract_file_info(
+        cls, filename: str | Path | None = None, file_info: dict | None = None
+    ) -> tuple[Path, str, str]:
+        if file_info:
+            _filename = file_info["name"]
+            location = file_info["location"]
+            name, ext = os.path.splitext(_filename)
+        elif filename:
+            location = Path(filename)
+            name = Path(filename).stem
+            ext = Path(filename).suffix
+        else:
+            raise RuntimeError("NMR block did not receive any file information.")
+
+        return location, name, ext.lower()
+
+    def read_jcamp_nmr_data(
+        self, filename: str | Path | None = None, file_info: dict | None = None
+    ):
+        location, name, ext = self._extract_file_info(filename, file_info)
+
+        if ext not in JCAMP_FILE_EXTENSIONS:
+            raise RuntimeError(
+                f"Unsupported file extension for JCAMP reader: {ext} (must be one of {JCAMP_FILE_EXTENSIONS})"
+            )
+
+        df, a_dic, title, shape = read_jcamp_dx_1d(location)
+
+        data_type = a_dic.get("DATATYPE", [])
+        if len(data_type) > 1:
+            warnings.warn(
+                f"Found multiple data types {data_type} in JCAMP file, only using the first: {data_type[0]}"
+            )
+
+        if len(data_type) == 0:
+            warnings.warn(
+                "No data type found in JCAMP file, may not be able to extract data successfully."
+            )
+
+        if data_type[0] not in ("NMR SPECTRUM",):
+            warnings.warn(
+                f"Unsupported JCAMP-DX data type: {data_type[0]}. Expected 'NMR SPECTRUM'. Will attempt to plot regardless."
+            )
+
+        metadata: dict[str, Any] = {}
+        metadata["processed_data_shape"] = shape
+        metadata["title"] = " ".join(title)
+
+        keys_to_scape = {
+            "nucleus": ".OBSERVENUCLEUS",
+            "carrier_frequency_MHz": ".OBSERVEFREQUENCY",
+            "pulse_program_name": ".PULSESEQUENCE",
+        }
+        for key, jcamp_key in keys_to_scape.items():
+            try:
+                metadata[key] = a_dic[jcamp_key]
+                if isinstance(metadata[key], list):
+                    metadata[key] = metadata[key][0]
+
+            except Exception as e:
+                warnings.warn(
+                    f"Unable to parse {key} from {jcamp_key} in JCAMP file: {a_dic.get(jcamp_key)} - {validation_message(e)}"
+                )
+
+        if "nucleus" in metadata:
+            metadata["nucleus"] = metadata["nucleus"].replace("^", "")
+
+        try:
+            # This is a Bruker-specific extension
+            metadata["nscans"] = int(a_dic["$NS"][0])
+        except Exception:  # noqa
+            pass
+
+        serialized_df = df.to_dict() if (df is not None) else None
+        self.data["metadata"] = NMRMetadata(**metadata).model_dump()
+
+        return serialized_df, metadata
+
+    def read_jeol_nmr_data(
+        self, filename: str | Path | None = None, file_info: dict | None = None
+    ) -> tuple[dict | None, dict]:
+        """Loads a JEOL output file (.jdx) and parses it into a
+        serialized dataframe and metadata dictionary.
+
+        Parameters:
+            filename: Optional local file to use instead of the database lookup.
+            file_info: Optional file information dictionary to use for the database lookup.
+
+        Returns:
+            A tuple of the dataframe (serialized as dictionary) and the metadata
+                dictionary, or None if no compatible data is available.
+
+        """
+        location, name, ext = self._extract_file_info(filename, file_info)
+
+        if ext not in JEOL_FILE_EXTENSIONS:
+            raise RuntimeError(
+                f"Unsupported file extension for JEOL reader: {ext} (must be one of {JEOL_FILE_EXTENSIONS})"
+            )
+
+        df, a_dic, title, shape, a_udic, nscans = read_jeol_jdf_1d(location)
+
+        file_id = a_dic["header"].get("file_identifier", [])
+
+        if file_id not in ("JEOL.NMR",):
+            warnings.warn(
+                f"Unexpected file identifier: {file_id[0]}. Expected 'JEOL.NMR'. Will attempt to plot regardless."
+            )
+
+        metadata: dict[str, Any] = {}
+        metadata["processed_data_shape"] = shape
+        metadata["title"] = title
+
+        # Scrape the dictionaries that nmrglue makes for the relevant metadata
+        keys_to_scrape = {
+            "carrier_frequency_Hz": "car",
+            "nucleus": "x_domain",
+            "carrier_offset_ppm": "x_offset",
+            "recycle_delay": "relaxation_delay",
+            "pulse_program_name": "experiment",
+            "spectral_window_Hz": "x_sweep",
+        }
+        for key, jeol_key in keys_to_scrape.items():
+            try:
+                if jeol_key in a_udic[0]:
+                    metadata[key] = a_udic[0][jeol_key]
+                elif jeol_key in a_dic["header"]:
+                    metadata[key] = a_dic["header"][jeol_key]
+                elif jeol_key in a_dic["parameters"]:
+                    metadata[key] = a_dic["parameters"][jeol_key]
+                else:
+                    warnings.warn(f"Could not find {key} in JEOL file")
+            except Exception as e:
+                warnings.warn(f"Unable to parse {key} from {jeol_key} in JEOL file - {validation_message(e)}")
+
+        if "carrier_frequency_Hz" in metadata and "carrier_frequency_MHz" not in metadata:
+            # JEOL gives carrier frequency in Hz. Convert to MHz for display
+            metadata["carrier_frequency_MHz"] = float(metadata.pop("carrier_frequency_Hz")) * 1e-6
+
+        if "carrier_offset_ppm" in metadata and "carrier_offset_Hz" not in metadata:
+            # Convert carrier offset from ppm to Hz for display, using the carrier frequency if available
+            import nmrglue as ng
+
+            uc = ng.fileiobase.uc_from_udic(a_udic)
+            metadata["carrier_offset_Hz"] = float(metadata.pop("carrier_offset_ppm")) * (
+                uc.ppm_scale()[0] / uc.hz_scale()[0]
+            )
+
+        if metadata["nucleus"] == "Proton":
+            # JEOL labels proton NMR as proton, convert to 1H
+            metadata["nucleus"] = "1H"
+
+        if "nucleus" in metadata:
+            metadata["nucleus"] = metadata["nucleus"].replace("^", "")
+
+        metadata["nscans"] = nscans
+
+        serialized_df = df.to_dict() if (df is not None) else None
+        self.data["metadata"] = NMRMetadata(**metadata).model_dump()
+
+        return serialized_df, metadata
+
+    def load_nmr_data(self, file_info: dict):
+        location, name, ext = self._extract_file_info(file_info=file_info)
+
+        if ext == ".zip":
+            df, metadata = self.read_bruker_nmr_data(file_info=file_info)
+
+        elif ext in (".jdx", ".dx"):
+            df, metadata = self.read_jcamp_nmr_data(file_info=file_info)
+
+        elif ext in JEOL_FILE_EXTENSIONS:
+            df, metadata = self.read_jeol_nmr_data(file_info=file_info)
+        else:
+            raise RuntimeError(
+                f"Unsupported file extension for NMR reader: {ext} (must be one of {self.accepted_file_extensions})"
+            )
+
+        return df
+
+    def generate_nmr_plot(self, parse: bool = True):
+        """Generate an NMR plot and store processed data for the
+        data files attached to this block.
+
+        """
+        if parse:
+            if not self.data.get("file_id"):
+                return None
+
+            file_info = get_file_info_by_id(self.data["file_id"], update_if_live=True)
+            name, ext = os.path.splitext(file_info["name"])
+
+            self.processed_data = self.load_nmr_data(file_info)
+
+        processed_data_shape = self.data.get("metadata", {}).get("processed_data_shape", [])
+        if not processed_data_shape or len(processed_data_shape) > 1:
+            warnings.warn(
+                f"Plotting is only supported for 1D data, found {processed_data_shape}. Only metadata will be displayed."
+            )
+            return
+
+        if not self.processed_data:
+            self.data["bokeh_plot_data"] = None
+            warnings.warn(
+                "No compatible processed data available for plotting, only metadata will be displayed."
+            )
+            return
+
+        df = pd.DataFrame(self.processed_data)
+        df["normalized intensity"] = df.intensity / df.intensity.max()
+
+        self.data["bokeh_plot_data"] = self.make_nmr_plot(df, self.data["metadata"])
+
+    @classmethod
+    def make_nmr_plot(cls, df: pd.DataFrame, metadata: dict[str, Any]) -> str:
+        """Create a Bokeh plot for the NMR data stored in the dataframe and metadata."""
+        nucleus_label = metadata.get("nucleus") or ""
+        # replace numbers with superscripts
+        nucleus_label = nucleus_label.translate(str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹"))
+        df.rename(
+            {
+                "ppm": f"{nucleus_label} chemical shift (ppm)",
+                "hz": f"{nucleus_label} chemical shift (Hz)",
+                "intensity": "Intensity",
+                "intensity_per_scan": "Intensity per scan",
+                "normalized intensity": "Normalized intensity",
+            },
+            axis=1,
+            inplace=True,
+        )
+
+        bokeh_layout = selectable_axes_plot(
+            df,
+            x_options=[
+                f"{nucleus_label} chemical shift (ppm)",
+                f"{nucleus_label} chemical shift (Hz)",
+            ],
+            y_options=[
+                "Intensity",
+                "Intensity per scan",
+                "Normalized intensity",
+            ],
+            plot_line=True,
+            plot_points=False,
+        )
+        # Flip the x axis, per NMR convention. The figure is found by looking for
+        # the child that has an x axis at all, rather than by position: the layout
+        # also holds axis selectors and an export button, whose ordering is an
+        # implementation detail of `selectable_axes_plot`.
+        figure = next((child for child in bokeh_layout.children if hasattr(child, "x_range")), None)
+        if figure is not None:
+            figure.x_range.flipped = True
+
+        return bokeh.embed.json_item(bokeh_layout, theme=DATALAB_BOKEH_THEME)

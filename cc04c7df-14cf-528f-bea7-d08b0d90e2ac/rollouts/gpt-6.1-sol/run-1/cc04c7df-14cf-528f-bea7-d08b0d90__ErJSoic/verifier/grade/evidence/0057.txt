@@ -1,0 +1,49 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/historic/HistoricStats.java (changed against State A) ===
+@@
+41  | import lombok.Setter;
+42  | import lombok.ToString;
+43  | 
+   -| /**
+   -|  * POJO defining historic <code>Team Competition</code> stats (hourly, daily, monthly, etc.) for a {@link me.zodac.folding.api.tc.User}.
+   -|  */
+44 +| 
+45  | @NoArgsConstructor
+46  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+47  | @Getter
+@@
+59  |     private long multipliedPoints;
+60  |     private int units;
+61  | 
+   -|     /**
+   -|      * Creates an instance of {@link HistoricStats}.
+   -|      *
+   -|      * @param dateTime         the {@link LocalDateTime} of the stats
+   -|      * @param points           the points
+   -|      * @param multipliedPoints the multiplied points
+   -|      * @param units            the units
+   -|      * @return the {@link HistoricStats} instance
+   -|      */
+62 +|     
+63  |     public static HistoricStats create(final LocalDateTime dateTime, final long points, final long multipliedPoints, final int units) {
+64  |         return new HistoricStats(dateTime.truncatedTo(ChronoUnit.HOURS), points, multipliedPoints, units);
+65  |     }
+66  | 
+   -|     /**
+   -|      * Combines the values of the provided {@link HistoricStats} instances.
+   -|      *
+   -|      * <p>
+   -|      * Since each {@link me.zodac.folding.api.tc.User} may have stats on different days (meaning one may have stats on the 4th of the month, but
+   -|      * another may not have been added until the 5th), we take the key {@link LocalDateTime} from each {@link HistoricStats} and combine them into a
+   -|      * new {@link Map} with all available {@link LocalDateTime}s as the {@link Map#keySet()}.
+   -|      *
+   -|      * <p>
+   -|      * We then iterate over all instances for all users, and whenever one matches a key, we combine the results into a new {@link HistoricStats}
+   -|      * instance which is added to the output {@link Map}.
+   -|      *
+   -|      * @param allStats the {@link HistoricStats} for multiple {@link me.zodac.folding.api.tc.User}s and {@link LocalDateTime}s
+   -|      * @return a {@link Collection} of combined {@link HistoricStats}
+   -|      */
+67 +|     
+68  |     public static Collection<HistoricStats> combine(final Collection<HistoricStats> allStats) {
+69  |         final Set<LocalDateTime> keys = allStats.stream()
+70  |             .map(HistoricStats::getDateTime)

@@ -1,0 +1,45 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/leaderboard/UserCategoryLeaderboardEntry.java (changed against State A) ===
+@@
+34  | import me.zodac.folding.api.tc.User;
+35  | import me.zodac.folding.rest.api.tc.UserSummary;
+36  | 
+   -| /**
+   -|  * POJO for the {@link User} {@link me.zodac.folding.api.tc.Category} leaderboard, summarising
+   -|  * the stats for a {@link User} in a {@link me.zodac.folding.api.tc.Category}.
+   -|  */
+37 +| 
+38  | @NoArgsConstructor
+39  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+40  | @Getter
+@@
+55  |     private long diffToLeader;
+56  |     private long diffToNext;
+57  | 
+   -|     /**
+   -|      * Creates the {@link UserCategoryLeaderboardEntry} for a {@link User}.
+   -|      *
+   -|      * @param userSummary  the {@link UserSummary} for the {@link User}
+   -|      * @param rank         the rank of the {@link User} in their {@link me.zodac.folding.api.tc.Category}
+   -|      * @param diffToLeader the number of points between this {@link User} and the one in first place
+   -|      * @param diffToNext   the number of points between this {@link User} and the one a single place above
+   -|      * @return the created {@link UserCategoryLeaderboardEntry}
+   -|      */
+58 +|     
+59  |     public static UserCategoryLeaderboardEntry create(final UserSummary userSummary, final int rank, final long diffToLeader, final long diffToNext) {
+60  |         return new UserCategoryLeaderboardEntry(
+61  |             userSummary.getUser(),
+@@
+68  |         );
+69  |     }
+70  | 
+   -|     /**
+   -|      * Creates the {@link UserCategoryLeaderboardEntry} for the {@link User} in first place. The rank and diff
+   -|      * values are constant in this case.
+   -|      *
+   -|      * @param userSummary the {@link UserSummary} for the {@link User} in first
+   -|      * @return the created {@link UserCategoryLeaderboardEntry}
+   -|      */
+71 +|     
+72  |     public static UserCategoryLeaderboardEntry createLeader(final UserSummary userSummary) {
+73  |         return create(userSummary, DEFAULT_RANK, DEFAULT_DIFF, DEFAULT_DIFF);
+74  |     }

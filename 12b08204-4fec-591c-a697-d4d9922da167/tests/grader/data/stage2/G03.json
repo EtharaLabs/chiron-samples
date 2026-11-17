@@ -1,0 +1,507 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "admin-api-as-admin",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/admin/api/v1/releases/get"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Forbidden",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Forbidden",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    }
+   ],
+   "id": "admin-api-as-user",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/admin/api/v1/releases/get"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "GET",
+     "path": "/admin/api/v1/users"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Forbidden",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    }
+   ],
+   "id": "admin-api-as-manager",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a003"
+     },
+     "method": "GET",
+     "path": "/admin/api/v1/users"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Forbidden",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    }
+   ],
+   "id": "admin-api-anon",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/admin/api/v1/users"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    }
+   ],
+   "id": "admin-ui-as-user",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/admin/"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/admin/releases"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Admin Area - %ROUTE </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"6cac8fac-216a-4ac3-ac60-0c6a72750f8b\", \"email\": \"admin@localhost\", \"full_name\": \"Admin User\", \"id\": \"f67d055a-dc67-49a9-b4c4-36760d5389e5\", \"picture_id\": null, \"registration_date\": \"<now>\", \"roles\": [\"ROLE_USER\", \"ROLE_ADMIN\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"admin\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script>const gCurrentRoute = \"index\";</script> <script defer type=\"module\" src=\"/s/dist/adminPanel.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\"active nav-link\" href=\"/admin/\"><i class=\"fas fa-wrench\"></i> Admin Area</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> admin </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"m-2 min-vh-100 rounded bg-light-one shadow overflow-hidden\"> <div id=\"adminPanel\"> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Admin Area - %ROUTE </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"6cac8fac-216a-4ac3-ac60-0c6a72750f8b\", \"email\": \"admin@localhost\", \"full_name\": \"Admin User\", \"id\": \"f67d055a-dc67-49a9-b4c4-36760d5389e5\", \"picture_id\": null, \"registration_date\": \"<now>\", \"roles\": [\"ROLE_USER\", \"ROLE_ADMIN\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"admin\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script>const gCurrentRoute = \"releases\";</script> <script defer type=\"module\" src=\"/s/dist/adminPanel.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/admin/\"><i class=\"fas fa-wrench\"></i> Admin Area</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> admin </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"m-2 min-vh-100 rounded bg-light-one shadow overflow-hidden\"> <div id=\"adminPanel\"> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "admin-ui-as-admin",
+   "steps": [
+    {
+     "client": "admin",
+     "form": {
+      "password": "admin",
+      "username": "admin"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "admin",
+     "method": "GET",
+     "path": "/admin/"
+    },
+    {
+     "client": "admin",
+     "method": "GET",
+     "path": "/admin/releases"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    }
+   ],
+   "id": "impersonate-as-user",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/auth/admin/impersonate"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - User Switch </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"6cac8fac-216a-4ac3-ac60-0c6a72750f8b\", \"email\": \"admin@localhost\", \"full_name\": \"Admin User\", \"id\": \"f67d055a-dc67-49a9-b4c4-36760d5389e5\", \"picture_id\": null, \"registration_date\": \"<now>\", \"roles\": [\"ROLE_USER\", \"ROLE_ADMIN\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"admin\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/admin/\"><i class=\"fas fa-wrench\"></i> Admin Area</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> admin </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container border rounded shadow-sm bg-white\"> <h1>Users</h1> <div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "impersonate-as-admin",
+   "steps": [
+    {
+     "client": "admin",
+     "form": {
+      "password": "admin",
+      "username": "admin"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "admin",
+     "method": "GET",
+     "path": "/auth/admin/impersonate"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Forbidden",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    }
+   ],
+   "id": "admin-post-as-user",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "json": {
+      "release_name": "nope"
+     },
+     "method": "POST",
+     "path": "/admin/api/v1/release/create"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "0a11ce00-0000-4000-8000-000000000001": {
+        "email": "alice@argus.test",
+        "full_name": "Alice Tester",
+        "id": "0a11ce00-0000-4000-8000-000000000001",
+        "picture_id": null,
+        "registration_date": "2026-11-01T11:00:00.000Z",
+        "roles": [
+         "ROLE_USER"
+        ],
+        "service_user": false,
+        "username": "alice"
+       },
+       "0a11ce00-0000-4000-8000-000000000002": {
+        "email": "manny@argus.test",
+        "full_name": "Manny Manager",
+        "id": "0a11ce00-0000-4000-8000-000000000002",
+        "picture_id": null,
+        "registration_date": "2026-11-01T11:00:00.000Z",
+        "roles": [
+         "ROLE_USER",
+         "ROLE_MANAGER"
+        ],
+        "service_user": false,
+        "username": "manny"
+       },
+       "f67d055a-dc67-49a9-b4c4-36760d5389e5": {
+        "email": "admin@localhost",
+        "full_name": "Admin User",
+        "id": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "picture_id": null,
+        "registration_date": "<now>",
+        "roles": [
+         "ROLE_USER",
+         "ROLE_ADMIN",
+         "ROLE_MANAGER"
+        ],
+        "service_user": false,
+        "username": "admin"
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "admin-users-as-admin",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/admin/api/v1/users"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "arguments": [
+        "Cannot delete team \"Core Team\" as it doesn't belong to the user."
+       ],
+       "exception": "TeamManagerException",
+       "message": "Cannot delete team \"Core Team\" as it doesn't belong to the user.",
+       "trace_id": "<trace>"
+      },
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "team-delete-as-user",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token a0000000-0000-4000-8000-00000000a002"
+     },
+     "method": "DELETE",
+     "path": "/api/v1/team/0a11ce00-0000-4000-8000-000000000010/delete"
+    }
+   ]
+  }
+ ],
+ "group": "G03",
+ "name": "role-authorization"
+}

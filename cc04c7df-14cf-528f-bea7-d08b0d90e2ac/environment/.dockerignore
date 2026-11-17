@@ -1,0 +1,14 @@
+# Deny the build context by default; re-admit only what the Dockerfile copies.
+*
+!Dockerfile
+!downloads.txt
+!apt-snapshot.sh
+!fetch.sh
+!fetch-m2.sh
+!gen-metadata.py
+!settings-offline.xml
+!target.sha256
+!original.sha256
+!state-a.tar.gz
+!original/
+!original/**

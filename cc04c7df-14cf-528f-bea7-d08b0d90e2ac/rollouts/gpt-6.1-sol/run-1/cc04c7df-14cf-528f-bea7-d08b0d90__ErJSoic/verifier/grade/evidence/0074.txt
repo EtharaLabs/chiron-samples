@@ -1,0 +1,86 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/response/HistoricStatsResponseParser.java (changed against State A) ===
+@@
+33  | import me.zodac.folding.rest.api.tc.historic.HistoricStats;
+34  | import me.zodac.folding.rest.util.RestUtilConstants;
+35  | 
+   -| /**
+   -|  * Utility class used to parse a {@link HttpResponse} returned from {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender}.
+   -|  */
+36 +| 
+37  | public final class HistoricStatsResponseParser {
+38  | 
+39  |     private HistoricStatsResponseParser() {
+40  | 
+41  |     }
+42  | 
+   -|     /**
+   -|      * Returns the {@link HistoricStats} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender#getHourlyUserStats(int, Year, Month, int, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link HistoricStats}
+   -|      */
+43 +|     
+44  |     public static Collection<HistoricStats> getHourlyUserStats(final HttpResponse<String> response) {
+45  |         return convertHistoricStats(response.body());
+46  |     }
+47  | 
+   -|     /**
+   -|      * Returns the {@link HistoricStats} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender#getDailyUserStats(int, Year, Month, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link HistoricStats}
+   -|      */
+48 +|     
+49  |     public static Collection<HistoricStats> getDailyUserStats(final HttpResponse<String> response) {
+50  |         return convertHistoricStats(response.body());
+51  |     }
+52  | 
+   -|     /**
+   -|      * Returns the {@link HistoricStats} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender#getMonthlyUserStats(int, Year, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link HistoricStats}
+   -|      */
+53 +|     
+54  |     public static Collection<HistoricStats> getMonthlyUserStats(final HttpResponse<String> response) {
+55  |         return convertHistoricStats(response.body());
+56  |     }
+57  | 
+   -|     /**
+   -|      * Returns the {@link HistoricStats} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender#getHourlyTeamStats(int, Year, Month, int, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link HistoricStats}
+   -|      */
+58 +|     
+59  |     public static Collection<HistoricStats> getHourlyTeamStats(final HttpResponse<String> response) {
+60  |         return convertHistoricStats(response.body());
+61  |     }
+62  | 
+   -|     /**
+   -|      * Returns the {@link HistoricStats} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender#getDailyTeamStats(int, Year, Month, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link HistoricStats}
+   -|      */
+63 +|     
+64  |     public static Collection<HistoricStats> getDailyTeamStats(final HttpResponse<String> response) {
+65  |         return convertHistoricStats(response.body());
+66  |     }
+67  | 
+   -|     /**
+   -|      * Returns the {@link HistoricStats} retrieved by
+   -|      * {@link me.zodac.folding.client.java.request.HistoricStatsRequestSender#getMonthlyTeamStats(int, Year, String)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link HistoricStats}
+   -|      */
+68 +|     
+69  |     public static Collection<HistoricStats> getMonthlyTeamStats(final HttpResponse<String> response) {
+70  |         return convertHistoricStats(response.body());
+71  |     }

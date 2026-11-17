@@ -1,0 +1,29 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/PostgresDbManager.java (changed against State A) ===
+@@
+77  | import org.jooq.SQLDialect;
+78  | import org.jooq.impl.DSL;
+79  | 
+   -| /**
+   -|  * Implementation of {@link DbManager} for <b>PostgreSQL</b> databases.
+   -|  *
+   -|  * <p>
+   -|  * Uses <b>jOOQ</b> for code generation for the DB tables/schemas, rather than direct SQL queries. See existing methods for examples.
+   -|  */
+80 +| 
+81  | public final class PostgresDbManager implements DbManager {
+82  | 
+83  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+89  |         this.dataSource = dataSource;
+90  |     }
+91  | 
+   -|     /**
+   -|      * Creates an instance of {@link PostgresDbManager}.
+   -|      *
+   -|      * @param dataSource the {@link DataSource} for this instance
+   -|      * @return the created {@link PostgresDbManager}
+   -|      */
+92 +|     
+93  |     public static PostgresDbManager create(final DataSource dataSource) {
+94  |         return new PostgresDbManager(dataSource);
+95  |     }

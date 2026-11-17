@@ -1,0 +1,5 @@
+expected:
+Yosys 0.66+post (git sha1 8125af88d61c61dc47c23537abb32e87bd1206e8, g++ 11.5.0-1ubuntu1~24.04.1 -fPIC -O3)
+
+observed:
+Yosys 0.66+post (git sha1 8125af88d61c61dc47c23537abb32e87bd1206e8, g++ 11.5.0 -fPIC -O3)

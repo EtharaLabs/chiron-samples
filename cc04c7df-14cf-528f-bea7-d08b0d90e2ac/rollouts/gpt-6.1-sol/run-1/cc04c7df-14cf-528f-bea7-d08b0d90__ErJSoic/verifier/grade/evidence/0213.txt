@@ -1,0 +1,92 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/user/UserTeamChangeHandler.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc.user;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import me.zodac.folding.state.ParsingStateManager;
+32 +| import me.zodac.folding.api.state.ParsingState;
+33 +| import me.zodac.folding.api.tc.Team;
+34 +| import me.zodac.folding.api.tc.User;
+35 +| import me.zodac.folding.api.tc.stats.RetiredUserTcStats;
+36 +| import me.zodac.folding.api.tc.stats.UserStats;
+37 +| import me.zodac.folding.api.tc.stats.UserTcStats;
+38 +| import me.zodac.folding.api.util.ProcessingType;
+39 +| import me.zodac.folding.service.api.FoldingStatsCore;
+40 +| import me.zodac.folding.service.tc.scheduled.StatsScheduler;
+41 +| import org.apache.logging.log4j.LogManager;
+42 +| import org.apache.logging.log4j.Logger;
+43 +| 
+44 +| @Service
+45 +| public class UserTeamChangeHandler {
+46 +| 
+47 +|     private static final Logger LOGGER = LogManager.getLogger();
+48 +| 
+49 +|     @Autowired
+50 +|     @Lazy
+51 +|     private FoldingStatsCore foldingStatsCore;
+52 +| 
+53 +|     @Autowired
+54 +|     @Lazy
+55 +|     private StatsScheduler statsScheduler;
+56 +| 
+57 +|     public boolean isUserTeamChange(final User updatedUser, final User existingUser) {
+58 +|         if (updatedUser.getTeam().getId() != existingUser.getTeam().getId()) {
+59 +|             LOGGER.info("User '{}' (ID: {}) moved from team '{}' -> '{}'", existingUser.getDisplayName(), existingUser.getId(),
+60 +|                 updatedUser.getTeam().getTeamName(), existingUser.getTeam().getTeamName());
+61 +|             return true;
+62 +|         }
+63 +| 
+64 +|         return false;
+65 +|     }
+66 +| 
+67 +|     public void handleTeamChange(final User userWithTeamChange, final Team oldTeam) {
+68 +|         if (ParsingStateManager.current() == ParsingState.DISABLED) {
+69 +|             LOGGER.debug("Received a team change for user '{}' (ID: {}), but system is not currently parsing stats",
+70 +|                 userWithTeamChange.getDisplayName(), userWithTeamChange.getId());
+71 +|             return;
+72 +|         }
+73 +| 
+74 +|         // Add user's current stats as retired stats for old team
+75 +|         final UserTcStats userStats = foldingStatsCore.getHourlyTcStats(userWithTeamChange);
+76 +|         final RetiredUserTcStats retiredUserTcStats =
+77 +|             RetiredUserTcStats.createWithoutId(oldTeam.getId(), userWithTeamChange.getDisplayName(), userStats);
+78 +|         final RetiredUserTcStats createdRetiredUserTcStats = foldingStatsCore.createRetiredUserStats(retiredUserTcStats);
+79 +|         LOGGER.info("User '{}' (ID: {}) retired with retired stats ID: {}", userWithTeamChange.getDisplayName(), userWithTeamChange.getId(),
+80 +|             createdRetiredUserTcStats.getRetiredUserId());
+81 +| 
+82 +|         // Reset user stats
+83 +|         final UserStats userTotalStats = foldingStatsCore.getTotalStats(userWithTeamChange);
+84 +|         foldingStatsCore.createInitialStats(userTotalStats);
+85 +| 
+86 +|         // Pull stats to update teams
+87 +|         statsScheduler.manualTeamCompetitionStatsParsing(ProcessingType.SYNCHRONOUS);
+88 +| 
+89 +|         LOGGER.info("Handled team change for user '{}' (ID: {})", userWithTeamChange.getDisplayName(), userWithTeamChange.getId());
+90 +|     }
+91 +| }

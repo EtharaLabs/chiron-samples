@@ -1,0 +1,175 @@
+{
+ "id": "s3_family_38",
+ "source": "f057_base64_padding_and_whitespace",
+ "steps": [
+  {
+   "case": "missing_padding",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q"
+    }
+   }
+  },
+  {
+   "case": "extra_padding",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q=="
+    }
+   }
+  },
+  {
+   "case": "embedded_space",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpz aHJvb3Q="
+    }
+   }
+  },
+  {
+   "case": "base64url_alphabet",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q="
+    }
+   }
+  },
+  {
+   "case": "correctly_padded_control",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": "admin"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "missing_padding",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q"
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "extra_padding",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q=="
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "embedded_space",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDpz aHJvb3Q="
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "base64url_alphabet",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q="
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "correctly_padded_control",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "Base64 payloads that a strict decoder rejects (missing padding, extra padding, embedded space) versus ones it accepts: the rejection path throws inside the interceptor and therefore grants access."
+}

@@ -1,0 +1,36 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/gen/Sequences.java (changed against State A) ===
+@@
+9  | import org.jooq.impl.SQLDataType;
+10  | 
+11  | 
+   -| /**
+   -|  * Convenience access to all sequences in public.
+   -|  */
+12 +| 
+13  | @SuppressWarnings({ "all", "unchecked", "rawtypes" })
+14  | public class Sequences {
+15  | 
+   -|     /**
+   -|      * The sequence <code>public.hardware_hardware_id_seq</code>
+   -|      */
+16 +|     
+17  |     public static final Sequence<Integer> HARDWARE_HARDWARE_ID_SEQ = Internal.createSequence("hardware_hardware_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
+18  | 
+   -|     /**
+   -|      * The sequence <code>public.retired_user_stats_retired_user_id_seq</code>
+   -|      */
+19 +|     
+20  |     public static final Sequence<Integer> RETIRED_USER_STATS_RETIRED_USER_ID_SEQ = Internal.createSequence("retired_user_stats_retired_user_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
+21  | 
+   -|     /**
+   -|      * The sequence <code>public.teams_team_id_seq</code>
+   -|      */
+22 +|     
+23  |     public static final Sequence<Integer> TEAMS_TEAM_ID_SEQ = Internal.createSequence("teams_team_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
+24  | 
+   -|     /**
+   -|      * The sequence <code>public.users_user_id_seq</code>
+   -|      */
+25 +|     
+26  |     public static final Sequence<Integer> USERS_USER_ID_SEQ = Internal.createSequence("users_user_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
+27  | }

@@ -1,0 +1,66 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/StringUtils.java (changed against State A) ===
+@@
+29  | import java.util.Locale;
+30  | import java.util.Set;
+31  | 
+   -| /**
+   -|  * Convenience methods to assist with {@link String}s.
+   -|  */
+32 +| 
+33  | public final class StringUtils {
+34  | 
+35  |     private static final Set<String> VALID_URL_SCHEMES = Set.of("http", "https");
+@@
+38  | 
+39  |     }
+40  | 
+   -|     /**
+   -|      * Checks if the provided {@link String} is <code>null</code>, and if it is not, that it is a valid URL.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> Only supports <b>HTTP</b> or <b>HTTPS</b> URLs.
+   -|      *
+   -|      * @param input the {@link String} to check
+   -|      * @return <code>true</code> if the {@link String} is either empty, or a valid URL
+   -|      */
+41 +|     
+42  |     public static boolean isBlankOrValidUrl(final String input) {
+43  |         if (isBlank(input)) {
+44  |             return true;
+@@
+47  |         return isValidUrl(input);
+48  |     }
+49  | 
+   -|     /**
+   -|      * Checks if the provided {@link String} is <code>null</code>, or {@link String#isBlank()}.
+   -|      *
+   -|      * @param input the {@link String} to check
+   -|      * @return <code>true</code> if the {@link String} is either <code>null</code> or {@link String#isBlank()}
+   -|      */
+50 +|     
+51  |     public static boolean isBlank(final String input) {
+52  |         return input == null || input.isBlank();
+53  |     }
+54  | 
+   -|     /**
+   -|      * Checks if the provided {@link String} is not <code>null</code>, and is not {@link String#isBlank()}.
+   -|      *
+   -|      * @param input the {@link String} to check
+   -|      * @return <code>true</code> if the {@link String} is neither <code>null</code> nor {@link String#isBlank()}
+   -|      */
+55 +|     
+56  |     public static boolean isNotBlank(final String input) {
+57  |         return !isBlank(input);
+58  |     }
+59  | 
+   -|     /**
+   -|      * Checks if the two provided {@link String}s are not <code>null</code>, and are not {@link String#isBlank()}.
+   -|      *
+   -|      * @param first  the first {@link String} to check
+   -|      * @param second the second {@link String} to check
+   -|      * @return <code>true</code> if the {@link String}s are neither <code>null</code> nor {@link String#isBlank()}
+   -|      */
+60 +|     
+61  |     public static boolean isNeitherBlank(final String first, final String second) {
+62  |         return isNotBlank(first) && isNotBlank(second);
+63  |     }

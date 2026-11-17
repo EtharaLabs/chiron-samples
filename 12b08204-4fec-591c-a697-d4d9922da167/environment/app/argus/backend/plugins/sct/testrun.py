@@ -1,0 +1,524 @@
+from enum import Enum
+import logging
+from datetime import UTC, datetime, timezone
+from dataclasses import dataclass, field
+from threading import Lock
+from typing import Annotated, ClassVar, Optional
+from uuid import UUID, uuid4
+
+from pydantic import Field
+from coodie import Ascii, ClusteringKey, Double, Frozen, Indexed, PrimaryKey
+from coodie.exceptions import DocumentNotFound
+from coodie.sync import Document
+
+from argus.backend.db import ScyllaCluster
+from argus.backend.models.web import ArgusRelease, ArgusTest, ReleaseDistinctVersions, ReleaseDistinctImages
+from argus.backend.plugins.core import PluginModelBase
+from argus.backend.plugins.sct.resource_setup import ResourceSetup
+from argus.backend.plugins.sct.udt import (
+    CloudInstanceDetails,
+    CloudResource,
+    CloudSetupDetails,
+    EventsBySeverity,
+    NemesisRunInfo,
+    NodeDescription,
+    PackageVersion,
+    PerformanceHDRHistogram
+)
+from argus.backend.util.common import chunk, get_build_number
+from argus.common.enums import ResourceState
+
+LOGGER = logging.getLogger(__name__)
+SCT_REGION_PROPERTY_MAP = {
+    "aws": "region_name",
+    "aws-siren": "region_name",
+    "k8s-eks": "region_name",
+    "gce": "gce_datacenter",
+    "gce-siren": "gce_datacenter",
+    "k8s-gke": "gce_datacenter",
+    "azure": "azure_region_name",
+    "oci": "oci_region_name",
+    "default": "region_name",
+}
+
+
+class SubtestType(str, Enum):
+    GEMINI = "gemini"
+    PERFORMANCE = "performance"
+
+
+@dataclass(init=True, repr=True, frozen=True)
+class SCTTestRunSubmissionRequest():
+    schema_version: str
+    run_id: str
+    job_name: str
+    job_url: str
+    started_by: str
+    commit_id: str
+    sct_config: dict | None
+    origin_url: Optional[str] = field(default=None)
+    branch_name: Optional[str] = field(default=None)
+    runner_public_ip: Optional[str] = field(default=None)
+    runner_private_ip: Optional[str] = field(default=None)
+
+
+class SCTEventSeverity(str, Enum):
+    CRITICAL = "CRITICAL"
+    ERROR = "ERROR"
+    WARNING = "WARNING"
+    NORMAL = "NORMAL"
+    DEBUG = "DEBUG"
+
+
+class StressCommand(Document):
+    run_id: Annotated[Optional[UUID], PrimaryKey()] = None
+    ts: Annotated[Optional[datetime], ClusteringKey(order="DESC")] = Field(
+        default_factory=lambda: datetime.now(tz=UTC))
+    cmd: Optional[str] = None
+    log_name: Optional[str] = None
+    node_name: Optional[str] = None
+
+    class Settings:
+        name = "stress_command"
+
+
+class SCTEvent(Document):
+    run_id: Annotated[Optional[UUID], PrimaryKey(partition_key_index=0)] = None
+    severity: Annotated[Optional[str], PrimaryKey(partition_key_index=1)] = None
+    ts: Annotated[Optional[datetime], ClusteringKey()] = None
+    event_id: Annotated[Optional[UUID], Indexed()] = Field(default_factory=uuid4)
+    event_type: Optional[str] = None
+    message: Optional[str] = None
+    duplicate_id: Optional[UUID] = None
+    summary: Optional[str] = None  # LLM-generated summary; null until/unless summarized (see argusAI)
+
+    # DB Log columns
+    node: Optional[str] = None
+    received_timestamp: Optional[datetime] = None  # SCT DB message timestamp
+
+    # Nemesis columns
+    nemesis_name: Optional[str] = None
+    duration: Optional[float] = None
+    target_node: Optional[str] = None
+    nemesis_status: Optional[str] = None
+
+    # Misc
+    known_issue: Optional[str] = None
+
+    class Settings:
+        name = "sct_event"
+
+
+class SCTUnprocessedEvent(Document):
+    """Table to track events that need embedding generation."""
+    run_id: Annotated[Optional[UUID], PrimaryKey()] = None
+    severity: Annotated[Optional[str], ClusteringKey(clustering_key_index=0)] = None
+    ts: Annotated[Optional[datetime], ClusteringKey(order="DESC", clustering_key_index=1)] = None
+
+    class Settings:
+        name = "sct_unprocessed_events"
+
+
+class SCTNemesis(Document):
+    run_id: Annotated[Optional[UUID], PrimaryKey()] = None
+    start_time: Annotated[Optional[int], ClusteringKey()] = None
+    class_name: Optional[str] = None
+    name: Optional[str] = None
+    duration: Optional[int] = None
+    target_node: Optional[NodeDescription] = None
+    status: Optional[str] = None
+    end_time: Optional[int] = None
+    stack_trace: Optional[str] = None
+
+    class Settings:
+        name = "sct_nemesis"
+
+
+class SCTResource(Document):
+    run_id: Annotated[Optional[UUID], PrimaryKey()] = None
+    name: Annotated[Optional[str], ClusteringKey()] = None
+    state: Optional[str] = Field(default=ResourceState.RUNNING.value)
+    resource_type: Optional[str] = None
+    instance_info: Optional[CloudInstanceDetails] = None
+
+    class Settings:
+        name = "sct_resource"
+
+
+class SCTTestRun(PluginModelBase):
+    _plugin_name: ClassVar[str] = "scylla-cluster-tests"
+
+    class Settings:
+        name = "sct_test_run"
+
+    # Test Details
+    test_name: Optional[str] = None
+    stress_duration: Optional[float] = None
+    scm_revision_id: Optional[str] = None
+    branch_name: Optional[str] = None
+    origin_url: Optional[str] = None
+    started_by: Optional[str] = None
+    config_files: list[str] = Field(default_factory=list)
+    packages: list[PackageVersion] = Field(default_factory=list)
+    version_source: Optional[str] = None
+    yaml_test_duration: Optional[int] = None
+
+    # Test Preset Resources
+    sct_runner_host: Optional[CloudInstanceDetails] = None
+    region_name: list[str] = Field(default_factory=list)
+    cloud_setup: Optional[CloudSetupDetails] = None
+
+    # Test Runtime Resources
+    allocated_resources: list[CloudResource] = Field(default_factory=list)
+
+    # Test Results
+    events: list[EventsBySeverity] = Field(default_factory=list)
+    nemesis_data: list[NemesisRunInfo] = Field(default_factory=list)
+    nemesis_stats: dict[str, int] = Field(default_factory=dict)
+    screenshots: list[str] = Field(default_factory=list)
+
+    # Subtest
+    subtest_name: Optional[str] = None
+
+    # Gemini-related fields
+    oracle_nodes_count: Optional[int] = None
+    oracle_node_ami_id: Optional[str] = None
+    oracle_node_instance_type: Optional[str] = None
+    oracle_node_scylla_version: Optional[str] = None
+    gemini_command: Optional[str] = None
+    gemini_version: Optional[str] = None
+    gemini_status: Optional[str] = None
+    gemini_seed: Optional[str] = None
+    gemini_write_ops: Optional[int] = None
+    gemini_write_errors: Optional[int] = None
+    gemini_read_ops: Optional[int] = None
+    gemini_read_errors: Optional[int] = None
+
+    # Performance fields
+    perf_op_rate_average: Annotated[Optional[float], Double()] = None
+    perf_op_rate_total: Annotated[Optional[float], Double()] = None
+    perf_avg_latency_99th: Annotated[Optional[float], Double()] = None
+    perf_avg_latency_mean: Annotated[Optional[float], Double()] = None
+    perf_total_errors: Annotated[Optional[float], Double()] = None
+    stress_cmd: Optional[str] = None
+
+    histograms: list[Annotated[dict[str, PerformanceHDRHistogram], Frozen()]] = Field(default_factory=list)
+    test_method: Annotated[Optional[str], Ascii()] = None
+
+    @classmethod
+    def _stats_query(cls) -> str:
+        return ("SELECT id, test_id, group_id, release_id, status, start_time, build_job_url, build_id, nemesis_stats, "
+                f"assignee, end_time, investigation_status, heartbeat, build_number, scylla_version, cloud_setup FROM {cls.table_name()} WHERE build_id IN ? PER PARTITION LIMIT 15")
+
+    @classmethod
+    def load_test_run(cls, run_id: UUID) -> 'SCTTestRun':
+        return cls.get(id=run_id)
+
+    @classmethod
+    def submit_run(cls, request_data: dict) -> 'SCTTestRun':
+        req = SCTTestRunSubmissionRequest(**request_data)
+        run = cls.from_sct_config(req=req)
+        run.invalidate_release_snapshot()
+        run.index_image(run)
+        return run
+
+    @classmethod
+    def get_distinct_product_versions(cls, release: ArgusRelease) -> list[str]:
+        rows = list(ReleaseDistinctVersions.find(release_id=release.id).all())
+        if rows:
+            return sorted([r.version for r in rows], reverse=True)
+        # Fallback: index not yet populated — scan GSI directly
+        cluster = ScyllaCluster.get()
+        statement = cluster.prepare(f"SELECT scylla_version FROM {cls.table_name()} WHERE release_id = ?")
+        result = cluster.session.execute(query=statement, parameters=(release.id,))
+        unique_versions = {r["scylla_version"] for r in result if r["scylla_version"]}
+        return sorted(list(unique_versions), reverse=True)
+
+    @classmethod
+    def get_version_data_for_release(cls, release_name: str):
+        cluster = ScyllaCluster.get()
+        release = ArgusRelease.get(name=release_name)
+        query = cluster.prepare(f"SELECT scylla_version, packages, status FROM {
+                                cls.table_name()} WHERE release_id = ?")
+        rows = cluster.session.execute(query=query, parameters=(release.id,))
+
+        return list(rows)
+
+    @staticmethod
+    def get_image(row: dict):
+        if cs := row.get("cloud_setup"):
+            return cs.db_node.image_id
+
+    @classmethod
+    def get_distinct_cloud_images_for_release(cls, release: ArgusRelease):
+        rows = list(ReleaseDistinctImages.find(release_id=release.id).all())
+        if rows:
+            return sorted([r.image_id for r in rows], reverse=True)
+        # Fallback: index not yet populated — scan GSI + deserialize UDTs directly
+        cluster = ScyllaCluster.get()
+        statement = cluster.prepare(f"SELECT cloud_setup FROM {cls.table_name()} WHERE release_id = ?")
+        result = cluster.session.execute(query=statement, parameters=(release.id,))
+        unique_images = {cls.get_image(r) for r in result if cls.get_image(r)}
+        return sorted(list(unique_images), reverse=True)
+
+    @classmethod
+    def get_distinct_cloud_images_for_view(cls, tests: list[ArgusTest]):
+        cluster = ScyllaCluster.get()
+        statement = cluster.prepare(f"SELECT cloud_setup FROM {
+                                    cls.table_name()} WHERE build_id IN ?")
+        futures = []
+        for batch in chunk(tests):
+            futures.append(cluster.session.execute_async(query=statement,
+                           parameters=([t.build_system_id for t in batch],)))
+
+        rows = []
+        for future in futures:
+            rows.extend(future.result())
+        unique_images = {cls.get_image(r) for r in rows if cls.get_image(r)}
+
+        return sorted(list(unique_images), reverse=True)
+
+    @classmethod
+    def get_perf_results_for_test_name(cls, build_id: str, start_time: float, test_name: str):
+        cluster = ScyllaCluster.get()
+        query = cluster.prepare(f"SELECT build_id, packages, scylla_version, test_name, perf_op_rate_average, perf_op_rate_total, "
+                                "perf_avg_latency_99th, perf_avg_latency_mean, perf_total_errors, id, start_time, build_job_url, build_number"
+                                f" FROM {cls.table_name()} WHERE build_id = ? AND start_time < ? AND test_name = ? ALLOW FILTERING")
+        rows = cluster.session.execute(
+            query=query, parameters=(build_id, start_time, test_name))
+
+        return list(rows)
+
+    @classmethod
+    def init_sct_run(cls, req: SCTTestRunSubmissionRequest):
+        run = cls()
+        run.build_id = req.job_name
+        run.assign_categories()
+        try:
+            run.assignee = run.get_scheduled_assignee()
+        except DocumentNotFound:
+            run.assignee = None
+        run.start_time = datetime.now(timezone.utc)
+        run.id = UUID(req.run_id)
+        run.scm_revision_id = req.commit_id
+        if req.origin_url:
+            run.origin_url = req.origin_url
+            run.branch_name = req.branch_name
+        run.started_by = req.started_by
+        run.build_job_url = req.job_url
+        run.build_number = get_build_number(req.job_url)
+
+        return run
+
+    @classmethod
+    def from_sct_config(cls, req: SCTTestRunSubmissionRequest):
+        try:
+            run = cls.get(id=UUID(req.run_id) if isinstance(req.run_id, str) else req.run_id)
+        except DocumentNotFound:
+            run = cls.init_sct_run(req)
+            run.save()
+
+        if req.sct_config:
+            backend = req.sct_config.get("cluster_backend")
+            if duration_override := req.sct_config.get("stress_duration"):
+                run.stress_duration = float(duration_override)
+            region_key = SCT_REGION_PROPERTY_MAP.get(
+                backend, SCT_REGION_PROPERTY_MAP["default"])
+            raw_regions = req.sct_config.get(region_key) or "undefined_region"
+            regions = raw_regions.split() if isinstance(raw_regions, str) else raw_regions
+            primary_region = regions[0]
+            if req.runner_public_ip:  # NOTE: Legacy support, not needed otherwise
+                run.sct_runner_host = CloudInstanceDetails(
+                    public_ip=req.runner_public_ip,
+                    private_ip=req.runner_private_ip,
+                    provider=backend,
+                    region=primary_region,
+                )
+            run.cloud_setup = ResourceSetup.get_resource_setup(
+                backend=backend, sct_config=req.sct_config)
+
+            run.config_files = req.sct_config.get("config_files")
+            run.region_name = regions
+            run.test_method = req.sct_config.get("test_method")
+            run.save()
+
+        return run
+
+    def get_resources(self) -> list[SCTResource]:
+        return list(SCTResource.find(run_id=self.id).all())
+
+    def get_nemeses(self) -> list[SCTNemesis]:
+        return list(SCTNemesis.find(run_id=self.id).all())
+
+    @classmethod
+    def get_stress_commands(cls, run_id: str) -> list[StressCommand]:
+        return list(StressCommand.find(run_id=UUID(run_id) if isinstance(run_id, str) else run_id).all())
+
+    def add_stress_command(self, cmd: str, ts: float, log_name: str, loader_name: str):
+        s = StressCommand()
+        s.run_id = self.id
+        s.ts = datetime.fromtimestamp(ts)
+        s.cmd = cmd
+        s.log_name = log_name
+        s.node_name = loader_name
+
+        s.save()
+        return True
+
+    def get_events_legacy(self) -> list[EventsBySeverity]:
+        """
+            Deprecated. To be replaced by new events system.
+        """
+        return self._get_events_legacy()
+
+    def _get_events_legacy(self) -> list[EventsBySeverity]:
+        return self.events
+
+    @classmethod
+    def get_events_limited(cls, run_id: UUID, before: datetime | None = None, after: datetime | None = None, severities: list[SCTEventSeverity] = None, per_partition_limit: int = 100) -> list[dict]:
+        db = ScyllaCluster.get()
+        query = f"SELECT * FROM {SCTEvent.table_name()
+                                 } WHERE run_id = ? AND severity IN ?"
+        params = [run_id]
+        if severities:
+            severity_filter = [s.value for s in severities]
+        else:
+            severity_filter = [s.value for s in list(SCTEventSeverity)]
+        params.append(severity_filter)
+        if before:
+            query += " AND ts <= ?"
+            params.append(before)
+        if after:
+            query += " AND ts >= ?"
+            params.append(after)
+        query += " PER PARTITION LIMIT ?"
+        params.append(per_partition_limit)
+        prepared = db.prepare(query)
+
+        result = db.session.execute(prepared, parameters=params).all()
+
+        return sorted(list(result), key=lambda evt: evt["ts"])
+
+    def get_all_events(self):
+        return SCTEvent.find(run_id=self.id, severity__in=[s.value for s in list(SCTEventSeverity)]).all()
+
+    def get_events_by_severity(self, severity: SCTEventSeverity | list[SCTEventSeverity]):
+        if isinstance(severity, list):
+            return SCTEvent.find(run_id=self.id, severity__in=[s.value for s in severity]).all()
+        else:
+            return SCTEvent.find(run_id=self.id, severity=severity.value).all()
+
+    def submit_product_version(self, version: str):
+        if not self.version_source:
+            self.scylla_version = version
+        try:
+            new_assignee = self.get_assignment(version)
+        except DocumentNotFound:
+            new_assignee = None
+        if new_assignee:
+            self.assignee = new_assignee
+        self.index_version()
+
+    def finish_run(self, payload: dict = None):
+        end_time = payload.get("end_time") if payload else None
+        if end_time is not None:
+            self.end_time = datetime.utcfromtimestamp(end_time)
+        else:
+            self.end_time = datetime.utcnow()
+        self.invalidate_release_snapshot()
+        self.index_version()
+        self.index_image(self)
+
+    def submit_logs(self, logs: list[dict]):
+        for log in logs:
+            if any(existing[0] == log["log_name"] for existing in self.logs):
+                continue
+            self.logs.append((log["log_name"], log["log_link"]))
+
+    def add_screenshot(self, screenshot_link: str):
+        self.screenshots.append(screenshot_link)
+
+    def update_nemesis_stats(self, key: str):
+        stats = dict(self.nemesis_stats) if self.nemesis_stats else {}
+        val = stats.get(key, 0)
+        val += 1
+        stats[key] = val
+        self.nemesis_stats = stats
+
+    def _add_new_event_type(self, event: EventsBySeverity):
+        self.events.append(event)
+
+    def _collect_event_message(self, event: EventsBySeverity, message: str):
+        if len(event.last_events) >= 100:
+            event.last_events = event.last_events[1:]
+
+        event.event_amount += 1
+        event.last_events.append(message)
+
+    def add_event(self, event_severity: str, event_message: str):
+        try:
+            event = next(filter(lambda v: v.severity ==
+                         event_severity, self.events))
+        except StopIteration:
+            event = EventsBySeverity(
+                severity=event_severity, event_amount=0, last_events=[])
+            self._add_new_event_type(event)
+
+        self._collect_event_message(event, event_message)
+
+    def sut_timestamp(self, sut_package_name) -> float:
+        """converts scylla-server date to timestamp and adds revision in sub-seconds precision to differentiate
+        scylla versions from the same day. It's not perfect, but we don't know exact version time."""
+
+        for sut_name in [f"{sut_package_name}-upgraded",
+                         f"{sut_package_name}-upgrade-target",
+                         sut_package_name,
+                         f"{sut_package_name}-target"
+                         ]:
+            scylla_package = next(
+                (pkg for pkg in self.packages if pkg.name == sut_name), None)
+            if scylla_package:
+                break
+
+        if scylla_package:
+            return (datetime.strptime(scylla_package.date, '%Y%m%d').replace(tzinfo=timezone.utc).timestamp()
+                    + int(scylla_package.revision_id, 16) % 1000000 / 1000000)
+        else:
+            raise ValueError(
+                f"{sut_package_name} package not found in packages - cannot determine SUT timestamp")
+
+    @classmethod
+    def get_run_response(cls, run_id: UUID) -> dict | None:
+        try:
+            run = cls.get(id=run_id)
+        except DocumentNotFound:
+            return None
+        response = run.model_dump()
+        response["junit_reports"] = list(
+            SCTJunitReports.find(test_id=run_id).all())
+        response["nemesis_data"] = list(SCTNemesis.find(run_id=run.id).all())
+        response["allocated_resources"] = list(
+            SCTResource.find(run_id=run_id).all())
+        return response
+
+    @staticmethod
+    def index_image(run: 'SCTTestRun') -> None:
+        if not run.release_id:
+            return
+        try:
+            image_id = run.cloud_setup and run.cloud_setup.db_node and run.cloud_setup.db_node.image_id
+            if not image_id:
+                return
+            ReleaseDistinctImages.create(release_id=run.release_id, image_id=image_id)
+        except Exception:
+            LOGGER.warning("Failed to index image for release %s", run.release_id, exc_info=True)
+
+
+class SCTJunitReports(Document):
+    test_id: Annotated[Optional[UUID], PrimaryKey()] = None
+    file_name: Annotated[Optional[str], ClusteringKey()] = None
+    report: Optional[str] = None
+
+    class Settings:
+        # cqlengine collapsed the consecutive capitals when deriving the name
+        name = "sctjunit_reports"

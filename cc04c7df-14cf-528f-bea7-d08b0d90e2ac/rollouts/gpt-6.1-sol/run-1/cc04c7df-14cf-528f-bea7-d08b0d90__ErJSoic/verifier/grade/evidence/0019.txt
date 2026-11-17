@@ -1,0 +1,38 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/stats/FoldingStatsDetails.java (changed against State A) ===
+@@
+31  | import lombok.ToString;
+32  | import me.zodac.folding.api.tc.User;
+33  | 
+   -| /**
+   -|  * Simple POJO encapsulating the username and passkey for a Folding@Home user.
+   -|  */
+34 +| 
+35  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+36  | @Getter
+37  | @EqualsAndHashCode
+@@
+41  |     private final String foldingUserName;
+42  |     private final String passkey;
+43  | 
+   -|     /**
+   -|      * Creates a {@link FoldingStatsDetails}.
+   -|      *
+   -|      * @param foldingUserName the Folding@Home username
+   -|      * @param passkey         the passkey for the user
+   -|      * @return the created {@link FoldingStatsDetails}
+   -|      */
+44 +|     
+45  |     public static FoldingStatsDetails create(final String foldingUserName, final String passkey) {
+46  |         return new FoldingStatsDetails(foldingUserName, passkey);
+47  |     }
+48  | 
+   -|     /**
+   -|      * Creates a {@link FoldingStatsDetails}.
+   -|      *
+   -|      * @param user the {@link User} from which we can get the Folding@Home username and passkey
+   -|      * @return the created {@link FoldingStatsDetails}
+   -|      */
+49 +|     
+50  |     public static FoldingStatsDetails createFromUser(final User user) {
+51  |         return create(user.getFoldingUserName(), user.getPasskey());
+52  |     }

@@ -1,0 +1,47 @@
+#!/bin/bash
+# argus-original sync|start|stop|status|seed
+# The original Flask application (State A) on its own wheel set, runnable as the behavioural oracle.
+# It serves on http://127.0.0.1:8010 under uWSGI from /opt/argus-original, with its own keyspace
+# argus_original on the local database (start that first with: argus-db start).
+set -euo pipefail
+root=/opt/argus-original
+venv=$root/.venv
+home="${ARGUS_ORIGINAL_HOME:-$HOME/.argus-original}"
+port="${ARGUS_ORIGINAL_PORT:-8010}"
+pidfile="$home/uwsgi.pid"
+mkdir -p "$home/metrics"
+export CQLENG_ALLOW_SCHEMA_MANAGEMENT=1 PROMETHEUS_MULTIPROC_DIR="$home/metrics" PYTHONDONTWRITEBYTECODE=1
+running() { [[ -f "$pidfile" ]] && kill -0 "$(cat "$pidfile")" 2>/dev/null; }
+keyspace() {
+  /usr/bin/cqlsh -u cassandra -p cassandra -e \
+    "CREATE KEYSPACE IF NOT EXISTS argus_original WITH replication = {'class': 'NetworkTopologyStrategy', 'replication_factor': 1};
+     CREATE KEYSPACE IF NOT EXISTS argus_tablets WITH replication = {'class': 'NetworkTopologyStrategy', 'replication_factor': 1} AND tablets = {'enabled': true};"
+}
+case "${1:-status}" in
+  sync)
+    keyspace
+    cd "$root" && exec "$venv/bin/flask" --app argus_backend:argus_app cli sync-models ;;
+  seed)
+    shift; cd "$root" && PYTHONPATH="$root" exec "$venv/bin/python" dev-db/seed_data.py "$@" ;;
+  start)
+    if running; then echo "argus-original: already running on 127.0.0.1:$port"; exit 0; fi
+    cd "$root"
+    "$venv/bin/uwsgi" --http-socket "127.0.0.1:$port" --master --processes 1 --threads 100 \
+      --enable-threads --lazy-apps --single-interpreter --manage-script-name \
+      --mount /=argus_backend:argus_app --buffer-size 48000 --need-app \
+      --env "PROMETHEUS_MULTIPROC_DIR=$home/metrics" \
+      --pidfile "$pidfile" --daemonize "$home/uwsgi.log"
+    for _ in $(seq 1 60); do
+      if "$venv/bin/python" -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:$port/auth/login').status == 200 else 1)" 2>/dev/null; then
+        echo "argus-original: serving on http://127.0.0.1:$port"; exit 0
+      fi
+      sleep 1
+    done
+    echo "argus-original: not serving after 60 s; see $home/uwsgi.log" >&2; exit 1 ;;
+  stop)
+    if running; then "$venv/bin/uwsgi" --stop "$pidfile" || true; fi
+    rm -f "$pidfile"; echo "argus-original: stopped" ;;
+  status)
+    if running; then echo "argus-original: running on 127.0.0.1:$port"; else echo "argus-original: not running"; exit 1; fi ;;
+  *) echo "usage: argus-original sync|seed [seed_data.py options]|start|stop|status" >&2; exit 2 ;;
+esac

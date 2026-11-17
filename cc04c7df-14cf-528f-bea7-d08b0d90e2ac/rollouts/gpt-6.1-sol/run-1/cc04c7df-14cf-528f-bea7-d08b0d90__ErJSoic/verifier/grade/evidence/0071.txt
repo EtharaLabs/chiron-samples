@@ -1,0 +1,241 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/request/TeamRequestSender.java (changed against State A) ===
+@@
+40  | import me.zodac.folding.rest.api.tc.request.TeamRequest;
+41  | import me.zodac.folding.rest.util.RestUtilConstants;
+42  | 
+   -| /**
+   -|  * Convenience class to send HTTP requests to the {@link me.zodac.folding.api.tc.Team} REST endpoint.
+   -|  */
+43 +| 
+44  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+45  | public final class TeamRequestSender {
+46  | 
+47  |     private final String teamsUrl;
+48  | 
+   -|     /**
+   -|      * Create an instance of {@link TeamRequestSender}.
+   -|      *
+   -|      * @param foldingUrl the root URL of the <code>/folding</code> endpoint, i.e:
+   -|      *                   <pre>http://127.0.0.1:8080/folding</pre>
+   -|      * @return the created {@link TeamRequestSender}
+   -|      */
+49 +|     
+50  |     public static TeamRequestSender createWithUrl(final String foldingUrl) {
+51  |         final String teamsUrl = foldingUrl + "/teams";
+52  |         return new TeamRequestSender(teamsUrl);
+53  |     }
+54  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve all {@link me.zodac.folding.api.tc.Team}s in the system.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getAll(String)
+   -|      */
+55 +|     
+56  |     public HttpResponse<String> getAll() throws FoldingRestException {
+57  |         return getAll(null);
+58  |     }
+59  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve all {@link me.zodac.folding.api.tc.Team}s in the system.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link me.zodac.folding.api.tc.Team} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve cached {@link me.zodac.folding.api.tc.Team}s
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getAll()
+   -|      */
+60 +|     
+61  |     public HttpResponse<String> getAll(final String entityTag) throws FoldingRestException {
+62  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+63  |             .GET()
+@@
+80  |         }
+81  |     }
+82  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link me.zodac.folding.api.tc.Team} with the given {@code teamId}.
+   -|      *
+   -|      * @param teamId the ID of the {@link me.zodac.folding.api.tc.Team} to be retrieved
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(int, String)
+   -|      */
+83 +|     
+84  |     public HttpResponse<String> get(final int teamId) throws FoldingRestException {
+85  |         return get(teamId, null);
+86  |     }
+87  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link me.zodac.folding.api.tc.Team} with the given {@code teamId}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link me.zodac.folding.api.tc.Team} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamId    the ID of the {@link me.zodac.folding.api.tc.Team} to be retrieved
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached {@link me.zodac.folding.api.tc.Team}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(int)
+   -|      */
+88 +|     
+89  |     public HttpResponse<String> get(final int teamId, final String entityTag) throws FoldingRestException {
+90  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+91  |             .GET()
+@@
+108  |         }
+109  |     }
+110  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link me.zodac.folding.api.tc.Team} with the given {@code teamName}.
+   -|      *
+   -|      * @param teamName the {@code teamName} of the {@link me.zodac.folding.api.tc.Team} to be retrieved
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(String, String)
+   -|      */
+111 +|     
+112  |     public HttpResponse<String> get(final String teamName) throws FoldingRestException {
+113  |         return get(teamName, null);
+114  |     }
+115  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve a single {@link me.zodac.folding.api.tc.Team} with the given {@code teamName}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link me.zodac.folding.api.tc.Team} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param teamName  the {@code teamName} of the {@link me.zodac.folding.api.tc.Team} to be retrieved
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached {@link me.zodac.folding.api.tc.Team}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #get(String)
+   -|      */
+116 +|     
+117  |     public HttpResponse<String> get(final String teamName, final String entityTag) throws FoldingRestException {
+118  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+119  |             .GET()
+@@
+136  |         }
+137  |     }
+138  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link TeamRequest} in the system.
+   -|      *
+   -|      * @param team the {@link TeamRequest} to create
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+139 +|     
+140  |     public HttpResponse<String> create(final TeamRequest team) throws FoldingRestException {
+141  |         return create(team, null, null);
+142  |     }
+143  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link TeamRequest} in the system.
+   -|      *
+   -|      * @param team     the {@link TeamRequest} to create
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+144 +|     
+145  |     public HttpResponse<String> create(final TeamRequest team, final String userName, final String password) throws FoldingRestException {
+146  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+147  |             .POST(HttpRequest.BodyPublishers.ofString(RestUtilConstants.GSON.toJson(team)))
+@@
+164  |         }
+165  |     }
+166  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link me.zodac.folding.api.tc.Team}s in the system.
+   -|      *
+   -|      * @param batchOfTeams the {@link Collection} of {@link me.zodac.folding.api.tc.Team}s to create
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+167 +|     
+168  |     public HttpResponse<String> createBatchOf(final Collection<TeamRequest> batchOfTeams) throws FoldingRestException {
+169  |         return createBatchOf(batchOfTeams, null, null);
+170  |     }
+171  | 
+   -|     /**
+   -|      * Send a <b>POST</b> request to create the given {@link me.zodac.folding.api.tc.Team}s in the system.
+   -|      *
+   -|      * @param batchOfTeams the {@link Collection} of {@link me.zodac.folding.api.tc.Team}s to create
+   -|      * @param userName     the username
+   -|      * @param password     the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+172 +|     
+173  |     public HttpResponse<String> createBatchOf(final Collection<TeamRequest> batchOfTeams, final String userName, final String password)
+174  |         throws FoldingRestException {
+175  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+@@
+193  |         }
+194  |     }
+195  | 
+   -|     /**
+   -|      * Send a <b>PUT</b> request to update the given {@link TeamRequest} in the system.
+   -|      *
+   -|      * @param teamId the ID of the {@link me.zodac.folding.api.tc.Team} to update
+   -|      * @param team   the {@link TeamRequest} to update
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+196 +|     
+197  |     public HttpResponse<String> update(final int teamId, final TeamRequest team) throws FoldingRestException {
+198  |         return update(teamId, team, null, null);
+199  |     }
+200  | 
+   -|     /**
+   -|      * Send a <b>PUT</b> request to update the given {@link TeamRequest} in the system.
+   -|      *
+   -|      * @param teamId   the ID of the {@link me.zodac.folding.api.tc.Team} to update
+   -|      * @param team     the {@link TeamRequest} to update
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+201 +|     
+202  |     public HttpResponse<String> update(final int teamId, final TeamRequest team, final String userName, final String password)
+203  |         throws FoldingRestException {
+204  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+@@
+222  |         }
+223  |     }
+224  | 
+   -|     /**
+   -|      * Send a <b>DELETE</b> request to remove a {@link me.zodac.folding.api.tc.Team} with the given {@code teamId}.
+   -|      *
+   -|      * @param teamId the ID of the {@link me.zodac.folding.api.tc.Team} to remove
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+225 +|     
+226  |     public HttpResponse<Void> delete(final int teamId) throws FoldingRestException {
+227  |         return delete(teamId, null, null);
+228  |     }
+229  | 
+   -|     /**
+   -|      * Send a <b>DELETE</b> request to remove a {@link me.zodac.folding.api.tc.Team} with the given {@code teamId}.
+   -|      *
+   -|      * @param teamId   the ID of the {@link me.zodac.folding.api.tc.Team} to remove
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+230 +|     
+231  |     public HttpResponse<Void> delete(final int teamId, final String userName, final String password) throws FoldingRestException {
+232  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+233  |             .DELETE()

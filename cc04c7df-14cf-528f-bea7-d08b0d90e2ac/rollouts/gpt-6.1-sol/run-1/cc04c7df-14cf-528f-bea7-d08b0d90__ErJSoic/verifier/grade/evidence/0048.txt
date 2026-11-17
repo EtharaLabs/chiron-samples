@@ -1,0 +1,33 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/exception/FoldingRestException.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.rest.api.exception;
+26  | 
+   -| /**
+   -|  * Application {@link Exception} used when an error occurs sending a REST request.
+   -|  */
+27 +| 
+28  | public class FoldingRestException extends Exception {
+29  | 
+30  |     private static final long serialVersionUID = -3883148353675655633L;
+31  | 
+   -|     /**
+   -|      * Constructor taking in an error message.
+   -|      *
+   -|      * @param message the error message
+   -|      */
+32 +|     
+33  |     public FoldingRestException(final String message) {
+34  |         super(message);
+35  |     }
+36  | 
+   -|     /**
+   -|      * Constructor taking in an error message and a cause {@link Throwable}.
+   -|      *
+   -|      * @param message   the error message
+   -|      * @param throwable the cause {@link Throwable}
+   -|      */
+37 +|     
+38  |     public FoldingRestException(final String message, final Throwable throwable) {
+39  |         super(message, throwable);
+40  |     }

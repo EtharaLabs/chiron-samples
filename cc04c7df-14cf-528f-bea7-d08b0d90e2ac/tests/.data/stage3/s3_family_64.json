@@ -1,0 +1,133 @@
+{
+ "id": "s3_family_64",
+ "source": "f096_lars_best_gpu_selection_ignores_row_order",
+ "steps": [
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Low",
+      "manufacturer": "nVidia",
+      "modelInfo": "Gpu Low",
+      "rank": 3,
+      "averagePpd": 100
+     },
+     {
+      "displayName": "Mid",
+      "manufacturer": "nVidia",
+      "modelInfo": "Gpu Mid",
+      "rank": 2,
+      "averagePpd": 200
+     },
+     {
+      "displayName": "Top",
+      "manufacturer": "nVidia",
+      "modelInfo": "Gpu Top",
+      "rank": 1,
+      "averagePpd": 400
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_ascending_order",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_collection_order_and_multipliers",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   }
+  },
+  {
+   "case": "hardware_one_is_first_by_name",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "lars_update_ascending_order",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_collection_order_and_multipliers",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"Gpu Low\",\n    \"displayName\": \"Low\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 4.0,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"Gpu Mid\",\n    \"displayName\": \"Mid\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.0,\n    \"averagePpd\": 200\n  },\n  {\n    \"id\": 3,\n    \"hardwareName\": \"Gpu Top\",\n    \"displayName\": \"Top\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 400\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "545",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "etag": "\"-1374215183\"",
+     "x-total-count": "3"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_one_is_first_by_name",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"Gpu Low\",\n  \"displayName\": \"Low\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 4.0,\n  \"averagePpd\": 100\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429190",
+     "connection": "close",
+     "content-length": "161",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "etag": "\"-1611994690\""
+    },
+    "status": 200
+   }
+  }
+ ],
+ "probe": "The GPU list is re-sorted by descending average PPD before the best one is chosen, so supplying the rows in ascending PPD order must still give the highest-PPD card multiplier 1.0 (and the created rows are inserted in hardware-name order)."
+}

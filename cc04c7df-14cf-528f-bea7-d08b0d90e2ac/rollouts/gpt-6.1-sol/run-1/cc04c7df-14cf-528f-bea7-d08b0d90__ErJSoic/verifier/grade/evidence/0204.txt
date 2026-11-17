@@ -1,0 +1,133 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/tc/lars/LarsHardwareUpdater.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.tc.lars;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import static java.util.stream.Collectors.toSet;
+32 +| import static me.zodac.folding.api.util.NumberUtils.formatWithCommas;
+33 +| 
+34 +| import java.util.Collection;
+35 +| import java.util.List;
+36 +| import java.util.Map;
+37 +| import me.zodac.folding.api.tc.Hardware;
+38 +| import me.zodac.folding.api.tc.HardwareMake;
+39 +| import me.zodac.folding.api.tc.HardwareType;
+40 +| import me.zodac.folding.api.tc.lars.LarsGpu;
+41 +| import me.zodac.folding.service.api.FoldingStatsCore;
+42 +| import me.zodac.folding.lars.HardwareSplitter;
+43 +| import me.zodac.folding.lars.LarsGpuRetriever;
+44 +| import org.apache.logging.log4j.LogManager;
+45 +| import org.apache.logging.log4j.Logger;
+46 +| 
+47 +| @Service
+48 +| public class LarsHardwareUpdater {
+49 +| 
+50 +|     private static final Logger LOGGER = LogManager.getLogger();
+51 +|     @org.springframework.beans.factory.annotation.Value("${LARS_URL_ROOT:https://folding.lar.systems}")
+52 +|     private String larsUrlRoot;
+53 +| 
+54 +|     @Autowired
+55 +|     @Lazy
+56 +|     private FoldingStatsCore foldingStatsCore;
+57 +| 
+58 +|     public void retrieveHardwareAndPersist() {
+59 +|         final String gpuDbUrl = larsUrlRoot + "/gpu_ppd/overall_ranks";
+60 +|         final List<LarsGpu> larsGpus = LarsGpuRetriever.retrieveGpus(gpuDbUrl);
+61 +|         LOGGER.debug("Retrieved GPUs from LARS DB: {}", larsGpus);
+62 +|         LOGGER.info("Retrieved {} GPUs from LARS DB", larsGpus.size());
+63 +| 
+64 +|         if (larsGpus.isEmpty()) {
+65 +|             LOGGER.warn("No GPUs retrieved from LARs DB");
+66 +|             return;
+67 +|         }
+68 +| 
+69 +|         final LarsGpu bestGpu = larsGpus.get(0);
+70 +|         final long bestPpd = bestGpu.getAveragePpd();
+71 +|         LOGGER.info("Best PPD is '{}' for '{}', will compare to this", formatWithCommas(bestPpd), bestGpu.getModelInfo());
+72 +| 
+73 +|         final Collection<Hardware> lars = larsGpus
+74 +|             .stream()
+75 +|             .map(larsGpu -> toHardware(larsGpu, bestPpd))
+76 +|             .collect(toSet());
+77 +|         final Collection<Hardware> existing = foldingStatsCore.getAllHardware();
+78 +| 
+79 +|         for (final Hardware hardware : HardwareSplitter.toDelete(lars, existing)) {
+80 +|             foldingStatsCore.deleteHardware(hardware);
+81 +|             LOGGER.info("Deleted hardware '{}' (ID: {})", hardware.getHardwareName(), hardware.getId());
+82 +|         }
+83 +| 
+84 +|         for (final Map.Entry<Hardware, Hardware> entry : HardwareSplitter.toUpdate(lars, existing).entrySet()) {
+85 +|             try {
+86 +|                 final Hardware updatedHardware = entry.getKey();
+87 +|                 final Hardware existingHardware = entry.getValue();
+88 +|                 final Hardware updatedHardwareWithId = Hardware.updateWithId(existingHardware.getId(), updatedHardware);
+89 +| 
+90 +|                 foldingStatsCore.updateHardware(updatedHardwareWithId, existingHardware);
+91 +|                 LOGGER.info("LARS updated hardware\n" +
+92 +|                         "ID: {}\n" +
+93 +|                         "{}\n" +
+94 +|                         "Multiplier: {} -> {}\n" +
+95 +|                         "Average PPD: {} -> {}\n",
+96 +|                     existingHardware.getId(),
+97 +|                     updatedHardware.getHardwareName(),
+98 +|                     existingHardware.getMultiplier(),
+99 +|                     updatedHardware.getMultiplier(),
+100 +|                     formatWithCommas(existingHardware.getAveragePpd()),
+101 +|                     formatWithCommas(updatedHardware.getAveragePpd()));
+102 +|             } catch (final Exception e) {
+103 +|                 LOGGER.warn("Unexpected error connecting to Folding@Home stats to verify new hardware", e);
+104 +|             }
+105 +|         }
+106 +| 
+107 +|         for (final Hardware hardware : HardwareSplitter.toCreate(lars, existing)) {
+108 +|             final Hardware createdHardware = foldingStatsCore.createHardware(hardware);
+109 +|             LOGGER.info("Created hardware '{}' (ID: {})", createdHardware.getHardwareName(), createdHardware.getId());
+110 +|         }
+111 +|     }
+112 +| 
+113 +|     private static Hardware toHardware(final LarsGpu larsGpu, final long bestPpd) {
+114 +|         return Hardware.builder()
+115 +|             .hardwareName(larsGpu.getModelInfo())
+116 +|             .displayName(larsGpu.getDisplayName())
+117 +|             .hardwareMake(HardwareMake.get(larsGpu.getManufacturer()))
+118 +|             .hardwareType(HardwareType.GPU)
+119 +|             .multiplier(getMultiplier(bestPpd, larsGpu.getAveragePpd()))
+120 +|             .averagePpd(larsGpu.getAveragePpd())
+121 +|             .build();
+122 +|     }
+123 +| 
+124 +|     private static double getMultiplier(final long bestPpd, final long currentPpd) {
+125 +|         return roundDoubleToTwoPlaces((double) bestPpd / currentPpd);
+126 +|     }
+127 +| 
+128 +|     private static double roundDoubleToTwoPlaces(final double input) {
+129 +|         final String doubleAsString = String.format("%.2f", input);
+130 +|         return Double.parseDouble(doubleAsString);
+131 +|     }
+132 +| }

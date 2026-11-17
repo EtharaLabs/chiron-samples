@@ -1,0 +1,56 @@
+{
+    "task": {
+        "path": "cc04c7df-14cf-528f-bea7-d08b0d90e2ac"
+    },
+    "trial_name": "cc04c7df-14cf-528f-bea7-d08b0d90__ErJSoic",
+    "trials_dir": "cc04c7df-14cf-528f-bea7-d08b0d90e2ac/rollouts/gpt-6.1-sol/run-1",
+    "agent_setup_timeout_multiplier": 5.0,
+    "agent": {
+        "name": "codex",
+        "model_name": "openai/gpt-6.1-sol",
+        "extra_allowed_hosts": [
+            "172.31.14.51"
+        ],
+        "kwargs": {
+            "version": "0.166.0",
+            "reasoning_effort": "high",
+            "web_search": "disabled"
+        },
+        "env": {
+            "OPENAI_BASE_URL": "${P1_CODEX_BASE_URL}",
+            "OPENAI_API_KEY": "${KAIJU_CODEX_BRIDGE_SECRET}"
+        }
+    },
+    "environment": {
+        "type": "docker",
+        "extra_allowed_hosts": [
+            "snapshot.debian.org",
+            "deb.debian.org",
+            "snapshot.ubuntu.com",
+            "archive.ubuntu.com",
+            "security.ubuntu.com",
+            "astral.sh",
+            "releases.astral.sh",
+            "github.com",
+            "objects.githubusercontent.com",
+            "release-assets.githubusercontent.com",
+            "pypi.org",
+            "files.pythonhosted.org",
+            "repo.maven.apache.org",
+            "repo1.maven.org",
+            "storage.googleapis.com",
+            "fastdl.mongodb.org",
+            "raw.githubusercontent.com",
+            "nodejs.org",
+            "registry.npmjs.org"
+        ]
+    },
+    "verifier": {
+        "env": {
+            "ANTHROPIC_BASE_URL": "${P1_JUDGE_BASE_URL}",
+            "ANTHROPIC_API_BASE": "${P1_JUDGE_BASE_URL}",
+            "ANTHROPIC_API_KEY": "${P1_JUDGE_API_KEY}"
+        }
+    },
+    "job_id": "fc193460-9822-43ca-a057-d8357c52982e"
+}

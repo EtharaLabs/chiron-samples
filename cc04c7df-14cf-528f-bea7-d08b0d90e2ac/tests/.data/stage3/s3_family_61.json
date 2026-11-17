@@ -1,0 +1,129 @@
+{
+ "id": "s3_family_61",
+ "source": "f093_lars_non_positive_and_comma_formatted_ppd",
+ "steps": [
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Comma",
+      "manufacturer": "nVidia",
+      "modelInfo": "Comma Gpu",
+      "rank": 1,
+      "averagePpd": "1,000"
+     },
+     {
+      "displayName": "Neg",
+      "manufacturer": "nVidia",
+      "modelInfo": "Neg Gpu",
+      "rank": 2,
+      "averagePpd": -5
+     },
+     {
+      "displayName": "NegRank",
+      "manufacturer": "nVidia",
+      "modelInfo": "NegRank Gpu",
+      "rank": -1,
+      "averagePpd": 900
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_with_mixed_rows",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_after_mixed_rows",
+   "http": {
+    "method": "GET",
+    "path": "/hardware"
+   }
+  },
+  {
+   "case": "second_hardware_absent",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/2"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "lars_update_with_mixed_rows",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_after_mixed_rows",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"Comma Gpu\",\n    \"displayName\": \"Comma\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1000\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "188",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-2042251923\"",
+     "x-total-count": "1"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "second_hardware_absent",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  }
+ ],
+ "probe": "LARS rows with a comma-grouped average PPD (kept, commas stripped), a negative PPD and a negative rank (both skipped): only the valid row may become hardware, and it must get multiplier 1.0 as the best GPU."
+}

@@ -1,0 +1,760 @@
+{
+ "extra": {
+  "infrastructure": "",
+  "seconds": 257.3
+ },
+ "items": {
+  "F001": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F001 step 0 GET /auth/admin/impersonate: location: expected \"/\" got \"/auth/login\"",
+   "weight": 3
+  },
+  "F002": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F002 step 2 GET /auth/admin/impersonate: location: expected \"/\" got \"/auth/login\"",
+   "weight": 3
+  },
+  "F003": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F004": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F005": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F006": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F007": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F007 step 0 GET /admin/api/v1/: json: expected {\"message\": \"Forbidden\", \"status\": \"error\"} got {\"message\": \"Authorization required\", \"status\": \"error\"}",
+   "weight": 3
+  },
+  "F008": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F009": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F010": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F011": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F012": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F013": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F014": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F015": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F016": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F017": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F018": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F019": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F020": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F021": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F022": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F023": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F023 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+   "weight": 3
+  },
+  "F024": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F024 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+   "weight": 3
+  },
+  "F025": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F025 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+   "weight": 3
+  },
+  "F026": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F026 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+   "weight": 3
+  },
+  "F027": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F027 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+   "weight": 3
+  },
+  "F028": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F028 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+   "weight": 3
+  },
+  "F029": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F030": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F030 step 1 GET /api/v1/release/planner/comment/get/test: json: expected {\"response\": \"stage3 planner note\", \"status\": \"ok\"} got {\"response\": \"\", \"status\": \"ok\"}",
+   "weight": 3
+  },
+  "F031": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F031 step 1 GET /api/v1/views/get: json: expected {\"response\": {\"created\": \"2026-11-01T11:00:00.000Z\", \"description\": \"Seeded view\", \"display_name\": \"Core View\", \"group_ids\": [\"34f73064-36d3-42e0-9bf8-17840d9eb352\"], \"id\": \"0a11ce00-0000-4000-8000-000000000020\", \"last_updated\": \"<now>\", \"name\": \"core-view\", \"plan_id\": null, \"release_ids\": [\"feb3dc2 got {\"response\": {\"created\": \"<now>\", \"description\": \"second view\", \"display_name\": \"Dup Read\", \"group_ids\": [], \"id\": \"<id1>\", \"last_updated\": \"<now>\", \"name\": \"stage3-dup-read-view\", \"plan_id\": null, \"release_ids\": [], \"tests\": [\"3ed77c66-c3b8-404f-8f43-266b75771178\"], \"user_id\": \"f67d055a-dc67-49a9-b",
+   "weight": 3
+  },
+  "F032": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F033": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F033 step 0 POST /api/v1/views: location: expected null got \"/api/v1/views/\"",
+   "weight": 3
+  },
+  "F034": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F035": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F036": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F037": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F038": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F039": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F040": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F041": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F042": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F043": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F044": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F045": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F046": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F047": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F048": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F049": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F050": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F051": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F052": {
+   "kind": "family",
+   "observed": false,
+   "pass": false,
+   "reason": "F052 step 2 GET /release/by-id/{{release}}/planner: location: expected \"/release/stage%20three%20release/planner\" got \"/release/stage three release/planner\"",
+   "weight": 3
+  },
+  "F053": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F054": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F055": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F056": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F057": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F058": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F059": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F060": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F061": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F062": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F063": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F064": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "F065": {
+   "kind": "family",
+   "observed": true,
+   "pass": true,
+   "reason": "agrees with State A",
+   "weight": 3
+  },
+  "G01": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G02": {
+   "cases": 11,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "11 cases agree",
+   "weight": 5
+  },
+  "G03": {
+   "cases": 11,
+   "failed_cases": 1,
+   "kind": "veto",
+   "observed": false,
+   "pass": false,
+   "reason": "admin-api-anon step 0 GET /admin/api/v1/users: json: expected {\"message\": \"Forbidden\", \"status\": \"error\"} got {\"message\": \"Authorization required\", \"status\": \"error\"}",
+   "weight": 5
+  },
+  "G04": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G05": {
+   "cases": 14,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "14 cases agree",
+   "weight": 5
+  },
+  "G06": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G07": {
+   "cases": 11,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "11 cases agree",
+   "weight": 5
+  },
+  "G08": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G09": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G10": {
+   "cases": 13,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "13 cases agree",
+   "weight": 5
+  },
+  "G11": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G12": {
+   "cases": 15,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "15 cases agree",
+   "weight": 5
+  },
+  "G13": {
+   "cases": 12,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "12 cases agree",
+   "weight": 5
+  },
+  "G14": {
+   "cases": 15,
+   "failed_cases": 1,
+   "kind": "veto",
+   "observed": false,
+   "pass": false,
+   "reason": "alert-debug step 1 GET /alert_debug: cookies: expected [[\"session\", {\"httponly\": true, \"lifetime\": false, \"path\": \"/\"}]] got []",
+   "weight": 5
+  },
+  "G15": {
+   "cases": 13,
+   "failed_cases": 1,
+   "kind": "veto",
+   "observed": false,
+   "pass": false,
+   "reason": "slashed-name-redirect step 1 GET /release/by-id/{{release}}/planner: location: expected \"/release/stage2/slashed/planner\" got null",
+   "weight": 5
+  },
+  "G16": {
+   "cases": 2,
+   "failed_cases": 0,
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "2 cases agree",
+   "weight": 5
+  },
+  "G17": {
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "schema matches State A",
+   "weight": 5
+  },
+  "K1": {
+   "kind": "quality",
+   "observed": true,
+   "pass": true,
+   "reason": "max_requests resolves to 65535",
+   "weight": 1
+  },
+  "K2": {
+   "kind": "quality",
+   "observed": true,
+   "pass": true,
+   "reason": "graceful_timeout resolves to 60",
+   "weight": 1
+  },
+  "K3": {
+   "kind": "quality",
+   "observed": true,
+   "pass": true,
+   "reason": "child_exit removes the exiting worker's live-gauge files and keeps the others",
+   "weight": 3
+  },
+  "K4": {
+   "kind": "quality",
+   "observed": true,
+   "pass": true,
+   "reason": "the repository's configuration loads worker_class uvicorn.workers.UvicornWorker",
+   "weight": 1
+  },
+  "K5": {
+   "kind": "quality",
+   "observed": true,
+   "pass": true,
+   "reason": "cli help exited 0",
+   "weight": 1
+  },
+  "S1": {
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "rebuilt offline against the target set and served",
+   "weight": 5
+  },
+  "S10": {
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "every State A rule is matched by an APIRoute or the static mount",
+   "weight": 5
+  },
+  "S2": {
+   "kind": "veto",
+   "observed": false,
+   "pass": true,
+   "reason": "no retired import",
+   "weight": 5
+  },
+  "S3": {
+   "kind": "veto",
+   "observed": false,
+   "pass": true,
+   "reason": "no retired or bridge distribution declared, locked or installed",
+   "weight": 5
+  },
+  "S4": {
+   "kind": "veto",
+   "observed": false,
+   "pass": true,
+   "reason": "no retired launch",
+   "weight": 5
+  },
+  "S5": {
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "create_app() returns a FastAPI application with no foreign mount, served through UvicornWorker",
+   "weight": 5
+  },
+  "S6": {
+   "kind": "veto",
+   "observed": false,
+   "pass": true,
+   "reason": "no bridge import",
+   "weight": 5
+  },
+  "S7": {
+   "kind": "veto",
+   "observed": false,
+   "pass": true,
+   "reason": "no retired source transplanted",
+   "shares": {
+    "a2wsgi": {
+     "blind": 0.1851,
+     "verbatim": 0.0041
+    },
+    "asgiref": {
+     "blind": 0.1669,
+     "verbatim": 0.0018
+    },
+    "blinker": {
+     "blind": 0.1507,
+     "verbatim": 0.0047
+    },
+    "flask": {
+     "blind": 0.1394,
+     "verbatim": 0.0024
+    },
+    "flask_login": {
+     "blind": 0.1981,
+     "verbatim": 0.0028
+    },
+    "flask_wtf": {
+     "blind": 0.1918,
+     "verbatim": 0.0037
+    },
+    "prometheus_flask_exporter": {
+     "blind": 0.1593,
+     "verbatim": 0.0
+    },
+    "uwsgi": {
+     "blind": 0.1129,
+     "verbatim": 0.0017
+    },
+    "wtforms": {
+     "blind": 0.1532,
+     "verbatim": 0.0024
+    }
+   },
+   "weight": 5
+  },
+  "S8": {
+   "kind": "veto",
+   "observed": false,
+   "pass": true,
+   "reason": "nothing names or detects the verifier",
+   "weight": 5
+  },
+  "S9": {
+   "kind": "veto",
+   "observed": true,
+   "pass": true,
+   "reason": "0.9975 of State A's collected test ids are collected",
+   "share": 0.9975,
+   "weight": 5
+  }
+ },
+ "veto_reason": "G03: admin-api-anon step 0 GET /admin/api/v1/users: json: expected {\"message\": \"Forbidden\", \"status\": \"error\"} got {\"message\": \"Authorization required\", \"status\": \"error\"}",
+ "vetoed": true
+}

@@ -1,0 +1,1493 @@
+{
+ "id": "g17_configuration_binding",
+ "source": "g17_configuration_binding",
+ "steps": [
+  {
+   "case": "redirect_url_bound_from_environment",
+   "http": {
+    "method": "GET",
+    "path": "/nosuchpath"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "LarsGpu One",
+      "manufacturer": "nVidia",
+      "modelInfo": "LarsGpu #1",
+      "rank": 1,
+      "averagePpd": 1000
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_uses_lars_url_root",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "lars_hardware_lookup_by_name",
+   "compare": "full",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=LarsGpu%20%231"
+   }
+  },
+  {
+   "case": "lars_hardware_name_now_conflicts",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "LarsGpu #1",
+     "displayName": "Clashing Name",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 5.0,
+     "averagePpd": 7
+    }
+   }
+  },
+  {
+   "case": "hw_create_nvidia_gpu",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ConfigGpuNvidia",
+     "displayName": "Config GPU NVIDIA",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "capture": {
+    "hwNvidia": "json:id"
+   }
+  },
+  {
+   "case": "hw_create_amd_gpu",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ConfigGpuAmd",
+     "displayName": "Config GPU AMD",
+     "hardwareMake": "AMD",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "capture": {
+    "hwAmd": "json:id"
+   }
+  },
+  {
+   "case": "hw_create_amd_cpu",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ConfigCpuAmd",
+     "displayName": "Config CPU AMD",
+     "hardwareMake": "AMD",
+     "hardwareType": "CPU",
+     "multiplier": 1.0,
+     "averagePpd": 1
+    }
+   },
+   "capture": {
+    "hwCpu": "json:id"
+   }
+  },
+  {
+   "case": "team_create_one",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "ConfigTeamOne"
+    }
+   },
+   "capture": {
+    "teamOne": "json:id"
+   }
+  },
+  {
+   "case": "team_create_two",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "ConfigTeamTwo"
+    }
+   },
+   "capture": {
+    "teamTwo": "json:id"
+   }
+  },
+  {
+   "case": "team_create_three",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "ConfigTeamThree"
+    }
+   },
+   "capture": {
+    "teamThree": "json:id"
+   }
+  },
+  {
+   "case": "category_values_listed_from_enum",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "BadCategory",
+     "displayName": "Bad Category",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "GPU",
+     "hardwareId": 2,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=NvidiaOne&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "nvidia_first_user_accepted",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "NvidiaOne",
+     "displayName": "Nvidia One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 2,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=NvidiaTwo&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "nvidia_second_user_refused_with_capacity_one",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "NvidiaTwo",
+     "displayName": "Nvidia Two",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 2,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "USERS_IN_NVIDIA_GPU": "2"
+    }
+   }
+  },
+  {
+   "case": "nvidia_second_user_accepted_with_capacity_two",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "NvidiaTwo",
+     "displayName": "Nvidia Two",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 2,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=NvidiaThree&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "nvidia_third_user_refused_with_capacity_two",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "NvidiaThree",
+     "displayName": "Nvidia Three",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 2,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=AmdOne&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "amd_first_user_accepted",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "AmdOne",
+     "displayName": "Amd One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=WildcardOne&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "wildcard_first_user_accepted",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "WildcardOne",
+     "displayName": "Wildcard One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "WILDCARD",
+     "hardwareId": 4,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=OverflowOne&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "team_total_capacity_four_exceeded",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "OverflowOne",
+     "displayName": "Overflow One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "USERS_IN_AMD_GPU": "2",
+     "USERS_IN_WILDCARD": "2"
+    }
+   }
+  },
+  {
+   "case": "fifth_user_accepted_with_total_capacity_six",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "OverflowOne",
+     "displayName": "Overflow One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 1,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=TwoAmdOne&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "team_two_amd_first_user_accepted",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "TwoAmdOne",
+     "displayName": "Two Amd One",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 2,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=TwoAmdTwo&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "team_two_amd_second_user_accepted",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "TwoAmdTwo",
+     "displayName": "Two Amd Two",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 2,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=TwoAmdThree&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "USERS_IN_AMD_GPU": "notanumber"
+    }
+   }
+  },
+  {
+   "case": "amd_capacity_shrunk_equality_check_admits_user",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "TwoAmdThree",
+     "displayName": "Two Amd Three",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 2,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "USERS_IN_WILDCARD": "0"
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=ThreeWildcard&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "wildcard_capacity_zero_refuses_first_user",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "ThreeWildcard",
+     "displayName": "Three Wildcard",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "WILDCARD",
+     "hardwareId": 4,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "USERS_IN_WILDCARD": "1"
+    }
+   }
+  },
+  {
+   "case": "wildcard_capacity_one_accepts_first_user",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "ThreeWildcard",
+     "displayName": "Three Wildcard",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "WILDCARD",
+     "hardwareId": 4,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "REDIRECT_URL": "https://other.example/landing"
+    }
+   }
+  },
+  {
+   "case": "redirect_url_rebound_after_restart",
+   "http": {
+    "method": "GET",
+    "path": "/nosuchpath"
+   }
+  },
+  {
+   "case": "redirect_url_applies_to_unknown_subresource",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1/nosuchsubresource"
+   }
+  },
+  {
+   "case": "stats_url_root_zero_units_user_refused",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "NoUnitsProbe",
+     "displayName": "No Units Probe",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=StatsProbe&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "STATS_URL_ROOT": "http://127.0.0.1:9"
+    }
+   }
+  },
+  {
+   "case": "stats_url_root_unreachable_refuses_user_creation",
+   "compare": "full",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "StatsProbe",
+     "displayName": "Stats Probe",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "restart": {
+    "env": {
+     "STATS_URL_ROOT": "http://127.0.0.1:8082"
+    }
+   }
+  },
+  {
+   "case": "stats_url_root_restored_accepts_user_creation",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "StatsProbe",
+     "displayName": "Stats Probe",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "AMD_GPU",
+     "hardwareId": 3,
+     "teamId": 3,
+     "userIsCaptain": false
+    }
+   }
+  },
+  {
+   "case": "redirect_url_still_rebound_after_later_restarts",
+   "http": {
+    "method": "GET",
+    "path": "/anotherunknownpath"
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "redirect_url_bound_from_environment",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/nosuchpath"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://frontend.example"
+    },
+    "status": 303
+   }
+  },
+  {
+   "case": "lars_update_uses_lars_url_root",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "lars_hardware_lookup_by_name",
+   "compare": "full",
+   "cache_rule": "clock",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/fields?hardwareName=LarsGpu%20%231"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"LarsGpu #1\",\n  \"displayName\": \"LarsGpu One\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1000\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "cache-control": "no-transform, max-age=1429191",
+     "connection": "close",
+     "content-length": "173",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "etag": "\"-230048750\""
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "lars_hardware_name_now_conflicts",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 7,
+     "displayName": "Clashing Name",
+     "hardwareMake": "AMD",
+     "hardwareName": "LarsGpu #1",
+     "hardwareType": "GPU",
+     "multiplier": 5.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"LarsGpu #1\",\n    \"displayName\": \"Clashing Name\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 5.0,\n    \"averagePpd\": 7\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"LarsGpu #1\",\n      \"displayName\": \"LarsGpu One\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "522",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "hw_create_nvidia_gpu",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "Config GPU NVIDIA",
+     "hardwareMake": "NVIDIA",
+     "hardwareName": "ConfigGpuNvidia",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"ConfigGpuNvidia\",\n  \"displayName\": \"Config GPU NVIDIA\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "181",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "hw_create_amd_gpu",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "Config GPU AMD",
+     "hardwareMake": "AMD",
+     "hardwareName": "ConfigGpuAmd",
+     "hardwareType": "GPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 3,\n  \"hardwareName\": \"ConfigGpuAmd\",\n  \"displayName\": \"Config GPU AMD\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "172",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/3"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "hw_create_amd_cpu",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 1,
+     "displayName": "Config CPU AMD",
+     "hardwareMake": "AMD",
+     "hardwareName": "ConfigCpuAmd",
+     "hardwareType": "CPU",
+     "multiplier": 1.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"id\": 4,\n  \"hardwareName\": \"ConfigCpuAmd\",\n  \"displayName\": \"Config CPU AMD\",\n  \"hardwareMake\": \"AMD\",\n  \"hardwareType\": \"CPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "172",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/hardware/4"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_create_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "ConfigTeamOne"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"ConfigTeamOne\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_create_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "ConfigTeamTwo"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"teamName\": \"ConfigTeamTwo\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "44",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_create_three",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "ConfigTeamThree"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 3,\n  \"teamName\": \"ConfigTeamThree\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "46",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/3"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "category_values_listed_from_enum",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "GPU",
+     "displayName": "Bad Category",
+     "foldingUserName": "BadCategory",
+     "hardwareId": 2,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"BadCategory\",\n    \"displayName\": \"Bad Category\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"GPU\",\n    \"hardwareId\": 2,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Field 'category' must be one of: [AMD_GPU, NVIDIA_GPU, WILDCARD]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "330",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "nvidia_first_user_accepted",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Nvidia One",
+     "foldingUserName": "NvidiaOne",
+     "hardwareId": 2,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"NvidiaOne\",\n  \"displayName\": \"Nvidia One\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 2,\n    \"hardwareName\": \"ConfigGpuNvidia\",\n    \"displayName\": \"Config GPU NVIDIA\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ConfigTeamOne\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "456",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "nvidia_second_user_refused_with_capacity_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Nvidia Two",
+     "foldingUserName": "NvidiaTwo",
+     "hardwareId": 2,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"NvidiaTwo\",\n    \"displayName\": \"Nvidia Two\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 2,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Team 'ConfigTeamOne' already has 1 users in category 'NVIDIA_GPU', only 1 permitted\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "352",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "nvidia_second_user_accepted_with_capacity_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Nvidia Two",
+     "foldingUserName": "NvidiaTwo",
+     "hardwareId": 2,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 2,\n  \"foldingUserName\": \"NvidiaTwo\",\n  \"displayName\": \"Nvidia Two\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 2,\n    \"hardwareName\": \"ConfigGpuNvidia\",\n    \"displayName\": \"Config GPU NVIDIA\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ConfigTeamOne\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "456",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/2"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "nvidia_third_user_refused_with_capacity_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "Nvidia Three",
+     "foldingUserName": "NvidiaThree",
+     "hardwareId": 2,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"NvidiaThree\",\n    \"displayName\": \"Nvidia Three\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardwareId\": 2,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Team 'ConfigTeamOne' already has 2 users in category 'NVIDIA_GPU', only 2 permitted\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "356",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "amd_first_user_accepted",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Amd One",
+     "foldingUserName": "AmdOne",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 3,\n  \"foldingUserName\": \"AmdOne\",\n  \"displayName\": \"Amd One\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 3,\n    \"hardwareName\": \"ConfigGpuAmd\",\n    \"displayName\": \"Config GPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ConfigTeamOne\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "438",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/3"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "wildcard_first_user_accepted",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "WILDCARD",
+     "displayName": "Wildcard One",
+     "foldingUserName": "WildcardOne",
+     "hardwareId": 4,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 4,\n  \"foldingUserName\": \"WildcardOne\",\n  \"displayName\": \"Wildcard One\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"WILDCARD\",\n  \"hardware\": {\n    \"id\": 4,\n    \"hardwareName\": \"ConfigCpuAmd\",\n    \"displayName\": \"Config CPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ConfigTeamOne\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "449",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/4"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_total_capacity_four_exceeded",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Overflow One",
+     "foldingUserName": "OverflowOne",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"OverflowOne\",\n    \"displayName\": \"Overflow One\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"AMD_GPU\",\n    \"hardwareId\": 3,\n    \"teamId\": 1,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Team 'ConfigTeamOne' has 4 users, maximum permitted is 4\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "326",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:15 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "fifth_user_accepted_with_total_capacity_six",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Overflow One",
+     "foldingUserName": "OverflowOne",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 1,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 5,\n  \"foldingUserName\": \"OverflowOne\",\n  \"displayName\": \"Overflow One\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 3,\n    \"hardwareName\": \"ConfigGpuAmd\",\n    \"displayName\": \"Config GPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"ConfigTeamOne\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "448",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/5"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_two_amd_first_user_accepted",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Two Amd One",
+     "foldingUserName": "TwoAmdOne",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 2,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 6,\n  \"foldingUserName\": \"TwoAmdOne\",\n  \"displayName\": \"Two Amd One\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 3,\n    \"hardwareName\": \"ConfigGpuAmd\",\n    \"displayName\": \"Config GPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"ConfigTeamTwo\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "445",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/6"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "team_two_amd_second_user_accepted",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Two Amd Two",
+     "foldingUserName": "TwoAmdTwo",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 2,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 7,\n  \"foldingUserName\": \"TwoAmdTwo\",\n  \"displayName\": \"Two Amd Two\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 3,\n    \"hardwareName\": \"ConfigGpuAmd\",\n    \"displayName\": \"Config GPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"ConfigTeamTwo\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "445",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:13 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/7"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "amd_capacity_shrunk_equality_check_admits_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Two Amd Three",
+     "foldingUserName": "TwoAmdThree",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 2,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 8,\n  \"foldingUserName\": \"TwoAmdThree\",\n  \"displayName\": \"Two Amd Three\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 3,\n    \"hardwareName\": \"ConfigGpuAmd\",\n    \"displayName\": \"Config GPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 2,\n    \"teamName\": \"ConfigTeamTwo\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "449",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/8"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "wildcard_capacity_zero_refuses_first_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "WILDCARD",
+     "displayName": "Three Wildcard",
+     "foldingUserName": "ThreeWildcard",
+     "hardwareId": 4,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 3,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"ThreeWildcard\",\n    \"displayName\": \"Three Wildcard\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"WILDCARD\",\n    \"hardwareId\": 4,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Team 'ConfigTeamThree' already has 0 users in category 'WILDCARD', only 0 permitted\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "358",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "wildcard_capacity_one_accepts_first_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "WILDCARD",
+     "displayName": "Three Wildcard",
+     "foldingUserName": "ThreeWildcard",
+     "hardwareId": 4,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 3,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 9,\n  \"foldingUserName\": \"ThreeWildcard\",\n  \"displayName\": \"Three Wildcard\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"WILDCARD\",\n  \"hardware\": {\n    \"id\": 4,\n    \"hardwareName\": \"ConfigCpuAmd\",\n    \"displayName\": \"Config CPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 3,\n    \"teamName\": \"ConfigTeamThree\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "455",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/9"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "redirect_url_rebound_after_restart",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/nosuchpath"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "https://other.example/landing"
+    },
+    "status": 303
+   }
+  },
+  {
+   "case": "redirect_url_applies_to_unknown_subresource",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1/nosuchsubresource"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "https://other.example/landing"
+    },
+    "status": 303
+   }
+  },
+  {
+   "case": "stats_url_root_zero_units_user_refused",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "No Units Probe",
+     "foldingUserName": "NoUnitsProbe",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 3,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"NoUnitsProbe\",\n    \"displayName\": \"No Units Probe\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"AMD_GPU\",\n    \"hardwareId\": 3,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"User 'NoUnitsProbe' has 0 Work Units with passkey 'DummyPasskey12345678901234567890', there must be at least one completed Work Unit before adding the user\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "428",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "stats_url_root_unreachable_refuses_user_creation",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Stats Probe",
+     "foldingUserName": "StatsProbe",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 3,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"foldingUserName\": \"StatsProbe\",\n    \"displayName\": \"Stats Probe\",\n    \"passkey\": \"DummyPasskey12345678901234567890\",\n    \"category\": \"AMD_GPU\",\n    \"hardwareId\": 3,\n    \"teamId\": 3,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"Unable to connect to 'http://127.0.0.1:9/user/StatsProbe/stats?team=37726&passkey=DummyPasskey12345678901234567890' to check stats for user 'Stats Probe': Unable to connect to Folding@Home API\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "460",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "stats_url_root_restored_accepts_user_creation",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "AMD_GPU",
+     "displayName": "Stats Probe",
+     "foldingUserName": "StatsProbe",
+     "hardwareId": 3,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": 3,
+     "userIsCaptain": false
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 10,\n  \"foldingUserName\": \"StatsProbe\",\n  \"displayName\": \"Stats Probe\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"AMD_GPU\",\n  \"hardware\": {\n    \"id\": 3,\n    \"hardwareName\": \"ConfigGpuAmd\",\n    \"displayName\": \"Config GPU AMD\",\n    \"hardwareMake\": \"AMD\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 1\n  },\n  \"team\": {\n    \"id\": 3,\n    \"teamName\": \"ConfigTeamThree\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "449",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/10"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "redirect_url_still_rebound_after_later_restarts",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/anotherunknownpath"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:10 GMT",
+     "location": "https://other.example/landing"
+    },
+    "status": 303
+   }
+  }
+ ],
+ "capability": "Environment-bound configuration read through EnvironmentVariableUtils and observable over the API: the per-category user limits USERS_IN_AMD_GPU/USERS_IN_NVIDIA_GPU/USERS_IN_WILDCARD, the REDIRECT_URL used for unknown URLs, and the LARS_URL_ROOT/STATS_URL_ROOT external service roots."
+}

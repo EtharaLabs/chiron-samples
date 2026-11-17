@@ -1,0 +1,27 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/lars/LarsGpuParser.java (changed against State A) ===
+@@
+31  | import org.jsoup.nodes.Element;
+32  | import org.jsoup.select.Elements;
+33  | 
+   -| /**
+   -|  * Utility class to parse the raw HTML from LARS for a GPU.
+   -|  */
+34 +| 
+35  | final class LarsGpuParser {
+36  | 
+37  |     private static final Logger LOGGER = LogManager.getLogger();
+@@
+44  | 
+45  |     }
+46  | 
+   -|     /**
+   -|      * Parses a GPU {@link Element} retrieved from LARS and converts it into a {@link LarsGpu}.
+   -|      *
+   -|      * @param gpuEntry the LARS HTML data for a single GPU to parse
+   -|      * @return the parsed {@link LarsGpu}s
+   -|      * @throws LarsParseException thrown if an error occurs parsing the input {@link Element}
+   -|      */
+47 +|     
+48  |     static LarsGpu parseSingleGpuEntry(final Element gpuEntry) throws LarsParseException {
+49  |         LOGGER.debug("Parsing GPU entry '{}'", gpuEntry);
+50  | 

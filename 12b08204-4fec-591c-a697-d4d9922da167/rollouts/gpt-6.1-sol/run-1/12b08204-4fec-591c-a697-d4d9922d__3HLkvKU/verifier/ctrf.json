@@ -1,0 +1,989 @@
+{
+ "results": {
+  "tool": {
+   "name": "argus-graded-pipeline"
+  },
+  "summary": {
+   "tests": 97,
+   "passed": 81,
+   "failed": 16,
+   "pending": 0,
+   "skipped": 0,
+   "other": 0,
+   "start": 0,
+   "stop": 0
+  },
+  "tests": [
+   {
+    "name": "S2",
+    "status": "passed",
+    "message": "no retired import",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S4",
+    "status": "passed",
+    "message": "no retired launch",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S6",
+    "status": "passed",
+    "message": "no bridge import",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S7",
+    "status": "passed",
+    "message": "no retired source transplanted",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": true
+    }
+   },
+   {
+    "name": "S8",
+    "status": "passed",
+    "message": "nothing names or detects the verifier",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": true
+    }
+   },
+   {
+    "name": "S3",
+    "status": "passed",
+    "message": "no retired or bridge distribution declared, locked or installed",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G17",
+    "status": "passed",
+    "message": "schema matches State A",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S1",
+    "status": "passed",
+    "message": "rebuilt offline against the target set and served",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S5",
+    "status": "passed",
+    "message": "create_app() returns a FastAPI application with no foreign mount, served through UvicornWorker",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S10",
+    "status": "passed",
+    "message": "every State A rule is matched by an APIRoute or the static mount",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "K1",
+    "status": "passed",
+    "message": "max_requests resolves to 65535",
+    "extra": {
+     "weight": 1,
+     "kind": "quality",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "K2",
+    "status": "passed",
+    "message": "graceful_timeout resolves to 60",
+    "extra": {
+     "weight": 1,
+     "kind": "quality",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "K4",
+    "status": "passed",
+    "message": "the repository's configuration loads worker_class uvicorn.workers.UvicornWorker",
+    "extra": {
+     "weight": 1,
+     "kind": "quality",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "K3",
+    "status": "passed",
+    "message": "child_exit removes the exiting worker's live-gauge files and keeps the others",
+    "extra": {
+     "weight": 3,
+     "kind": "quality",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "K5",
+    "status": "passed",
+    "message": "cli help exited 0",
+    "extra": {
+     "weight": 1,
+     "kind": "quality",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "S9",
+    "status": "passed",
+    "message": "0.9975 of State A's collected test ids are collected",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G01",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G02",
+    "status": "passed",
+    "message": "11 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G03",
+    "status": "failed",
+    "message": "admin-api-anon step 0 GET /admin/api/v1/users: json: expected {\"message\": \"Forbidden\", \"status\": \"error\"} got {\"message\": \"Authorization required\", \"status\": \"error\"}",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G04",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G05",
+    "status": "passed",
+    "message": "14 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G06",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G07",
+    "status": "passed",
+    "message": "11 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G08",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G09",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G10",
+    "status": "passed",
+    "message": "13 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G11",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G12",
+    "status": "passed",
+    "message": "15 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G13",
+    "status": "passed",
+    "message": "12 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G14",
+    "status": "failed",
+    "message": "alert-debug step 1 GET /alert_debug: cookies: expected [[\"session\", {\"httponly\": true, \"lifetime\": false, \"path\": \"/\"}]] got []",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G15",
+    "status": "failed",
+    "message": "slashed-name-redirect step 1 GET /release/by-id/{{release}}/planner: location: expected \"/release/stage2/slashed/planner\" got null",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "G16",
+    "status": "passed",
+    "message": "2 cases agree",
+    "extra": {
+     "weight": 5,
+     "kind": "veto",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F001",
+    "status": "failed",
+    "message": "F001 step 0 GET /auth/admin/impersonate: location: expected \"/\" got \"/auth/login\"",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F002",
+    "status": "failed",
+    "message": "F002 step 2 GET /auth/admin/impersonate: location: expected \"/\" got \"/auth/login\"",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F003",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F004",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F005",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F006",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F007",
+    "status": "failed",
+    "message": "F007 step 0 GET /admin/api/v1/: json: expected {\"message\": \"Forbidden\", \"status\": \"error\"} got {\"message\": \"Authorization required\", \"status\": \"error\"}",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F008",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F009",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F010",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F011",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F012",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F013",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F014",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F015",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F016",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F017",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F018",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F019",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F020",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F021",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F022",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F023",
+    "status": "failed",
+    "message": "F023 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F024",
+    "status": "failed",
+    "message": "F024 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F025",
+    "status": "failed",
+    "message": "F025 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F026",
+    "status": "failed",
+    "message": "F026 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F027",
+    "status": "failed",
+    "message": "F027 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F028",
+    "status": "failed",
+    "message": "F028 step 2 GET /profile/: text: expected \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\") got \"<!DOCTYPE html> <html lang=\\\"en\\\" data-bs-theme=\\\"light\\\"> <head> <meta charset=\\\"UTF-8\\\"> <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"> <script> (function() { var pref = localStorage.getItem(\\\"argus-theme\\\"); function resolve(p) { if (p === \\\"light\\\" || p === \\\"dark\\\")",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F029",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F030",
+    "status": "failed",
+    "message": "F030 step 1 GET /api/v1/release/planner/comment/get/test: json: expected {\"response\": \"stage3 planner note\", \"status\": \"ok\"} got {\"response\": \"\", \"status\": \"ok\"}",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F031",
+    "status": "failed",
+    "message": "F031 step 1 GET /api/v1/views/get: json: expected {\"response\": {\"created\": \"2026-11-01T11:00:00.000Z\", \"description\": \"Seeded view\", \"display_name\": \"Core View\", \"group_ids\": [\"34f73064-36d3-42e0-9bf8-17840d9eb352\"], \"id\": \"0a11ce00-0000-4000-8000-000000000020\", \"last_updated\": \"<now>\", \"name\": \"core-view\", \"plan_id\": null, \"release_ids\": [\"feb3dc2 got {\"response\": {\"created\": \"<now>\", \"description\": \"second view\", \"display_name\": \"Dup Read\", \"group_ids\": [], \"id\": \"<id1>\", \"last_updated\": \"<now>\", \"name\": \"stage3-dup-read-view\", \"plan_id\": null, \"release_ids\": [], \"tests\": [\"3ed77c66-c3b8-404f-8f43-266b75771178\"], \"user_id\": \"f67d055a-dc67-49a9-b",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F032",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F033",
+    "status": "failed",
+    "message": "F033 step 0 POST /api/v1/views: location: expected null got \"/api/v1/views/\"",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F034",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F035",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F036",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F037",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F038",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F039",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F040",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F041",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F042",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F043",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F044",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F045",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F046",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F047",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F048",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F049",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F050",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F051",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F052",
+    "status": "failed",
+    "message": "F052 step 2 GET /release/by-id/{{release}}/planner: location: expected \"/release/stage%20three%20release/planner\" got \"/release/stage three release/planner\"",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F053",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F054",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F055",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F056",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F057",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F058",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F059",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F060",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F061",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F062",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F063",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F064",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   },
+   {
+    "name": "F065",
+    "status": "passed",
+    "message": "agrees with State A",
+    "extra": {
+     "weight": 3,
+     "kind": "family",
+     "cheat_check": false
+    }
+   }
+  ]
+ }
+}

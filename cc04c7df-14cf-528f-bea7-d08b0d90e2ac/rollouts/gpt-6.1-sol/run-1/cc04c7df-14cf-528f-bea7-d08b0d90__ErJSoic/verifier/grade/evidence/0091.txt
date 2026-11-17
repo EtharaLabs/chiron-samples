@@ -1,0 +1,28 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/DbManagerRetriever.java (changed against State A) ===
+@@
+31  | import me.zodac.folding.db.postgres.PostgresDataSource;
+32  | import me.zodac.folding.db.postgres.PostgresDbManager;
+33  | 
+   -| /**
+   -|  * Utility class used to retrieve an instance of {@link DbManager} for the system.
+   -|  */
+34 +| 
+35  | public final class DbManagerRetriever {
+36  | 
+37  |     private static final String DATABASE_VARIABLE_NAME = "DEPLOYED_DATABASE";
+@@
+41  | 
+42  |     }
+43  | 
+   -|     /**
+   -|      * Returns a concrete implementation of {@link DbManager}, based on the value of the <b>DEPLOYED_DATABASE</b> environment variable.
+   -|      *
+   -|      * <p>
+   -|      * Supported DBs are defined by {@link DatabaseType}.
+   -|      *
+   -|      * @return the {@link DbManager} instance
+   -|      */
+44 +|     
+45  |     public static DbManager get() {
+46  |         final String deployedDatabase = EnvironmentVariableUtils.get(DATABASE_VARIABLE_NAME);
+47  |         final DatabaseType databaseType = DatabaseType.get(deployedDatabase);

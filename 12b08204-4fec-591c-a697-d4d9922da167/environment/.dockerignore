@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!locks/
+!app/
+!bin/argus-db
+!bin/argus-original
+!oracle/argus_web.yaml
+!rpms/

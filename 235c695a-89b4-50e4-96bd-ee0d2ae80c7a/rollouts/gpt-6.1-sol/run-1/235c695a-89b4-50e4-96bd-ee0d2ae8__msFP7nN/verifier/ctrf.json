@@ -1,0 +1,367 @@
+{
+ "results": {
+  "tool": {
+   "name": "yosys-cmake-grader"
+  },
+  "summary": {
+   "tests": 58,
+   "passed": 19,
+   "failed": 4,
+   "skipped": 35,
+   "pending": 0,
+   "other": 0,
+   "start": 1794636294843,
+   "stop": 1794636294843
+  },
+  "tests": [
+   {
+    "name": "S1-make-build-absent",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S1-cmake-default-installs",
+    "status": "passed",
+    "duration": 0,
+    "message": "configure exit 0; build exit 0; unit exit 0; install exit 0; installed bin/yosys -V exit 0"
+   },
+   {
+    "name": "S1-no-embedded-old-build",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S1-no-build-forwarding",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S1-no-verifier-awareness",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-ci-test-build",
+    "status": "failed",
+    "duration": 0,
+    "message": "test-yosys/vanilla-test-exit; test-yosys/various; test-yosys/xprop"
+   },
+   {
+    "name": "S2-ci-test-compile",
+    "status": "failed",
+    "duration": 0,
+    "message": "gcc-11/banner"
+   },
+   {
+    "name": "S2-ci-test-sanitizers",
+    "status": "failed",
+    "duration": 0,
+    "message": "vanilla-test-exit; vanilla/various; vanilla/xprop"
+   },
+   {
+    "name": "S2-ci-extra-builds",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-ci-wheels",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-ci-source-vendor",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-ci-docs",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-suite-frontends",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-suite-passes",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-suite-techmap-arch",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-suite-sim-formal",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-command-reference",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-compiled-features",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-install-layout",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-binary-abi",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-consumer-routes",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "S2-option-matrix",
+    "status": "passed",
+    "duration": 0,
+    "message": ""
+   },
+   {
+    "name": "F-alt-installed-consumer",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-readonly-outside-build",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-edit-share-file",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-off-readline",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-alt-relocated-share",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-static-consumer",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-off-tcl",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-edit-python-tool",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-edit-cellhelp",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-alt-python-tools",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-datdir-copied-binary",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-install-without-build",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-delete-share-product",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-wasi-default",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-edit-config-template",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-usr-libdir",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-help-source",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-off-plugins",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-off-zlib",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-debug-install",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-alt-noabc-synth",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-noop-rebuild",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-version-checkout",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-edit-generator",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-tools-relocated",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-debug-backtrace",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "F-debug-banner",
+    "status": "skipped",
+    "duration": 0,
+    "message": "Stage III not run: the veto fired earlier"
+   },
+   {
+    "name": "G-native-build",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-ci-job-dropped",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-ci-failure-masked",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-ci-triggers-changed",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-wheels-config-changed",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-version-duplicated",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-hardcoded-host-path",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "J-tests-weakened",
+    "status": "skipped",
+    "duration": 0,
+    "message": "judge not called on this route"
+   },
+   {
+    "name": "vetoed",
+    "status": "failed",
+    "duration": 0,
+    "message": "S2-ci-test-build, S2-ci-test-compile, S2-ci-test-sanitizers"
+   }
+  ]
+ }
+}

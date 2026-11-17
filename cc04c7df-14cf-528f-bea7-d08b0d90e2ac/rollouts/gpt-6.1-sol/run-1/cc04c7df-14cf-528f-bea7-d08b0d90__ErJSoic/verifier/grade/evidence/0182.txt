@@ -1,0 +1,37 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/rest/WebErrors.java (added against State A) ===
+1 +| package me.zodac.folding.rest;
+2 +| 
+3 +| import javax.servlet.http.HttpServletResponse;
+4 +| import org.springframework.http.ResponseEntity;
+5 +| import org.springframework.http.converter.HttpMessageNotReadableException;
+6 +| import org.springframework.web.HttpMediaTypeNotAcceptableException;
+7 +| import org.springframework.web.HttpMediaTypeNotSupportedException;
+8 +| import org.springframework.web.HttpRequestMethodNotSupportedException;
+9 +| import org.springframework.web.bind.annotation.ExceptionHandler;
+10 +| import org.springframework.web.bind.annotation.RestControllerAdvice;
+11 +| import org.springframework.web.servlet.NoHandlerFoundException;
+12 +| 
+13 +| @RestControllerAdvice
+14 +| public class WebErrors {
+15 +|     private final String redirectUrl;
+16 +|     public WebErrors(@org.springframework.beans.factory.annotation.Value("${REDIRECT_URL:https://zodac.me}") String redirectUrl) {
+17 +|         this.redirectUrl = redirectUrl;
+18 +|     }
+19 +|     @ExceptionHandler(NoHandlerFoundException.class)
+20 +|     public ResponseEntity<Void> missing(HttpServletResponse response) {
+21 +|         return ResponseEntity.status(303).header("Location", redirectUrl).build();
+22 +|     }
+23 +|     @ExceptionHandler(HttpMessageNotReadableException.class)
+24 +|     public ResponseEntity<String> unreadable(HttpServletResponse response) {
+25 +|         return ResponseEntity.badRequest().header("Content-Type", "text/html;charset=UTF-8").body("<html><body>Bad Request</body></html>");
+26 +|     }
+27 +|     @ExceptionHandler({HttpMediaTypeNotAcceptableException.class, HttpMediaTypeNotSupportedException.class, HttpRequestMethodNotSupportedException.class})
+28 +|     public ResponseEntity<Void> protocol(Exception error, HttpServletResponse response) {
+29 +|         return ResponseEntity.status(error instanceof HttpMediaTypeNotAcceptableException ? 406 : error instanceof HttpMediaTypeNotSupportedException ? 415 : 405).build();
+30 +|     }
+31 +|     @ExceptionHandler(Exception.class)
+32 +|     public ResponseEntity<String> failed(Exception error, HttpServletResponse response) {
+33 +|         response.reset();
+34 +|         return ResponseEntity.status(500).header("Content-Type", "text/html;charset=UTF-8").body("<html><body>Internal Server Error</body></html>");
+35 +|     }
+36 +| }

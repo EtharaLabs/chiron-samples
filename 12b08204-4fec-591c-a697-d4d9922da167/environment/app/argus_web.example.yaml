@@ -1,0 +1,126 @@
+# BASE URL FOR ARGUS APPLICATION
+BASE_URL: "https://argus.scylladb.com"
+# Main DB Cluster contact points
+SCYLLA_CONTACT_POINTS:
+    - 1.1.1.1
+    - 2.2.2.2
+    - 3.3.3.3
+# Username
+SCYLLA_USERNAME: user
+# Password
+SCYLLA_PASSWORD: password
+# Default keyspace (can be created using 'create-keyspace' command with RF set to the number of contact points)
+SCYLLA_KEYSPACE_NAME: mykeyspacename
+# Replication factor used - if set, will override contact_points as amount of nodes for replication
+# SCYLLA_REPLICATION_FACTOR: 3
+
+# Which login methods to enable
+# Enable Cloudflare Access JWT auth by adding "cf" to LOGIN_METHODS.
+LOGIN_METHODS:
+    - password
+    - gh
+    - cf
+
+# Application log level
+APP_LOG_LEVEL: INFO
+# Secret key used to match session data
+SECRET_KEY: MUSTBEUNIQUE
+# Allowed buckets for S3 proxying
+S3_ALLOWED_BUCKETS:
+    - my-bucket-name
+
+# Allowed mime types for S3 proxying
+S3_ALLOWED_MIME:
+    - image/png
+    - application/zstd
+    - application/gzip
+
+# AWS Client ID
+AWS_CLIENT_ID: ABCDE
+# AWS Client Secret
+AWS_CLIENT_SECRET: YourSecretKey
+# Client ID of a github oauth application
+GITHUB_CLIENT_ID: YOUR_GITHUB_CLIENT_ID
+# Scopes used for Github Application:
+# GITHUB_SCOPES: 'user:email read:user read:org'
+# Client secret of a github oauth application
+GITHUB_CLIENT_SECRET: YOUR_GITHUB_CLIENT_SECRET
+# Github personal access token
+GITHUB_ACCESS_TOKEN: YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+# List of required organization names (Comment out to disable organization requirement)
+GITHUB_REQUIRED_ORGANIZATIONS:
+    # at least one is required for user to successfully authenticate
+    - myorg
+    - otherorg
+# Enable/disable remote GitHub issue-tracking calls (default: true).
+# When false, GITHUB_ACCESS_TOKEN is not required for issue tracking.
+# Note: GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET are still needed for OAuth login.
+GITHUB_ENABLED: true
+
+# JIRA Server address
+JIRA_SERVER: https://your.jira.instance
+# Email of the service user
+JIRA_EMAIL: user@your.jira.instance
+# API Token of the service user
+JIRA_TOKEN: base64Token
+# Enable/disable remote Jira calls (default: true).
+# When false, JIRA_SERVER, JIRA_EMAIL, and JIRA_TOKEN are not required.
+JIRA_ENABLED: true
+
+JENKINS_URL: https://your_jenkins_hostname
+JENKINS_USER: user
+JENKINS_API_TOKEN_NAME: Optional
+JENKINS_API_TOKEN: hex-token
+
+EMAIL_SENDER: "qabot@scylladb.com"
+EMAIL_SENDER_USER: ""
+EMAIL_SENDER_PASS: ""
+EMAIL_SERVER: "smtp.gmail.com"
+EMAIL_SERVER_PORT: "587"
+# Enable/disable email notifications (default: true).
+# When false, EMAIL_SENDER, EMAIL_SENDER_USER, EMAIL_SENDER_PASS,
+# EMAIL_SERVER, and EMAIL_SERVER_PORT are not required.
+# In-app (DB-backed) notifications are unaffected.
+EMAIL_ENABLED: true
+
+# Used to determine whether or not assigned job is still considered valid.
+# TODO: Move to user settings
+JOB_VALIDITY_PERIOD_DAYS: 30
+
+# Documentation link, if present, will be shown in the nav bar
+APP_DOC_LINK:
+# Cloudflare Access JWT verification
+CLOUDFLARE_ACCESS_TEAM_DOMAIN: your-team.cloudflareaccess.com
+# Application Audience (AUD) Tag for the Access app
+CLOUDFLARE_ACCESS_AUD: your-application-aud-tag-from-cloudflare-dashboard
+
+# Zeus host for proxying zeus endpoints
+ZEUS_SCHEMA: http
+ZEUS_HOST: example.com:80
+ZEUS_TOKEN: your-token
+
+# Event summarization (argusAI worker). Disabled by default; read once at worker startup,
+# so changing any of these requires a worker restart. See docs/plans/event-summarization.md.
+EVENT_SUMMARIZATION_ENABLED: false
+# OPENAI_API_KEY: your-openai-key            # required only when summarization is enabled
+# OPENAI_BASE_URL: https://api.openai.com/v1 # set for Azure / proxy / compatible endpoints
+OPENAI_SUMMARY_MODEL: gpt-5.6-terra          # starting point; final pick gated on the eval (argusAI/eval)
+EVENT_SUMMARIZATION_MAX_CONCURRENCY: 4       # bounded executor / rate-limit guard
+# Max events waiting to be summarized before new ones are dropped. Decoupled from
+# concurrency so a burst is buffered, not lost; bounds memory if the API stalls.
+EVENT_SUMMARIZATION_MAX_BACKLOG: 1000
+# Skip events shorter than this many input tokens (summarizing them expands rather than
+# compresses). 250 is the data-backed default (argusAI/eval §7, ≈800 chars of SCT event body);
+# set 0 to summarize everything.
+EVENT_SUMMARIZATION_MIN_TOKENS: 250
+# Expose Prometheus metrics for the summarization worker on this port (0 = off). The worker
+# is a standalone process, so it serves its own /metrics endpoint (separate from the web app's).
+# Metrics are labeled by model to compare live behaviour against the eval sweep (argusAI/eval):
+# input/output tokens, compression ratio, latency, lag, and ok/failed/dropped counts.
+EVENT_SUMMARIZATION_METRICS_PORT: 9109
+# Pick which versioned prompt to use (a stem from argusAI/prompts/, e.g. v1_surgical).
+# Also settable via the EVENT_SUMMARIZATION_PROMPT_VERSION env var. Defaults to the winner.
+# EVENT_SUMMARIZATION_PROMPT_VERSION: v1_surgical
+# Or supply the full prompt text inline, which overrides the version selection above:
+# EVENT_SUMMARIZATION_PROMPT: |
+#   ...your prompt...

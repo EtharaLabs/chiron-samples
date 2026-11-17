@@ -1,0 +1,23 @@
+{
+  "invalidObject": {
+    "hardwareName": "Hardware1",
+    "displayName": "Hardware1",
+    "hardwareMake": "NVIDIA",
+    "hardwareType": "GPU",
+    "multiplier": 16.38,
+    "averagePpd": 1
+  },
+  "conflictingObject": {
+    "id": 1,
+    "hardwareName": "Hardware1",
+    "displayName": "Hardware1",
+    "hardwareMake": "NVIDIA",
+    "hardwareType": "GPU",
+    "multiplier": 16.38,
+    "averagePpd": 1
+  },
+  "validationResult": "FAILURE_DUE_TO_CONFLICT",
+  "errors": [
+    "Payload conflicts with an existing object on: [hardwareName]"
+  ]
+}

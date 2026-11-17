@@ -1,0 +1,145 @@
+{
+ "id": "s3_family_27",
+ "source": "f043_empty_object_payloads",
+ "steps": [
+  {
+   "case": "empty_object_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {}
+   }
+  },
+  {
+   "case": "empty_object_team",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {}
+   }
+  },
+  {
+   "case": "empty_object_user",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {}
+   }
+  },
+  {
+   "case": "empty_object_batch_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware/batch",
+    "auth": "admin",
+    "json": [
+     {}
+    ]
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "empty_object_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {},
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"multiplier\": 0.0,\n    \"averagePpd\": 0\n  },\n  \"errors\": [\n    \"Field 'hardwareName' must not be empty\",\n    \"Field 'displayName' must not be empty\",\n    \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n    \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n    \"Field 'multiplier' must be 1.00 or higher\",\n    \"Field 'averagePpd' must be 1 or higher\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "395",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "empty_object_team",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {},
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {},\n  \"errors\": [\n    \"Field 'teamName' must not be empty\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "85",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "empty_object_user",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {},
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareId\": 0,\n    \"teamId\": 0,\n    \"userIsCaptain\": false\n  },\n  \"errors\": [\n    \"No hardware exist on the system\",\n    \"No teams exist on the system\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "186",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "empty_object_batch_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": [
+     {}
+    ],
+    "method": "POST",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "[\n  {\n    \"invalidObject\": {\n      \"multiplier\": 0.0,\n      \"averagePpd\": 0\n    },\n    \"errors\": [\n      \"Field 'hardwareName' must not be empty\",\n      \"Field 'displayName' must not be empty\",\n      \"Field 'hardwareMake' must be one of: [AMD, INTEL, NVIDIA]\",\n      \"Field 'hardwareType' must be one of: [CPU, GPU]\",\n      \"Field 'multiplier' must be 1.00 or higher\",\n      \"Field 'averagePpd' must be 1 or higher\"\n    ]\n  }\n]",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "427",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 400
+   }
+  }
+ ],
+ "probe": "An empty JSON object on each create endpoint: every field takes its default, so the response is the application's validation failure with an invalidObject that serialises to {} (nulls omitted) plus the zero-valued primitives."
+}

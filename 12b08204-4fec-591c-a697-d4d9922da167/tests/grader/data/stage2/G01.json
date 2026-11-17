@@ -1,0 +1,660 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Login </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/login.bundle.js\"></script> <script> const GITHUB_SCOPES = \"user:email read:user read:org\"; const GITHUB_CLIENT_ID = \"none\"; const CSRF_TOKEN = \"<tok1>\"; const LOGIN_METHODS = ['password']; const MANUAL_LOGOUT = false </script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\"active nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"loginContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "login-page",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/workspace",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/workspace\">/workspace</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Dashboard </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a002\", \"email\": \"alice@argus.test\", \"full_name\": \"Alice Tester\", \"id\": \"0a11ce00-0000-4000-8000-000000000001\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\"], \"service_user\": false, \"username\": \"alice\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/workArea.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\" nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> alice </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container-fluid\" id=\"dashboard-body\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "login-ok-then-home",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/run_dashboard"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    }
+   ],
+   "id": "login-bad-password",
+   "steps": [
+    {
+     "client": "anon",
+     "form": {
+      "password": "nope",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/run_dashboard"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Login </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = [[\"error\", \"User not found\"]]; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/login.bundle.js\"></script> <script> const GITHUB_SCOPES = \"user:email read:user read:org\"; const GITHUB_CLIENT_ID = \"none\"; const CSRF_TOKEN = \"<tok1>\"; const LOGIN_METHODS = ['password']; const MANUAL_LOGOUT = false </script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\"active nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"loginContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "login-unknown-user",
+   "steps": [
+    {
+     "client": "anon",
+     "form": {
+      "password": "x",
+      "username": "ghost"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 400,
+     "text": "<!doctype html> <html lang=en> <title>400 Bad Request</title> <h1>Bad Request</h1> <p>The browser (or proxy) sent a request that this server could not understand.</p>"
+    }
+   ],
+   "id": "login-missing-field",
+   "steps": [
+    {
+     "client": "anon",
+     "form": {
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    }
+   ],
+   "id": "logged-in-visits-login",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Login </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = [[\"error\", \"Unauthorized, please login\"]]; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/login.bundle.js\"></script> <script> const GITHUB_SCOPES = \"user:email read:user read:org\"; const GITHUB_CLIENT_ID = \"none\"; const CSRF_TOKEN = \"<tok1>\"; const LOGIN_METHODS = ['password']; const MANUAL_LOGOUT = true </script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\"active nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"loginContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "logout-clears-session",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "POST",
+     "path": "/auth/logout"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/run_dashboard"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    }
+   ],
+   "id": "protected-page-redirects",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/releases"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/test_runs"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/profile/"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    }
+   ],
+   "id": "protected-page-next",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/view/core-view"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/test_run/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    }
+   ],
+   "id": "register-redirects",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/register"
+    },
+    {
+     "client": "anon",
+     "method": "POST",
+     "path": "/auth/register"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 405,
+     "text": "<!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowed</h1> <p>The method is not allowed for the requested URL.</p>"
+    }
+   ],
+   "id": "logout-get-not-allowed",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/logout"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "0a11ce00-0000-4000-8000-000000000001": {
+        "email": "alice@argus.test",
+        "full_name": "Alice Tester",
+        "id": "0a11ce00-0000-4000-8000-000000000001",
+        "picture_id": null,
+        "username": "alice"
+       },
+       "0a11ce00-0000-4000-8000-000000000002": {
+        "email": "manny@argus.test",
+        "full_name": "Manny Manager",
+        "id": "0a11ce00-0000-4000-8000-000000000002",
+        "picture_id": null,
+        "username": "manny"
+       },
+       "f67d055a-dc67-49a9-b4c4-36760d5389e5": {
+        "email": "admin@localhost",
+        "full_name": "Admin User",
+        "id": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "picture_id": null,
+        "username": "admin"
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "token": "a0000000-0000-4000-8000-00000000a003"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Profile </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script> var gArgusCurrentUser = {\"api_token\": \"a0000000-0000-4000-8000-00000000a003\", \"email\": \"manny@argus.test\", \"full_name\": \"Manny Manager\", \"id\": \"0a11ce00-0000-4000-8000-000000000002\", \"picture_id\": null, \"registration_date\": \"2026-11-01T11:00:00.000Z\", \"roles\": [\"ROLE_USER\", \"ROLE_MANAGER\"], \"service_user\": false, \"username\": \"manny\"}; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a class=\" nav-link\" href=\"/profile/jobs\"><i class=\"fas fa-archive\"></i> My Jobs</a> <a class=\" nav-link position-relative\" href=\"/notifications/\"><div class=\"position-absolute\" id=\"notificationCounter\"></div><i class=\"far fa-bell\"></i> Notifications</a> <a class=\" nav-link\" href=\"/teams/\"><i class=\"fas fa-users\"></i> Teams</a> <a class=\"active nav-link d-flex align-items-center\" href=\"/profile/\"> <i class=\"fas fa-user\"></i> manny </a> <div class=\"d-inline-flex align-items-center\"> <form action=\"/auth/logout\" method=\"post\"> <button class=\"btn btn-sm btn-danger me-2\" type=\"submit\"> <i class=\"fas fa-sign-out-alt\"></i> Logout </button> </form> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div class=\"container\"> <div class=\"row border rounded bg-main my-3 shadow-sm\"> <div class=\"col-2 border-end p-2\"> <img class=\"img-profile img-thumbnail\" src=\"/s/no-user-picture.png\" alt=\"\"> </div> <div class=\"col-10\"> <h1>Profile</h1> <h4>manny</h4> <h6>Details</h6> <div class=\"row\"> <div class=\"col-1 p-2\"> Username: </div> <div class=\"col-4\"> <form class=\"form mb-3\" action=\"/profile/update/username\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateUserName\" name=\"new_username\" type=\"text\" placeholder=\"@manny\"> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </div> </form> </div> </div> <div class=\"row\"> <div class=\"col-1 p-2\"> Name: </div> <div class=\"col-4\"> <form class=\"form mb-3\" action=\"/profile/update/name\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateName\" name=\"new_name\" type=\"text\" placeholder=\"Manny Manager\"> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </div> </form> </div> </div> <div class=\"row\"> <div class=\"col-1 p-2\"> Email: </div> <div class=\"col-6\"> <div class=\"mb-3 d-flex align-items-center\"> <input class=\"form-control form-control-sm me-3\" id=\"formUpdateName\" name=\"new_email\" type=\"text\" placeholder=\"manny@argus.test\" disabled> </div> </div> </div> <h4>Change profile picture</h4> <form class=\"form mb-3\" action=\"/profile/update/picture\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3\"> <label for=\"formPictureData\" class=\"form-label\">Profile Image</label> <input class=\"form-control form-control-sm\" id=\"formPictureData\" name=\"filedata\" type=\"file\"> </div> <button type=\"submit\" class=\"btn btn-primary\">Upload new image</button> </form> <h4>Change password</h4> <form class=\"form mb-3\" action=\"/profile/update/password\" method=\"post\" enctype=\"multipart/form-data\"> <div class=\"mb-3\"> <label for=\"formCurrentPassword\" class=\"form-label\">Current Password</label> <input class=\"form-control form-control-sm\" id=\"formCurrentPassword\" name=\"old_password\" type=\"password\"> </div> <div class=\"mb-3\"> <label for=\"formNewPassword\" class=\"form-label\">New Password</label> <input class=\"form-control form-control-sm\" id=\"formNewPassword\" name=\"new_password\" type=\"password\"> </div> <div class=\"mb-3\"> <label for=\"formNewPasswordConfirm\" class=\"form-label\">New Password confirmation</label> <input class=\"form-control form-control-sm\" id=\"formNewPasswordConfirm\" name=\"new_password_confirm\" type=\"password\"> </div> <button type=\"submit\" class=\"btn btn-primary\">Change</button> </form> <h4>API Token</h4> <div class=\"mb-2\"> <p>Generate an API token</p> <form class=\"d-flex align-items-center\" action=\"/auth/profile/api/token/generate\" method=\"post\"> <div class=\"input-group\"> <span class=\"input-group-text\">Current token</span> <input class=\"form-control\" type=\"text\" disabled value=\"************\"> </div> <div class=\"ms-2\"> <button class=\"btn btn-sm btn-primary\" type=\"submit\"> Regenerate </button> </div> </form> </div> </div> </div> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    }
+   ],
+   "id": "session-survives-requests",
+   "steps": [
+    {
+     "client": "manny",
+     "form": {
+      "password": "manny-password",
+      "username": "manny"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "manny",
+     "method": "GET",
+     "path": "/api/v1/users"
+    },
+    {
+     "client": "manny",
+     "method": "GET",
+     "path": "/api/v1/user/token"
+    },
+    {
+     "client": "manny",
+     "method": "GET",
+     "path": "/profile/"
+    }
+   ]
+  }
+ ],
+ "group": "G01",
+ "name": "password-session-auth"
+}

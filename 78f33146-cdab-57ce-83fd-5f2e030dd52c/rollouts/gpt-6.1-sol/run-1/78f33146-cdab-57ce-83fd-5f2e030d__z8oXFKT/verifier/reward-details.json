@@ -1,0 +1,757 @@
+{
+  "reward": {
+    "kind": "group",
+    "score": 0.0,
+    "aggregation": "weighted-mean",
+    "components": [
+      {
+        "name": "vetoed",
+        "weight": 0.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "vetoed",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 0.0,
+              "description": "veto failed: S2-info, S2-errors"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      },
+      {
+        "name": "zeroed",
+        "weight": 1.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "S1-build",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-build"
+            },
+            {
+              "name": "S1-manifest",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-manifest"
+            },
+            {
+              "name": "S1-lockfile",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-lockfile"
+            },
+            {
+              "name": "S1-installed",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-installed"
+            },
+            {
+              "name": "S1-v1-namespace",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-v1-namespace"
+            },
+            {
+              "name": "S1-default-path",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-default-path"
+            },
+            {
+              "name": "S1-deprecated-aliases",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-deprecated-aliases"
+            },
+            {
+              "name": "S1-transplant",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-transplant"
+            },
+            {
+              "name": "S1-shim",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-shim"
+            },
+            {
+              "name": "S1-verifier-isolation",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S1-verifier-isolation"
+            },
+            {
+              "name": "S2-settings",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-settings"
+            },
+            {
+              "name": "S2-info",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-info"
+            },
+            {
+              "name": "S2-item-create",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-item-create"
+            },
+            {
+              "name": "S2-item-read",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-item-read"
+            },
+            {
+              "name": "S2-item-save",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-item-save"
+            },
+            {
+              "name": "S2-versioning",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-versioning"
+            },
+            {
+              "name": "S2-listing-search",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-listing-search"
+            },
+            {
+              "name": "S2-collections",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-collections"
+            },
+            {
+              "name": "S2-relationships",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-relationships"
+            },
+            {
+              "name": "S2-blocks",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-blocks"
+            },
+            {
+              "name": "S2-files",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-files"
+            },
+            {
+              "name": "S2-users-roles",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-users-roles"
+            },
+            {
+              "name": "S2-auth-keys",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-auth-keys"
+            },
+            {
+              "name": "S2-groups-admin",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-groups-admin"
+            },
+            {
+              "name": "S2-export",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-export"
+            },
+            {
+              "name": "S2-equipment-cells",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-equipment-cells"
+            },
+            {
+              "name": "S2-errors",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-errors"
+            },
+            {
+              "name": "S2-health-remotes",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: S2-health-remotes"
+            },
+            {
+              "name": "S3-a2-cfg-backup-assign-testing",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a2-cfg-backup-assign-testing"
+            },
+            {
+              "name": "S3-a2-cfg-backup-defaults-testing",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a2-cfg-backup-defaults-testing"
+            },
+            {
+              "name": "S3-a2-cfg-cache-min-only-config-file",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a2-cfg-cache-min-only-config-file"
+            },
+            {
+              "name": "S3-a2-collection-synthesis-relationship-order",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a2-collection-synthesis-relationship-order"
+            },
+            {
+              "name": "S3-a3-datetime-isoformat-offset-response",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a3-datetime-isoformat-offset-response"
+            },
+            {
+              "name": "S3-a3-info-types-samples-schema-defaults",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a3-info-types-samples-schema-defaults"
+            },
+            {
+              "name": "S3-a4-settings-cache-age-default-max",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a4-settings-cache-age-default-max"
+            },
+            {
+              "name": "S3-a4-settings-cache-age-int-order",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a4-settings-cache-age-int-order"
+            },
+            {
+              "name": "S3-a4-settings-list-json-from-env",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a4-settings-list-json-from-env"
+            },
+            {
+              "name": "S3-a5-cache-age-env-inverted",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a5-cache-age-env-inverted"
+            },
+            {
+              "name": "S3-a5-dotenv-syntax",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a5-dotenv-syntax"
+            },
+            {
+              "name": "S3-a5-testing-backups-from-config-file",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a5-testing-backups-from-config-file"
+            },
+            {
+              "name": "S3-a5-update-testing-then-backups",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a5-update-testing-then-backups"
+            },
+            {
+              "name": "S3-a6-compare-versions-objectid-validation",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a6-compare-versions-objectid-validation"
+            },
+            {
+              "name": "S3-a6-legacy-collection-without-collection-id",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-a6-legacy-collection-without-collection-id"
+            },
+            {
+              "name": "S3-b1-collection-last-modified-utc-offset",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-collection-last-modified-utc-offset"
+            },
+            {
+              "name": "S3-b1-collection-null-collection-id-accepted",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-collection-null-collection-id-accepted"
+            },
+            {
+              "name": "S3-b1-item-create-nested-group-display-name-dict",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-item-create-nested-group-display-name-dict"
+            },
+            {
+              "name": "S3-b1-legacy-item-null-refcode-read",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-legacy-item-null-refcode-read"
+            },
+            {
+              "name": "S3-b1-new-sample-underscore-id-null",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-new-sample-underscore-id-null"
+            },
+            {
+              "name": "S3-b1-settings-deployment-default-port",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-settings-deployment-default-port"
+            },
+            {
+              "name": "S3-b1-settings-deployment-scheme-case",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b1-settings-deployment-scheme-case"
+            },
+            {
+              "name": "S3-b2-collection-immutable-id-null-create",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-collection-immutable-id-null-create"
+            },
+            {
+              "name": "S3-b2-collection-relationship-objectid-json",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-collection-relationship-objectid-json"
+            },
+            {
+              "name": "S3-b2-constituent-objectid-json",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-constituent-objectid-json"
+            },
+            {
+              "name": "S3-b2-group-immutable-id-null-patch",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-group-immutable-id-null-patch"
+            },
+            {
+              "name": "S3-b2-group-members-null-patch",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-group-members-null-patch"
+            },
+            {
+              "name": "S3-b2-relationship-objectid-json",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-relationship-objectid-json"
+            },
+            {
+              "name": "S3-b2-stored-item-id-null-get-by-refcode",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b2-stored-item-id-null-get-by-refcode"
+            },
+            {
+              "name": "S3-b3-cache-age-config-min-env-max",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-cache-age-config-min-env-max"
+            },
+            {
+              "name": "S3-b3-deployment-homepage-trailing-slash",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-deployment-homepage-trailing-slash"
+            },
+            {
+              "name": "S3-b3-deployment-issue-tracker-host-case",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-deployment-issue-tracker-host-case"
+            },
+            {
+              "name": "S3-b3-deployment-source-repo-default-port",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-deployment-source-repo-default-port"
+            },
+            {
+              "name": "S3-b3-dotenv-null-clears-config-deployment-metadata",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-dotenv-null-clears-config-deployment-metadata"
+            },
+            {
+              "name": "S3-b3-dotenv-null-email-domain-allow-list",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-dotenv-null-email-domain-allow-list"
+            },
+            {
+              "name": "S3-b3-dotenv-remote-filesystems-json",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-dotenv-remote-filesystems-json"
+            },
+            {
+              "name": "S3-b3-dotenv-secret-key-only",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-dotenv-secret-key-only"
+            },
+            {
+              "name": "S3-b3-dotenv-smtp-json",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-dotenv-smtp-json"
+            },
+            {
+              "name": "S3-b3-dotenv-testing-backups-prefix",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-dotenv-testing-backups-prefix"
+            },
+            {
+              "name": "S3-b3-env-null-clears-config-email-domain-list",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-env-null-clears-config-email-domain-list"
+            },
+            {
+              "name": "S3-b3-update-deployment-metadata-url",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b3-update-deployment-metadata-url"
+            },
+            {
+              "name": "S3-b4-create-collection-null-collection-id-with-oid",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-create-collection-null-collection-id-with-oid"
+            },
+            {
+              "name": "S3-b4-new-sample-member-of-collection-without-collection-id",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-new-sample-member-of-collection-without-collection-id"
+            },
+            {
+              "name": "S3-b4-patch-collection-string-type-output",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-patch-collection-string-type-output"
+            },
+            {
+              "name": "S3-b4-restore-version-missing-field-errors-body",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-restore-version-missing-field-errors-body"
+            },
+            {
+              "name": "S3-b4-restore-version-restored-data-invalid-output",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-restore-version-restored-data-invalid-output"
+            },
+            {
+              "name": "S3-b4-save-item-constituent-none-not-allowed-message",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-save-item-constituent-none-not-allowed-message"
+            },
+            {
+              "name": "S3-b4-save-item-int-parsing-wire-message",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-save-item-int-parsing-wire-message"
+            },
+            {
+              "name": "S3-b4-save-item-stored-collection-without-collection-id",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-save-item-stored-collection-without-collection-id"
+            },
+            {
+              "name": "S3-b4-stored-item-invalid-500-message",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b4-stored-item-invalid-500-message"
+            },
+            {
+              "name": "S3-b5-admin-groups-null-objectid-doc",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-admin-groups-null-objectid-doc"
+            },
+            {
+              "name": "S3-b5-admin-users-legacy-display-name-list",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-admin-users-legacy-display-name-list"
+            },
+            {
+              "name": "S3-b5-group-managers-nested-display-name-list",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-group-managers-nested-display-name-list"
+            },
+            {
+              "name": "S3-b5-group-members-nested-null-objectid",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-group-members-nested-null-objectid"
+            },
+            {
+              "name": "S3-b5-group-patch-display-name-dict",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-group-patch-display-name-dict"
+            },
+            {
+              "name": "S3-b5-nmr-block-metadata-dict-deprecation",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-nmr-block-metadata-dict-deprecation"
+            },
+            {
+              "name": "S3-b5-remote-file-xrd-block-dict-deprecation",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b5-remote-file-xrd-block-dict-deprecation"
+            },
+            {
+              "name": "S3-b6-collection-create-string-type-error-text",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-collection-create-string-type-error-text"
+            },
+            {
+              "name": "S3-b6-collection-save-int-parsing-error-text",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-collection-save-int-parsing-error-text"
+            },
+            {
+              "name": "S3-b6-collection-save-string-type-error-text",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-collection-save-string-type-error-text"
+            },
+            {
+              "name": "S3-b6-restore-version-extra-key-wire",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-restore-version-extra-key-wire"
+            },
+            {
+              "name": "S3-b6-restore-version-missing-field-wire",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-restore-version-missing-field-wire"
+            },
+            {
+              "name": "S3-b6-restore-version-nonstring-field-wire",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-restore-version-nonstring-field-wire"
+            },
+            {
+              "name": "S3-b6-restore-version-null-field-wire",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-restore-version-null-field-wire"
+            },
+            {
+              "name": "S3-b6-restore-version-value-error-wire",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-restore-version-value-error-wire"
+            },
+            {
+              "name": "S3-b6-save-item-aliased-float-error-loc",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-save-item-aliased-float-error-loc"
+            },
+            {
+              "name": "S3-b6-save-item-int-parsing-error-text",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-save-item-int-parsing-error-text"
+            },
+            {
+              "name": "S3-b6-settings-deployment-metadata-url-exact",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-settings-deployment-metadata-url-exact"
+            },
+            {
+              "name": "S3-b6-settings-deployment-metadata-url-from-dotenv",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-settings-deployment-metadata-url-from-dotenv"
+            },
+            {
+              "name": "S3-b6-settings-testing-false-string-keeps-backups",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-b6-settings-testing-false-string-keeps-backups"
+            },
+            {
+              "name": "Q-dump-mode",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-dump-mode"
+            },
+            {
+              "name": "Q-settings-sources",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-settings-sources"
+            },
+            {
+              "name": "Q-discarded-error",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-discarded-error"
+            },
+            {
+              "name": "Q-loose-types",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: Q-loose-types"
+            },
+            {
+              "name": "Q-version-branch",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "zeroed by the veto: Q-version-branch"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      }
+    ]
+  }
+}

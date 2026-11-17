@@ -1,0 +1,151 @@
+{
+ "id": "s3_family_39",
+ "cases": [
+  {
+   "case": "delete_team_without_auth",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/1"
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.0646045,
+    1773572407.0684564
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_team_as_read_only",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": "readonly"
+   },
+   "compare": "full",
+   "response": {
+    "status": 403,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.0684988,
+    1773572407.1118097
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_team_wrong_password",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": {
+     "user": "root",
+     "password": "wrongpassword"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.111855,
+    1773572407.1215065
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_team_unknown_user",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": {
+     "user": "nosuchuser",
+     "password": "shroot"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 401,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.1215491,
+    1773572407.1268623
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "delete_team_as_admin_not_found",
+   "request": {
+    "method": "DELETE",
+    "path": "/teams/1",
+    "auth": "admin"
+   },
+   "compare": "full",
+   "response": {
+    "status": 404,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.1269076,
+    1773572407.1474214
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

@@ -1,0 +1,26 @@
+<FindBugsFilter>
+    <!-- Exclude generated files -->
+    <Match>
+        <Package name="~me.zodac.folding.db.postgres.gen.*"/>
+    </Match>
+
+    <!-- Lombok-generated issues -->
+    <Match>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Bug pattern="MS_EXPOSE_REP"/>
+    </Match>
+
+    <!-- False positive, no null checks being made -->
+    <Match>
+        <Class name="me.zodac.folding.db.postgres.PostgresDbManager"/>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
+</FindBugsFilter>

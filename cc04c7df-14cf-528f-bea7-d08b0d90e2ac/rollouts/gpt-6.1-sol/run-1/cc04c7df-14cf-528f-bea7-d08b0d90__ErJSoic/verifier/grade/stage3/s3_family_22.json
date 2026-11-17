@@ -1,0 +1,133 @@
+{
+ "id": "s3_family_22",
+ "cases": [
+  {
+   "case": "create_team_as_text_plain",
+   "request": {
+    "method": "POST",
+    "path": "/teams",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "auth": "admin",
+    "body": "{\"teamName\":\"PlainTeam\"}"
+   },
+   "compare": "status",
+   "response": {
+    "status": 415,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.831875,
+    1773572406.838623
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "create_user_as_text_plain",
+   "request": {
+    "method": "POST",
+    "path": "/users",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "auth": "admin",
+    "body": "{\"foldingUserName\":\"PlainUser\"}"
+   },
+   "compare": "status",
+   "response": {
+    "status": 415,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.8386438,
+    1773572406.8413928
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "offset_stats_as_text_plain",
+   "request": {
+    "method": "PATCH",
+    "path": "/stats/users/1",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "auth": "admin",
+    "body": "{\"pointsOffset\":1}"
+   },
+   "compare": "status",
+   "response": {
+    "status": 415,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.8414125,
+    1773572406.8439498
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "login_as_text_plain",
+   "request": {
+    "method": "POST",
+    "path": "/login/admin",
+    "headers": {
+     "Content-Type": "text/plain"
+    },
+    "body": "{\"encodedUserNameAndPassword\":\"Basic cm9vdDpzaHJvb3Q=\"}"
+   },
+   "compare": "status",
+   "response": {
+    "status": 415,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572406.8439646,
+    1773572406.8463316
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

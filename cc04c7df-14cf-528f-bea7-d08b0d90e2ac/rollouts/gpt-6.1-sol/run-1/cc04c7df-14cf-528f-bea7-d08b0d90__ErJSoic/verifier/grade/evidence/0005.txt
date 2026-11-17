@@ -1,0 +1,7 @@
+=== submission file: docker/spring/Dockerfile (added against State A) ===
+1 +| FROM eclipse-temurin:17-jre
+2 +| WORKDIR /app
+3 +| COPY folding-stats-service/target/folding-stats-service-1.0.0-SNAPSHOT.jar service.jar
+4 +| EXPOSE 8080
+5 +| USER 10001
+6 +| ENTRYPOINT ["java", "-jar", "/app/service.jar"]

@@ -1,0 +1,976 @@
+import base64
+from dataclasses import dataclass
+from datetime import UTC, datetime
+import logging
+import math
+import re
+from time import time
+from typing import TypedDict
+from uuid import UUID
+from xml.etree import ElementTree
+from flask import current_app, g
+from cassandra.util import uuid_from_time
+from coodie.exceptions import DocumentNotFound
+
+from argus.backend.db import ScyllaCluster
+from argus.backend.models.github_issue import GithubIssue, IssueLink
+from argus.backend.models.jira import JiraIssue
+from argus.backend.models.web import ArgusEventTypes, ErrorEventEmbeddings, CriticalEventEmbeddings
+from argus.backend.models.argus_ai import SCTErrorEventEmbedding, SCTCriticalEventEmbedding
+from argus.backend.plugins.sct.testrun import SCTEvent, SCTEventSeverity, SCTJunitReports, SCTResource, SCTNemesis, SCTTestRun, SubtestType, SCTUnprocessedEvent, StressCommand
+from argus.common.sct_types import GeminiResultsRequest, PerformanceResultsRequest, RawEventPayload, ResourceUpdateRequest
+from argus.backend.plugins.sct.udt import (
+    CloudInstanceDetails,
+    EventsBySeverity,
+    NemesisRunInfo,
+    NodeDescription,
+    PackageVersion,
+    PerformanceHDRHistogram,
+)
+from argus.backend.service.event_service import EventService
+from argus.backend.util.common import chunk
+from argus.common.enums import NemesisStatus, ResourceState, TestStatus
+from argus.common.utils import clamp_ts_to_milliseconds
+
+LOGGER = logging.getLogger(__name__)
+MAX_SIMILARS = 20
+
+
+class SCTServiceException(Exception):
+    pass
+
+
+@dataclass(init=True, repr=True)
+class NemesisSubmissionRequest:
+    name: str
+    class_name: str
+    start_time: int
+    node_name: str
+    node_ip: str
+    node_shards: int
+    description: str | None = None
+
+
+@dataclass(init=True, repr=True)
+class NemesisFinalizationRequest:
+    name: str
+    start_time: int
+    status: str
+    message: str
+
+
+@dataclass(init=True, repr=True)
+class EventSubmissionRequest:
+    severity: str
+    total_events: int
+    messages: list[str]
+
+
+@dataclass(init=True, repr=True)
+class EventSubmitRequest:
+    run_id: str
+    severity: str
+    ts: float
+    message: str
+    event_type: str
+    received_timestamp: str | None = None
+    nemesis_name: str | None = None
+    duration: float | None = None
+    node: str | None = None
+    target_node: str | None = None
+    known_issue: str | None = None
+    nemesis_status: str | None = None
+
+
+class CoredumpLink(TypedDict):
+    log_name: str
+    log_link: str
+
+
+class SCTService:
+
+    @staticmethod
+    def submit_packages(run_id: str, packages: list[dict]) -> str:
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            for package_dict in packages:
+                package = PackageVersion(**package_dict)
+                if "target" in package.name:
+                    SCTService.process_target_version(run, package)
+                if package not in run.packages:
+                    run.packages.append(package)
+            run.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "added"
+
+    @staticmethod
+    def process_target_version(run: SCTTestRun, package: PackageVersion):
+        if run.version_source and "upgrade-target" in run.version_source and package.name == "scylla-server-target":
+            return
+        run.version_source = package.name
+        run.scylla_version = package.version
+
+    @staticmethod
+    def set_sct_runner(run_id: str, public_ip: str, private_ip: str, region: str, backend: str, name: str = None):
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            details = CloudInstanceDetails(
+                public_ip=public_ip,
+                private_ip=private_ip,
+                provider=backend,
+                region=region,
+            )
+            run.sct_runner_host = details
+            run.save()
+            resource_name = name or "sct-runner"
+            if not SCTResource.find(run_id=UUID(run_id), name=resource_name).count():
+                SCTResource.create(
+                    run_id=UUID(run_id),
+                    name=resource_name,
+                    resource_type="sct-runner",
+                    instance_info=details,
+                )
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "updated"
+
+    @staticmethod
+    def submit_screenshots(run_id: str, screenshot_links: list[str]) -> str:
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            for link in screenshot_links:
+                if link not in run.screenshots:
+                    run.add_screenshot(link)
+            run.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "submitted"
+
+    @staticmethod
+    def submit_gemini_results(run_id: str, gemini_data: GeminiResultsRequest) -> str:
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            run.subtest_name = SubtestType.GEMINI.value
+            run.oracle_nodes_count = gemini_data.get("oracle_nodes_count")
+            run.oracle_node_ami_id = gemini_data.get("oracle_node_ami_id")
+            run.oracle_node_instance_type = gemini_data.get(
+                "oracle_node_instance_type")
+            run.oracle_node_scylla_version = gemini_data.get(
+                "oracle_node_scylla_version")
+            run.gemini_command = gemini_data.get("gemini_command")
+            run.gemini_version = gemini_data.get("gemini_version")
+            run.gemini_status = gemini_data.get("gemini_status")
+            run.gemini_seed = str(gemini_data.get("gemini_seed"))
+            run.gemini_write_ops = gemini_data.get("gemini_write_ops")
+            run.gemini_write_errors = gemini_data.get("gemini_write_errors")
+            run.gemini_read_ops = gemini_data.get("gemini_read_ops")
+            run.gemini_read_errors = gemini_data.get("gemini_read_errors")
+            run.save()
+
+            if run.gemini_status != "PASSED":
+                run.status = TestStatus.FAILED.value
+                EventService.create_run_event(kind=ArgusEventTypes.TestRunStatusChanged, body={
+                    "message": "[{username}] Setting run status to {status} due to Gemini reporting following status: {gemini_status}",
+                    "username": g.user.username,
+                    "status": TestStatus.FAILED.value,
+                    "gemini_status": run.gemini_status,
+                }, user_id=g.user.id, run_id=run_id, release_id=run.release_id, test_id=run.test_id)
+                run.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "submitted"
+
+    @staticmethod
+    def submit_performance_results(run_id: str, performance_results: PerformanceResultsRequest):
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            run.subtest_name = SubtestType.PERFORMANCE.value
+            run.perf_op_rate_average = performance_results.get(
+                "perf_op_rate_average")
+            run.perf_op_rate_total = performance_results.get(
+                "perf_op_rate_total")
+            run.perf_avg_latency_99th = performance_results.get(
+                "perf_avg_latency_99th")
+            run.perf_avg_latency_mean = performance_results.get(
+                "perf_avg_latency_mean")
+            run.perf_total_errors = performance_results.get(
+                "perf_total_errors")
+            run.stress_cmd = performance_results.get("stress_cmd")
+            run.test_name = performance_results.get("test_name")
+            run.save()
+
+            is_latency_test = "latency" in run.test_name
+            threshold_negative = -10
+
+            def cmp(lhs, rhs):
+                delta = rhs - lhs
+                change = int(math.fabs(delta) * 100 / rhs)
+                return change if delta >= 0 else change * -1
+
+            previous_runs = SCTTestRun.get_perf_results_for_test_name(
+                run.build_id, run.start_time, run.test_name)
+            metrics_to_check = ["perf_avg_latency_99th",
+                                "perf_avg_latency_mean"] if is_latency_test else ["perf_op_rate_total"]
+
+            older_runs_by_version = {}
+            for prev_run in previous_runs:
+                if not older_runs_by_version.get(prev_run["scylla_version"]):
+                    older_runs_by_version[prev_run["scylla_version"]] = []
+                older_runs_by_version[prev_run["scylla_version"]].append(
+                    prev_run)
+
+            regression_found = False
+            regression_info = {
+                "version": None,
+                "delta": None,
+                "id": None,
+                "metric": None,
+                "job_url": None,
+                "build_number": None,
+            }
+
+            if performance_results["histograms"]:
+                for histogram in performance_results["histograms"]:
+                    run.histograms = {k: PerformanceHDRHistogram(
+                        **v) for k, v in histogram.items()}
+
+            for version, runs in older_runs_by_version.items():
+                for metric in metrics_to_check:
+                    best_run = sorted(runs, reverse=(
+                        not is_latency_test), key=lambda v: v[metric])[0]
+                    last_run = runs[0]
+
+                    metric_to_best = cmp(run[metric], best_run[metric])
+                    metric_to_last = cmp(run[metric], last_run[metric])
+                    if metric_to_last < threshold_negative:
+                        regression_found = True
+                        regression_info["metric"] = metric
+                        regression_info["version"] = version
+                        regression_info["job_url"] = last_run["build_job_url"]
+                        regression_info["id"] = str(last_run["id"])
+                        regression_info["delta"] = metric_to_last
+                        regression_info["build_number"] = last_run["build_number"]
+                        break
+
+                    if metric_to_best < threshold_negative:
+                        regression_found = True
+                        regression_info["metric"] = metric
+                        regression_info["version"] = version
+                        regression_info["job_url"] = best_run["build_job_url"]
+                        regression_info["id"] = str(best_run["id"])
+                        regression_info["delta"] = metric_to_best
+                        regression_info["build_number"] = best_run["build_number"]
+                        break
+
+                if regression_found:
+                    break
+
+            if regression_found:
+                run.status = TestStatus.FAILED.value
+                run.save()
+                EventService.create_run_event(kind=ArgusEventTypes.TestRunStatusChanged, body={
+                    "message": "[{username}] Setting run status to {status} due to performance metric '{metric}' falling "
+                    "below allowed threshold ({threshold_negative}): {delta}% compared to "
+                    "<a href='/test/{test_id}/runs?additionalRuns[]={base_run_id}&additionalRuns[]={previous_run_id}'>This {version} (#{build_number}) run</a>",
+                    "username": g.user.username,
+                    "status": TestStatus.FAILED.value,
+                    "metric": regression_info["metric"],
+                    "threshold_negative": threshold_negative,
+                    "delta": regression_info["delta"],
+                    "test_id": str(run.test_id),
+                    "base_run_id": str(run.id),
+                    "previous_run_id": regression_info["id"],
+                    "version": regression_info["version"],
+                    "build_number": regression_info["build_number"]
+                }, user_id=g.user.id, run_id=run_id, release_id=run.release_id, test_id=run.test_id)
+            else:
+                # NOTE: This will override status set by SCT Events.
+                run.status = TestStatus.PASSED.value
+                run.save()
+
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "submitted"
+
+    @staticmethod
+    def get_performance_history_for_test(run_id: str):
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            rows = run.get_perf_results_for_test_name(
+                build_id=run.build_id, start_time=run.start_time, test_name=run.test_name)
+            return rows
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+    @staticmethod
+    def get_resources(run_id: str):
+        return list(SCTResource.find(run_id=UUID(run_id) if isinstance(run_id, str) else run_id).all())
+
+    @staticmethod
+    def get_resource(run_id: str, name: str):
+        return SCTResource.get(run_id=UUID(run_id) if isinstance(run_id, str) else run_id, name=name)
+
+    @staticmethod
+    def create_resource(run_id: str, resource_details: dict) -> str:
+        instance_details = CloudInstanceDetails(
+            **resource_details.pop("instance_details"))
+        resource_name = resource_details.get("name")
+        try:
+            SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            if not SCTResource.find(run_id=UUID(run_id), name=resource_name).count():
+                SCTResource.create(
+                    run_id=UUID(run_id),
+                    name=resource_name,
+                    state=resource_details.get(
+                        "state", ResourceState.RUNNING.value),
+                    resource_type=resource_details.get("resource_type"),
+                    instance_info=instance_details,
+                )
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "created"
+
+    @staticmethod
+    def update_resource_shards(run_id: str, resource_name: str, new_shards: int) -> str:
+        try:
+            resource = SCTResource.get(run_id=UUID(run_id), name=resource_name)
+            info = resource.instance_info.model_copy() if resource.instance_info else CloudInstanceDetails()
+            info.shards_amount = new_shards
+            resource.instance_info = info
+            resource.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Resource %s not found in run %s",
+                         resource_name, run_id)
+            raise SCTServiceException(
+                "Resource not found", resource_name) from exception
+
+        return "updated"
+
+    @staticmethod
+    def update_resource(run_id: str, resource_name: str, update_data: ResourceUpdateRequest) -> str:
+        try:
+            fields_updated = {}
+            resource = SCTResource.get(run_id=UUID(run_id), name=resource_name)
+            instance_info = update_data.pop("instance_info", None)
+            resource.state = ResourceState(
+                update_data.get("state", resource.state)).value
+            if instance_info:
+                resource_instance_info = (resource.instance_info.model_copy()
+                                          if resource.instance_info else CloudInstanceDetails())
+                for k, v in instance_info.items():
+                    if k in CloudInstanceDetails.model_fields:
+                        setattr(resource_instance_info, k, v)
+                        fields_updated[k] = v
+                resource.update(instance_info=resource_instance_info)
+            resource.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Resource %s not found in run %s",
+                         resource_name, run_id)
+            raise SCTServiceException(
+                "Resource not found", resource_name) from exception
+
+        return {
+            "state": "updated",
+            "fields": fields_updated
+        }
+
+    @staticmethod
+    def terminate_resource(run_id: str, resource_name: str, reason: str) -> str:
+        try:
+            if "sct-runner" in resource_name:  # FIXME: Temp solution until sct-runner name is propagated on submit
+                resources = list(SCTResource.find(run_id=UUID(run_id)).all())
+                resource = next(
+                    res for res in resources if "sct-runner" in res.name)
+            else:
+                resource = SCTResource.get(
+                    run_id=UUID(run_id), name=resource_name)
+            info = resource.instance_info.model_copy() if resource.instance_info else CloudInstanceDetails()
+            info.termination_reason = reason
+            info.termination_time = int(time())
+            resource.state = ResourceState.TERMINATED.value
+            resource.update(instance_info=info)
+            resource.save()
+        except (StopIteration, DocumentNotFound) as exception:
+            LOGGER.error("Resource %s not found in run %s",
+                         resource_name, run_id)
+            raise SCTServiceException(
+                "Resource not found", resource_name) from exception
+
+        return "terminated"
+
+    @staticmethod
+    def get_nemesis(run_id: str) -> list:
+        return list(SCTNemesis.find(run_id=run_id).all())
+
+    @staticmethod
+    def submit_nemesis(run_id: str, nemesis_details: dict) -> str:
+        nem_req = NemesisSubmissionRequest(**nemesis_details)
+        run_uuid = UUID(run_id) if isinstance(run_id, str) else run_id
+        if SCTNemesis.find(run_id=run_uuid, start_time=int(nem_req.start_time)).first() is not None:
+            return "created"
+        node_desc = NodeDescription(
+            name=nem_req.node_name, ip=nem_req.node_ip, shards=nem_req.node_shards)
+        nemesis_info = SCTNemesis(
+            run_id=run_id,
+            start_time=int(nem_req.start_time),
+            class_name=nem_req.class_name,
+            name=nem_req.name,
+            end_time=0,
+            duration=0,
+            stack_trace="",
+            status=NemesisStatus.RUNNING.value,
+            target_node=node_desc,
+        )
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            nemesis_info.save()
+            run.update_nemesis_stats("total")
+            run.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "created"
+
+    @staticmethod
+    def finalize_nemesis(run_id: str, nemesis_details: dict) -> str:
+        nem_req = NemesisFinalizationRequest(**nemesis_details)
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            nemesis = SCTNemesis.get(
+                run_id=run.id, start_time=int(nem_req.start_time))
+            # Idempotency (e.g. the same replay archive uploaded twice): once a
+            # nemesis is finalized its status leaves RUNNING. Re-finalizing would
+            # re-increment ``nemesis_stats`` and recompute end_time/duration, so
+            # skip when it is already in a terminal state.
+            if nemesis.status != NemesisStatus.RUNNING.value:
+                return "updated"
+            nemesis.status = NemesisStatus(nem_req.status).value
+            nemesis.stack_trace = nem_req.message
+            nemesis.end_time = int(time())
+            nemesis.duration = nemesis.end_time - nemesis.start_time
+            nemesis.save()
+            run.update_nemesis_stats(NemesisStatus(nem_req.status).value)
+            run.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Nemesis %s (%s) not found for run %s",
+                         nem_req.name, nem_req.start_time, run_id)
+            raise SCTServiceException(
+                "Nemesis not found", (nem_req.name, nem_req.start_time)) from exception
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "updated"
+
+    @classmethod
+    def submit_event(cls, run_id: str, raw_event: RawEventPayload):
+        req = EventSubmitRequest(**raw_event)
+
+        event = SCTEvent()
+        event.run_id = UUID(run_id)
+        event.severity = SCTEventSeverity(req.severity.upper()).value
+        event.ts = datetime.fromtimestamp(req.ts, tz=UTC)
+        event.message = req.message
+        event.event_type = req.event_type
+
+        # DB related events
+        event.node = req.node
+        if req.received_timestamp:
+            event.received_timestamp = datetime.fromisoformat(
+                req.received_timestamp)
+
+        # Nemesis related events
+        event.nemesis_name = req.nemesis_name
+        event.nemesis_status = req.nemesis_status
+        event.target_node = req.target_node
+        event.duration = req.duration
+
+        event.known_issue = req.known_issue
+
+        event.save()
+        try:
+            if event.event_type.lower() == "coredumpevent" and (link := cls.create_coredump_link(event.message, event.ts)):
+                run: SCTTestRun = SCTTestRun.get(id=event.run_id)
+                run.submit_logs([link])
+                run.save()
+        except Exception:
+            LOGGER.warning(
+                "Unable to parse event for coredump links.", exc_info=True)
+        # Add to unprocessed events queue for ERROR and CRITICAL events
+        if event.severity in (SCTEventSeverity.ERROR.value, SCTEventSeverity.CRITICAL.value):
+            try:
+                unprocessed_event = SCTUnprocessedEvent()
+                unprocessed_event.run_id = event.run_id
+                unprocessed_event.severity = event.severity
+                unprocessed_event.ts = event.ts
+                unprocessed_event.save()
+                LOGGER.debug(f"Added event to unprocessed queue: run_id={
+                             run_id}, severity={event.severity}, ts={event.ts}")
+            except Exception as e:
+                LOGGER.error(f"Failed to add event to unprocessed queue: {
+                             e}", exc_info=True)
+
+        return True
+
+    @staticmethod
+    def get_events(run_id: str, limit: int, severities: list[str], before: str | None, after: str | None = None) -> list[dict]:
+        before_dt = datetime.fromtimestamp(
+            int(before), tz=UTC) if before else None
+        after_dt = datetime.fromtimestamp(
+            int(after), tz=UTC) if after else None
+
+        return SCTTestRun.get_events_limited(run_id=UUID(run_id), before=before_dt, after=after_dt, severities=severities, per_partition_limit=limit)
+
+    @staticmethod
+    def count_events_by_severity(run_id: str, severity: SCTEventSeverity) -> int:
+        db = ScyllaCluster.get()
+        query = f"SELECT count(*) FROM {SCTEvent.table_name()
+                                        } WHERE run_id = ? AND severity IN ?"
+        params = [UUID(run_id), [SCTEventSeverity(severity).value]]
+
+        prepared = db.prepare(query)
+
+        result = db.session.execute(prepared, parameters=params).one()
+        return result["count"]
+
+    @staticmethod
+    def submit_events(run_id: str, events: list[dict]) -> str:
+        # NOTE: Dummied out – EventsBySeverity column is being dropped.
+        # Kept for API compatibility with old clients. Events are submitted
+        # through the per-event ``event/submit`` endpoint instead.
+        return "added"
+
+    @classmethod
+    def locate_coredumps(cls, run: SCTTestRun, events: list[EventsBySeverity]) -> list[CoredumpLink]:
+        flat_messages: list[str] = []
+        links = []
+        for es in events:
+            flat_messages.extend(es.last_events)
+        coredump_events = filter(
+            lambda v: "coredumpevent" in v.lower(), flat_messages)
+        for event in coredump_events:
+            if link := cls.create_coredump_link(event):
+                links.append(link)
+        return links
+
+    @staticmethod
+    def create_coredump_link(event_message: str, event_ts: datetime | None = None) -> CoredumpLink | None:
+        core_pattern = r"corefile_url=(?P<url>.+)$"
+        ts_pattern = r"^(?P<ts>\d{4}-\d{2}-\d{2} ([\d:]*)\.\d{3})"
+        node_name_pattern = r"node=(?P<name>.+)$"
+        core_url_match = re.search(core_pattern, event_message, re.MULTILINE)
+        node_name_match = re.search(
+            node_name_pattern, event_message, re.MULTILINE)
+        ts_match = re.search(ts_pattern, event_message)
+        timestamp = datetime.now(UTC)
+        if core_url_match:
+            url = core_url_match.group("url")
+            ext = url.rsplit(".", maxsplit=1)[-1]
+            # Default to .zst if URL doesn't conform
+            ext = ext if len(ext) <= 5 else "zst"
+            timestamp_component = ""
+            if event_ts:
+                timestamp_component = event_ts.strftime("-%Y-%m-%d_%H-%M-%S")
+            elif ts_match:
+                try:
+                    timestamp = datetime.fromisoformat(ts_match.group("ts"))
+                    timestamp_component = timestamp.strftime(
+                        "-%Y-%m-%d_%H-%M-%S")
+                except ValueError:
+                    pass
+            else:
+                timestamp_component = timestamp.strftime("-%Y-%m-%d_%H-%M-%S")
+            node_name = (
+                node_name_match.group("name")
+                if node_name_match
+                else f"unknown-node-{uuid_from_time(event_ts or timestamp, node=1000, clock_seq=128)}"
+            )
+            split_name = node_name.split(" ")
+            node_name = split_name[1] if len(split_name) >= 2 else node_name
+            log_link = {
+                "log_name": f"core.scylla-{node_name}{timestamp_component}.{ext}",
+                "log_link": url
+            }
+            return log_link
+        return None
+
+    @staticmethod
+    def get_similar_events(run_id: str) -> list[dict]:
+        """Get similar events for each event in a test run
+
+        Args:
+            run_id: The test run ID to get similar events for
+
+        Returns:
+            List of dictionaries containing event_index, severity and similars_set for each event
+        """
+        run_id = UUID(run_id) if isinstance(run_id, str) else run_id
+        error_embeddings = ErrorEventEmbeddings.find(run_id=run_id).only(
+            "event_index", "similars_map", "duplicates_list").all()
+        critical_embeddings = CriticalEventEmbeddings.find(run_id=run_id).only(
+            "event_index", "similars_map", "duplicates_list").all()
+
+        result = []
+        # Process ERROR embeddings
+        for embedding in error_embeddings:
+            result.append(
+                {
+                    "event_index": embedding.event_index,
+                    "severity": "ERROR",
+                    "similars_set": [str(similar_run_id) for similar_run_id in embedding.similars_map],
+                    "duplicates_list": list(embedding.duplicates_list) if embedding.duplicates_list is not None else [],
+                }
+            )
+
+        # Process CRITICAL embeddings
+        for embedding in critical_embeddings:
+            result.append(
+                {
+                    "event_index": embedding.event_index,
+                    "severity": "CRITICAL",
+                    "similars_set": [str(similar_run_id) for similar_run_id in embedding.similars_map],
+                    "duplicates_list": list(embedding.duplicates_list) if embedding.duplicates_list is not None else [],
+                }
+            )
+
+        return result
+
+    @staticmethod
+    def get_similar_events_realtime(run_id: str, severity: str, ts: str, limit: int = 100) -> list[dict]:
+        """Get similar events for a specific event using real-time vector search
+        Fetching more than we show to account for possible duplicates and the event itself.
+
+        Args:
+            run_id: The test run ID
+            severity: Event severity (ERROR or CRITICAL)
+            ts: Event timestamp (ISO format string)
+            limit: Maximum number of similar events to return (default: 50)
+        Returns:
+            List of similar events with their details and similarity scores
+        """
+        try:
+            # Convert timestamp to datetime if needed
+            event_ts = datetime.fromisoformat(ts)
+            event: SCTEvent = SCTEvent.get(
+                run_id=UUID(run_id) if isinstance(run_id, str) else run_id, severity=severity, ts=event_ts)
+            if event.duplicate_id:
+                real_event: SCTEvent = SCTEvent.get(
+                    event_id=event.duplicate_id)
+                run_id = real_event.run_id
+                severity = real_event.severity
+                event_ts = real_event.ts
+
+            # Get the embedding for the query event
+            if severity == "ERROR":
+                embedding_model = SCTErrorEventEmbedding
+            elif severity == "CRITICAL":
+                embedding_model = SCTCriticalEventEmbedding
+            else:
+                raise SCTServiceException(
+                    f"Unsupported severity for similarity search: {severity}")
+
+            # Fetch the embedding for the query event
+            query_embedding_result = embedding_model.find(run_id=UUID(
+                run_id) if isinstance(run_id, str) else run_id, ts=event_ts).first()
+
+            if not query_embedding_result:
+                LOGGER.warning(f"No embedding found for event: run_id={
+                               run_id}, severity={severity}, ts={event_ts}")
+                return []
+
+            query_embedding = query_embedding_result.embedding
+
+            db = ScyllaCluster.get()
+            table_name = embedding_model.table_name()
+            keyspace = embedding_model.Settings.keyspace or current_app.config["SCYLLA_KEYSPACE_NAME"]
+
+            query = f"""
+                SELECT run_id, ts
+                FROM {keyspace}.{table_name}
+                ORDER BY embedding ANN OF ?
+                LIMIT ?
+            """
+
+            prepared = db.prepare(query)
+            result_rows = db.session.execute(
+                prepared, parameters=[query_embedding, limit + 1])
+
+            similar_events = []
+            visited_run_ids = {str(run_id)}  # Skip current run_id
+            for row in result_rows:
+                if str(row['run_id']) in visited_run_ids:
+                    continue
+
+                similar_events.append({
+                    "run_id": str(row["run_id"]),
+                    "severity": severity,
+                    "ts": row["ts"],
+                })
+                visited_run_ids.add(str(row['run_id']))
+
+            return similar_events
+
+        except Exception as e:
+            LOGGER.error(f"Error fetching similar events: {e}", exc_info=True)
+            raise SCTServiceException(
+                f"Failed to fetch similar events: {str(e)}")
+
+    @staticmethod
+    def get_similar_runs_info(run_ids: list[str]):
+        """Get build IDs and issues for a list of run IDs
+
+        Args:
+            run_ids: List of run IDs to fetch information for
+
+        Returns:
+            Dictionary mapping run IDs to their information (build_id, start_time, and issues)
+        """
+        result = {}
+
+        # Step 1: Get issue links for all run_ids in batches
+        all_issue_links = {}
+
+        for batch_run_ids in chunk(run_ids):
+            batch_links = IssueLink.find(
+                run_id__in=[UUID(r) if isinstance(r, str) else r for r in batch_run_ids]).all()
+
+            for link in batch_links:
+                run_id_str = str(link.run_id)
+                if run_id_str not in all_issue_links:
+                    all_issue_links[run_id_str] = []
+                all_issue_links[run_id_str].append(link)
+
+        # Step 2: Fetch all unique issue details
+        all_issue_ids = set()
+        for links in all_issue_links.values():
+            all_issue_ids.update(link.issue_id for link in links)
+
+        issues_by_id = {}
+        if all_issue_ids:
+            for batch_issue_ids in chunk(list(all_issue_ids)):
+                batch_issues = GithubIssue.find(id__in=batch_issue_ids).all()
+
+                for issue in batch_issues:
+                    issues_by_id[issue.id] = issue
+
+            missing_ids = [id for id in all_issue_ids if id not in issues_by_id]
+            if missing_ids:
+                for batch_issue_ids in chunk(missing_ids):
+                    for issue in JiraIssue.find(id__in=batch_issue_ids).all():
+                        issues_by_id[issue.id] = issue
+
+        # Step 3: Fetch test runs only for run_ids that have issue links (limiting to MAX_SIMILARS runs)
+        runs_with_issues = list(all_issue_links.keys())
+
+        test_runs = {}
+        if runs_with_issues:
+            for run_id in runs_with_issues[:MAX_SIMILARS]:
+                try:
+                    test_run = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+                    test_runs[run_id] = test_run
+                except Exception as e:
+                    LOGGER.debug(f"Failed to fetch test run {
+                                 run_id}: {str(e)}")
+
+        # Step 4: Assign run and issue details to result for runs with issues
+        for run_id in runs_with_issues:
+            try:
+                test_run = test_runs.get(run_id)
+                if not test_run:
+                    continue
+
+                links = all_issue_links.get(run_id, [])
+                issues = [issues_by_id[link.issue_id]
+                          for link in links if link.issue_id in issues_by_id]
+
+                try:
+                    build_number = int(
+                        test_run.build_job_url[:-1].split("/")[-1]
+                    )
+                except Exception as e:
+                    LOGGER.error(
+                        f"Error parsing build number for run {run_id}: {test_run.build_job_url[:-1].split('/')} - {str(e)}")
+                    build_number = -1
+
+                for pkg_name in ["scylla-server-upgraded", "scylla-server", "scylla-server-target"]:
+                    sut_version = next(
+                        (f"{pkg.version}-{pkg.date}" for pkg in test_run.packages if pkg.name == pkg_name), None)
+                    if sut_version:
+                        break
+
+                result[run_id] = {
+                    "build_id": f"{test_run.build_id}#{build_number}",
+                    "start_time": test_run.start_time.isoformat(),
+                    "version": sut_version or "unknown",
+                    "issues": [
+                        {
+                            "subtype": "github",
+                            "number": issue.number,
+                            "state": issue.state,
+                            "title": issue.title,
+                            "url": issue.url,
+                            "owner": issue.owner,
+                            "repo": issue.repo,
+                        } if isinstance(issue, GithubIssue) else {
+                            "subtype": "jira",
+                            "key": issue.key,
+                            "state": issue.state,
+                            "summary": issue.summary,
+                            "permalink": issue.permalink,
+                        }
+                        for issue in issues
+                    ],
+                }
+            except Exception as e:
+                LOGGER.error(f"Error fetching info for run {run_id}: {str(e)}")
+                result[run_id] = {"build_id": None,
+                                  "start_time": None, "issues": []}
+
+        # Step 5: If less than MAX_SIMILARS results, fetch MAX_SIMILARS more run details
+        if len(result) < MAX_SIMILARS:
+            remaining_run_ids = [
+                run_id for run_id in run_ids if run_id not in result]
+            additional_needed = min(
+                MAX_SIMILARS - len(result), len(remaining_run_ids))
+
+            if additional_needed > 0:
+                additional_run_ids = remaining_run_ids[:additional_needed]
+
+                additional_test_runs = {}
+                for run_id in additional_run_ids:
+                    try:
+                        test_run = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+                        additional_test_runs[run_id] = test_run
+                    except Exception as e:
+                        LOGGER.debug(f"Failed to fetch additional test run {
+                                     run_id}: {str(e)}")
+
+                for run_id in additional_run_ids:
+                    try:
+                        test_run = additional_test_runs.get(run_id)
+                        if not test_run:
+                            continue
+
+                        try:
+                            build_number = int(
+                                test_run.build_job_url[:-1].split("/")[-1]
+                            )
+                        except Exception as e:
+                            LOGGER.error(
+                                f"Error parsing build number for run {run_id}: {test_run.build_job_url[:-1].split('/')} - {str(e)}")
+                            build_number = -1
+
+                        for pkg_name in ["scylla-server-upgraded", "scylla-server", "scylla-server-target"]:
+                            sut_version = next(
+                                (f"{pkg.version}-{pkg.date}" for pkg in test_run.packages if pkg.name == pkg_name), None)
+                            if sut_version:
+                                break
+
+                        result[run_id] = {
+                            "build_id": f"{test_run.build_id}#{build_number}",
+                            "start_time": test_run.start_time.isoformat(),
+                            "version": sut_version or "unknown",
+                            "issues": [],
+                        }
+                    except Exception as e:
+                        LOGGER.error(f"Error fetching info for run {
+                                     run_id}: {str(e)}")
+                        result[run_id] = {"build_id": None,
+                                          "start_time": None, "issues": []}
+
+        return result
+
+    @staticmethod
+    def get_scylla_version_kernels_report(release_name: str):
+        all_release_runs = SCTTestRun.get_version_data_for_release(
+            release_name=release_name)
+        kernels_by_version = {}
+        kernel_metadata = {}
+        for run in all_release_runs:
+            packages = run["packages"]
+            if not packages:
+                continue
+            scylla_pkgs = {
+                p["name"]: p for p in packages if "scylla-server" in p["name"]}
+            scylla_pkg = scylla_pkgs["scylla-server-upgraded"] if scylla_pkgs.get(
+                "scylla-server-upgraded") else scylla_pkgs.get("scylla-server")
+            version = f"{scylla_pkg['version']}-{scylla_pkg['date']
+                                                 }.{scylla_pkg['revision_id']}" if scylla_pkg else "unknown"
+            kernel_packages = [p for p in packages if "kernel" in p["name"]]
+            kernel_package = kernel_packages[0] if len(
+                kernel_packages) > 0 else None
+            if not kernel_package:
+                continue
+            version_list = set(kernels_by_version.get(version, []))
+            version_list.add(kernel_package["version"])
+            kernels_by_version[version] = list(version_list)
+            metadata = kernel_metadata.get(
+                kernel_package.version,
+                {
+                    "passed": 0,
+                    "failed": 0,
+                    "aborted": 0,
+                    "test_error": 0,
+                }
+            )
+            if run["status"] in ["passed", "failed", "aborted", "test_error"]:
+                metadata[run["status"]] += 1
+            kernel_metadata[kernel_package["version"]] = metadata
+
+        return {
+            "versions": kernels_by_version,
+            "metadata": kernel_metadata
+        }
+
+    @staticmethod
+    def junit_submit(run_id: str, file_name: str, content: str) -> bool:
+        xml_content = str(base64.decodebytes(
+            bytes(content, encoding="utf-8")), encoding="utf-8")
+        try:
+            _ = ElementTree.fromstring(xml_content)
+        except Exception:
+            raise SCTServiceException(f"Malformed JUnit report submitted")
+
+        try:
+            report = SCTJunitReports.get(test_id=UUID(run_id) if isinstance(run_id, str) else run_id, file_name=file_name)
+        except DocumentNotFound:
+            report = SCTJunitReports()
+            report.test_id = UUID(run_id) if isinstance(run_id, str) else run_id
+            report.file_name = file_name
+
+        report.report = xml_content
+        report.save()
+
+        return True
+
+    @staticmethod
+    def get_stress_commands(run_id: str) -> list[StressCommand]:
+        return SCTTestRun.get_stress_commands(run_id)
+
+    @staticmethod
+    def add_stress_command(run_id: str, cmd: str, ts: float, loader_name: str, log_name: str):
+        try:
+            run: SCTTestRun = SCTTestRun.get(id=UUID(run_id) if isinstance(run_id, str) else run_id)
+            run.add_stress_command(cmd=cmd, ts=clamp_ts_to_milliseconds(
+                ts), loader_name=loader_name, log_name=log_name)
+            run.save()
+        except DocumentNotFound as exception:
+            LOGGER.error("Run %s not found for SCTTestRun", run_id)
+            raise SCTServiceException("Run not found", run_id) from exception
+
+        return "added"

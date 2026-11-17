@@ -1,0 +1,511 @@
+=== submission file: folding-stats-service/src/main/java/me/zodac/folding/service/core/FoldingStatsService.java (added against State A) ===
+1 +| /*
+2 +|  * MIT License
+3 +|  *
+4 +|  * Copyright (c) 2021-2022 zodac.me
+5 +|  *
+6 +|  * Permission is hereby granted, free of charge, to any person obtaining a copy
+7 +|  * of this software and associated documentation files (the "Software"), to deal
+8 +|  * in the Software without restriction, including without limitation the rights
+9 +|  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+10 +|  * copies of the Software, and to permit persons to whom the Software is
+11 +|  * furnished to do so, subject to the following conditions:
+12 +|  *
+13 +|  * The above copyright notice and this permission notice shall be included in all
+14 +|  * copies or substantial portions of the Software.
+15 +|  *
+16 +|  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+17 +|  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+18 +|  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+19 +|  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+20 +|  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+21 +|  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+22 +|  * SOFTWARE.
+23 +|  */
+24 +| 
+25 +| package me.zodac.folding.service.core;
+26 +| 
+27 +| import org.springframework.stereotype.Service;
+28 +| import org.springframework.beans.factory.annotation.Autowired;
+29 +| import org.springframework.context.annotation.Lazy;
+30 +| 
+31 +| import static java.util.stream.Collectors.toList;
+32 +| 
+33 +| import java.time.Month;
+34 +| import java.time.Year;
+35 +| import java.util.Collection;
+36 +| import java.util.Collections;
+37 +| import java.util.List;
+38 +| import java.util.Optional;
+39 +| import me.zodac.folding.api.UserAuthenticationResult;
+40 +| import me.zodac.folding.api.exception.ExternalConnectionException;
+41 +| import me.zodac.folding.api.state.ParsingState;
+42 +| import me.zodac.folding.api.state.SystemState;
+43 +| import me.zodac.folding.api.stats.FoldingStatsRetriever;
+44 +| import me.zodac.folding.api.tc.Hardware;
+45 +| import me.zodac.folding.api.tc.Team;
+46 +| import me.zodac.folding.api.tc.User;
+47 +| import me.zodac.folding.api.tc.result.MonthlyResult;
+48 +| import me.zodac.folding.api.tc.stats.OffsetTcStats;
+49 +| import me.zodac.folding.api.tc.stats.RetiredUserTcStats;
+50 +| import me.zodac.folding.api.tc.stats.UserStats;
+51 +| import me.zodac.folding.api.tc.stats.UserTcStats;
+52 +| import me.zodac.folding.api.util.ProcessingType;
+53 +| import me.zodac.folding.service.api.FoldingStatsCore;
+54 +| import me.zodac.folding.service.tc.scheduled.StatsScheduler;
+55 +| import me.zodac.folding.service.tc.user.UserCaptainHandler;
+56 +| import me.zodac.folding.service.tc.user.UserStateChangeHandler;
+57 +| import me.zodac.folding.service.tc.user.UserStatsParser;
+58 +| import me.zodac.folding.service.tc.user.UserTeamChangeHandler;
+59 +| import me.zodac.folding.rest.api.tc.CompetitionSummary;
+60 +| import me.zodac.folding.rest.api.tc.RetiredUserSummary;
+61 +| import me.zodac.folding.rest.api.tc.TeamSummary;
+62 +| import me.zodac.folding.rest.api.tc.UserSummary;
+63 +| import me.zodac.folding.rest.api.tc.historic.HistoricStats;
+64 +| import me.zodac.folding.state.ParsingStateManager;
+65 +| import me.zodac.folding.state.SystemStateManager;
+66 +| import org.apache.logging.log4j.LogManager;
+67 +| import org.apache.logging.log4j.Logger;
+68 +| 
+69 +| @Service
+70 +| public class FoldingStatsService implements FoldingStatsCore {
+71 +| 
+72 +|     private static final Logger LOGGER = LogManager.getLogger();
+73 +|     @Autowired
+74 +|     private FoldingStatsRetriever foldingStatsRetriever;
+75 +| 
+76 +|     @Autowired
+77 +|     @Lazy
+78 +|     private StatsScheduler statsScheduler;
+79 +| 
+80 +|     @Autowired
+81 +|     @Lazy
+82 +|     private Storage storage;
+83 +| 
+84 +|     @Autowired
+85 +|     @Lazy
+86 +|     private UserCaptainHandler userCaptainHandler;
+87 +| 
+88 +|     @Autowired
+89 +|     @Lazy
+90 +|     private UserStateChangeHandler userStateChangeHandler;
+91 +| 
+92 +|     @Autowired
+93 +|     @Lazy
+94 +|     private UserStatsParser userStatsParser;
+95 +| 
+96 +|     @Autowired
+97 +|     @Lazy
+98 +|     private UserTeamChangeHandler userTeamChangeHandler;
+99 +| 
+100 +|     @Override
+101 +|     public Hardware createHardware(final Hardware hardware) {
+102 +|         return storage.createHardware(hardware);
+103 +|     }
+104 +| 
+105 +|     @Override
+106 +|     public Optional<Hardware> getHardware(final int hardwareId) {
+107 +|         return storage.getHardware(hardwareId);
+108 +|     }
+109 +| 
+110 +|     @Override
+111 +|     public Collection<Hardware> getAllHardware() {
+112 +|         return storage.getAllHardware();
+113 +|     }
+114 +| 
+115 +|     @Override
+116 +|     public Hardware updateHardware(final Hardware hardwareToUpdate, final Hardware existingHardware) {
+117 +|         final Hardware updatedHardware = storage.updateHardware(hardwareToUpdate);
+118 +| 
+119 +|         if (userStateChangeHandler.isHardwareStateChange(updatedHardware, existingHardware)) {
+120 +|             final Collection<User> usersUsingThisHardware = getUsersWithHardware(updatedHardware);
+121 +| 
+122 +|             for (final User userUsingHardware : usersUsingThisHardware) {
+123 +|                 LOGGER.debug("User '{}' (ID: {}) had state change to hardware", userUsingHardware.getDisplayName(), userUsingHardware.getId());
+124 +|                 userStateChangeHandler.handleStateChange(userUsingHardware);
+125 +|             }
+126 +|         }
+127 +| 
+128 +|         return updatedHardware;
+129 +|     }
+130 +| 
+131 +|     private Collection<User> getUsersWithHardware(final Hardware hardware) {
+132 +|         if (hardware.getId() == Hardware.EMPTY_HARDWARE_ID) {
+133 +|             return Collections.emptyList();
+134 +|         }
+135 +| 
+136 +|         return getAllUsersWithPasskeys()
+137 +|             .stream()
+138 +|             .filter(user -> user.getHardware().getId() == hardware.getId())
+139 +|             .collect(toList());
+140 +|     }
+141 +| 
+142 +|     @Override
+143 +|     public void deleteHardware(final Hardware hardware) {
+144 +|         storage.deleteHardware(hardware.getId());
+145 +|     }
+146 +| 
+147 +|     @Override
+148 +|     public Team createTeam(final Team team) {
+149 +|         final Team createdTeam = storage.createTeam(team);
+150 +|         if (ParsingStateManager.current() != ParsingState.DISABLED) {
+151 +|             statsScheduler.manualTeamCompetitionStatsParsing(ProcessingType.SYNCHRONOUS);
+152 +|         }
+153 +|         return createdTeam;
+154 +|     }
+155 +| 
+156 +|     @Override
+157 +|     public Optional<Team> getTeam(final int teamId) {
+158 +|         return storage.getTeam(teamId);
+159 +|     }
+160 +| 
+161 +|     @Override
+162 +|     public Collection<Team> getAllTeams() {
+163 +|         return storage.getAllTeams();
+164 +|     }
+165 +| 
+166 +|     @Override
+167 +|     public Team updateTeam(final Team teamToUpdate) {
+168 +|         return storage.updateTeam(teamToUpdate);
+169 +|     }
+170 +| 
+171 +|     @Override
+172 +|     public void deleteTeam(final Team team) {
+173 +|         storage.deleteTeam(team.getId());
+174 +|     }
+175 +| 
+176 +|     @Override
+177 +|     public User createUser(final User user) {
+178 +|         if (userCaptainHandler.isUserCaptainAndCaptainExistsOnTeam(user)) {
+179 +|             userCaptainHandler.removeCaptaincyFromExistingTeamCaptain(user.getTeam());
+180 +|         }
+181 +| 
+182 +|         final User createdUser = storage.createUser(user);
+183 +| 
+184 +|         try {
+185 +|             // When adding a new user, we configure the initial stats DB/cache
+186 +|             final UserStats currentUserStats = foldingStatsRetriever.getTotalStats(createdUser);
+187 +|             final UserStats initialStats = createInitialStats(currentUserStats);
+188 +|             LOGGER.info("User '{}' (ID: {}) created with initial stats: {}", createdUser.getDisplayName(), createdUser.getId(), initialStats);
+189 +|             userStatsParser.parseTcStatsForUser(createdUser);
+190 +|         } catch (final ExternalConnectionException e) {
+191 +|             LOGGER.error("Error retrieving initial stats for user '{}' (ID: {})", createdUser.getDisplayName(), createdUser.getId(), e);
+192 +|         }
+193 +| 
+194 +|         return createdUser;
+195 +|     }
+196 +| 
+197 +|     @Override
+198 +|     public Optional<User> getUserWithPasskey(final int userId) {
+199 +|         return storage.getUser(userId);
+200 +|     }
+201 +| 
+202 +|     @Override
+203 +|     public Optional<User> getUserWithoutPasskey(final int userId) {
+204 +|         final Optional<User> user = getUserWithPasskey(userId);
+205 +| 
+206 +|         if (user.isEmpty()) {
+207 +|             return user;
+208 +|         }
+209 +| 
+210 +|         return Optional.of(User.hidePasskey(user.get()));
+211 +|     }
+212 +| 
+213 +|     @Override
+214 +|     public Collection<User> getAllUsersWithPasskeys() {
+215 +|         return storage.getAllUsers();
+216 +|     }
+217 +| 
+218 +|     @Override
+219 +|     public Collection<User> getAllUsersWithoutPasskeys() {
+220 +|         return getAllUsersWithPasskeys()
+221 +|             .stream()
+222 +|             .map(User::hidePasskey)
+223 +|             .collect(toList());
+224 +|     }
+225 +| 
+226 +|     @Override
+227 +|     public User updateUser(final User userToUpdate, final User existingUser) {
+228 +|         if (userCaptainHandler.isUserCaptainAndCaptainExistsOnTeam(userToUpdate)) {
+229 +|             final boolean isCaptainChange = userToUpdate.isUserIsCaptain() != existingUser.isUserIsCaptain();
+230 +|             final boolean isTeamChange = userToUpdate.getTeam().getId() != existingUser.getTeam().getId();
+231 +| 
+232 +|             if (isCaptainChange || isTeamChange) {
+233 +|                 userCaptainHandler.removeCaptaincyFromExistingTeamCaptain(userToUpdate.getTeam());
+234 +|             }
+235 +|         }
+236 +| 
+237 +|         // Perform any stats handling before updating the user
+238 +|         if (userTeamChangeHandler.isUserTeamChange(userToUpdate, existingUser)) {
+239 +|             userTeamChangeHandler.handleTeamChange(userToUpdate, existingUser.getTeam());
+240 +|         }
+241 +| 
+242 +|         final User updatedUser = storage.updateUser(userToUpdate);
+243 +| 
+244 +|         if (userStateChangeHandler.isUserStateChange(updatedUser, existingUser)) {
+245 +|             userStateChangeHandler.handleStateChange(updatedUser);
+246 +|             LOGGER.trace("User updated with required state change");
+247 +|         }
+248 +| 
+249 +|         return updatedUser;
+250 +|     }
+251 +| 
+252 +|     @Override
+253 +|     public void deleteUser(final User user) {
+254 +|         // Retrieve the user's stats before deleting the user, so we can use the values for the retried user stats
+255 +|         final UserTcStats userStats = getHourlyTcStats(user);
+256 +|         storage.deleteUser(user.getId());
+257 +| 
+258 +|         if (userStats.isEmptyStats()) {
+259 +|             LOGGER.warn("User '{}' (ID: {}) has no stats, not saving any retired stats", user.getDisplayName(), user.getId());
+260 +|             return;
+261 +|         }
+262 +| 
+263 +|         final RetiredUserTcStats retiredUserTcStats = RetiredUserTcStats.createWithoutId(user.getTeam().getId(), user.getDisplayName(), userStats);
+264 +|         final RetiredUserTcStats createdRetiredUserTcStats = storage.createRetiredUserStats(retiredUserTcStats);
+265 +|         LOGGER.info("User '{}' (ID: {}) retired with retired stats ID: {}", user.getDisplayName(), user.getId(),
+266 +|             createdRetiredUserTcStats.getRetiredUserId());
+267 +|     }
+268 +| 
+269 +|     @Override
+270 +|     public Collection<User> getUsersOnTeam(final Team team) {
+271 +|         if (team.getId() == Team.EMPTY_TEAM_ID) {
+272 +|             return Collections.emptyList();
+273 +|         }
+274 +| 
+275 +|         return getUsersOnTeamWithPasskeys(team)
+276 +|             .stream()
+277 +|             .map(User::hidePasskey)
+278 +|             .collect(toList());
+279 +|     }
+280 +| 
+281 +|     @Override
+282 +|     public Collection<User> getUsersOnTeamWithPasskeys(final Team team) {
+283 +|         if (team.getId() == Team.EMPTY_TEAM_ID) {
+284 +|             return Collections.emptyList();
+285 +|         }
+286 +| 
+287 +|         return getAllUsersWithPasskeys()
+288 +|             .stream()
+289 +|             .filter(user -> user.getTeam().getId() == team.getId())
+290 +|             .collect(toList());
+291 +|     }
+292 +| 
+293 +|     @Override
+294 +|     public MonthlyResult createMonthlyResult(final MonthlyResult monthlyResult) {
+295 +|         return storage.createMonthlyResult(monthlyResult);
+296 +|     }
+297 +| 
+298 +|     @Override
+299 +|     public Optional<MonthlyResult> getMonthlyResult(final Month month, final Year year) {
+300 +|         return storage.getMonthlyResult(month, year);
+301 +|     }
+302 +| 
+303 +|     @Override
+304 +|     public UserAuthenticationResult authenticateSystemUser(final String userName, final String password) {
+305 +|         final UserAuthenticationResult userAuthenticationResult = storage.authenticateSystemUser(userName, password);
+306 +| 
+307 +|         if (userAuthenticationResult.isUserExists() && userAuthenticationResult.isPasswordMatch()) {
+308 +|             LOGGER.debug("System user '{}' successfully logged in", userName);
+309 +|         } else {
+310 +|             LOGGER.debug("Error authenticating system user '{}': {}", userName, userAuthenticationResult);
+311 +|         }
+312 +| 
+313 +|         return userAuthenticationResult;
+314 +|     }
+315 +| 
+316 +|     @Override
+317 +|     public Collection<HistoricStats> getHistoricStats(final User user, final Year year, final Month month, final int day) {
+318 +|         final Collection<HistoricStats> historicStats = storage.getHistoricStats(user.getId(), year, month, day);
+319 +|         if (historicStats.isEmpty()) {
+320 +|             LOGGER.warn("No stats retrieved for user with ID {} on {}/{}/{}, returning empty", user.getId(), year.getValue(), month.getValue(), day);
+321 +|         }
+322 +| 
+323 +|         return historicStats;
+324 +|     }
+325 +| 
+326 +|     @Override
+327 +|     public Collection<HistoricStats> getHistoricStats(final User user, final Year year, final Month month) {
+328 +|         final Collection<HistoricStats> historicStats = storage.getHistoricStats(user.getId(), year, month, 0);
+329 +|         if (historicStats.isEmpty()) {
+330 +|             LOGGER.warn("No stats retrieved for user with ID {} on {}/{}, returning empty", user.getId(), year.getValue(), month.getValue());
+331 +|         }
+332 +| 
+333 +|         return historicStats;
+334 +|     }
+335 +| 
+336 +|     @Override
+337 +|     public Collection<HistoricStats> getHistoricStats(final User user, final Year year) {
+338 +|         final Collection<HistoricStats> historicStats = storage.getHistoricStats(user.getId(), year, null, 0);
+339 +|         if (historicStats.isEmpty()) {
+340 +|             LOGGER.warn("No stats retrieved for user with ID {} on {}, returning empty", user.getId(), year.getValue());
+341 +|         }
+342 +| 
+343 +|         return historicStats;
+344 +|     }
+345 +| 
+346 +|     @Override
+347 +|     public UserStats createTotalStats(final UserStats userStats) {
+348 +|         return storage.createTotalStats(userStats);
+349 +|     }
+350 +| 
+351 +|     @Override
+352 +|     public UserStats getTotalStats(final User user) {
+353 +|         return storage.getTotalStats(user.getId())
+354 +|             .orElse(UserStats.empty());
+355 +|     }
+356 +| 
+357 +|     @Override
+358 +|     public OffsetTcStats createOffsetStats(final User user, final OffsetTcStats offsetTcStats) {
+359 +|         storage.deleteOffsetStats(user.getId());
+360 +|         return storage.createOrUpdateOffsetStats(user.getId(), offsetTcStats);
+361 +|     }
+362 +| 
+363 +|     @Override
+364 +|     public OffsetTcStats createOrUpdateOffsetStats(final User user, final OffsetTcStats offsetTcStats) {
+365 +|         return storage.createOrUpdateOffsetStats(user.getId(), offsetTcStats);
+366 +|     }
+367 +| 
+368 +|     @Override
+369 +|     public OffsetTcStats getOffsetStats(final User user) {
+370 +|         return storage.getOffsetStats(user.getId())
+371 +|             .orElse(OffsetTcStats.empty());
+372 +|     }
+373 +| 
+374 +|     @Override
+375 +|     public UserTcStats createHourlyTcStats(final UserTcStats userTcStats) {
+376 +|         return storage.createHourlyTcStats(userTcStats);
+377 +|     }
+378 +| 
+379 +|     @Override
+380 +|     public UserTcStats getHourlyTcStats(final User user) {
+381 +|         return storage.getHourlyTcStats(user.getId())
+382 +|             .orElse(UserTcStats.empty(user.getId()));
+383 +|     }
+384 +| 
+385 +|     @Override
+386 +|     public boolean isAnyHourlyTcStatsExist() {
+387 +|         return storage.getFirstHourlyTcStats().isPresent();
+388 +|     }
+389 +| 
+390 +|     @Override
+391 +|     public UserStats createInitialStats(final UserStats userStats) {
+392 +|         return storage.createInitialStats(userStats);
+393 +|     }
+394 +| 
+395 +|     @Override
+396 +|     public UserStats getInitialStats(final User user) {
+397 +|         return storage.getInitialStats(user.getId())
+398 +|             .orElse(UserStats.empty());
+399 +|     }
+400 +| 
+401 +|     @Override
+402 +|     public RetiredUserTcStats createRetiredUserStats(final RetiredUserTcStats retiredUserTcStats) {
+403 +|         return storage.createRetiredUserStats(retiredUserTcStats);
+404 +|     }
+405 +| 
+406 +|     @Override
+407 +|     public void resetAllTeamCompetitionUserStats() {
+408 +|         for (final User user : getAllUsersWithoutPasskeys()) {
+409 +|             LOGGER.info("Resetting TC stats for {}", user.getDisplayName());
+410 +|             final UserStats totalStats = getTotalStats(user);
+411 +|             createInitialStats(totalStats);
+412 +|         }
+413 +| 
+414 +|         LOGGER.info("Deleting retired user TC stats");
+415 +|         storage.deleteAllRetiredUserTcStats();
+416 +| 
+417 +|         LOGGER.info("Deleting offset TC stats");
+418 +|         storage.deleteAllOffsetTcStats();
+419 +| 
+420 +|         LOGGER.info("Evicting TC and initial stats caches");
+421 +|         storage.evictTcStatsCache();
+422 +|         storage.evictInitialStatsCache();
+423 +|     }
+424 +| 
+425 +|     @Override
+426 +|     public CompetitionSummary getCompetitionSummary() {
+427 +|         if (SystemStateManager.current() != SystemState.WRITE_EXECUTED) {
+428 +|             LOGGER.debug("System is not in state {}, retrieving competition summary", SystemState.WRITE_EXECUTED);
+429 +| 
+430 +|             final Optional<CompetitionSummary> cachedCompetitionResult = storage.getCompetitionSummary();
+431 +|             if (cachedCompetitionResult.isPresent()) {
+432 +|                 return cachedCompetitionResult.get();
+433 +|             }
+434 +|         }
+435 +| 
+436 +|         LOGGER.debug("Calculating latest TC result, system state: {}", SystemStateManager.current());
+437 +|         final CompetitionSummary competitionSummary = createCompetitionSummary();
+438 +|         final CompetitionSummary createdCompetitionSummary = storage.createCompetitionSummary(competitionSummary);
+439 +|         SystemStateManager.next(SystemState.AVAILABLE);
+440 +| 
+441 +|         return createdCompetitionSummary;
+442 +|     }
+443 +| 
+444 +|     private CompetitionSummary createCompetitionSummary() {
+445 +|         final List<TeamSummary> teamSummaries = getStatsForTeams();
+446 +|         LOGGER.debug("Found {} TC teams", teamSummaries::size);
+447 +| 
+448 +|         if (teamSummaries.isEmpty()) {
+449 +|             LOGGER.warn("No TC teams to show");
+450 +|         }
+451 +| 
+452 +|         return CompetitionSummary.create(teamSummaries);
+453 +|     }
+454 +| 
+455 +|     private List<TeamSummary> getStatsForTeams() {
+456 +|         return getAllTeams()
+457 +|             .stream()
+458 +|             .map(this::getTcTeamResult)
+459 +|             .collect(toList());
+460 +|     }
+461 +| 
+462 +|     private TeamSummary getTcTeamResult(final Team team) {
+463 +|         LOGGER.debug("Converting team '{}' for TC stats", team::getTeamName);
+464 +| 
+465 +|         final Collection<User> usersOnTeam = getUsersOnTeam(team);
+466 +| 
+467 +|         final Collection<UserSummary> activeUserSummaries = usersOnTeam
+468 +|             .stream()
+469 +|             .map(this::getTcStatsForUser)
+470 +|             .collect(toList());
+471 +| 
+472 +|         final Collection<RetiredUserSummary> retiredUserSummaries = getAllRetiredUsersForTeam(team)
+473 +|             .stream()
+474 +|             .map(RetiredUserSummary::createWithDefaultRank)
+475 +|             .collect(toList());
+476 +| 
+477 +|         final String captainDisplayName = getCaptainDisplayName(team.getTeamName(), usersOnTeam);
+478 +|         return TeamSummary.createWithDefaultRank(team, captainDisplayName, activeUserSummaries, retiredUserSummaries);
+479 +|     }
+480 +| 
+481 +|     private Collection<RetiredUserTcStats> getAllRetiredUsersForTeam(final Team team) {
+482 +|         return storage.getAllRetiredUsers()
+483 +|             .stream()
+484 +|             .filter(retiredUserTcStats -> retiredUserTcStats.getTeamId() == team.getId())
+485 +|             .collect(toList());
+486 +|     }
+487 +| 
+488 +|     private UserSummary getTcStatsForUser(final User user) {
+489 +|         final UserTcStats userTcStats = getHourlyTcStats(user);
+490 +|         LOGGER.debug("Results for {}: {} points | {} multiplied points | {} units", user::getDisplayName, userTcStats::getPoints,
+491 +|             userTcStats::getMultipliedPoints, userTcStats::getUnits);
+492 +|         return UserSummary.createWithDefaultRank(user, userTcStats.getPoints(), userTcStats.getMultipliedPoints(), userTcStats.getUnits());
+493 +|     }
+494 +| 
+495 +|     private static String getCaptainDisplayName(final String teamName, final Collection<User> usersOnTeam) {
+496 +|         for (final User user : usersOnTeam) {
+497 +|             if (user.isUserIsCaptain()) {
+498 +|                 return user.getDisplayName();
+499 +|             }
+500 +|         }
+501 +| 
+502 +|         LOGGER.warn("No captain set for team '{}'", teamName);
+503 +|         return null;
+504 +|     }
+505 +| 
+506 +|     @Override
+507 +|     public void printCacheContents() {
+508 +|         storage.printCacheContents();
+509 +|     }
+510 +| }

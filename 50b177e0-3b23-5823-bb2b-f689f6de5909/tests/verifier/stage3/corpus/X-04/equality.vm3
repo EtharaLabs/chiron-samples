@@ -1,0 +1,17 @@
+new
+iparse 0 [1,2.0,%22a%22,true,null,{%22k%22:1}]
+iparse 1 [1,2,%22a%22,true,null,{%22k%22:1}]
+ieq 0 1
+mutcopy 0
+getroot r1
+mvalcopy r2 r1
+eq r1 r2
+eqroot r2
+valmutcopy r3 1 ~
+eq r1 r3
+eq r1 !
+eq ! !
+strcpy r4 a -
+eqstr r4 a
+eqstr r4 b
+eqstr r4 ~

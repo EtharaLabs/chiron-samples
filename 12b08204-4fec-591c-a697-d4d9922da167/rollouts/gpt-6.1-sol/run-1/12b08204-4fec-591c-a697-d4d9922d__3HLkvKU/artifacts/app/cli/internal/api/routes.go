@@ -1,0 +1,90 @@
+package api
+
+// Routes for Argus API endpoints.
+// Path-parameter placeholders use %s for fmt.Sprintf substitution.
+const (
+	// Receive version information
+	ArgusVersion = "/api/v1/version"
+
+	// User token route
+	// GET – returns (or generates on first call) the caller's Argus API token.
+	// Requires an active session cookie or an existing Authorization: token header.
+	UserToken = "/api/v1/user/token"
+
+	// Test run routes
+	TestRunsList        = "/api/v1/test/%s/runs"            // GET  – list runs for a test (test_id)
+	TestRunGetType      = "/api/v1/run/%s/type"             // GET  – run type (run_id)
+	TestRunGet          = "/api/v1/run/%s/%s"               // GET  – single run (run_type, run_id)
+	TestRunActivity     = "/api/v1/run/%s/activity"         // GET  – activity log (run_id)
+	TestRunFetchResults = "/api/v1/run/%s/%s/fetch_results" // GET  – result tables (test_id, run_id)
+
+	// Comment routes
+	TestRunComments      = "/api/v1/run/%s/comments"                  // GET  – list comments for a run (run_id)
+	CommentGet           = "/api/v1/comment/%s/get"                   // GET  – single comment (comment_id)
+	TestRunCommentSubmit = "/api/v1/test/%s/run/%s/comments/submit"   // POST – submit a comment (test_id, run_id)
+	TestRunCommentUpdate = "/api/v1/test/%s/run/%s/comment/%s/update" // POST – update a comment (test_id, run_id, comment_id)
+	TestRunCommentDelete = "/api/v1/test/%s/run/%s/comment/%s/delete" // POST – delete a comment (test_id, run_id, comment_id)
+
+	// Issue routes
+	TestRunIssueSubmit = "/api/v1/test/%s/run/%s/issues/submit" // POST – submit an issue (test_id, run_id)
+	IssuesGet          = "/api/v1/issues/get"                   // GET  – list issues (filterKey, id query params)
+
+	// Pytest result routes
+	TestRunPytestResults = "/api/v1/run/%s/pytest/results"        // GET  – pytest results for a run (run_id)
+	PytestFilterResults  = "/api/v1/views/widgets/pytest/results" // GET  – filtered pytest results (query params: test, limit, before, after, status[], query, filters[], markers[])
+
+	// Log file routes
+	TestRunLogDownload = "/api/v1/tests/%s/%s/log/%s/download" // GET  – download log file, 302 to S3 (plugin_name, run_id, log_name)
+
+	// SCT event routes (scylla-cluster-tests plugin)
+	// Mounted at /api/v1/client/sct/ via: api(url_prefix=/api/v1) → client_api(url_prefix=/client) → sct_api(url_prefix=/sct)
+	SCTEventsGet             = "/api/v1/client/sct/%s/events/get"      // GET  – paginated SCT events (run_id); params: limit, before, severity[]
+	SCTEventsBySeverity      = "/api/v1/client/sct/%s/events/%s/get"   // GET  – SCT events filtered by severity (run_id, severity)
+	SCTEventsCountBySeverity = "/api/v1/client/sct/%s/events/%s/count" // GET  – count SCT events by severity (run_id, severity)
+	// Note: there is no GET nemesis endpoint. Nemesis data is embedded in the
+	// full run response (SCTTestRun.NemesisData) from TestRunGet.
+
+	// SSH tunnel routes – client (proxy host / AuthorizedKeysCommand)
+	SSHKeysList = "/api/v1/client/ssh/keys"   // GET  – plain-text authorized_keys; called by AuthorizedKeysCommand
+	SSHTunnel   = "/api/v1/client/ssh/tunnel" // POST – register public key and receive proxy config
+
+	// SSH tunnel routes – admin (requires Admin role)
+	AdminProxyTunnelConfig    = "/admin/api/v1/proxy-tunnel/config"           // GET  – one active config (tunnel_id query param optional); POST – create
+	AdminProxyTunnelConfigs   = "/admin/api/v1/proxy-tunnel/configs"          // GET  – all configs (active_only query param optional)
+	AdminProxyTunnelSetActive = "/admin/api/v1/proxy-tunnel/config/%s/active" // POST   – enable/disable a config (tunnel_id)
+	AdminProxyTunnelDelete    = "/admin/api/v1/proxy-tunnel/config/%s"        // DELETE – permanently remove a config (tunnel_id)
+	AdminSSHKeys              = "/admin/api/v1/ssh/keys"                      // GET  – list all registered keys with metadata
+	AdminSSHKeyDelete         = "/admin/api/v1/ssh/keys/%s"                   // DELETE – revoke a key (key_id)
+
+	// Release planner routes (planning_api blueprint, mounted at /api/v1/planning)
+	PlansForRelease = "/api/v1/planning/release/%s/all"           // GET    – list plans for a release (release_id)
+	PlanGet         = "/api/v1/planning/plan/%s/get"              // GET    – single plan (plan_id or key)
+	PlanCreate      = "/api/v1/planning/plan/create"              // POST   – create a plan (CreatePlanRequest)
+	PlanUpdate      = "/api/v1/planning/plan/update"              // POST   – update a plan (PlanDiffRequest)
+	PlanDelete      = "/api/v1/planning/plan/%s/delete"           // DELETE – delete a plan (plan_id); query param deleteView=0|1
+	PlanResolve     = "/api/v1/planning/plan/%s/resolve_entities" // GET  – resolve plan entities (plan_id)
+	PlanningSearch  = "/api/v1/planning/search"                   // GET    – search tests/groups/releases; query params query, releaseId
+	GroupExplode    = "/api/v1/planning/group/%s/explode"         // GET    – explode a group into its tests (group_id)
+	Gridview        = "/api/v1/planning/release/%s/gridview"      // GET    – release structure (enabled tests + groups) (release_id)
+
+	// User view routes (view_api blueprint, mounted at /api/v1/views)
+	ViewAll     = "/api/v1/views/all"        // GET  – list views; query param userId scopes to one user (else all)
+	ViewGet     = "/api/v1/views/get"        // GET  – single view; query param viewId
+	ViewResolve = "/api/v1/views/%s/resolve" // GET  – resolved view for edit (items carry build_system_id/name) (view_id)
+	ViewCreate  = "/api/v1/views/create"     // POST – create a view (ViewCreateRequest)
+	ViewUpdate  = "/api/v1/views/update"     // POST – update a view (ViewUpdateRequest: viewId + updateData)
+	ViewDelete  = "/api/v1/views/delete"     // POST – delete a view (body {viewId})
+
+	// Jenkins test-execution routes (testrun_api blueprint)
+	JenkinsParams    = "/api/v1/jenkins/params"     // POST – fetch a job's params (body {buildId, buildNumber}); buildId is build_system_id
+	JenkinsBuild     = "/api/v1/jenkins/build"      // POST – trigger a build (body {buildId, parameters}); returns {queueItem}
+	JenkinsQueueInfo = "/api/v1/jenkins/queue_info" // GET  – queue/build info (query param queueItem)
+
+	// Name-resolution routes
+	Releases = "/api/v1/releases" // GET – enabled releases (id/name); query param all=1 for every release
+	Users    = "/api/v1/users"    // GET – users keyed by id with username/full_name/email
+
+	// Replay-log ingest – uploads a tar.zst bundle of JSONL replay logs.
+	// POST – body is application/x-tar-zstd; query: dry_run=true|false.
+	ReplayIngest = "/api/v1/client/replay/ingest"
+)

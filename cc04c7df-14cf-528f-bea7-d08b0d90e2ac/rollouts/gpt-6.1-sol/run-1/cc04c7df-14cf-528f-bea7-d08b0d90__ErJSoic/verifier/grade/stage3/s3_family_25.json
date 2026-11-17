@@ -1,0 +1,227 @@
+{
+ "id": "s3_family_25",
+ "cases": [
+  {
+   "case": "multiplier_exponent_form",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DblHwOne",
+     "displayName": "DblHwOne",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 100.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "169",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"DblHwOne\",\n  \"displayName\": \"DblHwOne\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 100.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572406.7329931,
+    1773572406.8334832
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "multiplier_trailing_zero",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DblHwTwo",
+     "displayName": "DblHwTwo",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 2.5,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/2",
+     "content-type": "application/json",
+     "content-length": "167",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 2,\n  \"hardwareName\": \"DblHwTwo\",\n  \"displayName\": \"DblHwTwo\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 2.5,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572406.8335283,
+    1773572406.8451536
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "multiplier_many_zeros",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DblHwThree",
+     "displayName": "DblHwThree",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 3.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/3",
+     "content-type": "application/json",
+     "content-length": "171",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 3,\n  \"hardwareName\": \"DblHwThree\",\n  \"displayName\": \"DblHwThree\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 3.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572406.8451936,
+    1773572406.8560848
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "multiplier_near_one",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DblHwFour",
+     "displayName": "DblHwFour",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.000000000000001,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/4",
+     "content-type": "application/json",
+     "content-length": "183",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 4,\n  \"hardwareName\": \"DblHwFour\",\n  \"displayName\": \"DblHwFour\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.000000000000001,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572406.8561146,
+    1773572406.8671181
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "multiplier_repeating_decimal",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "DblHwFive",
+     "displayName": "DblHwFive",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.3000000000000003,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/5",
+     "content-type": "application/json",
+     "content-length": "184",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 5,\n  \"hardwareName\": \"DblHwFive\",\n  \"displayName\": \"DblHwFive\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.3000000000000003,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572406.867149,
+    1773572406.8778849
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "list_all_doubles",
+   "request": {
+    "method": "GET",
+    "path": "/hardware"
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"-705146408\"",
+     "cache-control": "no-transform, max-age=1429193",
+     "x-total-count": "5",
+     "content-type": "application/json",
+     "content-length": "976",
+     "date": "Sun, 15 Mar 2026 11:00:06 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"DblHwOne\",\n    \"displayName\": \"DblHwOne\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 100.0,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 2,\n    \"hardwareName\": \"DblHwTwo\",\n    \"displayName\": \"DblHwTwo\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 2.5,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 3,\n    \"hardwareName\": \"DblHwThree\",\n    \"displayName\": \"DblHwThree\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 3.0,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 4,\n    \"hardwareName\": \"DblHwFour\",\n    \"displayName\": \"DblHwFour\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.000000000000001,\n    \"averagePpd\": 100\n  },\n  {\n    \"id\": 5,\n    \"hardwareName\": \"DblHwFive\",\n    \"displayName\": \"DblHwFive\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.3000000000000003,\n    \"averagePpd\": 100\n  }\n]"
+   },
+   "clock_window": [
+    1773572406.877908,
+    1773572406.884391
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

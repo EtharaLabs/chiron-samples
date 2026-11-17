@@ -1,0 +1,38 @@
+[
+  {
+    "source": "/logs/artifacts",
+    "destination": "artifacts/logs/artifacts",
+    "type": "directory",
+    "status": "empty",
+    "service": null,
+    "exclude": []
+  },
+  {
+    "source": "/app",
+    "destination": "artifacts/app",
+    "type": "directory",
+    "status": "ok",
+    "service": null,
+    "exclude": [
+      "./build",
+      "./build.tar",
+      "./dist",
+      "./venv",
+      "./.venv",
+      "./.cache",
+      "./Testing",
+      ".git",
+      "CMakeFiles",
+      "__pycache__",
+      "*.o",
+      "*.a",
+      "*.so",
+      "*.so.*",
+      "*.pyc",
+      "CMakeCache.txt",
+      "*.ninja",
+      ".ninja_deps",
+      ".ninja_log"
+    ]
+  }
+]

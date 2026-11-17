@@ -1,0 +1,206 @@
+{
+ "id": "s3_family_19",
+ "cases": [
+  {
+   "case": "setup_hardware",
+   "request": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "ProbeHw",
+     "displayName": "ProbeHw",
+     "hardwareMake": "NVIDIA",
+     "hardwareType": "GPU",
+     "multiplier": 1.0,
+     "averagePpd": 100
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 201,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "location": "http://127.0.0.1:8080/folding/hardware/1",
+     "content-type": "application/json",
+     "content-length": "165",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "{\n  \"id\": 1,\n  \"hardwareName\": \"ProbeHw\",\n  \"displayName\": \"ProbeHw\",\n  \"hardwareMake\": \"NVIDIA\",\n  \"hardwareType\": \"GPU\",\n  \"multiplier\": 1.0,\n  \"averagePpd\": 100\n}"
+   },
+   "clock_window": [
+    1773572407.053835,
+    1773572407.1502867
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "accept_any",
+   "request": {
+    "method": "GET",
+    "path": "/hardware",
+    "headers": {
+     "Accept": "*/*"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"1156941915\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "187",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"ProbeHw\",\n    \"displayName\": \"ProbeHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  }\n]"
+   },
+   "clock_window": [
+    1773572407.1503296,
+    1773572407.157824
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "accept_application_wildcard",
+   "request": {
+    "method": "GET",
+    "path": "/hardware",
+    "headers": {
+     "Accept": "application/*"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"1156941915\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "187",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"ProbeHw\",\n    \"displayName\": \"ProbeHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  }\n]"
+   },
+   "clock_window": [
+    1773572407.1579077,
+    1773572407.1623068
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "accept_list_including_json",
+   "request": {
+    "method": "GET",
+    "path": "/hardware",
+    "headers": {
+     "Accept": "application/json, text/html;q=0.9"
+    }
+   },
+   "compare": "full",
+   "response": {
+    "status": 200,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "etag": "\"1156941915\"",
+     "cache-control": "no-transform, max-age=1429192",
+     "x-total-count": "1",
+     "content-type": "application/json",
+     "content-length": "187",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": "[\n  {\n    \"id\": 1,\n    \"hardwareName\": \"ProbeHw\",\n    \"displayName\": \"ProbeHw\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 100\n  }\n]"
+   },
+   "clock_window": [
+    1773572407.16235,
+    1773572407.1661084
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "accept_text_wildcard",
+   "request": {
+    "method": "GET",
+    "path": "/hardware",
+    "headers": {
+     "Accept": "text/*"
+    }
+   },
+   "compare": "status",
+   "response": {
+    "status": 406,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.1661575,
+    1773572407.171777
+   ],
+   "problems": [],
+   "agrees": true
+  },
+  {
+   "case": "accept_text_plain_only",
+   "request": {
+    "method": "GET",
+    "path": "/hardware",
+    "headers": {
+     "Accept": "text/plain"
+    }
+   },
+   "compare": "status",
+   "response": {
+    "status": 406,
+    "headers": {
+     "access-control-allow-origin": "*",
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:07 GMT",
+     "connection": "close"
+    },
+    "body": ""
+   },
+   "clock_window": [
+    1773572407.1717901,
+    1773572407.1743188
+   ],
+   "problems": [],
+   "agrees": true
+  }
+ ],
+ "agrees": true
+}

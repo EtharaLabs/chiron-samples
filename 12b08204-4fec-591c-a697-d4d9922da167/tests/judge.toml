@@ -1,0 +1,105 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+reasoning_effort = "high"
+mode = "individual"
+timeout = 600
+prompt_template = "prompt.md"
+
+[[criterion]]
+id = "Q01"
+name = "auth-decided-in-handler"
+description = "A route handler decides by itself whether the caller is authenticated, by reading the session, a cookie or an Authorization header in its own body and refusing or redirecting the caller there, instead of receiving the authenticated user from one shared mechanism that the framework runs before the handler. Handlers whose purpose is to log a user in or out, and code that only forwards a header onward without deciding access, are not this act."
+type = "binary"
+weight = 3
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q02"
+name = "roles-decided-in-handler"
+description = "A route that always requires the same role or roles of every caller tests that role membership in its handler body (and refuses or redirects there) instead of declaring the required roles through one shared mechanism attached to the route. A check that combines a role with request state, such as whether the caller is impersonating another user or owns the object being changed, is not this act, because no route-level declaration can express it."
+type = "binary"
+weight = 3
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q03"
+name = "database-blocks-event-loop"
+description = "A coroutine (`async def`) route handler, or a coroutine dependency that a route depends on, calls the synchronous database driver, or a model, query or service method that queries the database, directly on the event loop without handing the call to a worker thread, so one slow query stalls every request that worker serves."
+type = "binary"
+weight = 5
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q04"
+name = "error-contract-built-in-handler"
+description = "An API route handler catches an exception and builds the error response body itself (an error status envelope carrying a trace id, the exception name, its message or its arguments) instead of letting the exception reach the application's shared exception handling, which produces that error contract for every API route."
+type = "binary"
+weight = 3
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q05"
+name = "parameters-parsed-by-hand"
+description = "A route handler obtains a query-string parameter or form field with a fixed name that it uses itself by reading it from the raw request (the raw query string, the query-parameter mapping or a hand-parsed form) instead of declaring that parameter in the route's signature so the framework parses and validates it. Passing the whole parameter mapping on unchanged to code that accepts arbitrary filters is not this act."
+type = "binary"
+weight = 1
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q06"
+name = "responses-serialized-by-hand"
+description = "A route handler of the JSON API serializes its response body to JSON text itself, by calling a JSON dumping function and returning the resulting text or bytes, instead of returning its data through the one shared JSON response encoding the application's API uses."
+type = "binary"
+weight = 1
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q07"
+name = "request-metrics-by-hand"
+description = "A route handler records per-request HTTP metrics by hand, incrementing request counters or observing latency or status-code metrics in its own body, instead of relying on the one request instrumentation the application installs for every route."
+type = "binary"
+weight = 1
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q08"
+name = "template-context-by-hand"
+description = "A page handler passes the current user, the session, the flashed messages or the URL-building function into its template by hand on its render call, because no shared template context or environment mechanism supplies them to every template."
+type = "binary"
+weight = 1
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[[criterion]]
+id = "Q09"
+name = "tests-bypass-request-pipeline"
+description = "A migrated test that at State A sent an HTTP request to a route through the test client now calls the route's handler function, or the service code beneath it, directly instead of sending a request, so routing, request parsing, dependencies and exception handling no longer run in that test."
+type = "binary"
+weight = 3
+negate = true
+files = ["/var/tmp/judge-packet/tests"]
+
+[[criterion]]
+id = "Q11"
+name = "tests-emulate-old-client"
+description = "Migrated tests send their requests through a hand-made emulation of the old framework's test client, a wrapper class or adapter that reproduces the old client's call signatures or response attributes over the new framework's client, rather than using the new framework's test client and its own response interface."
+type = "binary"
+weight = 3
+negate = true
+files = ["/var/tmp/judge-packet/tests"]
+
+[[criterion]]
+id = "Q12"
+name = "blocking-io-on-event-loop"
+description = "A coroutine (`async def`) route handler performs blocking I/O other than database access directly on the event loop, such as a request through a synchronous HTTP client, a blocking file read or write, or a sleep, without handing it to a worker thread."
+type = "binary"
+weight = 5
+negate = true
+files = ["/var/tmp/judge-packet/app"]

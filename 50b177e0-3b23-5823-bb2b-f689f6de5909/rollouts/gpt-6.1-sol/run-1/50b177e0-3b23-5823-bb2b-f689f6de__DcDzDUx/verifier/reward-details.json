@@ -1,0 +1,694 @@
+{
+  "reward": {
+    "kind": "group",
+    "score": 0.0,
+    "aggregation": "weighted-mean",
+    "components": [
+      {
+        "name": "vetoed",
+        "weight": 0.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "vetoed",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 0.0,
+              "description": "veto failed: T-02, T-03, T-04, T-05, T-06, T-07, T-08, T-09, T-10, T-11, T-12, T-13, T-14, T-15, T-16, T-17, T-23, T-24, P-01, P-02, P-03, P-04, P-05, P-06"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      },
+      {
+        "name": "zeroed",
+        "weight": 1.0,
+        "detail": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "T-02",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-02"
+            },
+            {
+              "name": "T-03",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-03"
+            },
+            {
+              "name": "T-04",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-04"
+            },
+            {
+              "name": "T-05",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-05"
+            },
+            {
+              "name": "T-06",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-06"
+            },
+            {
+              "name": "T-07",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-07"
+            },
+            {
+              "name": "T-08",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-08"
+            },
+            {
+              "name": "T-09",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-09"
+            },
+            {
+              "name": "T-10",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-10"
+            },
+            {
+              "name": "T-11",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-11"
+            },
+            {
+              "name": "T-12",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-12"
+            },
+            {
+              "name": "T-13",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-13"
+            },
+            {
+              "name": "T-14",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-14"
+            },
+            {
+              "name": "T-15",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-15"
+            },
+            {
+              "name": "T-16",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-16"
+            },
+            {
+              "name": "T-17",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-17"
+            },
+            {
+              "name": "S3-X01-bom",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-bom"
+            },
+            {
+              "name": "S3-X01-comma",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-comma"
+            },
+            {
+              "name": "S3-X01-comment",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-comment"
+            },
+            {
+              "name": "S3-X01-errpos",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-errpos"
+            },
+            {
+              "name": "S3-X01-esc",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-esc"
+            },
+            {
+              "name": "S3-X01-esckey",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-esckey"
+            },
+            {
+              "name": "S3-X01-json5",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-json5"
+            },
+            {
+              "name": "S3-X01-trunc",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-trunc"
+            },
+            {
+              "name": "S3-X01-utf8",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-utf8"
+            },
+            {
+              "name": "S3-X01-ws",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-ws"
+            },
+            {
+              "name": "S3-X01-trunc23",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X01-trunc23"
+            },
+            {
+              "name": "S3-X02-d17",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-d17"
+            },
+            {
+              "name": "S3-X02-d768",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-d768"
+            },
+            {
+              "name": "S3-X02-diyfp",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-diyfp"
+            },
+            {
+              "name": "S3-X02-e21",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-e21"
+            },
+            {
+              "name": "S3-X02-expext",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-expext"
+            },
+            {
+              "name": "S3-X02-fuzz",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-fuzz"
+            },
+            {
+              "name": "S3-X02-halfrnd",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-halfrnd"
+            },
+            {
+              "name": "S3-X02-halfway",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-halfway"
+            },
+            {
+              "name": "S3-X02-hexinf",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-hexinf"
+            },
+            {
+              "name": "S3-X02-intbound",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-intbound"
+            },
+            {
+              "name": "S3-X02-longdig",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-longdig"
+            },
+            {
+              "name": "S3-X02-pow2",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-pow2"
+            },
+            {
+              "name": "S3-X02-rnd",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-rnd"
+            },
+            {
+              "name": "S3-X02-round",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-round"
+            },
+            {
+              "name": "S3-X02-subnormal",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X02-subnormal"
+            },
+            {
+              "name": "S3-X03-num",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X03-num"
+            },
+            {
+              "name": "S3-X03-str",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X03-str"
+            },
+            {
+              "name": "S3-X04-build_then_patch",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-build_then_patch"
+            },
+            {
+              "name": "S3-X04-copy_roundtrip",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-copy_roundtrip"
+            },
+            {
+              "name": "S3-X04-copy_scalars",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-copy_scalars"
+            },
+            {
+              "name": "S3-X04-deep_nest",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-deep_nest"
+            },
+            {
+              "name": "S3-X04-equality",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-equality"
+            },
+            {
+              "name": "S3-X04-mutpatch_all_mutable",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-mutpatch_all_mutable"
+            },
+            {
+              "name": "S3-X04-patch_fails_midway",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-patch_fails_midway"
+            },
+            {
+              "name": "S3-X04-patch_on_empty",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-patch_on_empty"
+            },
+            {
+              "name": "S3-X04-patch_op_names",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-patch_op_names"
+            },
+            {
+              "name": "S3-X04-ptr_array_tokens",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-ptr_array_tokens"
+            },
+            {
+              "name": "S3-X04-ptr_ctx_after_mutation",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-ptr_ctx_after_mutation"
+            },
+            {
+              "name": "S3-X04-ptr_escapes",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-ptr_escapes"
+            },
+            {
+              "name": "S3-X04-ptr_then_mutate",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-ptr_then_mutate"
+            },
+            {
+              "name": "S3-X04-fuzz",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X04-fuzz"
+            },
+            {
+              "name": "S3-X05-build_arr_grow",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-build_arr_grow"
+            },
+            {
+              "name": "S3-X05-build_obj",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-build_obj"
+            },
+            {
+              "name": "S3-X05-copy_cycle",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-copy_cycle"
+            },
+            {
+              "name": "S3-X05-dupkey_copy",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-dupkey_copy"
+            },
+            {
+              "name": "S3-X05-dyn_strings",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-dyn_strings"
+            },
+            {
+              "name": "S3-X05-merge_patch",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-merge_patch"
+            },
+            {
+              "name": "S3-X05-mutpatch_mutable",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-mutpatch_mutable"
+            },
+            {
+              "name": "S3-X05-numbers",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-numbers"
+            },
+            {
+              "name": "S3-X05-patch_add_copy",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-patch_add_copy"
+            },
+            {
+              "name": "S3-X05-patch_fail_mid",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-patch_fail_mid"
+            },
+            {
+              "name": "S3-X05-ptr_create_parent",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-ptr_create_parent"
+            },
+            {
+              "name": "S3-X05-ptr_mod_seq",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-ptr_mod_seq"
+            },
+            {
+              "name": "S3-X05-read_escapes",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-read_escapes"
+            },
+            {
+              "name": "S3-X05-read_write",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-read_write"
+            },
+            {
+              "name": "S3-X05-strpool",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-strpool"
+            },
+            {
+              "name": "S3-X05-valpool",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-valpool"
+            },
+            {
+              "name": "S3-X05-write_big",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-write_big"
+            },
+            {
+              "name": "S3-X05-fuzz",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: S3-X05-fuzz"
+            },
+            {
+              "name": "T-23",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-23"
+            },
+            {
+              "name": "T-24",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: T-24"
+            },
+            {
+              "name": "P-01",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: P-01"
+            },
+            {
+              "name": "P-02",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: P-02"
+            },
+            {
+              "name": "P-03",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: P-03"
+            },
+            {
+              "name": "P-04",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: P-04"
+            },
+            {
+              "name": "P-05",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: P-05"
+            },
+            {
+              "name": "P-06",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: P-06"
+            },
+            {
+              "name": "Q-01",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: Q-01"
+            },
+            {
+              "name": "Q-02",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "zeroed by the veto: Q-02"
+            },
+            {
+              "name": "Q-03",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: Q-03"
+            },
+            {
+              "name": "Q-04",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 5.0,
+              "description": "zeroed by the veto: Q-04"
+            },
+            {
+              "name": "Q-05",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-05"
+            },
+            {
+              "name": "Q-06",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-06"
+            },
+            {
+              "name": "Q-07",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-07"
+            },
+            {
+              "name": "Q-08",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 3.0,
+              "description": "zeroed by the veto: Q-08"
+            },
+            {
+              "name": "Q-09",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "zeroed by the veto: Q-09"
+            },
+            {
+              "name": "Q-10",
+              "value": 0.0,
+              "raw": 0.0,
+              "weight": 1.0,
+              "description": "zeroed by the veto: Q-10"
+            }
+          ],
+          "kind": "programmatic"
+        }
+      }
+    ]
+  }
+}

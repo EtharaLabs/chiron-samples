@@ -1,0 +1,138 @@
+from fastapi import Request
+from argus.backend.util.config import Config
+import logging
+from abc import ABC, abstractmethod
+import jenkins
+import click
+import re
+from coodie.exceptions import DocumentNotFound
+from argus.backend.db import ScyllaCluster
+from argus.backend.models.web import ArgusRelease, ArgusGroup, ArgusTest, ArgusTestException
+from argus.backend.service.release_manager import ReleaseManagerService
+LOGGER = logging.getLogger(__name__)
+
+class ArgusTestsMonitor(ABC):
+    BUILD_SYSTEM_FILTERED_PREFIXES = []
+
+    def __init__(self) -> None:
+        self._cluster = ScyllaCluster.get()
+        self._existing_releases = list(ArgusRelease.find())
+        self._existing_groups = list(ArgusGroup.find())
+        self._existing_tests = list(ArgusTest.find())
+        self._filtered_groups: list[str] = self.BUILD_SYSTEM_FILTERED_PREFIXES
+
+    def create_release(self, release_name: str, *, request: Request=None):
+        release = ArgusRelease()
+        release.name = release_name
+        release.save()
+        return release
+
+    def create_group(self, release: ArgusRelease, group_name: str, build_id: str, group_pretty_name: str | None=None, *, request: Request=None):
+        group = ArgusGroup()
+        group.release_id = release.id
+        group.name = group_name
+        group.build_system_id = build_id
+        if group_pretty_name:
+            group.pretty_name = group_pretty_name
+        group.save()
+        return group
+
+    def create_test(self, release: ArgusRelease, group: ArgusGroup, test_name: str, build_id: str, build_url: str, *, request: Request=None) -> ArgusTest:
+        test = ArgusTest()
+        test.name = test_name
+        test.group_id = group.id
+        test.release_id = release.id
+        test.build_system_id = build_id
+        test.build_system_url = build_url
+        test.validate_build_system_id()
+        test.save()
+        ReleaseManagerService().move_test_runs(test)
+        return test
+
+    @abstractmethod
+    def collect(self, *, request: Request=None):
+        raise NotImplementedError()
+
+    def check_filter(self, group_name: str) -> bool:
+        for prefix in self._filtered_groups:
+            if prefix.lower() in group_name.lower():
+                return False
+        return True
+
+class JenkinsMonitor(ArgusTestsMonitor):
+    BUILD_SYSTEM_FILTERED_PREFIXES = ['releng']
+    JENKINS_MONITORED_RELEASES = ['^scylla-master$', '^drivers$', '^scylla-\\d+\\.\\d+/releng-testing$', '^enterprise-20\\d{2}\\.\\d+/releng-testing$', '^scylla-staging$', '^scylla-\\d+\\.\\d+$', '^manager-3.\\d+$', '^scylla-operator/operator-master$', '^scylla-operator/operator-\\d+.\\d+$', '^scylla-enterprise$', '^enterprise-20\\d{2}\\.\\d+$', '^siren-tests$', '^releng-testing$', '^sct-github-PRs-scan$']
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._jenkins = jenkins.Jenkins(url=Config.load_yaml_config()['JENKINS_URL'], username=Config.load_yaml_config()['JENKINS_USER'], password=Config.load_yaml_config()['JENKINS_API_TOKEN'])
+        self._monitored_releases = self.JENKINS_MONITORED_RELEASES
+
+    def _check_release_name(self, release_name: str):
+        return any((re.match(pattern, release_name, re.IGNORECASE) for pattern in self._monitored_releases))
+
+    def collect(self, *, request: Request=None):
+        click.echo('Collecting new tests from jenkins')
+        all_jobs = self._jenkins.get_all_jobs()
+        all_monitored_folders = [job for job in all_jobs if self._check_release_name(job['fullname'])]
+        LOGGER.info('Will collect %s', [f['fullname'] for f in all_monitored_folders])
+        for release in all_monitored_folders:
+            LOGGER.info('Processing release %s', release['fullname'])
+            try:
+                saved_release = ArgusRelease.get(name=release['fullname'])
+                LOGGER.info('Release %s exists', release['fullname'])
+            except DocumentNotFound:
+                LOGGER.warning('Release %s does not exist, creating...', release['fullname'])
+                saved_release = self.create_release(release['fullname'], request=request)
+                self._existing_releases.append(saved_release)
+            try:
+                groups = self.collect_groups_for_release(release['jobs'])
+            except KeyError:
+                LOGGER.error('Empty release!\n %s', release)
+                continue
+            folder_stack = [dict(parent_name='', parent_display_name='', group=g) for g in reversed(groups)]
+            root_folder = {'parent_name': '', 'parent_display_name': '', 'group': {'name': f"{release['fullname']}-root", 'displayName': '-- root directory --', 'fullname': release['fullname'], 'jobs': self.collect_root_folder_jobs(release['jobs'])}}
+            folder_stack.append(root_folder)
+            while len(folder_stack) != 0:
+                group_dict = folder_stack.pop()
+                group = group_dict['group']
+                LOGGER.info('Processing group %s for release %s', group['name'], saved_release.name)
+                try:
+                    group_name = group['name'] if not group_dict['parent_name'] else f"{group_dict['parent_name']}-{group['name']}"
+                    saved_group = filter(lambda g: g.build_system_id == group['fullname'], self._existing_groups)
+                    saved_group = next(saved_group)
+                    LOGGER.info('Group %s already exists. (id: %s)', saved_group.build_system_id, saved_group.id)
+                except StopIteration:
+                    LOGGER.warning("Group %s for release %s doesn't exist, creating...", group_name, saved_release.name)
+                    try:
+                        display_name = group.get('displayName', self._jenkins.get_job_info(name=group['fullname'])['displayName'])
+                        display_name = display_name if not group_dict['parent_display_name'] else f"{group_dict['parent_display_name']} - {display_name}"
+                    except Exception:
+                        display_name = None
+                    saved_group = self.create_group(saved_release, group_name, group['fullname'], display_name, request=request)
+                    self._existing_groups.append(saved_group)
+                for job in group['jobs']:
+                    LOGGER.info('Processing job %s for release %s and group %s', job['fullname'], saved_group.name, saved_release.name)
+                    saved_test = None
+                    if 'Folder' in job['_class']:
+                        folder_stack.append(dict(parent_name=saved_group.name, parent_display_name=saved_group.pretty_name, group=job))
+                    if 'WorkflowJob' in job['_class']:
+                        try:
+                            saved_test = filter(lambda t: t.build_system_id == job['fullname'], self._existing_tests)
+                            saved_test = next(saved_test)
+                            LOGGER.info('Test %s already exists. (id: %s)', saved_test.build_system_id, saved_test.id)
+                        except StopIteration:
+                            LOGGER.warning("Test %s for release %s (group %s) doesn't exist, creating...", job['name'], saved_release.name, saved_group.name)
+                            try:
+                                saved_test = self.create_test(saved_release, saved_group, job['name'], job['fullname'], job['url'], request=request)
+                                self._existing_tests.append(saved_test)
+                            except ArgusTestException:
+                                LOGGER.error('Unable to create test for build_id %s', job['fullname'], exc_info=True)
+
+    def collect_groups_for_release(self, jobs):
+        groups = [folder for folder in jobs if 'Folder' in folder['_class'] or 'WorkflowMultiBranchProject' in folder['_class']]
+        groups = [group for group in groups if self.check_filter(group['name'])]
+        return groups
+
+    def collect_root_folder_jobs(self, jobs):
+        return [job for job in jobs if 'WorkflowJob' in job['_class']]

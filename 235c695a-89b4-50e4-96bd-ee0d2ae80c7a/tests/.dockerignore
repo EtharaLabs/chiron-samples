@@ -1,0 +1,16 @@
+*
+!.grader/engine/
+!.grader/expect/
+!.grader/items.json
+!.grader/rewardkit.lock.txt
+!.gate/judge.toml
+!.gate/zero.toml
+!.gate/prompt.md
+!test.sh
+!test_output.py
+!reward.toml
+!judge.toml
+!judge-prompt.md
+!install-packages.sh
+**/__pycache__
+**/*.pyc

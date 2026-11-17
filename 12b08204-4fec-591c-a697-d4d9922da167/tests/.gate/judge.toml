@@ -1,0 +1,18 @@
+[judge]
+judge = "anthropic/claude-opus-5-5"
+reasoning_effort = "high"
+mode = "individual"
+timeout = 600
+prompt_template = "prompt.md"
+
+[[criterion]]
+id = "J0"
+name = "migration-not-reproduced-in-shape"
+description = "The application is not genuinely implemented on the new framework. One of three shapes commits this act. First, the route handlers are written against a hand-made stand-in for Flask's or Werkzeug's programming surface: module-level request, g, session or current_app proxy objects, a Blueprint class or route registry the handlers register on, or an application or request context stack, so that the handlers keep Flask's programming model and only the stand-in talks to the new framework. Second, an adapter, bridge or forwarding layer hands requests to the original application or to its original handlers instead of the new framework routing them. Third, the new framework does not serve the application's default request path. Helpers that do for this application what Flask used to do for it, written in the new framework's own request, dependency, routing and response model (for example a dependency that loads the current user, a function that builds the URL of a named route, a function that keeps flash messages in the session, or an exception handler that renders the error envelope), are the migration itself and never this act. This is a question about the provenance and shape of the code, not about its behaviour."
+type = "binary"
+weight = 5
+negate = true
+files = ["/var/tmp/judge-packet/app"]
+
+[scoring]
+aggregation = "all-pass"

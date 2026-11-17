@@ -1,0 +1,1641 @@
+{
+ "id": "g14_lars_hardware_sync",
+ "source": "g14_lars_hardware_sync",
+ "steps": [
+  {
+   "case": "lars_update_unauthenticated",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars"
+   }
+  },
+  {
+   "case": "lars_update_readonly_user",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "lars_update_invalid_password",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": {
+     "user": "root",
+     "password": "invalid"
+    }
+   }
+  },
+  {
+   "case": "lars_update_with_empty_lars_db",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_one_absent_after_empty_lars_update",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/1"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware1",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #1",
+      "rank": 1,
+      "averagePpd": 1000
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_creates_single_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "conflict_shows_created_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #1",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "case": "hardware_two_absent_after_single_create",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/2"
+   }
+  },
+  {
+   "case": "lars_update_is_idempotent",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_two_still_absent_after_idempotent_update",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/2"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware1",
+      "manufacturer": "AMD",
+      "modelInfo": "Hardware #1",
+      "rank": 1,
+      "averagePpd": 1500
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_updates_changed_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "conflict_shows_updated_make_and_ppd",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #1",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "DELETE",
+    "path": "/gpu_ppd/overall_ranks"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware1",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #1",
+      "rank": 1,
+      "averagePpd": 10000
+     },
+     {
+      "displayName": "Hardware2",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #2",
+      "rank": 2,
+      "averagePpd": 5000
+     },
+     {
+      "displayName": "Hardware3",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #3",
+      "rank": 3,
+      "averagePpd": 1000
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_creates_additional_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "conflict_shows_best_gpu_multiplier_one",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #1",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "case": "conflict_shows_second_gpu_multiplier_two",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #2",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "case": "conflict_shows_third_gpu_multiplier_ten",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #3",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "case": "hardware_four_absent_after_three_created",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/4"
+   }
+  },
+  {
+   "stub": {
+    "method": "DELETE",
+    "path": "/gpu_ppd/overall_ranks"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware1",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #1",
+      "rank": 1,
+      "averagePpd": 20000
+     },
+     {
+      "displayName": "Hardware2",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #2",
+      "rank": 2,
+      "averagePpd": 5000
+     },
+     {
+      "displayName": "Hardware3",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #3",
+      "rank": 3,
+      "averagePpd": 1000
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_recalculates_multipliers_for_new_best_ppd",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "conflict_shows_recalculated_second_multiplier",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #2",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "case": "conflict_shows_recalculated_third_multiplier",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #3",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "DELETE",
+    "path": "/gpu_ppd/overall_ranks"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware1",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #1",
+      "rank": 1,
+      "averagePpd": 20000
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_deletes_retired_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_two_absent_after_retirement",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/2"
+   }
+  },
+  {
+   "case": "hardware_three_absent_after_retirement",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/3"
+   }
+  },
+  {
+   "case": "conflict_shows_surviving_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #1",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware4",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #4",
+      "rank": 4,
+      "averagePpd": 0
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_ignores_entry_with_zero_average_ppd",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_not_created_for_zero_ppd_entry",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/4"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware5",
+      "manufacturer": "nVidia",
+      "modelInfo": "Hardware #5",
+      "rank": 0,
+      "averagePpd": 500
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_ignores_entry_with_zero_rank",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "hardware_not_created_for_zero_rank_entry",
+   "http": {
+    "method": "GET",
+    "path": "/hardware/4"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/gpu_ppd/overall_ranks",
+    "json": [
+     {
+      "displayName": "Hardware6",
+      "manufacturer": "Matrox",
+      "modelInfo": "Hardware #6",
+      "rank": 6,
+      "averagePpd": 400
+     }
+    ]
+   }
+  },
+  {
+   "case": "lars_update_with_unknown_manufacturer",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "conflict_shows_invalid_hardware_make",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #6",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/__stub/fail?mode=500"
+   }
+  },
+  {
+   "case": "lars_update_with_failing_lars_endpoint",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/__stub/fail?mode="
+   }
+  },
+  {
+   "case": "conflict_unchanged_after_failing_lars_update",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #1",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/__stub/fail?mode=garbage"
+   }
+  },
+  {
+   "case": "lars_update_with_unparseable_lars_response",
+   "http": {
+    "method": "POST",
+    "path": "/debug/lars",
+    "auth": "admin"
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/__stub/fail?mode="
+   }
+  },
+  {
+   "case": "conflict_unchanged_after_unparseable_lars_update",
+   "http": {
+    "method": "POST",
+    "path": "/hardware",
+    "auth": "admin",
+    "json": {
+     "hardwareName": "Hardware #6",
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareType": "CPU",
+     "multiplier": 9.0,
+     "averagePpd": 9
+    }
+   }
+  },
+  {
+   "stub": {
+    "method": "POST",
+    "path": "/bonus?user=DummyUser1&passkey=DummyPasskey12345678901234567890&units=1"
+   }
+  },
+  {
+   "case": "setup_create_team_for_lars_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/teams",
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    }
+   },
+   "capture": {
+    "teamOne": "json:id"
+   }
+  },
+  {
+   "case": "create_user_on_lars_hardware",
+   "http": {
+    "method": "POST",
+    "path": "/users",
+    "auth": "admin",
+    "json": {
+     "foldingUserName": "DummyUser1",
+     "displayName": "DummyUser1",
+     "passkey": "DummyPasskey12345678901234567890",
+     "category": "NVIDIA_GPU",
+     "hardwareId": 1,
+     "teamId": "${teamOne}"
+    }
+   },
+   "capture": {
+    "userOne": "json:id"
+   }
+  },
+  {
+   "case": "user_stats_show_lars_hardware",
+   "http": {
+    "method": "GET",
+    "path": "/stats/users/${userOne}"
+   }
+  },
+  {
+   "case": "debug_caches_unauthenticated",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches"
+   }
+  },
+  {
+   "case": "debug_caches_readonly_user",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "debug_caches_as_admin",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": "admin"
+   }
+  },
+  {
+   "case": "lars_endpoint_get_not_allowed",
+   "http": {
+    "method": "GET",
+    "path": "/debug/lars",
+    "auth": "admin"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "lars_update_unauthenticated",
+   "compare": "full",
+   "request": {
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "lars_update_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "lars_update_invalid_password",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "password": "invalid",
+     "user": "root"
+    },
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "lars_update_with_empty_lars_db",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_one_absent_after_empty_lars_update",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/1"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "lars_update_creates_single_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_shows_created_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #1",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #1\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"Hardware #1\",\n      \"displayName\": \"Hardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "516",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "hardware_two_absent_after_single_create",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "lars_update_is_idempotent",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_two_still_absent_after_idempotent_update",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "lars_update_updates_changed_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_shows_updated_make_and_ppd",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #1",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #1\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"Hardware #1\",\n      \"displayName\": \"Hardware1\",\n      \"hardwareMake\": \"AMD\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 1500\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "513",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "lars_update_creates_additional_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_shows_best_gpu_multiplier_one",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #1",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #1\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"Hardware #1\",\n      \"displayName\": \"Hardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 10000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "conflict_shows_second_gpu_multiplier_two",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #2",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #2\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 2,\n      \"hardwareName\": \"Hardware #2\",\n      \"displayName\": \"Hardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 2.0,\n      \"averagePpd\": 5000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "516",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "conflict_shows_third_gpu_multiplier_ten",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #3",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #3\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 3,\n      \"hardwareName\": \"Hardware #3\",\n      \"displayName\": \"Hardware3\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 10.0,\n      \"averagePpd\": 1000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "hardware_four_absent_after_three_created",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/4"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "lars_update_recalculates_multipliers_for_new_best_ppd",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_shows_recalculated_second_multiplier",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #2",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #2\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 2,\n      \"hardwareName\": \"Hardware #2\",\n      \"displayName\": \"Hardware2\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 4.0,\n      \"averagePpd\": 5000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "516",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "conflict_shows_recalculated_third_multiplier",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #3",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #3\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 3,\n      \"hardwareName\": \"Hardware #3\",\n      \"displayName\": \"Hardware3\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 20.0,\n      \"averagePpd\": 1000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "lars_update_deletes_retired_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_two_absent_after_retirement",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/2"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "hardware_three_absent_after_retirement",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/3"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "conflict_shows_surviving_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #1",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #1\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"Hardware #1\",\n      \"displayName\": \"Hardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 20000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "lars_update_ignores_entry_with_zero_average_ppd",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_not_created_for_zero_ppd_entry",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/4"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "lars_update_ignores_entry_with_zero_rank",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "hardware_not_created_for_zero_rank_entry",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/hardware/4"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 404
+   }
+  },
+  {
+   "case": "lars_update_with_unknown_manufacturer",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_shows_invalid_hardware_make",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #6",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #6\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 4,\n      \"hardwareName\": \"Hardware #6\",\n      \"displayName\": \"Hardware6\",\n      \"hardwareMake\": \"INVALID\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 50.0,\n      \"averagePpd\": 400\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "lars_update_with_failing_lars_endpoint",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_unchanged_after_failing_lars_update",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #1",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #1\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 1,\n      \"hardwareName\": \"Hardware #1\",\n      \"displayName\": \"Hardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 20000\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "lars_update_with_unparseable_lars_response",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "conflict_unchanged_after_unparseable_lars_update",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "averagePpd": 9,
+     "displayName": "Probe",
+     "hardwareMake": "INTEL",
+     "hardwareName": "Hardware #6",
+     "hardwareType": "CPU",
+     "multiplier": 9.0
+    },
+    "method": "POST",
+    "path": "/hardware"
+   },
+   "response": {
+    "body": "{\n  \"invalidObject\": {\n    \"hardwareName\": \"Hardware #6\",\n    \"displayName\": \"Probe\",\n    \"hardwareMake\": \"INTEL\",\n    \"hardwareType\": \"CPU\",\n    \"multiplier\": 9.0,\n    \"averagePpd\": 9\n  },\n  \"conflictingObjects\": [\n    {\n      \"id\": 4,\n      \"hardwareName\": \"Hardware #6\",\n      \"displayName\": \"Hardware6\",\n      \"hardwareMake\": \"INVALID\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 50.0,\n      \"averagePpd\": 400\n    }\n  ],\n  \"errors\": [\n    \"Payload conflicts with an existing object on: [hardwareName]\"\n  ]\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "517",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 409
+   }
+  },
+  {
+   "case": "setup_create_team_for_lars_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "teamName": "DummyTeam1"
+    },
+    "method": "POST",
+    "path": "/teams"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"teamName\": \"DummyTeam1\"\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "41",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/teams/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "create_user_on_lars_hardware",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "json": {
+     "category": "NVIDIA_GPU",
+     "displayName": "DummyUser1",
+     "foldingUserName": "DummyUser1",
+     "hardwareId": 1,
+     "passkey": "DummyPasskey12345678901234567890",
+     "teamId": "1"
+    },
+    "method": "POST",
+    "path": "/users"
+   },
+   "response": {
+    "body": "{\n  \"id\": 1,\n  \"foldingUserName\": \"DummyUser1\",\n  \"displayName\": \"DummyUser1\",\n  \"passkey\": \"DummyPasskey12345678901234567890\",\n  \"category\": \"NVIDIA_GPU\",\n  \"hardware\": {\n    \"id\": 1,\n    \"hardwareName\": \"Hardware #1\",\n    \"displayName\": \"Hardware1\",\n    \"hardwareMake\": \"NVIDIA\",\n    \"hardwareType\": \"GPU\",\n    \"multiplier\": 1.0,\n    \"averagePpd\": 20000\n  },\n  \"team\": {\n    \"id\": 1,\n    \"teamName\": \"DummyTeam1\"\n  },\n  \"userIsCaptain\": false\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "446",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT",
+     "location": "http://127.0.0.1:8080/folding/users/1"
+    },
+    "status": 201
+   }
+  },
+  {
+   "case": "user_stats_show_lars_hardware",
+   "compare": "full",
+   "request": {
+    "method": "GET",
+    "path": "/stats/users/1"
+   },
+   "response": {
+    "body": "{\n  \"user\": {\n    \"id\": 1,\n    \"foldingUserName\": \"DummyUser1\",\n    \"displayName\": \"DummyUser1\",\n    \"passkey\": \"DummyPas************************\",\n    \"category\": \"NVIDIA_GPU\",\n    \"hardware\": {\n      \"id\": 1,\n      \"hardwareName\": \"Hardware #1\",\n      \"displayName\": \"Hardware1\",\n      \"hardwareMake\": \"NVIDIA\",\n      \"hardwareType\": \"GPU\",\n      \"multiplier\": 1.0,\n      \"averagePpd\": 20000\n    },\n    \"team\": {\n      \"id\": 1,\n      \"teamName\": \"DummyTeam1\"\n    },\n    \"userIsCaptain\": false\n  },\n  \"points\": 0,\n  \"multipliedPoints\": 0,\n  \"units\": 0,\n  \"rankInTeam\": 1\n}",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "573",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "debug_caches_unauthenticated",
+   "compare": "full",
+   "request": {
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "debug_caches_readonly_user",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "debug_caches_as_admin",
+   "compare": "full",
+   "request": {
+    "auth": "admin",
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "lars_endpoint_get_not_allowed",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "method": "GET",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:11 GMT"
+    },
+    "status": 405
+   }
+  }
+ ],
+ "capability": "LARS hardware synchronisation triggered by POST /debug/lars: hardware is created, updated, ignored or deleted according to the LARS GPU listing, multipliers are recomputed as (best PPD / this PPD) rounded to two places, entries with a non-positive rank or average PPD are skipped, an unknown manufacturer becomes INVALID, and an unreachable or unparseable LARS endpoint leaves the system untouched."
+}

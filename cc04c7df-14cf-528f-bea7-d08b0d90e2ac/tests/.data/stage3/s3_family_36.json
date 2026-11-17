@@ -1,0 +1,179 @@
+{
+ "id": "s3_family_36",
+ "source": "f054_empty_username_or_password",
+ "steps": [
+  {
+   "case": "empty_password",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDo="
+    }
+   }
+  },
+  {
+   "case": "empty_username",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic OnNocm9vdA=="
+    }
+   }
+  },
+  {
+   "case": "only_colon",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic Og=="
+    }
+   }
+  },
+  {
+   "case": "password_with_trailing_colon",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q6"
+    }
+   }
+  },
+  {
+   "case": "password_with_trailing_space",
+   "http": {
+    "method": "POST",
+    "path": "/debug/caches",
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Qg"
+    }
+   }
+  }
+ ],
+ "cases": [
+  {
+   "case": "empty_password",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDo="
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "empty_username",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic OnNocm9vdA=="
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "only_colon",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic Og=="
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "password_with_trailing_colon",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Q6"
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "password_with_trailing_space",
+   "compare": "full",
+   "request": {
+    "auth": {
+     "raw": "Basic cm9vdDpzaHJvb3Qg"
+    },
+    "method": "POST",
+    "path": "/debug/caches"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  }
+ ],
+ "probe": "Credentials whose username or password is empty, and a bare colon: decodeAuthentication's split(\":\", 2) produces an empty token rather than failing, so the database lookup decides the status."
+}

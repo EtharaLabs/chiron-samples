@@ -1,0 +1,111 @@
+from fastapi import Request
+from argus.backend.http import render_template
+from argus.backend.util.config import Config
+import logging
+from typing import Any
+from uuid import UUID
+from coodie.exceptions import DocumentNotFound
+from argus.backend.models.web import ArgusNotification, ArgusNotificationSourceTypes, ArgusNotificationTypes, ArgusNotificationState, User
+from argus.backend.util.send_email import Email
+LOGGER = logging.getLogger(__name__)
+
+class NotificationManagerException(Exception):
+    pass
+
+class NotificationManagerService:
+
+    def __init__(self, notification_senders: list['NotificationSenderBase'] | None=None) -> None:
+        self.notification_services: list['NotificationSenderBase'] = [ArgusDBNotificationSaver()]
+        if Config.load_yaml_config().get('EMAIL_ENABLED', True):
+            self.notification_services.append(EmailNotificationServiceSender())
+        if notification_senders:
+            self.notification_services.extend(notification_senders)
+
+    def send_notification(self, receiver: UUID, sender: UUID, notification_type: ArgusNotificationTypes, source_type: ArgusNotificationSourceTypes, source_id: UUID, title: str | None=None, source_message: str | None=None, content_params: dict | None=None, *, request: Request=None) -> Any:
+        for service in self.notification_services:
+            service.send_notification(receiver, sender, notification_type, source_type, source_id, title, source_message, content_params, request=request)
+
+    def get_notificaton(self, receiver: UUID, notification_id: UUID) -> ArgusNotification:
+        notification_id = UUID(notification_id) if isinstance(notification_id, str) else notification_id
+        return ArgusNotification.get(receiver=receiver, id=notification_id)
+
+    def get_unread_count(self, receiver: UUID, *, request: Request=None) -> int:
+        query = ArgusNotification.find(receiver=receiver, state=ArgusNotificationState.UNREAD.value).allow_filtering().all()
+        return len(query)
+
+    def read_notification(self, receiver: UUID, notification_id: UUID, *, request: Request=None) -> ArgusNotification:
+        notification_id = UUID(notification_id) if isinstance(notification_id, str) else notification_id
+        notification = ArgusNotification.get(receiver=receiver, id=notification_id)
+        notification.state = ArgusNotificationState.READ
+        notification.save()
+        return bool(notification.state)
+
+    def get_notifications(self, receiver: UUID, limit: int=20, after: UUID | None=None) -> list[ArgusNotification]:
+        if after:
+            after = UUID(after) if isinstance(after, str) else after
+            return ArgusNotification.find(receiver=receiver, id__lte=after).limit(limit).all()
+        return ArgusNotification.find(receiver=receiver).limit(limit).all()
+
+class NotificationSenderBase:
+    NOTIFICATION_TITLES = {ArgusNotificationTypes.Mention: 'You were mentioned in a comment', ArgusNotificationTypes.StatusChange: 'A run you are assigned to changed status', ArgusNotificationTypes.AssigneeChange: 'You were assigned to a run', ArgusNotificationTypes.ScheduleChange: 'You were assigned to a schedule', ArgusNotificationTypes.ViewActionItemAssignee: 'You were assigned to a view action item', ArgusNotificationTypes.ViewHighlightMention: 'You were mentioned in a view highlight'}
+    CONTENT_TEMPLATES = {}
+
+    def _check_user(self, user_id: UUID) -> bool:
+        try:
+            user = User.get(id=user_id)
+            if user.id == user_id:
+                return True
+        except DocumentNotFound:
+            return False
+
+    def _get_title_for_notification_type(self, notification_type: ArgusNotificationTypes) -> str:
+        if (title := self.NOTIFICATION_TITLES.get(notification_type)):
+            return title
+        raise NotificationManagerException(f'Title for notification type {notification_type} not found.', notification_type)
+
+    def _render_content(self, content_type: ArgusNotificationTypes, params: dict, *, request: Request=None):
+        if (content_renderer := self.CONTENT_TEMPLATES.get(content_type)):
+            return content_renderer(params, request=request)
+        raise NotificationManagerException(f'Content renderer for notification type {content_type} not found.', content_type)
+
+    def send_notification(self, receiver: UUID, sender: UUID, notification_type: ArgusNotificationTypes, source_type: ArgusNotificationSourceTypes, source_id: UUID, title: str | None=None, content: str | None=None, content_params: dict | None=None, *, request: Request=None) -> Any:
+        raise NotImplementedError()
+
+class ArgusDBNotificationSaver(NotificationSenderBase):
+    CONTENT_TEMPLATES = {ArgusNotificationTypes.Mention: lambda p, request: render_template(request, 'notifications/mention.html.j2', **p if p else {}), ArgusNotificationTypes.AssigneeChange: lambda p, request: render_template(request, 'notifications/assigned.html.j2', **p if p else {}), ArgusNotificationTypes.ViewActionItemAssignee: lambda p, request: render_template(request, 'notifications/view_action_item_assigned.html.j2', **p if p else {}), ArgusNotificationTypes.ViewHighlightMention: lambda p, request: render_template(request, 'notifications/view_highlight_mention.html.j2', **p if p else {})}
+
+    def send_notification(self, receiver: UUID, sender: UUID, notification_type: ArgusNotificationTypes, source_type: ArgusNotificationSourceTypes, source_id: UUID, title: str | None=None, content: str | None=None, content_params: dict | None=None, *, request: Request=None) -> ArgusNotification:
+        new_notification = ArgusNotification()
+        for user in [sender, receiver]:
+            if not self._check_user(user_id=user):
+                raise NotificationManagerException(f'UserId {user} not found in the database', user)
+        new_notification.sender = sender
+        new_notification.receiver = receiver
+        new_notification.type = notification_type.value
+        new_notification.source_type = source_type.value
+        new_notification.source_id = source_id
+        new_notification.title = title if title else self._get_title_for_notification_type(notification_type)
+        new_notification.content = content if not content_params else self._render_content(notification_type, content_params, request=request)
+        new_notification.save()
+        return new_notification
+
+class EmailNotificationServiceSender(NotificationSenderBase):
+    CONTENT_TEMPLATES = {ArgusNotificationTypes.Mention: lambda p, request: render_template(request, 'notifications/email_mention.html.j2', **p if p else {}), ArgusNotificationTypes.AssigneeChange: lambda p, request: render_template(request, 'notifications/assigned_email.html.j2', **p if p else {}), ArgusNotificationTypes.ViewActionItemAssignee: lambda p, request: render_template(request, 'notifications/view_action_item_assigned_email.html.j2', **p if p else {}), ArgusNotificationTypes.ViewHighlightMention: lambda p, request: render_template(request, 'notifications/view_highlight_mention_email.html.j2', **p if p else {})}
+
+    def __init__(self):
+        self.email = Email(init_connection=False)
+
+    def get_user(self, user_id: UUID) -> User:
+        return User.get(id=user_id)
+
+    def send_notification(self, receiver: UUID, sender: UUID, notification_type: ArgusNotificationTypes, source_type: ArgusNotificationSourceTypes, source_id: UUID, title: str | None=None, content: str | None=None, content_params: dict | None=None, *, request: Request=None):
+        try:
+            content_params = content_params or {}
+            receiver_user = self.get_user(receiver)
+            sender_user = self.get_user(sender)
+            subject = title if title else self._get_title_for_notification_type(notification_type)
+            content_params.update({'sender': sender_user.full_name, 'message': content})
+            email_content = self._render_content(notification_type, content_params, request=request)
+            self.email.send(subject=f'Argus Notification - {subject}', content=email_content, recipients=[receiver_user.email])
+        except Exception as details:
+            logging.getLogger(__name__).error('Failed to send email: %s', details)

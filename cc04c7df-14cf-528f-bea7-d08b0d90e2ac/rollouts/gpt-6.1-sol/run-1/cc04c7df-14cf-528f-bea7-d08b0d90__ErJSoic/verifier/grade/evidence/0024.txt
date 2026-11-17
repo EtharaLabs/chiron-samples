@@ -1,0 +1,57 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/HardwareType.java (changed against State A) ===
+@@
+29  | import java.util.Collection;
+30  | import java.util.stream.Stream;
+31  | 
+   -| /**
+   -|  * Specifies the type of {@link Hardware}.
+   -|  */
+32 +| 
+33  | public enum HardwareType {
+34  | 
+   -|     /**
+   -|      * The {@link Hardware} is a CPU.
+   -|      */
+35 +|     
+36  |     CPU,
+37  | 
+   -|     /**
+   -|      * The {@link Hardware} is a GPU.
+   -|      */
+38 +|     
+39  |     GPU,
+40  | 
+   -|     /**
+   -|      * Not a valid {@link HardwareType}.
+   -|      */
+41 +|     
+42  |     INVALID;
+43  | 
+44  |     private static final Collection<HardwareType> ALL_VALUES = Stream.of(values())
+45  |         .filter(value -> value != INVALID)
+46  |         .collect(toUnmodifiableList());
+47  | 
+   -|     /**
+   -|      * Retrieve all available {@link HardwareType}s (excluding {@link HardwareType#INVALID}).
+   -|      *
+   -|      * <p>
+   -|      * Should be used instead of {@link HardwareType#values()}, as that recalculates the array for each call,
+   -|      * while this method uses a static {@link Collection}.
+   -|      *
+   -|      * @return a {@link Collection} of all {@link HardwareType}s
+   -|      */
+48 +|     
+49  |     public static Collection<HardwareType> getAllValues() {
+50  |         return ALL_VALUES;
+51  |     }
+52  | 
+   -|     /**
+   -|      * Retrieve a {@link HardwareType} based on the input {@link String}. The search is case-insensitive.
+   -|      *
+   -|      * @param input the {@link HardwareType} as a {@link String}
+   -|      * @return the matching {@link HardwareType}, or {@link HardwareType#INVALID} if none is found
+   -|      */
+53 +|     
+54  |     public static HardwareType get(final String input) {
+55  |         return ALL_VALUES
+56  |             .stream()

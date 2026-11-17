@@ -1,0 +1,1184 @@
+=== submission file: folding-stats-jar/src/main/java/me/zodac/folding/db/postgres/gen/Routines.java (changed against State A) ===
+@@
+49  | import org.jooq.Result;
+50  | 
+51  | 
+   -| /**
+   -|  * Convenience access to all stored procedures and functions in public.
+   -|  */
+52 +| 
+53  | @SuppressWarnings({ "all", "unchecked", "rawtypes" })
+54  | public class Routines {
+55  | 
+   -|     /**
+   -|      * Call <code>public.armor</code>
+   -|      */
+56 +|     
+57  |     public static String armor1(
+58  |           Configuration configuration
+59  |         , byte[] __1
+@@
+65  |         return f.getReturnValue();
+66  |     }
+67  | 
+   -|     /**
+   -|      * Get <code>public.armor</code> as a field.
+   -|      */
+68 +|     
+69  |     public static Field<String> armor1(
+70  |           byte[] __1
+71  |     ) {
+@@
+75  |         return f.asField();
+76  |     }
+77  | 
+   -|     /**
+   -|      * Get <code>public.armor</code> as a field.
+   -|      */
+78 +|     
+79  |     public static Field<String> armor1(
+80  |           Field<byte[]> __1
+81  |     ) {
+@@
+85  |         return f.asField();
+86  |     }
+87  | 
+   -|     /**
+   -|      * Call <code>public.armor</code>
+   -|      */
+88 +|     
+89  |     public static String armor2(
+90  |           Configuration configuration
+91  |         , byte[] __1
+@@
+101  |         return f.getReturnValue();
+102  |     }
+103  | 
+   -|     /**
+   -|      * Get <code>public.armor</code> as a field.
+   -|      */
+104 +|     
+105  |     public static Field<String> armor2(
+106  |           byte[] __1
+107  |         , String[] __2
+@@
+115  |         return f.asField();
+116  |     }
+117  | 
+   -|     /**
+   -|      * Get <code>public.armor</code> as a field.
+   -|      */
+118 +|     
+119  |     public static Field<String> armor2(
+120  |           Field<byte[]> __1
+121  |         , Field<String[]> __2
+@@
+129  |         return f.asField();
+130  |     }
+131  | 
+   -|     /**
+   -|      * Call <code>public.crypt</code>
+   -|      */
+132 +|     
+133  |     public static String crypt(
+134  |           Configuration configuration
+135  |         , String __1
+@@
+143  |         return f.getReturnValue();
+144  |     }
+145  | 
+   -|     /**
+   -|      * Get <code>public.crypt</code> as a field.
+   -|      */
+146 +|     
+147  |     public static Field<String> crypt(
+148  |           String __1
+149  |         , String __2
+@@
+155  |         return f.asField();
+156  |     }
+157  | 
+   -|     /**
+   -|      * Get <code>public.crypt</code> as a field.
+   -|      */
+158 +|     
+159  |     public static Field<String> crypt(
+160  |           Field<String> __1
+161  |         , Field<String> __2
+@@
+167  |         return f.asField();
+168  |     }
+169  | 
+   -|     /**
+   -|      * Call <code>public.dearmor</code>
+   -|      */
+170 +|     
+171  |     public static byte[] dearmor(
+172  |           Configuration configuration
+173  |         , String __1
+@@
+179  |         return f.getReturnValue();
+180  |     }
+181  | 
+   -|     /**
+   -|      * Get <code>public.dearmor</code> as a field.
+   -|      */
+182 +|     
+183  |     public static Field<byte[]> dearmor(
+184  |           String __1
+185  |     ) {
+@@
+189  |         return f.asField();
+190  |     }
+191  | 
+   -|     /**
+   -|      * Get <code>public.dearmor</code> as a field.
+   -|      */
+192 +|     
+193  |     public static Field<byte[]> dearmor(
+194  |           Field<String> __1
+195  |     ) {
+@@
+199  |         return f.asField();
+200  |     }
+201  | 
+   -|     /**
+   -|      * Call <code>public.decrypt</code>
+   -|      */
+202 +|     
+203  |     public static byte[] decrypt(
+204  |           Configuration configuration
+205  |         , byte[] __1
+@@
+215  |         return f.getReturnValue();
+216  |     }
+217  | 
+   -|     /**
+   -|      * Get <code>public.decrypt</code> as a field.
+   -|      */
+218 +|     
+219  |     public static Field<byte[]> decrypt(
+220  |           byte[] __1
+221  |         , byte[] __2
+@@
+229  |         return f.asField();
+230  |     }
+231  | 
+   -|     /**
+   -|      * Get <code>public.decrypt</code> as a field.
+   -|      */
+232 +|     
+233  |     public static Field<byte[]> decrypt(
+234  |           Field<byte[]> __1
+235  |         , Field<byte[]> __2
+@@
+243  |         return f.asField();
+244  |     }
+245  | 
+   -|     /**
+   -|      * Call <code>public.decrypt_iv</code>
+   -|      */
+246 +|     
+247  |     public static byte[] decryptIv(
+248  |           Configuration configuration
+249  |         , byte[] __1
+@@
+261  |         return f.getReturnValue();
+262  |     }
+263  | 
+   -|     /**
+   -|      * Get <code>public.decrypt_iv</code> as a field.
+   -|      */
+264 +|     
+265  |     public static Field<byte[]> decryptIv(
+266  |           byte[] __1
+267  |         , byte[] __2
+@@
+277  |         return f.asField();
+278  |     }
+279  | 
+   -|     /**
+   -|      * Get <code>public.decrypt_iv</code> as a field.
+   -|      */
+280 +|     
+281  |     public static Field<byte[]> decryptIv(
+282  |           Field<byte[]> __1
+283  |         , Field<byte[]> __2
+@@
+293  |         return f.asField();
+294  |     }
+295  | 
+   -|     /**
+   -|      * Call <code>public.digest</code>
+   -|      */
+296 +|     
+297  |     public static byte[] digest1(
+298  |           Configuration configuration
+299  |         , String __1
+@@
+307  |         return f.getReturnValue();
+308  |     }
+309  | 
+   -|     /**
+   -|      * Get <code>public.digest</code> as a field.
+   -|      */
+310 +|     
+311  |     public static Field<byte[]> digest1(
+312  |           String __1
+313  |         , String __2
+@@
+319  |         return f.asField();
+320  |     }
+321  | 
+   -|     /**
+   -|      * Get <code>public.digest</code> as a field.
+   -|      */
+322 +|     
+323  |     public static Field<byte[]> digest1(
+324  |           Field<String> __1
+325  |         , Field<String> __2
+@@
+331  |         return f.asField();
+332  |     }
+333  | 
+   -|     /**
+   -|      * Call <code>public.digest</code>
+   -|      */
+334 +|     
+335  |     public static byte[] digest2(
+336  |           Configuration configuration
+337  |         , byte[] __1
+@@
+345  |         return f.getReturnValue();
+346  |     }
+347  | 
+   -|     /**
+   -|      * Get <code>public.digest</code> as a field.
+   -|      */
+348 +|     
+349  |     public static Field<byte[]> digest2(
+350  |           byte[] __1
+351  |         , String __2
+@@
+357  |         return f.asField();
+358  |     }
+359  | 
+   -|     /**
+   -|      * Get <code>public.digest</code> as a field.
+   -|      */
+360 +|     
+361  |     public static Field<byte[]> digest2(
+362  |           Field<byte[]> __1
+363  |         , Field<String> __2
+@@
+369  |         return f.asField();
+370  |     }
+371  | 
+   -|     /**
+   -|      * Call <code>public.encrypt</code>
+   -|      */
+372 +|     
+373  |     public static byte[] encrypt(
+374  |           Configuration configuration
+375  |         , byte[] __1
+@@
+385  |         return f.getReturnValue();
+386  |     }
+387  | 
+   -|     /**
+   -|      * Get <code>public.encrypt</code> as a field.
+   -|      */
+388 +|     
+389  |     public static Field<byte[]> encrypt(
+390  |           byte[] __1
+391  |         , byte[] __2
+@@
+399  |         return f.asField();
+400  |     }
+401  | 
+   -|     /**
+   -|      * Get <code>public.encrypt</code> as a field.
+   -|      */
+402 +|     
+403  |     public static Field<byte[]> encrypt(
+404  |           Field<byte[]> __1
+405  |         , Field<byte[]> __2
+@@
+413  |         return f.asField();
+414  |     }
+415  | 
+   -|     /**
+   -|      * Call <code>public.encrypt_iv</code>
+   -|      */
+416 +|     
+417  |     public static byte[] encryptIv(
+418  |           Configuration configuration
+419  |         , byte[] __1
+@@
+431  |         return f.getReturnValue();
+432  |     }
+433  | 
+   -|     /**
+   -|      * Get <code>public.encrypt_iv</code> as a field.
+   -|      */
+434 +|     
+435  |     public static Field<byte[]> encryptIv(
+436  |           byte[] __1
+437  |         , byte[] __2
+@@
+447  |         return f.asField();
+448  |     }
+449  | 
+   -|     /**
+   -|      * Get <code>public.encrypt_iv</code> as a field.
+   -|      */
+450 +|     
+451  |     public static Field<byte[]> encryptIv(
+452  |           Field<byte[]> __1
+453  |         , Field<byte[]> __2
+@@
+463  |         return f.asField();
+464  |     }
+465  | 
+   -|     /**
+   -|      * Call <code>public.gen_random_bytes</code>
+   -|      */
+466 +|     
+467  |     public static byte[] genRandomBytes(
+468  |           Configuration configuration
+469  |         , Integer __1
+@@
+475  |         return f.getReturnValue();
+476  |     }
+477  | 
+   -|     /**
+   -|      * Get <code>public.gen_random_bytes</code> as a field.
+   -|      */
+478 +|     
+479  |     public static Field<byte[]> genRandomBytes(
+480  |           Integer __1
+481  |     ) {
+@@
+485  |         return f.asField();
+486  |     }
+487  | 
+   -|     /**
+   -|      * Get <code>public.gen_random_bytes</code> as a field.
+   -|      */
+488 +|     
+489  |     public static Field<byte[]> genRandomBytes(
+490  |           Field<Integer> __1
+491  |     ) {
+@@
+495  |         return f.asField();
+496  |     }
+497  | 
+   -|     /**
+   -|      * Call <code>public.gen_random_uuid</code>
+   -|      */
+498 +|     
+499  |     public static UUID genRandomUuid(
+500  |           Configuration configuration
+501  |     ) {
+@@
+505  |         return f.getReturnValue();
+506  |     }
+507  | 
+   -|     /**
+   -|      * Get <code>public.gen_random_uuid</code> as a field.
+   -|      */
+508 +|     
+509  |     public static Field<UUID> genRandomUuid() {
+510  |         GenRandomUuid f = new GenRandomUuid();
+511  | 
+512  |         return f.asField();
+513  |     }
+514  | 
+   -|     /**
+   -|      * Call <code>public.gen_salt</code>
+   -|      */
+515 +|     
+516  |     public static String genSalt1(
+517  |           Configuration configuration
+518  |         , String __1
+@@
+524  |         return f.getReturnValue();
+525  |     }
+526  | 
+   -|     /**
+   -|      * Get <code>public.gen_salt</code> as a field.
+   -|      */
+527 +|     
+528  |     public static Field<String> genSalt1(
+529  |           String __1
+530  |     ) {
+@@
+534  |         return f.asField();
+535  |     }
+536  | 
+   -|     /**
+   -|      * Get <code>public.gen_salt</code> as a field.
+   -|      */
+537 +|     
+538  |     public static Field<String> genSalt1(
+539  |           Field<String> __1
+540  |     ) {
+@@
+544  |         return f.asField();
+545  |     }
+546  | 
+   -|     /**
+   -|      * Call <code>public.gen_salt</code>
+   -|      */
+547 +|     
+548  |     public static String genSalt2(
+549  |           Configuration configuration
+550  |         , String __1
+@@
+558  |         return f.getReturnValue();
+559  |     }
+560  | 
+   -|     /**
+   -|      * Get <code>public.gen_salt</code> as a field.
+   -|      */
+561 +|     
+562  |     public static Field<String> genSalt2(
+563  |           String __1
+564  |         , Integer __2
+@@
+570  |         return f.asField();
+571  |     }
+572  | 
+   -|     /**
+   -|      * Get <code>public.gen_salt</code> as a field.
+   -|      */
+573 +|     
+574  |     public static Field<String> genSalt2(
+575  |           Field<String> __1
+576  |         , Field<Integer> __2
+@@
+582  |         return f.asField();
+583  |     }
+584  | 
+   -|     /**
+   -|      * Call <code>public.hmac</code>
+   -|      */
+585 +|     
+586  |     public static byte[] hmac1(
+587  |           Configuration configuration
+588  |         , String __1
+@@
+598  |         return f.getReturnValue();
+599  |     }
+600  | 
+   -|     /**
+   -|      * Get <code>public.hmac</code> as a field.
+   -|      */
+601 +|     
+602  |     public static Field<byte[]> hmac1(
+603  |           String __1
+604  |         , String __2
+@@
+612  |         return f.asField();
+613  |     }
+614  | 
+   -|     /**
+   -|      * Get <code>public.hmac</code> as a field.
+   -|      */
+615 +|     
+616  |     public static Field<byte[]> hmac1(
+617  |           Field<String> __1
+618  |         , Field<String> __2
+@@
+626  |         return f.asField();
+627  |     }
+628  | 
+   -|     /**
+   -|      * Call <code>public.hmac</code>
+   -|      */
+629 +|     
+630  |     public static byte[] hmac2(
+631  |           Configuration configuration
+632  |         , byte[] __1
+@@
+642  |         return f.getReturnValue();
+643  |     }
+644  | 
+   -|     /**
+   -|      * Get <code>public.hmac</code> as a field.
+   -|      */
+645 +|     
+646  |     public static Field<byte[]> hmac2(
+647  |           byte[] __1
+648  |         , byte[] __2
+@@
+656  |         return f.asField();
+657  |     }
+658  | 
+   -|     /**
+   -|      * Get <code>public.hmac</code> as a field.
+   -|      */
+659 +|     
+660  |     public static Field<byte[]> hmac2(
+661  |           Field<byte[]> __1
+662  |         , Field<byte[]> __2
+@@
+670  |         return f.asField();
+671  |     }
+672  | 
+   -|     /**
+   -|      * Call <code>public.pgp_key_id</code>
+   -|      */
+673 +|     
+674  |     public static String pgpKeyId(
+675  |           Configuration configuration
+676  |         , byte[] __1
+@@
+682  |         return f.getReturnValue();
+683  |     }
+684  | 
+   -|     /**
+   -|      * Get <code>public.pgp_key_id</code> as a field.
+   -|      */
+685 +|     
+686  |     public static Field<String> pgpKeyId(
+687  |           byte[] __1
+688  |     ) {
+@@
+692  |         return f.asField();
+693  |     }
+694  | 
+   -|     /**
+   -|      * Get <code>public.pgp_key_id</code> as a field.
+   -|      */
+695 +|     
+696  |     public static Field<String> pgpKeyId(
+697  |           Field<byte[]> __1
+698  |     ) {
+@@
+702  |         return f.asField();
+703  |     }
+704  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_decrypt</code>
+   -|      */
+705 +|     
+706  |     public static String pgpPubDecrypt1(
+707  |           Configuration configuration
+708  |         , byte[] __1
+@@
+716  |         return f.getReturnValue();
+717  |     }
+718  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt</code> as a field.
+   -|      */
+719 +|     
+720  |     public static Field<String> pgpPubDecrypt1(
+721  |           byte[] __1
+722  |         , byte[] __2
+@@
+728  |         return f.asField();
+729  |     }
+730  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt</code> as a field.
+   -|      */
+731 +|     
+732  |     public static Field<String> pgpPubDecrypt1(
+733  |           Field<byte[]> __1
+734  |         , Field<byte[]> __2
+@@
+740  |         return f.asField();
+741  |     }
+742  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_decrypt</code>
+   -|      */
+743 +|     
+744  |     public static String pgpPubDecrypt2(
+745  |           Configuration configuration
+746  |         , byte[] __1
+@@
+756  |         return f.getReturnValue();
+757  |     }
+758  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt</code> as a field.
+   -|      */
+759 +|     
+760  |     public static Field<String> pgpPubDecrypt2(
+761  |           byte[] __1
+762  |         , byte[] __2
+@@
+770  |         return f.asField();
+771  |     }
+772  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt</code> as a field.
+   -|      */
+773 +|     
+774  |     public static Field<String> pgpPubDecrypt2(
+775  |           Field<byte[]> __1
+776  |         , Field<byte[]> __2
+@@
+784  |         return f.asField();
+785  |     }
+786  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_decrypt</code>
+   -|      */
+787 +|     
+788  |     public static String pgpPubDecrypt3(
+789  |           Configuration configuration
+790  |         , byte[] __1
+@@
+802  |         return f.getReturnValue();
+803  |     }
+804  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt</code> as a field.
+   -|      */
+805 +|     
+806  |     public static Field<String> pgpPubDecrypt3(
+807  |           byte[] __1
+808  |         , byte[] __2
+@@
+818  |         return f.asField();
+819  |     }
+820  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt</code> as a field.
+   -|      */
+821 +|     
+822  |     public static Field<String> pgpPubDecrypt3(
+823  |           Field<byte[]> __1
+824  |         , Field<byte[]> __2
+@@
+834  |         return f.asField();
+835  |     }
+836  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_decrypt_bytea</code>
+   -|      */
+837 +|     
+838  |     public static byte[] pgpPubDecryptBytea1(
+839  |           Configuration configuration
+840  |         , byte[] __1
+@@
+848  |         return f.getReturnValue();
+849  |     }
+850  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt_bytea</code> as a field.
+   -|      */
+851 +|     
+852  |     public static Field<byte[]> pgpPubDecryptBytea1(
+853  |           byte[] __1
+854  |         , byte[] __2
+@@
+860  |         return f.asField();
+861  |     }
+862  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt_bytea</code> as a field.
+   -|      */
+863 +|     
+864  |     public static Field<byte[]> pgpPubDecryptBytea1(
+865  |           Field<byte[]> __1
+866  |         , Field<byte[]> __2
+@@
+872  |         return f.asField();
+873  |     }
+874  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_decrypt_bytea</code>
+   -|      */
+875 +|     
+876  |     public static byte[] pgpPubDecryptBytea2(
+877  |           Configuration configuration
+878  |         , byte[] __1
+@@
+888  |         return f.getReturnValue();
+889  |     }
+890  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt_bytea</code> as a field.
+   -|      */
+891 +|     
+892  |     public static Field<byte[]> pgpPubDecryptBytea2(
+893  |           byte[] __1
+894  |         , byte[] __2
+@@
+902  |         return f.asField();
+903  |     }
+904  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt_bytea</code> as a field.
+   -|      */
+905 +|     
+906  |     public static Field<byte[]> pgpPubDecryptBytea2(
+907  |           Field<byte[]> __1
+908  |         , Field<byte[]> __2
+@@
+916  |         return f.asField();
+917  |     }
+918  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_decrypt_bytea</code>
+   -|      */
+919 +|     
+920  |     public static byte[] pgpPubDecryptBytea3(
+921  |           Configuration configuration
+922  |         , byte[] __1
+@@
+934  |         return f.getReturnValue();
+935  |     }
+936  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt_bytea</code> as a field.
+   -|      */
+937 +|     
+938  |     public static Field<byte[]> pgpPubDecryptBytea3(
+939  |           byte[] __1
+940  |         , byte[] __2
+@@
+950  |         return f.asField();
+951  |     }
+952  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_decrypt_bytea</code> as a field.
+   -|      */
+953 +|     
+954  |     public static Field<byte[]> pgpPubDecryptBytea3(
+955  |           Field<byte[]> __1
+956  |         , Field<byte[]> __2
+@@
+966  |         return f.asField();
+967  |     }
+968  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_encrypt</code>
+   -|      */
+969 +|     
+970  |     public static byte[] pgpPubEncrypt1(
+971  |           Configuration configuration
+972  |         , String __1
+@@
+980  |         return f.getReturnValue();
+981  |     }
+982  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt</code> as a field.
+   -|      */
+983 +|     
+984  |     public static Field<byte[]> pgpPubEncrypt1(
+985  |           String __1
+986  |         , byte[] __2
+@@
+992  |         return f.asField();
+993  |     }
+994  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt</code> as a field.
+   -|      */
+995 +|     
+996  |     public static Field<byte[]> pgpPubEncrypt1(
+997  |           Field<String> __1
+998  |         , Field<byte[]> __2
+@@
+1004  |         return f.asField();
+1005  |     }
+1006  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_encrypt</code>
+   -|      */
+1007 +|     
+1008  |     public static byte[] pgpPubEncrypt2(
+1009  |           Configuration configuration
+1010  |         , String __1
+@@
+1020  |         return f.getReturnValue();
+1021  |     }
+1022  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt</code> as a field.
+   -|      */
+1023 +|     
+1024  |     public static Field<byte[]> pgpPubEncrypt2(
+1025  |           String __1
+1026  |         , byte[] __2
+@@
+1034  |         return f.asField();
+1035  |     }
+1036  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt</code> as a field.
+   -|      */
+1037 +|     
+1038  |     public static Field<byte[]> pgpPubEncrypt2(
+1039  |           Field<String> __1
+1040  |         , Field<byte[]> __2
+@@
+1048  |         return f.asField();
+1049  |     }
+1050  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_encrypt_bytea</code>
+   -|      */
+1051 +|     
+1052  |     public static byte[] pgpPubEncryptBytea1(
+1053  |           Configuration configuration
+1054  |         , byte[] __1
+@@
+1062  |         return f.getReturnValue();
+1063  |     }
+1064  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt_bytea</code> as a field.
+   -|      */
+1065 +|     
+1066  |     public static Field<byte[]> pgpPubEncryptBytea1(
+1067  |           byte[] __1
+1068  |         , byte[] __2
+@@
+1074  |         return f.asField();
+1075  |     }
+1076  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt_bytea</code> as a field.
+   -|      */
+1077 +|     
+1078  |     public static Field<byte[]> pgpPubEncryptBytea1(
+1079  |           Field<byte[]> __1
+1080  |         , Field<byte[]> __2
+@@
+1086  |         return f.asField();
+1087  |     }
+1088  | 
+   -|     /**
+   -|      * Call <code>public.pgp_pub_encrypt_bytea</code>
+   -|      */
+1089 +|     
+1090  |     public static byte[] pgpPubEncryptBytea2(
+1091  |           Configuration configuration
+1092  |         , byte[] __1
+@@
+1102  |         return f.getReturnValue();
+1103  |     }
+1104  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt_bytea</code> as a field.
+   -|      */
+1105 +|     
+1106  |     public static Field<byte[]> pgpPubEncryptBytea2(
+1107  |           byte[] __1
+1108  |         , byte[] __2
+@@
+1116  |         return f.asField();
+1117  |     }
+1118  | 
+   -|     /**
+   -|      * Get <code>public.pgp_pub_encrypt_bytea</code> as a field.
+   -|      */
+1119 +|     
+1120  |     public static Field<byte[]> pgpPubEncryptBytea2(
+1121  |           Field<byte[]> __1
+1122  |         , Field<byte[]> __2
+@@
+1130  |         return f.asField();
+1131  |     }
+1132  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_decrypt</code>
+   -|      */
+1133 +|     
+1134  |     public static String pgpSymDecrypt1(
+1135  |           Configuration configuration
+1136  |         , byte[] __1
+@@
+1144  |         return f.getReturnValue();
+1145  |     }
+1146  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt</code> as a field.
+   -|      */
+1147 +|     
+1148  |     public static Field<String> pgpSymDecrypt1(
+1149  |           byte[] __1
+1150  |         , String __2
+@@
+1156  |         return f.asField();
+1157  |     }
+1158  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt</code> as a field.
+   -|      */
+1159 +|     
+1160  |     public static Field<String> pgpSymDecrypt1(
+1161  |           Field<byte[]> __1
+1162  |         , Field<String> __2
+@@
+1168  |         return f.asField();
+1169  |     }
+1170  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_decrypt</code>
+   -|      */
+1171 +|     
+1172  |     public static String pgpSymDecrypt2(
+1173  |           Configuration configuration
+1174  |         , byte[] __1
+@@
+1184  |         return f.getReturnValue();
+1185  |     }
+1186  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt</code> as a field.
+   -|      */
+1187 +|     
+1188  |     public static Field<String> pgpSymDecrypt2(
+1189  |           byte[] __1
+1190  |         , String __2
+@@
+1198  |         return f.asField();
+1199  |     }
+1200  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt</code> as a field.
+   -|      */
+1201 +|     
+1202  |     public static Field<String> pgpSymDecrypt2(
+1203  |           Field<byte[]> __1
+1204  |         , Field<String> __2
+@@
+1212  |         return f.asField();
+1213  |     }
+1214  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_decrypt_bytea</code>
+   -|      */
+1215 +|     
+1216  |     public static byte[] pgpSymDecryptBytea1(
+1217  |           Configuration configuration
+1218  |         , byte[] __1
+@@
+1226  |         return f.getReturnValue();
+1227  |     }
+1228  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt_bytea</code> as a field.
+   -|      */
+1229 +|     
+1230  |     public static Field<byte[]> pgpSymDecryptBytea1(
+1231  |           byte[] __1
+1232  |         , String __2
+@@
+1238  |         return f.asField();
+1239  |     }
+1240  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt_bytea</code> as a field.
+   -|      */
+1241 +|     
+1242  |     public static Field<byte[]> pgpSymDecryptBytea1(
+1243  |           Field<byte[]> __1
+1244  |         , Field<String> __2
+@@
+1250  |         return f.asField();
+1251  |     }
+1252  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_decrypt_bytea</code>
+   -|      */
+1253 +|     
+1254  |     public static byte[] pgpSymDecryptBytea2(
+1255  |           Configuration configuration
+1256  |         , byte[] __1
+@@
+1266  |         return f.getReturnValue();
+1267  |     }
+1268  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt_bytea</code> as a field.
+   -|      */
+1269 +|     
+1270  |     public static Field<byte[]> pgpSymDecryptBytea2(
+1271  |           byte[] __1
+1272  |         , String __2
+@@
+1280  |         return f.asField();
+1281  |     }
+1282  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_decrypt_bytea</code> as a field.
+   -|      */
+1283 +|     
+1284  |     public static Field<byte[]> pgpSymDecryptBytea2(
+1285  |           Field<byte[]> __1
+1286  |         , Field<String> __2
+@@
+1294  |         return f.asField();
+1295  |     }
+1296  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_encrypt</code>
+   -|      */
+1297 +|     
+1298  |     public static byte[] pgpSymEncrypt1(
+1299  |           Configuration configuration
+1300  |         , String __1
+@@
+1308  |         return f.getReturnValue();
+1309  |     }
+1310  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt</code> as a field.
+   -|      */
+1311 +|     
+1312  |     public static Field<byte[]> pgpSymEncrypt1(
+1313  |           String __1
+1314  |         , String __2
+@@
+1320  |         return f.asField();
+1321  |     }
+1322  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt</code> as a field.
+   -|      */
+1323 +|     
+1324  |     public static Field<byte[]> pgpSymEncrypt1(
+1325  |           Field<String> __1
+1326  |         , Field<String> __2
+@@
+1332  |         return f.asField();
+1333  |     }
+1334  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_encrypt</code>
+   -|      */
+1335 +|     
+1336  |     public static byte[] pgpSymEncrypt2(
+1337  |           Configuration configuration
+1338  |         , String __1
+@@
+1348  |         return f.getReturnValue();
+1349  |     }
+1350  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt</code> as a field.
+   -|      */
+1351 +|     
+1352  |     public static Field<byte[]> pgpSymEncrypt2(
+1353  |           String __1
+1354  |         , String __2
+@@
+1362  |         return f.asField();
+1363  |     }
+1364  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt</code> as a field.
+   -|      */
+1365 +|     
+1366  |     public static Field<byte[]> pgpSymEncrypt2(
+1367  |           Field<String> __1
+1368  |         , Field<String> __2
+@@
+1376  |         return f.asField();
+1377  |     }
+1378  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_encrypt_bytea</code>
+   -|      */
+1379 +|     
+1380  |     public static byte[] pgpSymEncryptBytea1(
+1381  |           Configuration configuration
+1382  |         , byte[] __1
+@@
+1390  |         return f.getReturnValue();
+1391  |     }
+1392  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt_bytea</code> as a field.
+   -|      */
+1393 +|     
+1394  |     public static Field<byte[]> pgpSymEncryptBytea1(
+1395  |           byte[] __1
+1396  |         , String __2
+@@
+1402  |         return f.asField();
+1403  |     }
+1404  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt_bytea</code> as a field.
+   -|      */
+1405 +|     
+1406  |     public static Field<byte[]> pgpSymEncryptBytea1(
+1407  |           Field<byte[]> __1
+1408  |         , Field<String> __2
+@@
+1414  |         return f.asField();
+1415  |     }
+1416  | 
+   -|     /**
+   -|      * Call <code>public.pgp_sym_encrypt_bytea</code>
+   -|      */
+1417 +|     
+1418  |     public static byte[] pgpSymEncryptBytea2(
+1419  |           Configuration configuration
+1420  |         , byte[] __1
+@@
+1430  |         return f.getReturnValue();
+1431  |     }
+1432  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt_bytea</code> as a field.
+   -|      */
+1433 +|     
+1434  |     public static Field<byte[]> pgpSymEncryptBytea2(
+1435  |           byte[] __1
+1436  |         , String __2
+@@
+1444  |         return f.asField();
+1445  |     }
+1446  | 
+   -|     /**
+   -|      * Get <code>public.pgp_sym_encrypt_bytea</code> as a field.
+   -|      */
+1447 +|     
+1448  |     public static Field<byte[]> pgpSymEncryptBytea2(
+1449  |           Field<byte[]> __1
+1450  |         , Field<String> __2
+@@
+1458  |         return f.asField();
+1459  |     }
+1460  | 
+   -|     /**
+   -|      * Call <code>public.pgp_armor_headers</code>.
+   -|      */
+1461 +|     
+1462  |     public static Result<PgpArmorHeadersRecord> pgpArmorHeaders(
+1463  |           Configuration configuration
+1464  |         , String __1
+@@
+1468  |         )).fetch();
+1469  |     }
+1470  | 
+   -|     /**
+   -|      * Get <code>public.pgp_armor_headers</code> as a table.
+   -|      */
+1471 +|     
+1472  |     public static PgpArmorHeaders pgpArmorHeaders(
+1473  |           String __1
+1474  |     ) {
+@@
+1477  |         );
+1478  |     }
+1479  | 
+   -|     /**
+   -|      * Get <code>public.pgp_armor_headers</code> as a table.
+   -|      */
+1480 +|     
+1481  |     public static PgpArmorHeaders pgpArmorHeaders(
+1482  |           Field<String> __1
+1483  |     ) {

@@ -1,0 +1,264 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/request/TeamCompetitionStatsRequestSender.java (changed against State A) ===
+@@
+39  | import me.zodac.folding.rest.api.header.RestHeader;
+40  | import me.zodac.folding.rest.util.RestUtilConstants;
+41  | 
+   -| /**
+   -|  * Convenience class to send HTTP requests to the <code>Team Competition</code> stats REST endpoint.
+   -|  */
+42 +| 
+43  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+44  | public final class TeamCompetitionStatsRequestSender {
+45  | 
+46  |     private final String statsUrl;
+47  | 
+   -|     /**
+   -|      * Create an instance of {@link TeamCompetitionStatsRequestSender}.
+   -|      *
+   -|      * @param foldingUrl the root URL of the <code>/folding</code> endpoint, i.e:
+   -|      *                   <pre>http://127.0.0.1:8080/folding</pre>
+   -|      * @return the created {@link TeamCompetitionStatsRequestSender}
+   -|      */
+48 +|     
+49  |     public static TeamCompetitionStatsRequestSender createWithUrl(final String foldingUrl) {
+50  |         final String statsUrl = foldingUrl + "/stats";
+51  |         return new TeamCompetitionStatsRequestSender(statsUrl);
+52  |     }
+53  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the overall <code>Team Competition</code> {@link me.zodac.folding.rest.api.tc.CompetitionSummary}.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getStats(String)
+   -|      */
+54 +|     
+55  |     public HttpResponse<String> getStats() throws FoldingRestException {
+56  |         return getStats(null);
+57  |     }
+58  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the overall <code>Team Competition</code> {@link me.zodac.folding.rest.api.tc.CompetitionSummary}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link me.zodac.folding.rest.api.tc.CompetitionSummary} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.CompetitionSummary}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getStats()
+   -|      */
+59 +|     
+60  |     public HttpResponse<String> getStats(final String entityTag) throws FoldingRestException {
+61  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+62  |             .GET()
+@@
+79  |         }
+80  |     }
+81  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the <code>Team Competition</code> {@link me.zodac.folding.rest.api.tc.UserSummary} for a
+   -|      * {@link me.zodac.folding.api.tc.User}.
+   -|      *
+   -|      * @param userId the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.UserSummary} is to be retrieved
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getStats(String)
+   -|      */
+82 +|     
+83  |     public HttpResponse<String> getStatsForUser(final int userId) throws FoldingRestException {
+84  |         return getStatsForUser(userId, null);
+85  |     }
+86  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the <code>Team Competition</code> {@link me.zodac.folding.rest.api.tc.UserSummary} for a
+   -|      * {@link me.zodac.folding.api.tc.User}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link me.zodac.folding.rest.api.tc.UserSummary} based on the <code>ETag</code>, an empty
+   -|      * {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param userId    the ID of the {@link me.zodac.folding.api.tc.User} whose {@link me.zodac.folding.rest.api.tc.UserSummary} is to be retrieved
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached
+   -|      *                  {@link me.zodac.folding.rest.api.tc.UserSummary}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getStats()
+   -|      */
+87 +|     
+88  |     public HttpResponse<String> getStatsForUser(final int userId, final String entityTag) throws FoldingRestException {
+89  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+90  |             .GET()
+@@
+107  |         }
+108  |     }
+109  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the overall <code>Team Competition</code> {@link me.zodac.folding.api.tc.Team} leaderboard.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getTeamLeaderboard(String)
+   -|      */
+110 +|     
+111  |     public HttpResponse<String> getTeamLeaderboard() throws FoldingRestException {
+112  |         return getTeamLeaderboard(null);
+113  |     }
+114  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the overall <code>Team Competition</code> {@link me.zodac.folding.api.tc.Team} leaderboard.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link HttpResponse} based on the <code>ETag</code>, an empty {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached {@link HttpResponse}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getTeamLeaderboard()
+   -|      */
+115 +|     
+116  |     public HttpResponse<String> getTeamLeaderboard(final String entityTag) throws FoldingRestException {
+117  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+118  |             .GET()
+@@
+135  |         }
+136  |     }
+137  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the <code>Team Competition</code> category leaderboard.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getCategoryLeaderboard(String)
+   -|      */
+138 +|     
+139  |     public HttpResponse<String> getCategoryLeaderboard() throws FoldingRestException {
+140  |         return getCategoryLeaderboard(null);
+141  |     }
+142  | 
+   -|     /**
+   -|      * Send a <b>GET</b> request to retrieve the <code>Team Competition</code> category leaderboard.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If the server has a cached {@link HttpResponse} based on the <code>ETag</code>, an empty {@link HttpResponse#body()} is returned.
+   -|      *
+   -|      * @param entityTag the <code>ETag</code> from a previous {@link HttpResponse}, to retrieve a cached{@link HttpResponse}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      * @see #getCategoryLeaderboard()
+   -|      */
+143 +|     
+144  |     public HttpResponse<String> getCategoryLeaderboard(final String entityTag) throws FoldingRestException {
+145  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+146  |             .GET()
+@@
+163  |         }
+164  |     }
+165  | 
+   -|     /**
+   -|      * Sends a <b>POST</b> request to manually trigger an update of the <code>Team Competition</code> stats for all
+   -|      * {@link me.zodac.folding.api.tc.User}s and {@link me.zodac.folding.api.tc.Team}s.
+   -|      *
+   -|      * <p>
+   -|      * Request will be sent and only return when the update is complete. If an asynchronous update is required, look at
+   -|      * {@link #manualUpdate(boolean, String, String)}.
+   -|      *
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+166 +|     
+167  |     public HttpResponse<Void> manualUpdate(final String userName, final String password) throws FoldingRestException {
+168  |         return manualUpdate(false, userName, password);
+169  |     }
+170  | 
+   -|     /**
+   -|      * Sends a <b>POST</b> request to manually trigger an update of the <code>Team Competition</code> stats for all
+   -|      * {@link me.zodac.folding.api.tc.User}s and {@link me.zodac.folding.api.tc.Team}s.
+   -|      *
+   -|      * @param async    should the update be performed asynchronously, or wait for the result
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+171 +|     
+172  |     public HttpResponse<Void> manualUpdate(final boolean async, final String userName, final String password) throws FoldingRestException {
+173  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+174  |             .POST(HttpRequest.BodyPublishers.noBody())
+@@
+191  |         }
+192  |     }
+193  | 
+   -|     /**
+   -|      * Sends a <b>POST</b> request to manually reset the <code>Team Competition</code> stats for all {@link me.zodac.folding.api.tc.User}s and
+   -|      * {@link me.zodac.folding.api.tc.Team}s.
+   -|      *
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+194 +|     
+195  |     public HttpResponse<Void> manualReset() throws FoldingRestException {
+196  |         return manualReset(null, null);
+197  |     }
+198  | 
+   -|     /**
+   -|      * Sends a <b>POST</b> request to manually reset the <code>Team Competition</code> stats for all {@link me.zodac.folding.api.tc.User}s and
+   -|      * {@link me.zodac.folding.api.tc.Team}s.
+   -|      *
+   -|      * @param userName the username
+   -|      * @param password the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+199 +|     
+200  |     public HttpResponse<Void> manualReset(final String userName, final String password) throws FoldingRestException {
+201  |         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+202  |             .POST(HttpRequest.BodyPublishers.noBody())
+@@
+219  |         }
+220  |     }
+221  | 
+   -|     /**
+   -|      * Send a <b>PATCH</b> request to retrieve update {@link me.zodac.folding.api.tc.User}s with the given {@code userId} with a points/unit offset.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If either the {@code pointsOffset} or {@code multipliedPointsOffset} are set to <b>0</b>, then it will be calculated
+   -|      * based on the hardware multiplier of the {@link me.zodac.folding.api.tc.User}.
+   -|      *
+   -|      * @param userId                 the ID of the {@link me.zodac.folding.api.tc.User} to update
+   -|      * @param pointsOffset           the additional (unmultiplied) points to add to the {@link me.zodac.folding.api.tc.User}
+   -|      * @param multipliedPointsOffset the additional (multiplied) points to add to the {@link me.zodac.folding.api.tc.User}
+   -|      * @param unitsOffset            the additional units to add to the {@link me.zodac.folding.api.tc.User}
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+222 +|     
+223  |     public HttpResponse<Void> offset(final int userId, final long pointsOffset, final long multipliedPointsOffset, final int unitsOffset)
+224  |         throws FoldingRestException {
+225  |         return offset(userId, pointsOffset, multipliedPointsOffset, unitsOffset, null, null);
+226  |     }
+227  | 
+   -|     /**
+   -|      * Send a <b>PATCH</b> request to retrieve update {@link me.zodac.folding.api.tc.User}s with the given {@code userId} with a points/unit offset.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> If either the {@code pointsOffset} or {@code multipliedPointsOffset} are set to <b>0</b>, then it will be calculated
+   -|      * based on the hardware multiplier of the {@link me.zodac.folding.api.tc.User}.
+   -|      *
+   -|      * @param userId                 the ID of the {@link me.zodac.folding.api.tc.User} to update
+   -|      * @param pointsOffset           the additional (unmultiplied) points to add to the {@link me.zodac.folding.api.tc.User}
+   -|      * @param multipliedPointsOffset the additional (multiplied) points to add to the {@link me.zodac.folding.api.tc.User}
+   -|      * @param unitsOffset            the additional units to add to the {@link me.zodac.folding.api.tc.User}
+   -|      * @param userName               the username
+   -|      * @param password               the password
+   -|      * @return the {@link HttpResponse} from the {@link HttpRequest}
+   -|      * @throws FoldingRestException thrown if an error occurs sending the {@link HttpRequest}
+   -|      */
+228 +|     
+229  |     public HttpResponse<Void> offset(final int userId, final long pointsOffset, final long multipliedPointsOffset, final int unitsOffset,
+230  |                                      final String userName, final String password) throws FoldingRestException {
+231  |         final OffsetTcStats offsetTcStats = OffsetTcStats.create(pointsOffset, multipliedPointsOffset, unitsOffset);

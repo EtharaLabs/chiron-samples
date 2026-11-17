@@ -1,0 +1,10 @@
+=== submission file: ci/pmd-ruleset.xml (changed against State A) ===
+@@
+109  | 
+110  |     <rule ref="category/java/multithreading.xml">
+111  |         <!-- False positives in TeamCompetitionStatsEndpoint#getCategoryLeaderboard() -->
+   -|         <!-- No need for concurrency in a @RequestScoped EJB, certainly not for an internal function -->
+112 +|         <!-- No need for concurrency in an internal operation, certainly not for an internal function -->
+113  |         <exclude name="UseConcurrentHashMap"/>
+114  |     </rule>
+115  | 

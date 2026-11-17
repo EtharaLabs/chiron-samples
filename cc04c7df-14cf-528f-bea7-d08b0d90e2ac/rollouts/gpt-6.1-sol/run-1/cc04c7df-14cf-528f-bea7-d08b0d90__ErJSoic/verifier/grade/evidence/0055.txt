@@ -1,0 +1,60 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/tc/TeamSummary.java (changed against State A) ===
+@@
+38  | import lombok.ToString;
+39  | import me.zodac.folding.api.tc.Team;
+40  | 
+   -| /**
+   -|  * Summary of the stats of a {@link Team}s and its {@link me.zodac.folding.api.tc.User}s in
+   -|  * the <code>Team Competition</code>.
+   -|  *
+   -|  * <p>
+   -|  * Available at the <code>folding/stats</code> REST endpoint.
+   -|  */
+41 +| 
+42  | @NoArgsConstructor
+43  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+44  | @Getter
+@@
+60  |     private Collection<UserSummary> activeUsers;
+61  |     private Collection<RetiredUserSummary> retiredUsers;
+62  | 
+   -|     /**
+   -|      * Creates a {@link TeamSummary}, using a {@link Collection} of {@link UserSummary}s and {@link RetiredUserSummary}.
+   -|      *
+   -|      * <p>
+   -|      * The {@link TeamSummary} is not ranked to begin with, since it is not aware of the other {@link TeamSummary}s. The
+   -|      * rank can be updated later using {@link TeamSummary#updateWithRank(TeamSummary, int)}.
+   -|      *
+   -|      * <p>
+   -|      * The points, multiplied points and units from each {@link UserSummary} and {@link RetiredUserSummary} are added
+   -|      * up to give the total team points, multiplied points and units.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> The {@link RetiredUserSummary}s will always be ranked after the {@link UserSummary}s, to highlight
+   -|      * the active {@link me.zodac.folding.api.tc.User}s.
+   -|      *
+   -|      * @param team         the {@link Team}
+   -|      * @param captainName  the captain's display name for the {@link Team}, or <b>null</b> if no captain
+   -|      * @param activeUsers  the active {@link me.zodac.folding.api.tc.User} {@link UserSummary}s
+   -|      * @param retiredUsers the retired {@link me.zodac.folding.api.tc.User} {@link RetiredUserSummary}
+   -|      * @return the created {@link TeamSummary}
+   -|      */
+63 +|     
+64  |     public static TeamSummary createWithDefaultRank(final Team team,
+65  |                                                     final String captainName,
+66  |                                                     final Collection<UserSummary> activeUsers,
+@@
+119  |         );
+120  |     }
+121  | 
+   -|     /**
+   -|      * Updates a {@link TeamSummary} with a rank, after it has been calculated.
+   -|      *
+   -|      * @param teamSummary the {@link TeamSummary} to update
+   -|      * @param rank        the rank
+   -|      * @return the updated {@link TeamSummary}
+   -|      */
+122 +|     
+123  |     public static TeamSummary updateWithRank(final TeamSummary teamSummary, final int rank) {
+124  |         return new TeamSummary(
+125  |             teamSummary.team,

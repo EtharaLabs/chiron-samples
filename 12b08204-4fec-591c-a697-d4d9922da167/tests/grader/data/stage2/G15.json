@@ -1,0 +1,575 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/workspace",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/workspace\">/workspace</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/workspace",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/workspace\">/workspace</a>. If not, click the link."
+    }
+   ],
+   "id": "root-redirect",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/"
+    },
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "bytes_sha256": "27026a9d1a58a3a08704c28bf9518916da1c3870ea8c940ff015e7ac67ca5aa5",
+     "charset": "",
+     "cookies": [],
+     "location": null,
+     "media": "image/png",
+     "status": 200
+    },
+    {
+     "bytes_sha256": "fc3336937d09ab36ad4d40ec734201f2ba72a4c641664ce8ee1e87b4545b2e1c",
+     "charset": "",
+     "cookies": [],
+     "location": null,
+     "media": "image/png",
+     "status": 200
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    }
+   ],
+   "id": "static-asset",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/s/argus.png"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/s/no-user-picture.png"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/s/no-such-file.js"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    }
+   ],
+   "id": "static-dir-traversal",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/s/../argus_web.yaml"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/profile/",
+     "media": "text/html",
+     "status": 308,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"http://argus.test/profile/\">http://argus.test/profile/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/notifications/",
+     "media": "text/html",
+     "status": 308,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"http://argus.test/notifications/\">http://argus.test/notifications/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/teams/",
+     "media": "text/html",
+     "status": 308,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"http://argus.test/teams/\">http://argus.test/teams/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/api/v1/views/",
+     "media": "text/html",
+     "status": 308,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"http://argus.test/api/v1/views/\">http://argus.test/api/v1/views/</a>. If not, click the link."
+    }
+   ],
+   "id": "trailing-slash-redirect",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/profile"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/notifications"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/teams"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/api/v1/views"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    }
+   ],
+   "id": "trailing-slash-extra",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/releases/"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/login/"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    }
+   ],
+   "id": "ui-404",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/no/such/page"
+    },
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "GET",
+     "path": "/no/such/page"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 405,
+     "text": "<!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowed</h1> <p>The method is not allowed for the requested URL.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 405,
+     "text": "<!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowed</h1> <p>The method is not allowed for the requested URL.</p>"
+    }
+   ],
+   "id": "ui-405",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "POST",
+     "path": "/releases"
+    },
+    {
+     "client": "anon",
+     "method": "POST",
+     "path": "/run_dashboard"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "new_release": {
+        "assignee": [],
+        "description": null,
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "<id1>",
+        "name": "stage2/slashed",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Stage Two Slashed",
+        "valid_version_regex": null
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/release/stage2/slashed/planner",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/release/stage2/slashed/planner\">/release/stage2/slashed/planner</a>. If not, click the link."
+    }
+   ],
+   "id": "slashed-name-redirect",
+   "steps": [
+    {
+     "capture": {
+      "release": "response.new_release.id"
+     },
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "json": {
+      "perpetual": false,
+      "pretty_name": "Stage Two Slashed",
+      "release_name": "stage2/slashed"
+     },
+     "method": "POST",
+     "path": "/admin/api/v1/release/create"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/release/by-id/{{release}}/planner"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": ""
+    }
+   ],
+   "id": "head-request",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "HEAD",
+     "path": "/auth/login"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": ""
+    }
+   ],
+   "id": "options-request",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "OPTIONS",
+     "path": "/api/v1/version"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/admin/",
+     "media": "text/html",
+     "status": 308,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"http://argus.test/admin/\">http://argus.test/admin/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": "/admin/",
+     "media": "text/html",
+     "status": 308,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"http://argus.test/admin/\">http://argus.test/admin/</a>. If not, click the link."
+    }
+   ],
+   "id": "admin-path-redirect",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/admin"
+    },
+    {
+     "client": "admin",
+     "form": {
+      "password": "admin",
+      "username": "admin"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "admin",
+     "method": "GET",
+     "path": "/admin"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/profile/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/profile/\">/profile/</a>. If not, click the link."
+    }
+   ],
+   "id": "token-generate-redirect",
+   "steps": [
+    {
+     "client": "alice",
+     "form": {
+      "password": "alice-password",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "alice",
+     "method": "POST",
+     "path": "/auth/profile/api/token/generate"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/auth/login",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/auth/login\">/auth/login</a>. If not, click the link."
+    }
+   ],
+   "id": "query-preserved-redirect",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/run_dashboard",
+     "query": {
+      "a": "1",
+      "b": "two words"
+     }
+    }
+   ]
+  }
+ ],
+ "group": "G15",
+ "name": "static-and-redirects"
+}

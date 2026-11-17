@@ -1,0 +1,751 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "allocated_resources": [],
+       "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+       "branch_name": "master",
+       "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+       "build_number": 14,
+       "cloud_setup": null,
+       "config_files": [
+        "test-cases/longevity-100gb-12h-test.yaml"
+       ],
+       "end_time": "2026-10-13T12:34:01.786Z",
+       "events": [],
+       "gemini_command": null,
+       "gemini_read_errors": null,
+       "gemini_read_ops": null,
+       "gemini_seed": null,
+       "gemini_status": null,
+       "gemini_version": null,
+       "gemini_write_errors": null,
+       "gemini_write_ops": null,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "heartbeat": "<now>",
+       "histograms": [],
+       "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+       "investigation_status": "not_investigated",
+       "junit_reports": [],
+       "logs": [],
+       "nemesis_data": [],
+       "nemesis_stats": {},
+       "oracle_node_ami_id": null,
+       "oracle_node_instance_type": null,
+       "oracle_node_scylla_version": null,
+       "oracle_nodes_count": null,
+       "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+       "packages": [],
+       "perf_avg_latency_99th": null,
+       "perf_avg_latency_mean": null,
+       "perf_op_rate_average": null,
+       "perf_op_rate_total": null,
+       "perf_total_errors": null,
+       "product_version": "2025.1.4",
+       "region_name": [
+        "us-east-1"
+       ],
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "scm_revision_id": "0c32bacab063aae9",
+       "screenshots": [],
+       "sct_runner_host": null,
+       "scylla_version": "6.1.9",
+       "start_time": "2026-10-13T11:00:01.786Z",
+       "started_by": "dev-user",
+       "status": "passed",
+       "stress_cmd": null,
+       "stress_duration": null,
+       "subtest_name": null,
+       "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "test_method": null,
+       "test_name": "longevity-100gb-12h-test",
+       "version_source": null,
+       "yaml_test_duration": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "run-full",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/scylla-cluster-tests/4978044e-c5ad-4b3c-8323-c11a57b4e909"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "events": {
+        "a70b1208-a0c3-4b04-b109-fa1d4604fed6": "Status changed to passed"
+       },
+       "raw_events": [
+        {
+         "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+         "created_at": "2026-10-13T11:00:20.786Z",
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "a70b1208-a0c3-4b04-b109-fa1d4604fed6",
+         "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+         "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        }
+       ],
+       "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "run-activity",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/activity"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "run_type": "scylla-cluster-tests"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "run-type",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/type"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "group": {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests",
+        "description": null,
+        "enabled": true,
+        "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "name": "longevity-tests",
+        "pretty_name": "Longevity Tests",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       },
+       "release": {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       },
+       "test": {
+        "assignee": [],
+        "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+        "description": null,
+        "enabled": true,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "name": "longevity-100gb-12h-test",
+        "plugin_name": "scylla-cluster-tests",
+        "plugin_subtype": null,
+        "pretty_name": "Longevity 100GB 12h",
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "test-info",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test-info",
+     "query": {
+      "testId": "3ed77c66-c3b8-404f-8f43-266b75771178"
+     }
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee": [
+        "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+       ],
+       "description": "Synthetic data for local development",
+       "dormant": false,
+       "enabled": true,
+       "github_repo_url": null,
+       "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+       "name": "seed-release",
+       "perpetual": false,
+       "picture_id": null,
+       "pretty_name": "Seed Release",
+       "valid_version_regex": null
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "release-details",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/feb3dc2e-0397-418b-a980-ddd8061bb847/details"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee": [],
+       "build_system_id": "seed-release/longevity-tests",
+       "description": null,
+       "enabled": true,
+       "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "name": "longevity-tests",
+       "pretty_name": "Longevity Tests",
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "group-details",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/group/34f73064-36d3-42e0-9bf8-17840d9eb352/details"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "assignee": [],
+       "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+       "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+       "description": null,
+       "enabled": true,
+       "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+       "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+       "name": "longevity-100gb-12h-test",
+       "plugin_name": "scylla-cluster-tests",
+       "plugin_subtype": null,
+       "pretty_name": "Longevity 100GB 12h",
+       "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "test-details",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/test/3ed77c66-c3b8-404f-8f43-266b75771178/details"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "0a11ce00-0000-4000-8000-000000000001": {
+        "email": "alice@argus.test",
+        "full_name": "Alice Tester",
+        "id": "0a11ce00-0000-4000-8000-000000000001",
+        "picture_id": null,
+        "username": "alice"
+       },
+       "0a11ce00-0000-4000-8000-000000000002": {
+        "email": "manny@argus.test",
+        "full_name": "Manny Manager",
+        "id": "0a11ce00-0000-4000-8000-000000000002",
+        "picture_id": null,
+        "username": "manny"
+       },
+       "f67d055a-dc67-49a9-b4c4-36760d5389e5": {
+        "email": "admin@localhost",
+        "full_name": "Admin User",
+        "id": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "picture_id": null,
+        "username": "admin"
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "users-map",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/users"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "run-comments",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/4978044e-c5ad-4b3c-8323-c11a57b4e909/comments"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       "6.2.8",
+       "6.2.7",
+       "6.2.6",
+       "6.2.5",
+       "6.2.1",
+       "6.1.9",
+       "6.1.8",
+       "6.1.7",
+       "6.1.6",
+       "6.1.5",
+       "6.1.4",
+       "6.1.2",
+       "6.1.1",
+       "6.0.8",
+       "6.0.7",
+       "6.0.6",
+       "6.0.3",
+       "6.0.2",
+       "6.0.0"
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "release-versions",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/feb3dc2e-0397-418b-a980-ddd8061bb847/versions"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/release/feb3dc2e-0397-418b-a980-ddd8061bb847/images"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "status": "ok",
+      "tables": [
+       {
+        "throughput": {
+         "columns": [
+          {
+           "higher_is_better": true,
+           "name": "op_rate",
+           "type": "float",
+           "unit": "ops/s",
+           "visible": true
+          },
+          {
+           "higher_is_better": false,
+           "name": "latency_99th",
+           "type": "float",
+           "unit": "ms",
+           "visible": true
+          },
+          {
+           "higher_is_better": false,
+           "name": "latency_mean",
+           "type": "float",
+           "unit": "ms",
+           "visible": true
+          }
+         ],
+         "description": "Throughput and latency results for Performance Large Partition",
+         "rows": [
+          "write",
+          "read",
+          "mixed"
+         ],
+         "table_data": {
+          "mixed": {
+           "latency_99th": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 19.941134004983176
+           },
+           "latency_mean": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 14.764555409024762
+           },
+           "op_rate": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 180475.1101090635
+           }
+          },
+          "read": {
+           "latency_99th": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 37.795119861894875
+           },
+           "latency_mean": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 4.93018175805436
+           },
+           "op_rate": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 101940.54239983809
+           }
+          },
+          "write": {
+           "latency_99th": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 2.0472160343823766
+           },
+           "latency_mean": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 7.559978766251438
+           },
+           "op_rate": {
+            "status": "UNSET",
+            "type": "float",
+            "value": 134068.77434424352
+           }
+          }
+         },
+         "table_status": "PASS"
+        }
+       }
+      ]
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "fetch-results",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/run/d62928bf-72ec-44c9-92ee-385ba917027c/0f3cfe25-fbf8-4fd1-b8ee-797ae65876fb/fetch_results"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "activity": {
+        "events": {
+         "a70b1208-a0c3-4b04-b109-fa1d4604fed6": "Status changed to passed"
+        },
+        "raw_events": [
+         {
+          "body": "{\"message\": \"Status changed to passed\", \"old_status\": \"created\", \"new_status\": \"passed\"}",
+          "created_at": "2026-10-13T11:00:20.786Z",
+          "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+          "id": "a70b1208-a0c3-4b04-b109-fa1d4604fed6",
+          "kind": "ARGUS_TEST_RUN_STATUS_CHANGE",
+          "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+          "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+          "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+          "user_id": "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         }
+        ],
+        "run_id": "4978044e-c5ad-4b3c-8323-c11a57b4e909"
+       },
+       "comments": [],
+       "plugin_name": "scylla-cluster-tests",
+       "test_info": {
+        "group": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests",
+         "description": null,
+         "enabled": true,
+         "id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "name": "longevity-tests",
+         "pretty_name": "Longevity Tests",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        },
+        "release": {
+         "assignee": [
+          "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+         ],
+         "description": "Synthetic data for local development",
+         "dormant": false,
+         "enabled": true,
+         "github_repo_url": null,
+         "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+         "name": "seed-release",
+         "perpetual": false,
+         "picture_id": null,
+         "pretty_name": "Seed Release",
+         "valid_version_regex": null
+        },
+        "test": {
+         "assignee": [],
+         "build_system_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+         "build_system_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test",
+         "description": null,
+         "enabled": true,
+         "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+         "id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+         "name": "longevity-100gb-12h-test",
+         "plugin_name": "scylla-cluster-tests",
+         "plugin_subtype": null,
+         "pretty_name": "Longevity 100GB 12h",
+         "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847"
+        }
+       },
+       "test_run": {
+        "allocated_resources": [],
+        "assignee": "f67d055a-dc67-49a9-b4c4-36760d5389e5",
+        "branch_name": "master",
+        "build_id": "seed-release/longevity-tests/longevity-100gb-12h-test",
+        "build_job_url": "http://jenkins.localhost/job/seed-release/longevity-tests/longevity-100gb-12h-test/14",
+        "build_number": 14,
+        "cloud_setup": null,
+        "config_files": [
+         "test-cases/longevity-100gb-12h-test.yaml"
+        ],
+        "end_time": "2026-10-13T12:34:01.786Z",
+        "events": [],
+        "gemini_command": null,
+        "gemini_read_errors": null,
+        "gemini_read_ops": null,
+        "gemini_seed": null,
+        "gemini_status": null,
+        "gemini_version": null,
+        "gemini_write_errors": null,
+        "gemini_write_ops": null,
+        "group_id": "34f73064-36d3-42e0-9bf8-17840d9eb352",
+        "heartbeat": "<now>",
+        "histograms": [],
+        "id": "4978044e-c5ad-4b3c-8323-c11a57b4e909",
+        "investigation_status": "not_investigated",
+        "logs": [],
+        "nemesis_data": [],
+        "nemesis_stats": {},
+        "oracle_node_ami_id": null,
+        "oracle_node_instance_type": null,
+        "oracle_node_scylla_version": null,
+        "oracle_nodes_count": null,
+        "origin_url": "https://github.com/scylladb/scylla-cluster-tests.git",
+        "packages": [],
+        "perf_avg_latency_99th": null,
+        "perf_avg_latency_mean": null,
+        "perf_op_rate_average": null,
+        "perf_op_rate_total": null,
+        "perf_total_errors": null,
+        "product_version": "2025.1.4",
+        "region_name": [
+         "us-east-1"
+        ],
+        "release_id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "scm_revision_id": "0c32bacab063aae9",
+        "screenshots": [],
+        "sct_runner_host": null,
+        "scylla_version": "6.1.9",
+        "start_time": "2026-10-13T11:00:01.786Z",
+        "started_by": "dev-user",
+        "status": "passed",
+        "stress_cmd": null,
+        "stress_duration": null,
+        "subtest_name": null,
+        "test_id": "3ed77c66-c3b8-404f-8f43-266b75771178",
+        "test_method": null,
+        "test_name": "longevity-100gb-12h-test",
+        "version_source": null,
+        "yaml_test_duration": null
+       }
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    }
+   ],
+   "id": "client-run-info",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/client/testrun/4978044e-c5ad-4b3c-8323-c11a57b4e909/info"
+    }
+   ]
+  }
+ ],
+ "group": "G06",
+ "name": "json-response-encoding"
+}

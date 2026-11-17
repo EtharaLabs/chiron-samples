@@ -1,0 +1,63 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/tc/HardwareMake.java (changed against State A) ===
+@@
+29  | import java.util.Collection;
+30  | import java.util.stream.Stream;
+31  | 
+   -| /**
+   -|  * Specifies the make/brand of {@link Hardware}.
+   -|  */
+32 +| 
+33  | public enum HardwareMake {
+34  | 
+   -|     /**
+   -|      * The {@link Hardware} is by <b>AMD</b>.
+   -|      */
+35 +|     
+36  |     AMD,
+37  | 
+   -|     /**
+   -|      * The {@link Hardware} is by <b>Intel</b>.
+   -|      */
+38 +|     
+39  |     INTEL,
+40  | 
+   -|     /**
+   -|      * The {@link Hardware} is by <b>nVidia</b>.
+   -|      */
+41 +|     
+42  |     NVIDIA,
+43  | 
+   -|     /**
+   -|      * Not a valid {@link HardwareMake}.
+   -|      */
+44 +|     
+45  |     INVALID;
+46  | 
+47  |     private static final Collection<HardwareMake> ALL_VALUES = Stream.of(values())
+48  |         .filter(value -> value != INVALID)
+49  |         .collect(toUnmodifiableList());
+50  | 
+   -|     /**
+   -|      * Retrieve all available {@link HardwareMake}s (excluding {@link HardwareMake#INVALID}).
+   -|      *
+   -|      * <p>
+   -|      * Should be used instead of {@link HardwareMake#values()}, as that recalculates the array for each call,
+   -|      * while this method uses a static {@link Collection}.
+   -|      *
+   -|      * @return a {@link Collection} of all {@link HardwareMake}s
+   -|      */
+51 +|     
+52  |     public static Collection<HardwareMake> getAllValues() {
+53  |         return ALL_VALUES;
+54  |     }
+55  | 
+   -|     /**
+   -|      * Retrieve a {@link HardwareMake} based on the input {@link String}. The search is case-insensitive.
+   -|      *
+   -|      * @param input the {@link HardwareMake} as a {@link String}
+   -|      * @return the matching {@link HardwareMake}, or {@link HardwareMake#INVALID} if none is found
+   -|      */
+56 +|     
+57  |     public static HardwareMake get(final String input) {
+58  |         return ALL_VALUES
+59  |             .stream()

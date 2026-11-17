@@ -1,0 +1,31 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/stats/FoldingStatsRetriever.java (changed against State A) ===
+@@
+29  | import me.zodac.folding.api.tc.stats.Stats;
+30  | import me.zodac.folding.api.tc.stats.UserStats;
+31  | 
+   -| /**
+   -|  * Interface defining a class that can retrieve Folding@Home stats.
+   -|  */
+32 +| 
+33  | public interface FoldingStatsRetriever {
+34  | 
+   -|     /**
+   -|      * Gets the {@link Stats} for the given {@link FoldingStatsDetails}.
+   -|      *
+   -|      * @param foldingStatsDetails the {@link FoldingStatsDetails} to use in stats retrieval
+   -|      * @return the {@link Stats} for the {@link FoldingStatsDetails}
+   -|      * @throws ExternalConnectionException thrown if an error occurs connecting to an external service
+   -|      */
+35 +|     
+36  |     Stats getStats(final FoldingStatsDetails foldingStatsDetails) throws ExternalConnectionException;
+37  | 
+   -|     /**
+   -|      * Gets the total {@link UserStats} for the given {@link User}.
+   -|      *
+   -|      * @param user the {@link User} to use in stats retrieval
+   -|      * @return the {@link UserStats} for the {@link User}
+   -|      * @throws ExternalConnectionException thrown if an error occurs connecting to an external service
+   -|      */
+38 +|     
+39  |     UserStats getTotalStats(final User user) throws ExternalConnectionException;
+40  | }

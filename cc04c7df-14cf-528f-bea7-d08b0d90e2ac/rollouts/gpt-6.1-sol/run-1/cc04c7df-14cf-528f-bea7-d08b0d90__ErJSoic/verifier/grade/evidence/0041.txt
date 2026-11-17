@@ -1,0 +1,154 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/api/util/DateTimeUtils.java (changed against State A) ===
+@@
+35  | import java.util.Date;
+36  | import java.util.Locale;
+37  | 
+   -| /**
+   -|  * Utility class with convenient date/time-based functions.
+   -|  */
+38 +| 
+39  | public final class DateTimeUtils {
+40  | 
+41  |     private DateTimeUtils() {
+42  | 
+43  |     }
+44  | 
+   -|     /**
+   -|      * Calculates the number of {@link ChronoUnit}s between the {@link #currentUtcDateTime()} and the start of next {@link Month}.
+   -|      *
+   -|      * @param chronoUnit the {@link ChronoUnit} of the response
+   -|      * @return the number of {@link ChronoUnit}s until <code>00:00:000</code> {@link ZoneOffset#UTC} of the 1st of next {@link Month}
+   -|      */
+45 +|     
+46  |     public static int untilNextMonthUtc(final ChronoUnit chronoUnit) {
+47  |         final int currentMonth = currentUtcMonth().getValue();
+48  |         final int nextMonth = currentMonth == 12 ? 1 : (currentMonth + 1);
+@@
+57  |         );
+58  |     }
+59  | 
+   -|     /**
+   -|      * Formats the input {@link Month} with correct capitalisation, based on {@link Locale#UK}.
+   -|      *
+   -|      * <p>
+   -|      * <b>NOTE:</b> This should only be used for logging. Any values making it to the frontend should be formatted there,
+   -|      * otherwise we may end up formatting with the incorrect style.
+   -|      *
+   -|      * @param month the {@link Month} to be formatted
+   -|      * @return the formatted {@link Month}
+   -|      */
+60 +|     
+61  |     public static String formatMonth(final Month month) {
+62  |         final String monthAsString = month.toString();
+63  |         return monthAsString.substring(0, 1).toUpperCase(Locale.UK) + monthAsString.substring(1).toLowerCase(Locale.UK);
+64  |     }
+65  | 
+   -|     /**
+   -|      * Get the {@link LocalDateTime} for the given values.
+   -|      *
+   -|      * @param year   the {@link Year}
+   -|      * @param month  the {@link Month}
+   -|      * @param day    the day of the {@link Month}
+   -|      * @param hour   the hour
+   -|      * @param minute the minute
+   -|      * @param second the second
+   -|      * @return the {@link LocalDateTime}
+   -|      */
+66 +|     
+67  |     public static LocalDateTime getLocalDateTimeOf(final Year year, final Month month, final int day, final int hour, final int minute,
+68  |                                                    final int second) {
+69  |         return LocalDateTime.of(year.getValue(), month.getValue(), day, hour, minute, second);
+70  |     }
+71  | 
+   -|     /**
+   -|      * Get the {@link LocalDateTime} for the given values.
+   -|      *
+   -|      * @param year  the {@link Year}
+   -|      * @param month the {@link Month}
+   -|      * @return the {@link LocalDateTime}
+   -|      */
+72 +|     
+73  |     public static LocalDateTime getLocalDateTimeOf(final Year year, final Month month) {
+74  |         return LocalDateTime.of(year.getValue(), month.getValue(), 1, 0, 0, 0);
+75  |     }
+76  | 
+   -|     /**
+   -|      * Get the {@link Timestamp} in {@link ZoneOffset#UTC} for the given values.
+   -|      *
+   -|      * @param year   the {@link Year}
+   -|      * @param month  the {@link Month}
+   -|      * @param day    the day of the {@link Month}
+   -|      * @param hour   the hour
+   -|      * @param minute the minute
+   -|      * @param second the second
+   -|      * @return the {@link ZoneOffset#UTC} {@link Timestamp}
+   -|      */
+77 +|     
+78  |     public static Timestamp getTimestampOf(final Year year, final Month month, final int day, final int hour, final int minute, final int second) {
+79  |         return toTimestamp(LocalDateTime.of(year.getValue(), month.getValue(), day, hour, minute, second));
+80  |     }
+81  | 
+   -|     /**
+   -|      * Convert the given {@link LocalDateTime} into a {@link Timestamp} in {@link ZoneOffset#UTC}.
+   -|      *
+   -|      * @param localDateTime the {@link LocalDateTime} to convert
+   -|      * @return the {@link ZoneOffset#UTC} {@link Timestamp}
+   -|      */
+82 +|     
+83  |     public static Timestamp toTimestamp(final LocalDateTime localDateTime) {
+84  |         return new Timestamp(localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
+85  |     }
+86  | 
+   -|     /**
+   -|      * Convert the given {@link Timestamp} into a {@link LocalDateTime} in {@link ZoneOffset#UTC}.
+   -|      *
+   -|      * @param date the {@link Date} to convert
+   -|      * @return the {@link ZoneOffset#UTC} {@link LocalDateTime}
+   -|      */
+87 +|     
+88  |     public static LocalDateTime toUtcLocalDateTime(final Date date) {
+89  |         return date
+90  |             .toInstant()
+@@
+92  |             .toLocalDateTime();
+93  |     }
+94  | 
+   -|     /**
+   -|      * Get the current {@link Timestamp} in {@link ZoneOffset#UTC}.
+   -|      *
+   -|      * @return the current {@link ZoneOffset#UTC} {@link Timestamp}
+   -|      */
+95 +|     
+96  |     public static Timestamp currentUtcTimestamp() {
+97  |         return new Timestamp(currentUtcDateTime().toInstant().toEpochMilli());
+98  |     }
+99  | 
+   -|     /**
+   -|      * Get the current {@link Month} in {@link ZoneOffset#UTC}.
+   -|      *
+   -|      * @return the current {@link ZoneOffset#UTC} {@link Month}
+   -|      */
+100 +|     
+101  |     public static Month currentUtcMonth() {
+102  |         return currentUtcDateTime().toLocalDate().getMonth();
+103  |     }
+104  | 
+   -|     /**
+   -|      * Get the current {@link Year} in {@link ZoneOffset#UTC}.
+   -|      *
+   -|      * @return the current {@link ZoneOffset#UTC} {@link Year}
+   -|      */
+105 +|     
+106  |     public static Year currentUtcYear() {
+107  |         return Year.now(ZoneOffset.UTC);
+108  |     }
+109  | 
+   -|     /**
+   -|      * Get the current {@link OffsetDateTime} in {@link ZoneOffset#UTC}.
+   -|      *
+   -|      * @return the current {@link ZoneOffset#UTC} {@link OffsetDateTime}
+   -|      */
+110 +|     
+111  |     public static OffsetDateTime currentUtcDateTime() {
+112  |         return OffsetDateTime.now(ZoneOffset.UTC);
+113  |     }

@@ -1,0 +1,165 @@
+{
+ "id": "s3_family_14",
+ "source": "f022_head_on_write_only_paths",
+ "steps": [
+  {
+   "case": "head_hardware_batch",
+   "http": {
+    "method": "HEAD",
+    "path": "/hardware/batch"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "head_login_admin",
+   "http": {
+    "method": "HEAD",
+    "path": "/login/admin"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "head_manual_update",
+   "http": {
+    "method": "HEAD",
+    "path": "/stats/manual/update",
+    "auth": "admin"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "head_debug_lars",
+   "http": {
+    "method": "HEAD",
+    "path": "/debug/lars",
+    "auth": "admin"
+   },
+   "compare": "status"
+  },
+  {
+   "case": "head_manual_save",
+   "http": {
+    "method": "HEAD",
+    "path": "/results/manual/save",
+    "auth": "admin"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "head_hardware_batch",
+   "compare": "status",
+   "request": {
+    "method": "HEAD",
+    "path": "/hardware/batch"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "53",
+     "content-type": "application/json",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 400
+   }
+  },
+  {
+   "case": "head_login_admin",
+   "compare": "status",
+   "request": {
+    "method": "HEAD",
+    "path": "/login/admin"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "head_manual_update",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "method": "HEAD",
+    "path": "/stats/manual/update"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "head_debug_lars",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "method": "HEAD",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 405
+   }
+  },
+  {
+   "case": "head_manual_save",
+   "compare": "status",
+   "request": {
+    "auth": "admin",
+    "method": "HEAD",
+    "path": "/results/manual/save"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:09 GMT"
+    },
+    "status": 405
+   }
+  }
+ ],
+ "probe": "HEAD on paths that only declare POST: the container must answer 405 (not 200 and not a redirect), because a synthesised HEAD only exists where a @GET method exists."
+}

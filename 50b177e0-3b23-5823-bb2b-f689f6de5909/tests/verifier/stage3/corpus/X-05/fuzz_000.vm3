@@ -1,0 +1,7 @@
+mpatch  []
+pdel
+imutcopy
+patch  [{%22op%22:%22copy%22,%22from%22:%22%22,%22path%22:%22y%22}]
+mutpatch [{%22%22:%22%22,%22%22:%22%22,%22%22:2}]
+uint r2
+padd

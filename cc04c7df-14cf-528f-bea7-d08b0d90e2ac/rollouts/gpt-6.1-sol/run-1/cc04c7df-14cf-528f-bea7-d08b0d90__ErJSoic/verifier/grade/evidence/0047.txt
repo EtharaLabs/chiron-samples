@@ -1,0 +1,34 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/LoginCredentials.java (changed against State A) ===
+@@
+34  | import me.zodac.folding.api.util.EncodingUtils;
+35  | 
+36  | 
+   -| /**
+   -|  * Simple POJO defining {@link java.util.Base64}-encoded credentials. The credentials are created by:
+   -|  * <ol>
+   -|  *     <li>Concatenate the username and password, with a <code>:</code> as delimiter (i.e., 'username:password')</li>
+   -|  *     <li>Encode the result with {@link java.util.Base64}</li>
+   -|  *     <li>Prefix the encoded result with "Basic " (note the space)</li>
+   -|  * </ol>
+   -|  */
+37 +| 
+38  | @NoArgsConstructor
+39  | @AllArgsConstructor(access = AccessLevel.PRIVATE)
+40  | @Getter
+@@
+45  | 
+46  |     private String encodedUserNameAndPassword;
+47  | 
+   -|     /**
+   -|      * Creates an instance of {@link LoginCredentials} given a {@link java.util.Base64}-encoded username/password credentials.
+   -|      *
+   -|      * <p>
+   -|      * If the input does not start with {@link EncodingUtils#BASIC_AUTHENTICATION_SCHEME}, it will be prefixed.
+   -|      *
+   -|      * @param encodedUserNameAndPassword the {@link java.util.Base64}-encoded username/password
+   -|      * @return the {@link LoginCredentials} for the given credentials
+   -|      */
+48 +|     
+49  |     public static LoginCredentials createWithBasicAuthentication(final String encodedUserNameAndPassword) {
+50  |         if (encodedUserNameAndPassword.startsWith(EncodingUtils.BASIC_AUTHENTICATION_SCHEME)) {
+51  |             return new LoginCredentials(encodedUserNameAndPassword);

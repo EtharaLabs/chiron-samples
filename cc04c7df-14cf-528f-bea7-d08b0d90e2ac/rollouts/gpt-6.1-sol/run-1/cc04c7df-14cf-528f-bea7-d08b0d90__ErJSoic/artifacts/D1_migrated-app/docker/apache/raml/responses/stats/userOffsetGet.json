@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "displayName": "User1",
+  "foldingName": "User1",
+  "hardware": {
+    "id": 1,
+    "hardwareName": "Hardware1",
+    "displayName": "Hardware1",
+    "hardwareMake": "NVIDIA",
+    "hardwareType": "GPU",
+    "multiplier": 21.33,
+    "averagePpd": 1
+  },
+  "team": {
+    "id": 1,
+    "teamName": "Team1"
+  },
+  "category": "AMD GPU",
+  "points": 540033,
+  "multipliedPoints": 8845741,
+  "units": 4,
+  "rankInTeam": 1
+}

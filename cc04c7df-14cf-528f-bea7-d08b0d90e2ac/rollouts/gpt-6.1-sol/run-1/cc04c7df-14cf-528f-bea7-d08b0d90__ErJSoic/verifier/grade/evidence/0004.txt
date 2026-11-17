@@ -1,0 +1,51 @@
+=== submission file: docker-compose.yml (changed against State A) ===
+@@
+31  |   backend:
+32  |     build:
+33  |       context: .
+   -|       dockerfile: docker/wildfly/Dockerfile
+   -|       args:
+   -|         ADMIN_USERNAME: "${BACKEND_USER}"
+   -|         ADMIN_PASSWORD: "${BACKEND_PASSWORD}"
+   -|         DEPLOYMENT_TYPE: "production"
+   -|         NEXUS_URL: "${NEXUS_URL}"
+34 +|       dockerfile: docker/spring/Dockerfile
+35  |     container_name: backend
+36  |     hostname: backend
+37  |     environment:
+38  |       # Container configuration
+   -|       JAVA_OPTS: -Xms${JAVA_XMS} -Xmx${JAVA_XMX} -Djava.net.preferIPv4Stack=true
+39 +|       JAVA_TOOL_OPTIONS: -Xms${JAVA_XMS} -Xmx${JAVA_XMX} -Djava.net.preferIPv4Stack=true
+40  |       # External URL configuration
+41  |       LARS_URL_ROOT: "${LARS_URL_ROOT}"
+42  |       STATS_URL_ROOT: "${STATS_URL_ROOT}"
+@@
+65  |       JDBC_CONNECTION_USER: "${DB_USER}"
+66  |       JDBC_CONNECTION_PASSWORD: "${DB_PASSWORD}"
+67  |       JDBC_CONNECTION_DRIVER: "org.postgresql.Driver"
+   -|     healthcheck:
+   -|       test: curl -k --fail https://localhost:${HTTPS_BACKEND_PORT}/folding || exit 1
+   -|       interval: 15s
+68 +|     interval: 15s
+69  |       timeout: 10s
+70  |       retries: 30
+71  |     links:
+@@
+73  |     networks:
+74  |       - production
+75  |     ports:
+   -|       - "${HTTPS_BACKEND_PORT}:${HTTPS_BACKEND_PORT}"
+   -|       - "${ADMIN_CONSOLE_PORT}:${ADMIN_CONSOLE_PORT}"
+76 +|       - "${HTTPS_BACKEND_PORT}:8080"
+77  |     restart: unless-stopped
+   -|     volumes:
+   -|       - backend_logs:/opt/jboss/wildfly/standalone/log
+78  | 
+79  |   database:
+80  |     build:
+@@
+117  | volumes:
+118  |   # Volume to save the database contents
+119  |   database_content:
+   -|   # Volume to save the backend logs in case of a crash
+   -|   backend_logs:

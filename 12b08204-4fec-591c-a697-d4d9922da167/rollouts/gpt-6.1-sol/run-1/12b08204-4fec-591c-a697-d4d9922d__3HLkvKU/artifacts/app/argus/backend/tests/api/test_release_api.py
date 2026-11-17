@@ -1,0 +1,250 @@
+from argus.backend.util.config import Config
+'Controller-level integration tests for release/group/test endpoints exposed by\n``argus/backend/controller/api.py``.\n\nScope (iteration 5 of the controller coverage matrix):\n\n- ``GET  /api/v1/version``\n- ``GET  /api/v1/releases``\n- ``GET  /api/v1/release/<id>/details``\n- ``GET  /api/v1/release/<id>/versions``\n- ``GET  /api/v1/release/<id>/images``\n- ``GET  /api/v1/release/<id>/pytest/results``\n- ``GET  /api/v1/release/activity?releaseName=``\n- ``GET  /api/v1/release/planner/data?releaseId=``\n- ``GET  /api/v1/release/planner/comment/get/test?id=``\n- ``GET  /api/v1/release/schedules?releaseId=``\n- ``POST /api/v1/release/schedules/submit``\n- ``POST /api/v1/release/schedules/update``\n- ``POST /api/v1/release/schedules/delete``\n- ``POST /api/v1/release/schedules/comment/update``\n- ``POST /api/v1/release/schedules/assignee/update``\n- ``GET  /api/v1/release/assignees/groups``\n- ``GET  /api/v1/release/assignees/tests``\n- ``GET  /api/v1/release/stats/v2``\n- ``POST /api/v1/release/create``\n- ``GET  /api/v1/groups?releaseId=``\n- ``GET  /api/v1/tests?groupId=``\n- ``GET  /api/v1/group/<id>/details``\n- ``GET  /api/v1/test/<id>/details``\n- ``POST /api/v1/test/<id>/set_plugin``\n- ``GET  /api/v1/test-info?testId=``\n\nVerification is JSON-first (paired GET endpoints).  All mutations create\nunique IDs/names so tests stay isolated.\n'
+import json
+import time
+import uuid
+from datetime import UTC, datetime, timedelta
+import pytest
+from argus.backend.models.web import ArgusRelease, User, UserRoles
+API_PREFIX = '/api/v1'
+
+def _api_get(flask_client, path: str, **params):
+    return flask_client.get(path, params=params)
+
+def _api_post(flask_client, path: str, payload: dict):
+    return flask_client.post(path, content=json.dumps(payload), headers={'Content-Type': 'application/json'})
+
+@pytest.fixture
+def saved_user():
+    """Create a real ``User`` row so assignee mutations have a valid receiver."""
+    user = User(id=uuid.uuid4(), username=f'release_api_user_{uuid.uuid4().hex[:8]}', full_name='Release API User', email=f'release_api_{uuid.uuid4().hex[:8]}@scylladb.com', password='test_password', roles=[UserRoles.User.value])
+    user.save()
+    return user
+
+@pytest.fixture
+def isolated_release(release_manager_service, *, test_request):
+    """Function-scoped release used by mutation tests so they cannot pollute
+    the session-scoped ``release`` fixture (which is shared with read-only
+    assertions)."""
+    name = f'release_api_iso_{time.time_ns()}'
+    return release_manager_service.create_release(name, name, False, request=test_request)
+
+@pytest.fixture
+def isolated_group(release_manager_service, isolated_release, *, test_request):
+    name = f'release_api_iso_group_{time.time_ns()}'
+    return release_manager_service.create_group(name, name, build_system_id=isolated_release.name, release_id=str(isolated_release.id), request=test_request)
+
+@pytest.fixture
+def isolated_test(release_manager_service, isolated_release, isolated_group, *, test_request):
+    name = f'release_api_iso_test_{time.time_ns()}'
+    return release_manager_service.create_test(name, name, name, name, group_id=str(isolated_group.id), release_id=str(isolated_release.id), plugin_name='scylla-cluster-tests', request=test_request)
+
+def test_version(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/version')
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert 'commit_id' in body['response']
+    assert isinstance(body['response']['commit_id'], str)
+    assert body['response']['commit_id']
+
+def test_list_releases_includes_session_release(flask_client, release):
+    resp = flask_client.get(f'{API_PREFIX}/releases')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    names = {r['name'] for r in body['response']}
+    assert release.name in names
+
+def test_release_details(flask_client, release):
+    resp = flask_client.get(f'{API_PREFIX}/release/{release.id}/details')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response']['id'] == str(release.id)
+    assert body['response']['name'] == release.name
+
+def test_release_details_unknown_id_errors(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/release/{uuid.uuid4()}/details')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_release_versions_returns_list(flask_client, release):
+    resp = flask_client.get(f'{API_PREFIX}/release/{release.id}/versions')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert isinstance(body['response'], list)
+
+def test_release_images_returns_list(flask_client, release):
+    resp = flask_client.get(f'{API_PREFIX}/release/{release.id}/images')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert isinstance(body['response'], list)
+
+def test_release_pytest_results_returns_list(flask_client, release):
+    resp = flask_client.get(f'{API_PREFIX}/release/{release.id}/pytest/results')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert isinstance(body['response'], list)
+
+def test_release_activity(flask_client, release):
+    resp = _api_get(flask_client, f'{API_PREFIX}/release/activity', releaseName=release.name)
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response']['release_id'] == str(release.id)
+    assert 'events' in body['response']
+    assert 'raw_events' in body['response']
+
+def test_release_activity_missing_name(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/release/activity')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_release_planner_data(flask_client, release, group, fake_test):
+    resp = _api_get(flask_client, f'{API_PREFIX}/release/planner/data', releaseId=str(release.id))
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    response = body['response']
+    assert response['release']['id'] == str(release.id)
+    assert str(group.id) in response['groups']
+    test_ids = {t['id'] for t in response['tests']}
+    assert str(fake_test.id) in test_ids
+
+def test_release_planner_data_missing_id(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/release/planner/data')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_planner_comment_for_test_without_comment_returns_empty(flask_client, fake_test):
+    resp = _api_get(flask_client, f'{API_PREFIX}/release/planner/comment/get/test', id=str(fake_test.id))
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response'] == ''
+
+def test_release_schedules_empty_when_no_schedules(flask_client, isolated_release):
+    resp = _api_get(flask_client, f'{API_PREFIX}/release/schedules', releaseId=str(isolated_release.id))
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response'] == {'schedules': []}
+
+def test_release_schedules_missing_release_id(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/release/schedules')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_release_schedule_comment_update(flask_client, isolated_release, isolated_group, isolated_test):
+    test_id = str(isolated_test.id)
+    payload = {'releaseId': str(isolated_release.id), 'groupId': str(isolated_group.id), 'testId': test_id, 'newComment': 'manually-set'}
+    resp = _api_post(flask_client, f'{API_PREFIX}/release/schedules/comment/update', payload)
+    assert resp.status_code == 200, resp.content
+    assert resp.json()['status'] == 'ok'
+    assert resp.json()['response']['newComment'] == 'manually-set'
+    get_resp = _api_get(flask_client, f'{API_PREFIX}/release/planner/comment/get/test', id=test_id)
+    assert get_resp.json()['response'] == 'manually-set'
+
+def test_release_assignees_tests_missing_group(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/release/assignees/tests')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_release_stats_v2_returns_dict(flask_client, release):
+    resp = _api_get(flask_client, f'{API_PREFIX}/release/stats/v2', release=release.name, limited=0, force=1, includeNoVersion=1)
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert isinstance(body['response'], dict)
+
+def test_release_create_creates_release_with_groups_and_tests(flask_client):
+    rel_name = f'created_release_{time.time_ns()}'
+    grp_name = f'created_group_{time.time_ns()}'
+    test_name = f'created_test_{time.time_ns()}'
+    payload = {rel_name: {'groups': {grp_name: {'pretty_name': grp_name, 'tests': [test_name]}}}}
+    resp = _api_post(flask_client, f'{API_PREFIX}/release/create', payload)
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response'][rel_name]['groups'][grp_name]['status'] == 'created'
+    assert body['response'][rel_name]['groups'][grp_name]['tests'][test_name] == 'created'
+    listing = flask_client.get(f'{API_PREFIX}/releases').json()['response']
+    assert rel_name in {r['name'] for r in listing}
+
+def test_release_create_duplicate_returns_error_per_release(flask_client, release):
+    payload = {release.name: {'groups': {}}}
+    resp = _api_post(flask_client, f'{API_PREFIX}/release/create', payload)
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response'][release.name]['status'] == 'error'
+
+def test_list_groups_for_release(flask_client, release, group):
+    resp = _api_get(flask_client, f'{API_PREFIX}/groups', releaseId=str(release.id))
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    ids = {g['id'] for g in body['response']}
+    assert str(group.id) in ids
+
+def test_list_groups_missing_release_id(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/groups')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_list_tests_for_group(flask_client, group, fake_test):
+    resp = _api_get(flask_client, f'{API_PREFIX}/tests', groupId=str(group.id))
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    ids = {t['id'] for t in body['response']}
+    assert str(fake_test.id) in ids
+
+def test_list_tests_missing_group_id(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/tests')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_group_details(flask_client, group):
+    resp = flask_client.get(f'{API_PREFIX}/group/{group.id}/details')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response']['id'] == str(group.id)
+    assert body['response']['name'] == group.name
+
+def test_test_details(flask_client, fake_test):
+    resp = flask_client.get(f'{API_PREFIX}/test/{fake_test.id}/details')
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response']['id'] == str(fake_test.id)
+    assert body['response']['name'] == fake_test.name
+
+def test_test_info(flask_client, release, group, fake_test):
+    resp = _api_get(flask_client, f'{API_PREFIX}/test-info', testId=str(fake_test.id))
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response']['test']['id'] == str(fake_test.id)
+    assert body['response']['group']['id'] == str(group.id)
+    assert body['response']['release']['id'] == str(release.id)
+
+def test_test_info_missing_id(flask_client):
+    resp = flask_client.get(f'{API_PREFIX}/test-info')
+    assert resp.status_code == 200
+    assert resp.json()['status'] == 'error'
+
+def test_set_test_plugin_round_trip(flask_client, isolated_test):
+    payload = {'plugin_name': 'driver-matrix-tests'}
+    resp = _api_post(flask_client, f'{API_PREFIX}/test/{isolated_test.id}/set_plugin', payload)
+    assert resp.status_code == 200, resp.content
+    body = resp.json()
+    assert body['status'] == 'ok'
+    assert body['response']['plugin_name'] == 'driver-matrix-tests'
+    get_resp = flask_client.get(f'{API_PREFIX}/test/{isolated_test.id}/details')
+    assert get_resp.json()['response']['plugin_name'] == 'driver-matrix-tests'

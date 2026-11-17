@@ -1,0 +1,159 @@
+{
+ "id": "s3_family_42",
+ "source": "f061_authentication_on_head_and_options_of_a_protected_resource",
+ "steps": [
+  {
+   "case": "head_passkey_without_auth",
+   "http": {
+    "method": "HEAD",
+    "path": "/users/1/passkey"
+   }
+  },
+  {
+   "case": "head_passkey_as_read_only",
+   "http": {
+    "method": "HEAD",
+    "path": "/users/1/passkey",
+    "auth": "readonly"
+   }
+  },
+  {
+   "case": "options_passkey_without_auth",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/users/1/passkey"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "options_debug_lars_without_auth",
+   "http": {
+    "method": "OPTIONS",
+    "path": "/debug/lars"
+   },
+   "compare": "status+headers"
+  },
+  {
+   "case": "head_debug_lars_without_auth",
+   "http": {
+    "method": "HEAD",
+    "path": "/debug/lars"
+   },
+   "compare": "status"
+  }
+ ],
+ "cases": [
+  {
+   "case": "head_passkey_without_auth",
+   "compare": "full",
+   "request": {
+    "method": "HEAD",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 401
+   }
+  },
+  {
+   "case": "head_passkey_as_read_only",
+   "compare": "full",
+   "request": {
+    "auth": "readonly",
+    "method": "HEAD",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 403
+   }
+  },
+  {
+   "case": "options_passkey_without_auth",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/users/1/passkey"
+   },
+   "response": {
+    "body": "HEAD, GET, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "HEAD, GET, OPTIONS",
+     "connection": "close",
+     "content-length": "18",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "options_debug_lars_without_auth",
+   "compare": "status+headers",
+   "request": {
+    "method": "OPTIONS",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "POST, OPTIONS",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "13",
+     "content-type": "text/plain;charset=UTF-8",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 200
+   }
+  },
+  {
+   "case": "head_debug_lars_without_auth",
+   "compare": "status",
+   "request": {
+    "method": "HEAD",
+    "path": "/debug/lars"
+   },
+   "response": {
+    "body": "",
+    "headers": {
+     "access-control-allow-credentials": "true",
+     "access-control-allow-headers": "origin, content-type, accept, Authorization",
+     "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+     "access-control-allow-origin": "*",
+     "allow": "POST, OPTIONS",
+     "connection": "close",
+     "content-length": "0",
+     "date": "Sun, 15 Mar 2026 11:00:08 GMT"
+    },
+    "status": 405
+   }
+  }
+ ],
+ "probe": "Authentication on the synthesised HEAD and on the container's OPTIONS for an admin-only resource: HEAD must be challenged exactly like GET, while OPTIONS matches no resource method and must not be challenged at all."
+}

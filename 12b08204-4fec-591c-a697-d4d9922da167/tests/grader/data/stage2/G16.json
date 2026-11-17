@@ -1,0 +1,449 @@
+{
+ "cases": [
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": null,
+     "media": "text/html",
+     "status": 200,
+     "text": "<!DOCTYPE html> <html lang=\"en\" data-bs-theme=\"light\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <script> (function() { var pref = localStorage.getItem(\"argus-theme\"); function resolve(p) { if (p === \"light\" || p === \"dark\") return p; return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\"; } document.documentElement.setAttribute(\"data-bs-theme\", resolve(pref)); window.matchMedia(\"(prefers-color-scheme: dark)\").addEventListener(\"change\", function(e) { if (!localStorage.getItem(\"argus-theme\")) { document.documentElement.setAttribute(\"data-bs-theme\", e.matches ? \"dark\" : \"light\"); if (typeof updateThemeIcon === \"function\") updateThemeIcon(); } }); window.applyTheme = function() { var p = localStorage.getItem(\"argus-theme\"); document.documentElement.setAttribute(\"data-bs-theme\", resolve(p)); updateThemeIcon(); }; window.cycleTheme = function() { var current = localStorage.getItem(\"argus-theme\"); var next = current === null ? \"light\" : current === \"light\" ? \"dark\" : null; if (next) { localStorage.setItem(\"argus-theme\", next); } else { localStorage.removeItem(\"argus-theme\"); } applyTheme(); }; window.updateThemeIcon = function() { var p = localStorage.getItem(\"argus-theme\"); var icon = document.getElementById(\"theme-icon\"); var label = document.getElementById(\"theme-label\"); if (icon) icon.className = \"fas \" + (p === null ? \"fa-circle-half-stroke\" : p === \"light\" ? \"fa-sun\" : \"fa-moon\"); if (label) label.textContent = p === null ? \"Auto\" : p === \"light\" ? \"Light\" : \"Dark\"; }; })(); </script> <title>Argus - Login </title> <link rel=\"stylesheet\" href=\"/s/dist/style.css\"> <link rel=\"shortcut icon\" href=\"/s/argus.png\" type=\"image/png\"> <script> var globalFlashes = []; </script> <script src=\"/s/dist/fontAwesome.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/main.bundle.js\"></script> <script type=\"module\" src=\"/s/dist/globalAlert.bundle.js\"></script> <script type=\"module\" defer src=\"/s/dist/notificationCounter.bundle.js\"></script> <script defer type=\"module\" src=\"/s/dist/login.bundle.js\"></script> <script> const GITHUB_SCOPES = \"user:email read:user read:org\"; const GITHUB_CLIENT_ID = \"none\"; const CSRF_TOKEN = \"<tok1>\"; const LOGIN_METHODS = ['password']; const MANUAL_LOGOUT = false </script> </head> <body class=\"bg-lighter\"> <div class=\"app d-flex flex-column min-vh-100\"> <nav id=\"argus-header\" class=\"navbar navbar-dark bg-dark navbar-expand-md\"> <div class=\"container\"> <a class=\"navbar-brand\" href=\"/workspace\"> <img src=\"/s/argus.png\" alt=\"\" width=\"64\" height=\"64\" class=\"d-inline-block align-text-middle\"> Argus </a> <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#argusNavCollapse\" aria-controls=\"argusNavCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"> <span class=\"navbar-toggler-icon\"></span> </button> <div class=\"collapse navbar-collapse\" id=\"argusNavCollapse\"> <div class=\"navbar-nav ms-auto\"> <a class=\" nav-link\" aria-current=\"page\" href=\"/workspace\"><i class=\"fas fa-tasks\"></i> Workspace</a> <a class=\" nav-link\" href=\"/releases\"><i class=\"fas fa-business-time\"></i> Releases</a> <a class=\" nav-link\" href=\"/views\"><i class=\"far fa-object-group\"></i> Views</a> <a href=\"/auth/login\" class=\"active nav-link\"><i class=\"fas fa-sign-in-alt\"></i> Login</a> <button id=\"theme-toggle\" class=\"btn btn-sm btn-link text-light text-decoration-none ms-2\" type=\"button\" title=\"Toggle theme\" aria-label=\"Toggle theme\" onclick=\"cycleTheme()\"> <i id=\"theme-icon\" class=\"fas fa-circle-half-stroke\"></i> <span id=\"theme-label\">Auto</span> </button> </div> </div> </div> </nav> <div id=\"argusErrors\"> </div> <div id=\"argusMain\" class=\"container-fluid\"> <div id=\"loginContainer\"> </div> </div> <div id=\"argusFooter\" class=\"mt-auto container-fluid bg-dark text-center text-light fw-light fs-6 p-4\"> Argus </div> </div> </body> </html>"
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": {
+       "commit_id": "version_unknown"
+      },
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "response": [
+       {
+        "assignee": [
+         "f67d055a-dc67-49a9-b4c4-36760d5389e5"
+        ],
+        "description": "Synthetic data for local development",
+        "dormant": false,
+        "enabled": true,
+        "github_repo_url": null,
+        "id": "feb3dc2e-0397-418b-a980-ddd8061bb847",
+        "name": "seed-release",
+        "perpetual": false,
+        "picture_id": null,
+        "pretty_name": "Seed Release",
+        "valid_version_regex": null
+       }
+      ],
+      "status": "ok"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 200
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/html",
+     "status": 404,
+     "text": "<!doctype html> <html lang=en> <title>404 Not Found</title> <h1>Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [
+      [
+       "session",
+       {
+        "httponly": true,
+        "lifetime": false,
+        "path": "/"
+       }
+      ]
+     ],
+     "location": "/",
+     "media": "text/html",
+     "status": 302,
+     "text": "<!doctype html> <html lang=en> <title>Redirecting...</title> <h1>Redirecting...</h1> <p>You should be redirected automatically to the target URL: <a href=\"/\">/</a>. If not, click the link."
+    },
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/plain",
+     "metrics": [
+      "# HELP exporter_info",
+      "# HELP http_request_by_endpoint_total",
+      "# HELP http_request_by_ip_total",
+      "# HELP http_request_by_user_agent_total",
+      "# HELP http_request_duration_seconds",
+      "# HELP http_request_job_tunnel_total",
+      "# HELP http_request_ssh_tunnel_total",
+      "# HELP http_request_total",
+      "# HELP http_request_tunnel_build_total",
+      "# TYPE exporter_info gauge",
+      "# TYPE http_request_by_endpoint_total counter",
+      "# TYPE http_request_by_ip_total counter",
+      "# TYPE http_request_by_user_agent_total counter",
+      "# TYPE http_request_duration_seconds histogram",
+      "# TYPE http_request_job_tunnel_total counter",
+      "# TYPE http_request_ssh_tunnel_total counter",
+      "# TYPE http_request_total counter",
+      "# TYPE http_request_tunnel_build_total counter",
+      "exporter_info{version=0.23.2}",
+      "http_request_by_endpoint_total{endpoint=api.app_version,method=GET,status=200 OK}",
+      "http_request_by_endpoint_total{endpoint=api.releases,method=GET,status=200 OK}",
+      "http_request_by_endpoint_total{endpoint=auth.login,method=GET,status=200 OK}",
+      "http_request_by_endpoint_total{endpoint=auth.login,method=POST,status=302 FOUND}",
+      "http_request_by_ip_total{endpoint=api.app_version,ip=127.0.0.1}",
+      "http_request_by_ip_total{endpoint=api.releases,ip=127.0.0.1}",
+      "http_request_by_ip_total{endpoint=auth.login,ip=127.0.0.1}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=api.app_version,user_agent_category=unknown}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=api.releases,user_agent_category=unknown}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=auth.login,user_agent_category=unknown}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=+Inf,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.005,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.01,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.025,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.05,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.075,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.1,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.25,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.5,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.75,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=1.0,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=10.0,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=2.5,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=5.0,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=7.5,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=+Inf,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.005,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.01,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.025,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.05,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.075,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.1,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.25,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.75,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=1.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=10.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=2.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=5.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=7.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=+Inf,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.005,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.01,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.025,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.05,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.075,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.1,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.25,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.75,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=1.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=10.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=2.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=5.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=7.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=+Inf,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=+Inf,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.005,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.005,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.01,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.01,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.025,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.025,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.05,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.05,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.075,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.075,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.1,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.1,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.25,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.25,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.5,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.75,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.75,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=1.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=1.0,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=10.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=10.0,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=2.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=2.5,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=5.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=5.0,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=7.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=7.5,method=POST,status=302}",
+      "http_request_duration_seconds_count{endpoint=None,method=GET,status=404}",
+      "http_request_duration_seconds_count{endpoint=api.app_version,method=GET,status=200}",
+      "http_request_duration_seconds_count{endpoint=api.releases,method=GET,status=200}",
+      "http_request_duration_seconds_count{endpoint=auth.login,method=GET,status=200}",
+      "http_request_duration_seconds_count{endpoint=auth.login,method=POST,status=302}",
+      "http_request_duration_seconds_sum{endpoint=None,method=GET,status=404}",
+      "http_request_duration_seconds_sum{endpoint=api.app_version,method=GET,status=200}",
+      "http_request_duration_seconds_sum{endpoint=api.releases,method=GET,status=200}",
+      "http_request_duration_seconds_sum{endpoint=auth.login,method=GET,status=200}",
+      "http_request_duration_seconds_sum{endpoint=auth.login,method=POST,status=302}",
+      "http_request_job_tunnel_total{branch=unknown,client_version=unknown,job_name=unknown,ssh_tunnel=no}",
+      "http_request_ssh_tunnel_total{endpoint=api.app_version,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_ssh_tunnel_total{endpoint=api.releases,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_ssh_tunnel_total{endpoint=auth.login,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_total{method=GET,status=200}",
+      "http_request_total{method=GET,status=404}",
+      "http_request_total{method=POST,status=302}",
+      "http_request_tunnel_build_total{build_id=unknown,build_url=,ssh_tunnel=no}"
+     ],
+     "status": 200
+    }
+   ],
+   "id": "metrics-after-sequence",
+   "steps": [
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/auth/login"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/version"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/api/v1/releases"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/api/v1/does/not/exist"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/no/such/page"
+    },
+    {
+     "client": "anon",
+     "form": {
+      "password": "bad",
+      "username": "alice"
+     },
+     "method": "POST",
+     "path": "/auth/login"
+    },
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/metrics"
+    }
+   ]
+  },
+  {
+   "expect": [
+    {
+     "charset": "utf-8",
+     "cookies": [],
+     "location": null,
+     "media": "text/plain",
+     "metrics": [
+      "# HELP exporter_info",
+      "# HELP http_request_by_endpoint_total",
+      "# HELP http_request_by_ip_total",
+      "# HELP http_request_by_user_agent_total",
+      "# HELP http_request_duration_seconds",
+      "# HELP http_request_job_tunnel_total",
+      "# HELP http_request_ssh_tunnel_total",
+      "# HELP http_request_total",
+      "# HELP http_request_tunnel_build_total",
+      "# TYPE exporter_info gauge",
+      "# TYPE http_request_by_endpoint_total counter",
+      "# TYPE http_request_by_ip_total counter",
+      "# TYPE http_request_by_user_agent_total counter",
+      "# TYPE http_request_duration_seconds histogram",
+      "# TYPE http_request_job_tunnel_total counter",
+      "# TYPE http_request_ssh_tunnel_total counter",
+      "# TYPE http_request_total counter",
+      "# TYPE http_request_tunnel_build_total counter",
+      "exporter_info{version=0.23.2}",
+      "http_request_by_endpoint_total{endpoint=api.app_version,method=GET,status=200 OK}",
+      "http_request_by_endpoint_total{endpoint=api.releases,method=GET,status=200 OK}",
+      "http_request_by_endpoint_total{endpoint=auth.login,method=GET,status=200 OK}",
+      "http_request_by_endpoint_total{endpoint=auth.login,method=POST,status=302 FOUND}",
+      "http_request_by_endpoint_total{endpoint=prometheus_metrics,method=GET,status=200 OK}",
+      "http_request_by_ip_total{endpoint=api.app_version,ip=127.0.0.1}",
+      "http_request_by_ip_total{endpoint=api.releases,ip=127.0.0.1}",
+      "http_request_by_ip_total{endpoint=auth.login,ip=127.0.0.1}",
+      "http_request_by_ip_total{endpoint=prometheus_metrics,ip=127.0.0.1}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=api.app_version,user_agent_category=unknown}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=api.releases,user_agent_category=unknown}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=auth.login,user_agent_category=unknown}",
+      "http_request_by_user_agent_total{client_version=unknown,endpoint=prometheus_metrics,user_agent_category=unknown}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=+Inf,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.005,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.01,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.025,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.05,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.075,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.1,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.25,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.5,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=0.75,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=1.0,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=10.0,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=2.5,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=5.0,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=None,le=7.5,method=GET,status=404}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=+Inf,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.005,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.01,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.025,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.05,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.075,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.1,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.25,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=0.75,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=1.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=10.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=2.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=5.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.app_version,le=7.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=+Inf,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.005,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.01,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.025,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.05,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.075,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.1,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.25,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=0.75,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=1.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=10.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=2.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=5.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=api.releases,le=7.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=+Inf,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=+Inf,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.005,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.005,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.01,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.01,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.025,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.025,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.05,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.05,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.075,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.075,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.1,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.1,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.25,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.25,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.5,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.75,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=0.75,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=1.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=1.0,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=10.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=10.0,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=2.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=2.5,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=5.0,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=5.0,method=POST,status=302}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=7.5,method=GET,status=200}",
+      "http_request_duration_seconds_bucket{endpoint=auth.login,le=7.5,method=POST,status=302}",
+      "http_request_duration_seconds_count{endpoint=None,method=GET,status=404}",
+      "http_request_duration_seconds_count{endpoint=api.app_version,method=GET,status=200}",
+      "http_request_duration_seconds_count{endpoint=api.releases,method=GET,status=200}",
+      "http_request_duration_seconds_count{endpoint=auth.login,method=GET,status=200}",
+      "http_request_duration_seconds_count{endpoint=auth.login,method=POST,status=302}",
+      "http_request_duration_seconds_sum{endpoint=None,method=GET,status=404}",
+      "http_request_duration_seconds_sum{endpoint=api.app_version,method=GET,status=200}",
+      "http_request_duration_seconds_sum{endpoint=api.releases,method=GET,status=200}",
+      "http_request_duration_seconds_sum{endpoint=auth.login,method=GET,status=200}",
+      "http_request_duration_seconds_sum{endpoint=auth.login,method=POST,status=302}",
+      "http_request_job_tunnel_total{branch=unknown,client_version=unknown,job_name=unknown,ssh_tunnel=no}",
+      "http_request_ssh_tunnel_total{endpoint=api.app_version,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_ssh_tunnel_total{endpoint=api.releases,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_ssh_tunnel_total{endpoint=auth.login,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_ssh_tunnel_total{endpoint=prometheus_metrics,ssh_tunnel=no,tunnel_established=no}",
+      "http_request_total{method=GET,status=200}",
+      "http_request_total{method=GET,status=404}",
+      "http_request_total{method=POST,status=302}",
+      "http_request_tunnel_build_total{build_id=unknown,build_url=,ssh_tunnel=no}"
+     ],
+     "status": 200
+    },
+    {
+     "charset": "",
+     "cookies": [],
+     "json": {
+      "message": "Authorization required",
+      "status": "error"
+     },
+     "location": null,
+     "media": "application/json",
+     "status": 403
+    }
+   ],
+   "id": "metrics-again",
+   "steps": [
+    {
+     "client": "token",
+     "headers": {
+      "Authorization": "token 6cac8fac-216a-4ac3-ac60-0c6a72750f8b"
+     },
+     "method": "GET",
+     "path": "/metrics"
+    },
+    {
+     "client": "anon",
+     "method": "GET",
+     "path": "/metrics"
+    }
+   ]
+  }
+ ],
+ "fresh_server": true,
+ "group": "G16",
+ "name": "metrics-exposition"
+}

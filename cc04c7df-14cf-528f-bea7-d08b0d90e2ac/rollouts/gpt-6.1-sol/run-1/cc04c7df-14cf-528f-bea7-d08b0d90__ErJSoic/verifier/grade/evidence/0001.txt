@@ -1,0 +1,11 @@
+=== submission file: .github/workflows/java.yml (changed against State A) ===
+@@
+20  |           key: ${{ runner.os }}-maven-${{ hashFiles('**.pom.xml') }}
+21  |           restore-keys: |
+22  |             ${{ runner.os }}-maven-
+   -|       - name: Run lints with Maven
+   -|         run: mvn clean install -Dlint
+   -|       - name: Run unit tests with Maven
+   -|         run: mvn clean install -Dunit-tests
+23 +|       - name: Package service
+24 +|         run: mvn -B -DskipTests package

@@ -1,0 +1,9 @@
+src/map/mio/mioParse.d src/map/mio/mioParse.o: src/map/mio/mioParse.c src/map/mio/mioInt.h \
+  /app/abc/src/misc/vec/vec.h /app/abc/src/misc/util/abc_global.h \
+  /app/abc/src/misc/util/abc_namespaces.h /app/abc/src/misc/vec/vecInt.h \
+  /app/abc/src/misc/vec/vecFlt.h /app/abc/src/misc/vec/vecStr.h \
+  /app/abc/src/misc/vec/vecPtr.h /app/abc/src/misc/vec/vecVec.h \
+  /app/abc/src/misc/vec/vecAtt.h /app/abc/src/misc/vec/vecWrd.h \
+  /app/abc/src/misc/vec/vecBit.h /app/abc/src/misc/vec/vecMem.h \
+  /app/abc/src/misc/vec/vecWec.h /app/abc/src/misc/mem/mem.h \
+  /app/abc/src/misc/st/st.h src/map/mio/mio.h src/map/mio/exp.h

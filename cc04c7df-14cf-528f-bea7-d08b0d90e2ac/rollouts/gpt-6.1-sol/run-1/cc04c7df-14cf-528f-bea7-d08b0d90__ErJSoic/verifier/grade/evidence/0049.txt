@@ -1,0 +1,38 @@
+=== submission file: folding-stats-api/src/main/java/me/zodac/folding/rest/api/header/CacheControl.java (changed against State A) ===
+@@
+24  | 
+25  | package me.zodac.folding.rest.api.header;
+26  | 
+   -| /**
+   -|  * Values for {@link RestHeader#CACHE_CONTROL} REST headers.
+   -|  */
+27 +| 
+28  | public enum CacheControl {
+29  | 
+   -|     /**
+   -|      * The <code>no-cache</code> value.
+   -|      */
+30 +|     
+31  |     NO_CACHE("no-cache");
+32  | 
+33  |     private final String cacheControlValue;
+34  | 
+   -|     /**
+   -|      * Constructs a {@link CacheControl} with the header value as a {@link String}.
+   -|      *
+   -|      * @param cacheControlValue the {@link CacheControl} value as a {@link String}
+   -|      */
+35 +|     
+36  |     CacheControl(final String cacheControlValue) {
+37  |         this.cacheControlValue = cacheControlValue;
+38  |     }
+39  | 
+   -|     /**
+   -|      * The value of the {@link CacheControl}.
+   -|      *
+   -|      * @return the {@link CacheControl} value
+   -|      */
+40 +|     
+41  |     public String cacheControl() {
+42  |         return cacheControlValue;
+43  |     }

@@ -1,0 +1,62 @@
+=== submission file: folding-stats-client-library-java/src/main/java/me/zodac/folding/client/java/response/UserResponseParser.java (changed against State A) ===
+@@
+31  | import me.zodac.folding.api.tc.User;
+32  | import me.zodac.folding.rest.util.RestUtilConstants;
+33  | 
+   -| /**
+   -|  * Utility class used to parse a {@link HttpResponse} returned from {@link me.zodac.folding.client.java.request.UserRequestSender}.
+   -|  */
+34 +| 
+35  | public final class UserResponseParser {
+36  | 
+37  |     private UserResponseParser() {
+38  | 
+39  |     }
+40  | 
+   -|     /**
+   -|      * Returns the {@link User}s retrieved by {@link me.zodac.folding.client.java.request.UserRequestSender#getAll()}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link User}s
+   -|      */
+41 +|     
+42  |     public static Collection<User> getAll(final HttpResponse<String> response) {
+43  |         final Type collectionType = new TypeToken<Collection<User>>() {
+44  |         }.getType();
+45  |         return RestUtilConstants.GSON.fromJson(response.body(), collectionType);
+46  |     }
+47  | 
+   -|     /**
+   -|      * Returns the {@link User} retrieved by {@link me.zodac.folding.client.java.request.UserRequestSender#get(int)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the retrieved {@link User}
+   -|      */
+48 +|     
+49  |     public static User get(final HttpResponse<String> response) {
+50  |         return RestUtilConstants.GSON.fromJson(response.body(), User.class);
+51  |     }
+52  | 
+   -|     /**
+   -|      * Returns the {@link User} created by
+   -|      * {@link me.zodac.folding.client.java.request.UserRequestSender#create(me.zodac.folding.rest.api.tc.request.UserRequest)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the created {@link User}
+   -|      */
+53 +|     
+54  |     public static User create(final HttpResponse<String> response) {
+55  |         return RestUtilConstants.GSON.fromJson(response.body(), User.class);
+56  |     }
+57  | 
+   -|     /**
+   -|      * Returns the {@link User} updated by
+   -|      * {@link me.zodac.folding.client.java.request.UserRequestSender#update(int, me.zodac.folding.rest.api.tc.request.UserRequest)}.
+   -|      *
+   -|      * @param response the {@link HttpResponse} to parse
+   -|      * @return the updated {@link User}
+   -|      */
+58 +|     
+59  |     public static User update(final HttpResponse<String> response) {
+60  |         return RestUtilConstants.GSON.fromJson(response.body(), User.class);
+61  |     }
