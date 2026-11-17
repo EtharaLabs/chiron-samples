@@ -4,9 +4,9 @@
 
 <p align="center"><b>Five sample tasks from Chiron SWE Refactor Bench, a Harbor benchmark of whole-repository migrations where an unmigrated repository scores zero.</b></p>
 
-<p align="center"><a href="#summary"><img src="https://img.shields.io/badge/tasks-5-845EF7" alt="tasks: 5"></a> <a href="#summary"><img src="https://img.shields.io/badge/harbor_schema-1.4-845EF7" alt="harbor schema: 1.4"></a> <a href="#rollouts"><img src="https://img.shields.io/badge/gpt--6.1--sol_mean_reward-0.0000-845EF7" alt="gpt-6.1-sol mean reward: 0.0000"></a></p>
+<p align="center"><a href="#summary"><img src="https://img.shields.io/badge/tasks-5-845EF7" alt="tasks: 5"></a> <a href="#summary"><img src="https://img.shields.io/badge/harbor_schema-1.4-845EF7" alt="harbor schema: 1.4"></a> <a href="#trials"><img src="https://img.shields.io/badge/gpt--6.1--sol_mean_reward-0.0000-845EF7" alt="gpt-6.1-sol mean reward: 0.0000"></a></p>
 
-<p align="center"><sub><a href="#abstract">Abstract</a> | <a href="#summary">Summary</a> | <a href="#tasks">Tasks</a> | <a href="#rollouts">Rollouts</a> | <a href="#coverage">Coverage</a> | <a href="#dataset-structure">Dataset structure</a> | <a href="#reproduction">Reproduction</a> | <a href="#cite">Cite</a> | <a href="#contact">Contact</a></sub></p>
+<p align="center"><sub><a href="#abstract">Abstract</a> | <a href="#summary">Summary</a> | <a href="#tasks">Tasks</a> | <a href="#trials">Trials</a> | <a href="#coverage">Coverage</a> | <a href="#dataset-structure">Dataset structure</a> | <a href="#reproduction">Reproduction</a> | <a href="#cite">Cite</a> | <a href="#contact">Contact</a></sub></p>
 
 ## Abstract
 
@@ -14,7 +14,7 @@ Chiron SWE Refactor Bench is a benchmark of whole-repository migration tasks in 
 
 Every task runs its agent offline and carries a reference solution, a grader that builds and runs the migrated repository and compares it with recordings of the original, an LLM-judged rubric, and a continuous reward from 0 to 1. Veto checks guard the core of each migration, such as the old stack being gone and the main recorded behaviours being unchanged; one failed veto sets the reward to 0.
 
-This repository holds the five-task sample. Each task is a different kind of migration: a web framework (Flask and uWSGI to FastAPI), a build system (GNU Make to CMake), an implementation language (C to Rust), a major dependency (Pydantic 1 to Pydantic 2), and an enterprise application framework (Java EE on WildFly to Spring Boot). The sample covers Python, C++, C, Rust, and Java, and every task includes its reference solution and one recorded rollout of `gpt-6.1-sol`.
+This repository holds the five-task sample. Each task is a different kind of migration: a web framework (Flask and uWSGI to FastAPI), a build system (GNU Make to CMake), an implementation language (C to Rust), a major dependency (Pydantic 1 to Pydantic 2), and an enterprise application framework (Java EE on WildFly to Spring Boot). The sample covers Python, C++, C, Rust, and Java, and every task includes its reference solution and one recorded trial of `gpt-6.1-sol`.
 
 ## Summary
 
@@ -41,9 +41,9 @@ This repository holds the five-task sample. Each task is a different kind of mig
 | [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/) | datalab (`datalab-org/datalab`) | Python | Upgrade the datalab research data management server, built on Flask and MongoDB, from Pydantic 1 to Pydantic 2 with every served behaviour unchanged, offline against a fixed wheel set. | 63 files (+7,027 -3,955 lines) |
 | [`cc04c7df`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/) | folding-stats (`zodac-personal/folding-stats`) | Java | Move the multi-module Maven service from Java EE 8 inside WildFly 24 (JAX-RS, EJB singletons and timers, CDI) onto Spring Boot, so that it builds from clean as one executable jar on JDK 17 and keeps the recorded HTTP behaviour against the same PostgreSQL schema. | 258 files (+4,019 -5,701 lines) |
 
-## Rollouts
+## Trials
 
-Each task was run once, using Codex CLI 0.166.0 with `gpt-6.1-sol` at reasoning effort high and web search disabled, and scored by the task's own verifier. Rollouts are stored in each task's `trials/gpt-6.1-sol/`.
+Each task was run once, using Codex CLI 0.166.0 with `gpt-6.1-sol` at reasoning effort high and web search disabled, and scored by the task's own verifier. Trials are stored in each task's `trials/gpt-6.1-sol/`.
 
 | Task | Reward | Cost (USD) | Agent time |
 | --- | ---: | ---: | ---: |
@@ -54,7 +54,7 @@ Each task was run once, using Codex CLI 0.166.0 with `gpt-6.1-sol` at reasoning 
 | [`cc04c7df-14cf-528f-bea7-d08b0d90e2ac`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/trials/gpt-6.1-sol/) | 0.0000 | 1.34 | 19m 3s |
 | **mean** | **0.0000** | **2.08** | **32m 43s** |
 
-Every rollout failed at least one veto check, so none reached the judged rubric:
+Every trial failed at least one veto check, so none reached the judged rubric:
 
 | Task | Vetoed on | What differed |
 | --- | --- | --- |
@@ -64,13 +64,13 @@ Every rollout failed at least one veto check, so none reached the judged rubric:
 | [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/trials/gpt-6.1-sol/verifier/) | S2-info, S2-errors | Stage I passed. 6 of the 295 cases in these two groups differ, among them `/info/blocks`, which gives `accepted_file_extensions: null` where the original gives `[]`. |
 | [`cc04c7df`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/trials/gpt-6.1-sol/verifier/) | g06, g10, g15, g18 | Stage I passed. Responses to an invalid, empty, or non-boolean `async` value on the manual update, and to requests without a body, differ from the original (6 cases). |
 
-Each rollout folder is Harbor's trial output:
+Each trial folder is Harbor's trial output:
 
 | Path | Contents |
 | --- | --- |
 | `config.json`, `lock.json` | Trial configuration and resolved run settings |
 | `result.json` | Agent, model, token usage, cost, timings, and verifier reward |
-| `agent/` | Agent trajectory (`trajectory.json`), Codex output (`codex.txt`), and session transcript (`sessions/`) |
+| `agent/` | Agent trajectory (`trajectory.json`), Codex session transcript (`sessions/`), and agent output (`codex.txt`) |
 | `verifier/` | `reward.txt`, `reward-keys.json`, `reward-details.json`, `ctrf.json`, test output, and the grader's own results |
 | `artifacts/` | The migrated repository, collected from the paths declared in `task.toml`, with `manifest.json` |
 
@@ -136,12 +136,12 @@ Each task is one Harbor task in a directory named by its uuid.
 ├── tests/            verifier image, hidden from the agent
 ├── solution/         reference solution, with TRUTH.md (how the task is graded)
 └── trials/
-    └── gpt-6.1-sol/  the recorded rollout (Harbor trial output)
+    └── gpt-6.1-sol/  the agent model's trial (Harbor trial output)
 ```
 
 ## Reproduction
 
-Each task directory is a complete Harbor task: `task.toml` is the runner manifest, `instruction.md` the objective, `environment/` the agent's image, `tests/` the verifier, and `solution/` the reference solution. `task.toml` pins both images on public ECR by digest, so Harbor pulls them instead of building; the Dockerfiles in `environment/` and `tests/` build them. The rollouts above were produced with Harbor 0.24.0 on linux/arm64:
+Each task directory is a complete Harbor task: `task.toml` is the runner manifest, `instruction.md` the objective, `environment/` the agent's image, `tests/` the verifier, and `solution/` the reference solution. `task.toml` pins both images on public ECR by digest, so Harbor pulls them instead of building; the Dockerfiles in `environment/` and `tests/` build them. The trials above were produced with Harbor 0.24.0 on linux/arm64:
 
 ```bash
 harbor run -p <uuid> -a codex -m openai/gpt-6.1-sol \
