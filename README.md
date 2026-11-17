@@ -2,60 +2,153 @@
 
 # chiron: samples
 
-<p align="center"><b>The samples lane: 0 of 5 Harbor task bundles.</b></p>
+<p align="center"><b>Five sample tasks from chiron, a Harbor benchmark of whole-repository migrations where an unmigrated repository scores zero.</b></p>
 
-<p align="center"><a href="#summary"><img src="https://img.shields.io/badge/bundles-0_of_5-845EF7" alt="bundles: 0 of 5"></a> <a href="#evidence-status"><img src="https://img.shields.io/badge/sealed-0-845EF7" alt="sealed: 0"></a> <a href="#difficulty-tiers"><img src="https://img.shields.io/badge/difficulty-measured-845EF7" alt="difficulty: measured"></a></p>
+<p align="center"><a href="#summary"><img src="https://img.shields.io/badge/tasks-5-845EF7" alt="tasks: 5"></a> <a href="#summary"><img src="https://img.shields.io/badge/harbor_schema-1.4-845EF7" alt="harbor schema: 1.4"></a> <a href="#rollouts"><img src="https://img.shields.io/badge/gpt--6.1--sol_mean_reward-0.0000-845EF7" alt="gpt-6.1-sol mean reward: 0.0000"></a></p>
 
-<p align="center"><sub><a href="#abstract">Abstract</a> | <a href="#summary">Summary</a> | <a href="#difficulty-tiers">Difficulty tiers</a> | <a href="#evidence-status">Evidence status</a> | <a href="#coverage">Coverage</a> | <a href="#dataset-structure">Dataset structure</a> | <a href="#verification-and-quality-assurance">Verification and quality assurance</a> | <a href="#reproduction">Reproduction</a> | <a href="#cite">Cite</a> | <a href="#license">License</a> | <a href="#contact">Contact</a></sub></p>
+<p align="center"><sub><a href="#abstract">Abstract</a> | <a href="#summary">Summary</a> | <a href="#tasks">Tasks</a> | <a href="#rollouts">Rollouts</a> | <a href="#coverage">Coverage</a> | <a href="#dataset-structure">Dataset structure</a> | <a href="#reproduction">Reproduction</a> | <a href="#cite">Cite</a> | <a href="#contact">Contact</a></sub></p>
 
 ## Abstract
 
-The curated lane of this corpus: at most 5 Harbor task bundles, every anchor seated first and every other bundle in seal order. Bundles past that ceiling live in `delivery/`.
+chiron is a benchmark of whole-repository migration tasks in [Harbor](https://github.com/harbor-framework/harbor) format. Each task hands an autonomous agent a real upstream open source repository and asks it to move the whole repository onto a new framework, build system, dependency version, or language while every observable behaviour of the original stays the same. A repository left unmigrated scores zero.
 
-Each bundle is one Harbor task in a directory named by its content-derived uuid5, so the name doubles as an integrity check. This page is rendered from the resident bundles on every reconcile; a value a bundle does not carry reads `absent`, and the page never fills one in.
+Every task runs its agent offline and carries a reference solution, a grader that builds and runs the migrated repository and compares it with recordings of the original, an LLM-judged rubric, and a continuous reward from 0 to 1. Veto checks guard the core of each migration, such as the old stack being gone and the main recorded behaviours being unchanged; one failed veto sets the reward to 0.
+
+This repository holds the five-task sample. Each task is a different kind of migration: a web framework (Flask and uWSGI to FastAPI), a build system (GNU Make to CMake), an implementation language (C to Rust), a major dependency (Pydantic 1 to Pydantic 2), and an enterprise application framework (Java EE on WildFly to Spring Boot). The sample covers Python, C++, C, Rust, and Java, and every task includes its reference solution and one recorded rollout of `gpt-6.1-sol`.
 
 ## Summary
 
 | Property | Value |
 | --- | --- |
-| Bundles | 0 of 5 |
-| Sealed | 0 of 0 |
-| Registrations | none |
-| Audit verdicts | none |
-| Harbor schema | none |
+| Tasks | 5 |
+| Domain | Software engineering (whole-repository migration) |
+| Languages | Python, C++, C, Rust, Java |
+| Format | Harbor task, schema 1.4 |
+| Platforms | linux/amd64, linux/arm64 |
+| Average handling time (AHT) | 10 hours per task |
+| Agent | Codex CLI 0.166.0 with `gpt-6.1-sol`, reasoning effort high |
+| Judge | Claude Opus 5.5, reasoning effort high |
+| Runs per task | 1 |
+| Mean reward | 0.0000 |
 
-## Difficulty tiers
+## Tasks
 
-Difficulty is measured by the signed pilot alone and never declared in a bundle, so this page states no tier a bundle claims.
+| Task | Project | Language | Objective | Reference migration |
+| --- | --- | --- | --- | --- |
+| [`12b08204`](12b08204-4fec-591c-a697-d4d9922da167/) | Argus (`scylladb/argus`) | Python | Move the Argus web backend from Flask and uWSGI to FastAPI on Starlette, served by Gunicorn with Uvicorn workers, keeping every observable behaviour of the original application. | 122 files (+5,738 -5,315 lines) |
+| [`235c695a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/) | Yosys 0.66 | C++ | Move the Yosys build, its CI workflows, and its Python wheel packaging from GNU Make to CMake, keeping every observable behaviour of the original build. | 223 files (+5,506 -2,233 lines) |
+| [`50b177e0`](50b177e0-3b23-5823-bb2b-f689f6de5909/) | yyjson 0.13.0 | C to Rust | Move the library's implementation from C to Rust (std, core, and alloc only, no crates) while keeping the public header, the C ABI, the CMake build, the installed tree, and every observable behaviour unchanged. | 11,480 lines of C removed, 52 exported entry points kept |
+| [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/) | datalab (`datalab-org/datalab`) | Python | Upgrade the datalab research data management server, built on Flask and MongoDB, from Pydantic 1 to Pydantic 2 with every served behaviour unchanged, offline against a fixed wheel set. | 63 files (+7,027 -3,955 lines) |
+| [`cc04c7df`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/) | folding-stats (`zodac-personal/folding-stats`) | Java | Move the multi-module Maven service from Java EE 8 inside WildFly 24 (JAX-RS, EJB singletons and timers, CDI) onto Spring Boot, so that it builds from clean as one executable jar on JDK 17 and keeps the recorded HTTP behaviour against the same PostgreSQL schema. | 258 files (+4,019 -5,701 lines) |
 
-## Evidence status
+## Rollouts
 
-The verdict is the audit outcome recorded at the sealed digest, and `none` means no verdict has landed for that digest yet. Only an authoring run removes a bundle from this lane, so removal waits for the next one.
+Each task was run once, using Codex CLI 0.166.0 with `gpt-6.1-sol` at reasoning effort high and web search disabled, and scored by the task's own verifier. Rollouts are stored in each task's `rollouts/gpt-6.1-sol/`.
+
+| Task | Reward | Cost (USD) | Agent time |
+| --- | ---: | ---: | ---: |
+| [`12b08204-4fec-591c-a697-d4d9922da167`](12b08204-4fec-591c-a697-d4d9922da167/rollouts/gpt-6.1-sol/) | 0.0000 | 4.50 | 1h 10m 27s |
+| [`235c695a-89b4-50e4-96bd-ee0d2ae80c7a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/rollouts/gpt-6.1-sol/) | 0.0000 | 2.85 | 47m 30s |
+| [`50b177e0-3b23-5823-bb2b-f689f6de5909`](50b177e0-3b23-5823-bb2b-f689f6de5909/rollouts/gpt-6.1-sol/) | 0.0000 | 0.47 | 10m 12s |
+| [`78f33146-cdab-57ce-83fd-5f2e030dd52c`](78f33146-cdab-57ce-83fd-5f2e030dd52c/rollouts/gpt-6.1-sol/) | 0.0000 | 1.26 | 16m 22s |
+| [`cc04c7df-14cf-528f-bea7-d08b0d90e2ac`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/rollouts/gpt-6.1-sol/) | 0.0000 | 1.34 | 19m 3s |
+| **mean** | **0.0000** | **2.08** | **32m 43s** |
+
+Every rollout failed at least one veto check, so none reached the judged rubric:
+
+| Task | Vetoed on | What differed |
+| --- | --- | --- |
+| [`12b08204`](12b08204-4fec-591c-a697-d4d9922da167/rollouts/gpt-6.1-sol/verifier/) | G03, G14, G15 | An anonymous `GET /admin/api/v1/users` answers "Authorization required" where the original answers "Forbidden"; `/alert_debug` sets no session cookie; `/release/by-id/{id}/planner` no longer redirects. |
+| [`235c695a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/rollouts/gpt-6.1-sol/verifier/) | S2-ci-test-build, S2-ci-test-compile, S2-ci-test-sanitizers | Stage I passed. The CI build and sanitizer jobs fail the `various` and `xprop` tests and the vanilla-test exit check, and the gcc-11 compile job fails its `banner` case. |
+| [`50b177e0`](50b177e0-3b23-5823-bb2b-f689f6de5909/rollouts/gpt-6.1-sol/verifier/) | 24 checks (T-02 to T-17, T-23, T-24, P-01 to P-06) | The agent stopped after 10 minutes with 19 of the 52 exported symbols in Rust and the C implementation still building the library. |
+| [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/rollouts/gpt-6.1-sol/verifier/) | S2-info, S2-errors | Stage I passed. 6 of the 295 cases in these two groups differ, among them `/info/blocks`, which gives `accepted_file_extensions: null` where the original gives `[]`. |
+| [`cc04c7df`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/rollouts/gpt-6.1-sol/verifier/) | g06, g10, g15, g18 | Stage I passed. Responses to an invalid, empty, or non-boolean `async` value on the manual update, and to requests without a body, differ from the original (6 cases). |
+
+Each rollout folder is Harbor's trial output:
+
+| Path | Contents |
+| --- | --- |
+| `config.json`, `lock.json` | Trial configuration and resolved run settings |
+| `result.json` | Agent, model, token usage, cost, timings, and verifier reward |
+| `agent/` | Agent trajectory (`trajectory.json`), Codex output (`codex.txt`), and session transcript (`sessions/`) |
+| `verifier/` | `reward.txt`, `reward-keys.json`, `reward-details.json`, `ctrf.json`, test output, and the grader's own results |
+| `artifacts/` | The migrated repository, collected from the paths declared in `task.toml`, with `manifest.json` |
+
+Log files and caches are left out. datalab's collected `.git` is stored as `.git.tar` (extracting it in place restores the repository), and its virtualenv is not included.
 
 ## Coverage
 
-No resident bundle declares a keyword.
+| Keyword | Tasks |
+| --- | --- |
+| abi | 1 |
+| behaviour-preservation | 1 |
+| build-toolchain | 1 |
+| c | 1 |
+| cdi | 1 |
+| ci-workflow-repair | 1 |
+| cmake | 2 |
+| dependency-upgrade | 1 |
+| ejb | 1 |
+| enterprise-framework-application-migration | 1 |
+| fastapi | 1 |
+| flask | 2 |
+| framework-migration | 1 |
+| framework-rewrite | 2 |
+| gnu-make | 1 |
+| gunicorn | 1 |
+| java | 1 |
+| java-ee | 1 |
+| jax-rs | 1 |
+| json | 1 |
+| language-rewrite | 1 |
+| maven | 1 |
+| migration | 3 |
+| mongodb | 1 |
+| offline | 1 |
+| postgresql | 1 |
+| pydantic | 1 |
+| python | 1 |
+| rust | 1 |
+| scylladb | 1 |
+| spring-boot | 1 |
+| starlette | 1 |
+| uwsgi | 1 |
+| wildfly | 1 |
+| yosys | 1 |
 
 ## Dataset structure
 
-No bundle is resident under `samples/`.
+Each task is one Harbor task in a directory named by its uuid.
 
-```mermaid
-%%{init: {"theme":"base","themeVariables":{"primaryColor":"#131a33","primaryTextColor":"#e8ecff","primaryBorderColor":"#845EF7","lineColor":"#22d3ee","fontFamily":"monospace"}}}%%
-flowchart LR
-    staging["staging/"]
-    staging --> samples["samples/<br/>0 of 5"]
-    samples --> delivery["delivery/<br/>0 of 10000"]
-    delivery --> stock["stock/<br/>0 of 10000"]
+| Task | Keywords |
+| --- | --- |
+| [`12b08204-4fec-591c-a697-d4d9922da167`](12b08204-4fec-591c-a697-d4d9922da167/) | behaviour-preservation, fastapi, flask, framework-migration, gunicorn, python, scylladb, starlette, uwsgi |
+| [`235c695a-89b4-50e4-96bd-ee0d2ae80c7a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/) | build-toolchain, ci-workflow-repair, cmake, gnu-make, migration, yosys |
+| [`50b177e0-3b23-5823-bb2b-f689f6de5909`](50b177e0-3b23-5823-bb2b-f689f6de5909/) | abi, c, cmake, json, language-rewrite, migration, rust |
+| [`78f33146-cdab-57ce-83fd-5f2e030dd52c`](78f33146-cdab-57ce-83fd-5f2e030dd52c/) | dependency-upgrade, flask, framework-rewrite, migration, mongodb, pydantic |
+| [`cc04c7df-14cf-528f-bea7-d08b0d90e2ac`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/) | cdi, ejb, enterprise-framework-application-migration, framework-rewrite, java, java-ee, jax-rs, maven, offline, postgresql, spring-boot, wildfly |
+
 ```
-
-## Verification and quality assurance
-
-Each bundle's signed provenance carrier holds its screening roots, screening instant, and absolute expiry. Placement moves that carrier into the private derivation set, which this page never reads, so reconcile lists no root it cannot verify here.
+<uuid>/
+├── task.toml         runner manifest, with the prebuilt images pinned by digest
+├── instruction.md    objective the agent reads
+├── environment/      agent image: the repository at its starting state
+├── tests/            verifier image, hidden from the agent
+├── solution/         reference solution, with TRUTH.md (how the task is graded)
+└── rollouts/
+    └── gpt-6.1-sol/  the recorded rollout (Harbor trial output)
+```
 
 ## Reproduction
 
-Each bundle directory is a complete Harbor task: `task.toml` is the runner manifest, `instruction.md` the objective, `environment/` the sandbox image, and `tests/` the verifier. Point a Harbor runner at one bundle directory to reproduce it; `solution/` stays private.
+Each task directory is a complete Harbor task: `task.toml` is the runner manifest, `instruction.md` the objective, `environment/` the agent's image, `tests/` the verifier, and `solution/` the reference solution. `task.toml` pins both images on public ECR by digest, so Harbor pulls them instead of building; the Dockerfiles in `environment/` and `tests/` build them. The rollouts above were produced with Harbor 0.24.0 on linux/arm64:
+
+```bash
+harbor run -p <uuid> -a codex -m openai/gpt-6.1-sol \
+  --ak version=0.166.0 --ak reasoning_effort=high --ak web_search=disabled
+```
+
+The verifier's LLM-judged rubric uses `ANTHROPIC_API_KEY` (Claude Opus 5.5, `anthropic/claude-opus-5-5`).
 
 ## Cite
 
@@ -63,22 +156,12 @@ Each bundle directory is a complete Harbor task: `task.toml` is the runner manif
 @misc{chiron2026,
   title        = {chiron: Whole-repository migration tasks where an unmigrated repository scores zero},
   author       = {{Ethara.AI}},
-  year         = {2026},
-  howpublished = {\url{https://github.com/EtharaOrion/chiron}},
-  note         = {Harbor-format terminal tasks for whole-repository migration}
+  year         = {2026}
 }
 ```
 
-## License
-
-chiron is released under the MIT License; see [LICENSE](LICENSE).
-
-Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
-
 ## Contact
 
-- Ethara.AI: [github.com/Ethara-Ai](https://github.com/Ethara-Ai)
-- Security and benchmark-integrity reports: [SECURITY.md](SECURITY.md)
-- Contributions: [CONTRIBUTING.md](CONTRIBUTING.md)
+chiron is built by [Ethara.AI](https://github.com/Ethara-Ai).
 
 Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
