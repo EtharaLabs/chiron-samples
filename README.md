@@ -51,9 +51,9 @@ Each task was run once, using Codex CLI 0.166.0 with `gpt-6.1-sol` at reasoning 
 | --- | ---: | ---: | ---: |
 | [`12b08204-4fec-591c-a697-d4d9922da167`](12b08204-4fec-591c-a697-d4d9922da167/trials/gpt-6.1-sol/) | 0.0000 | 4.50 | 1h 10m 27s |
 | [`235c695a-89b4-50e4-96bd-ee0d2ae80c7a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/trials/gpt-6.1-sol/) | 0.0000 | 2.85 | 47m 30s |
-| [`50b177e0-3b23-5823-bb2b-f689f6de5909`](50b177e0-3b23-5823-bb2b-f689f6de5909/trials/gpt-6.1-sol/) | 0.0000 | 0.47 | 10m 12s |
+| [`50b177e0-3b23-5823-bb2b-f689f6de5909`](50b177e0-3b23-5823-bb2b-f689f6de5909/trials/gpt-6.1-sol/) | 0.0000 | 0.47 | 10m 13s |
 | [`78f33146-cdab-57ce-83fd-5f2e030dd52c`](78f33146-cdab-57ce-83fd-5f2e030dd52c/trials/gpt-6.1-sol/) | 0.0000 | 1.26 | 16m 22s |
-| [`cc04c7df-14cf-528f-bea7-d08b0d90e2ac`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/trials/gpt-6.1-sol/) | 0.0000 | 1.34 | 19m 3s |
+| [`cc04c7df-14cf-528f-bea7-d08b0d90e2ac`](cc04c7df-14cf-528f-bea7-d08b0d90e2ac/trials/gpt-6.1-sol/) | 0.0000 | 1.34 | 19m 4s |
 | **mean** | **0.0000** | **2.08** | **32m 43s** |
 
 Every trial failed at least one veto check, so none reached the judged rubric:
