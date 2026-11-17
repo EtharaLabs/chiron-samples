@@ -1,16 +1,16 @@
 {
-    "id": "ebb917f9-3f76-4dfd-b147-0dc33ec17e82",
-    "task_name": "ethara/50b177e0-3b23-5823-bb2b-f689f6de5909",
-    "trial_name": "50b177e0-3b23-5823-bb2b-f689f6de__DcDzDUx",
-    "trial_uri": "50b177e0-3b23-5823-bb2b-f689f6de5909/rollouts/gpt-6.1-sol/run-1/50b177e0-3b23-5823-bb2b-f689f6de__DcDzDUx",
+    "id": "87395699-8389-4833-b256-6ea1bc83b8d3",
+    "task_name": "ethara/78f33146-cdab-57ce-83fd-5f2e030dd52c",
+    "trial_name": "78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
+    "trial_uri": "78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
     "task_id": {
-        "path": "50b177e0-3b23-5823-bb2b-f689f6de5909"
+        "path": "78f33146-cdab-57ce-83fd-5f2e030dd52c"
     },
     "source": null,
-    "task_checksum": "8e8b2a55a673b768780dc7343d6c532ecba22cfee83a5467fe58f06e5f6e946f",
+    "task_checksum": "970f65bbb8d0f182dda03c5871ae4e59eb46ddaa3e6b6a0d0c7655fea42c010e",
     "config": {
         "task": {
-            "path": "50b177e0-3b23-5823-bb2b-f689f6de5909",
+            "path": "78f33146-cdab-57ce-83fd-5f2e030dd52c",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
@@ -19,8 +19,8 @@
             "download_dir": null,
             "source": null
         },
-        "trial_name": "50b177e0-3b23-5823-bb2b-f689f6de__DcDzDUx",
-        "trials_dir": "50b177e0-3b23-5823-bb2b-f689f6de5909/rollouts/gpt-6.1-sol/run-1",
+        "trial_name": "78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
+        "trials_dir": "78f33146-codex-sol-run1",
         "install_only": false,
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
@@ -105,7 +105,7 @@
         "artifacts": [],
         "extra_instruction_paths": [],
         "extra_instructions": [],
-        "job_id": "5697b3f2-3d00-4714-b8b1-4c8f96b8a3f4",
+        "job_id": "22796bdd-0bc9-4840-9c71-96812fefc30c",
         "source_trial": null
     },
     "agent_info": {
@@ -117,16 +117,16 @@
         }
     },
     "agent_result": {
-        "n_input_tokens": 1355787,
-        "n_cache_tokens": 1304192,
-        "n_output_tokens": 23583,
-        "cost_usd": 0.46943920000000006,
+        "n_input_tokens": 6864062,
+        "n_cache_tokens": 6732800,
+        "n_output_tokens": 32397,
+        "cost_usd": 1.2597739999999997,
         "model_usage": {
             "openai/gpt-6.1-sol": {
-                "n_input_tokens": 1355787,
-                "n_cache_tokens": 1304192,
-                "n_output_tokens": 23583,
-                "cost_usd": 0.46943920000000006
+                "n_input_tokens": 6864062,
+                "n_cache_tokens": 6732800,
+                "n_output_tokens": 32397,
+                "cost_usd": 1.2597739999999997
             }
         },
         "rollout_details": null,
@@ -139,23 +139,23 @@
     },
     "verifier_environment_mode": "separate",
     "exception_info": null,
-    "started_at": "2026-11-14T03:50:22.129485Z",
-    "finished_at": "2026-11-14T04:11:39.359485Z",
+    "started_at": "2026-11-14T03:50:21.567818Z",
+    "finished_at": "2026-11-14T04:24:53.566876Z",
     "environment_setup": {
-        "started_at": "2026-11-14T03:50:22.203353Z",
-        "finished_at": "2026-11-14T03:55:46.521372Z"
+        "started_at": "2026-11-14T03:50:21.637770Z",
+        "finished_at": "2026-11-14T04:01:30.288027Z"
     },
     "agent_setup": {
-        "started_at": "2026-11-14T03:55:46.521425Z",
-        "finished_at": "2026-11-14T03:56:07.590887Z"
+        "started_at": "2026-11-14T04:01:30.288082Z",
+        "finished_at": "2026-11-14T04:01:51.003144Z"
     },
     "agent_execution": {
-        "started_at": "2026-11-14T03:56:07.597431Z",
-        "finished_at": "2026-11-14T04:06:20.452424Z"
+        "started_at": "2026-11-14T04:01:51.003294Z",
+        "finished_at": "2026-11-14T04:18:13.362763Z"
     },
     "verifier": {
-        "started_at": "2026-11-14T04:06:46.011947Z",
-        "finished_at": "2026-11-14T04:11:39.359467Z"
+        "started_at": "2026-11-14T04:19:21.327013Z",
+        "finished_at": "2026-11-14T04:24:53.566863Z"
     },
     "step_results": null
 }

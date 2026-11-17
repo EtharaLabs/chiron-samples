@@ -1,8 +1,26 @@
 {
-    "job_name": "50b177e0-codex-sol-run1",
-    "jobs_dir": "50b177e0-3b23-5823-bb2b-f689f6de5909/rollouts/gpt-6.1-sol",
+    "task": {
+        "path": "cc04c7df-14cf-528f-bea7-d08b0d90e2ac"
+    },
+    "trial_name": "cc04c7df-14cf-528f-bea7-d08b0d90__ErJSoic",
+    "trials_dir": "cc04c7df-codex-sol-run1",
     "agent_setup_timeout_multiplier": 5.0,
-    "n_concurrent_trials": 1,
+    "agent": {
+        "name": "codex",
+        "model_name": "openai/gpt-6.1-sol",
+        "extra_allowed_hosts": [
+            "172.31.14.51"
+        ],
+        "kwargs": {
+            "version": "0.166.0",
+            "reasoning_effort": "high",
+            "web_search": "disabled"
+        },
+        "env": {
+            "OPENAI_BASE_URL": "${P1_CODEX_BASE_URL}",
+            "OPENAI_API_KEY": "${KAIJU_CODEX_BRIDGE_SECRET}"
+        }
+    },
     "environment": {
         "type": "docker",
         "extra_allowed_hosts": [
@@ -34,27 +52,5 @@
             "ANTHROPIC_API_KEY": "${P1_JUDGE_API_KEY}"
         }
     },
-    "agents": [
-        {
-            "name": "codex",
-            "model_name": "openai/gpt-6.1-sol",
-            "extra_allowed_hosts": [
-                "172.31.14.51"
-            ],
-            "kwargs": {
-                "version": "0.166.0",
-                "reasoning_effort": "high",
-                "web_search": "disabled"
-            },
-            "env": {
-                "OPENAI_BASE_URL": "${P1_CODEX_BASE_URL}",
-                "OPENAI_API_KEY": "${KAIJU_CODEX_BRIDGE_SECRET}"
-            }
-        }
-    ],
-    "tasks": [
-        {
-            "path": "50b177e0-3b23-5823-bb2b-f689f6de5909"
-        }
-    ]
+    "job_id": "fc193460-9822-43ca-a057-d8357c52982e"
 }

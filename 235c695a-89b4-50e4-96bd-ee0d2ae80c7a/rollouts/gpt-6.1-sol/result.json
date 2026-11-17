@@ -1,16 +1,16 @@
 {
-    "id": "87395699-8389-4833-b256-6ea1bc83b8d3",
-    "task_name": "ethara/78f33146-cdab-57ce-83fd-5f2e030dd52c",
-    "trial_name": "78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
-    "trial_uri": "78f33146-cdab-57ce-83fd-5f2e030dd52c/rollouts/gpt-6.1-sol/run-1/78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
+    "id": "49b52f43-5225-4041-8584-cfe3d002a45f",
+    "task_name": "ethara/235c695a-89b4-50e4-96bd-ee0d2ae80c7a",
+    "trial_name": "235c695a-89b4-50e4-96bd-ee0d2ae8__msFP7nN",
+    "trial_uri": "235c695a-89b4-50e4-96bd-ee0d2ae8__msFP7nN",
     "task_id": {
-        "path": "78f33146-cdab-57ce-83fd-5f2e030dd52c"
+        "path": "235c695a-89b4-50e4-96bd-ee0d2ae80c7a"
     },
     "source": null,
-    "task_checksum": "970f65bbb8d0f182dda03c5871ae4e59eb46ddaa3e6b6a0d0c7655fea42c010e",
+    "task_checksum": "fec07fc4f4b3dffeeaad809ae9e8deb9a1709771a2d3e7e2b1fa226dc60fd435",
     "config": {
         "task": {
-            "path": "78f33146-cdab-57ce-83fd-5f2e030dd52c",
+            "path": "235c695a-89b4-50e4-96bd-ee0d2ae80c7a",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
@@ -19,8 +19,8 @@
             "download_dir": null,
             "source": null
         },
-        "trial_name": "78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
-        "trials_dir": "78f33146-cdab-57ce-83fd-5f2e030dd52c/rollouts/gpt-6.1-sol/run-1",
+        "trial_name": "235c695a-89b4-50e4-96bd-ee0d2ae8__msFP7nN",
+        "trials_dir": "235c695a-codex-sol-run1",
         "install_only": false,
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
@@ -105,7 +105,7 @@
         "artifacts": [],
         "extra_instruction_paths": [],
         "extra_instructions": [],
-        "job_id": "22796bdd-0bc9-4840-9c71-96812fefc30c",
+        "job_id": "1d03e221-ad90-4be1-a0b8-843c284adfaf",
         "source_trial": null
     },
     "agent_info": {
@@ -117,16 +117,16 @@
         }
     },
     "agent_result": {
-        "n_input_tokens": 6864062,
-        "n_cache_tokens": 6732800,
-        "n_output_tokens": 32397,
-        "cost_usd": 1.2597739999999997,
+        "n_input_tokens": 17286980,
+        "n_cache_tokens": 17147776,
+        "n_output_tokens": 85954,
+        "cost_usd": 2.8527256,
         "model_usage": {
             "openai/gpt-6.1-sol": {
-                "n_input_tokens": 6864062,
-                "n_cache_tokens": 6732800,
-                "n_output_tokens": 32397,
-                "cost_usd": 1.2597739999999997
+                "n_input_tokens": 17286980,
+                "n_cache_tokens": 17147776,
+                "n_output_tokens": 85954,
+                "cost_usd": 2.8527256
             }
         },
         "rollout_details": null,
@@ -139,23 +139,23 @@
     },
     "verifier_environment_mode": "separate",
     "exception_info": null,
-    "started_at": "2026-11-14T03:50:21.567818Z",
-    "finished_at": "2026-11-14T04:24:53.566876Z",
+    "started_at": "2026-11-14T03:50:22.505788Z",
+    "finished_at": "2026-11-14T06:05:19.250765Z",
     "environment_setup": {
-        "started_at": "2026-11-14T03:50:21.637770Z",
-        "finished_at": "2026-11-14T04:01:30.288027Z"
+        "started_at": "2026-11-14T03:50:22.549857Z",
+        "finished_at": "2026-11-14T04:00:23.406139Z"
     },
     "agent_setup": {
-        "started_at": "2026-11-14T04:01:30.288082Z",
-        "finished_at": "2026-11-14T04:01:51.003144Z"
+        "started_at": "2026-11-14T04:00:23.406195Z",
+        "finished_at": "2026-11-14T04:00:46.163283Z"
     },
     "agent_execution": {
-        "started_at": "2026-11-14T04:01:51.003294Z",
-        "finished_at": "2026-11-14T04:18:13.362763Z"
+        "started_at": "2026-11-14T04:00:46.163433Z",
+        "finished_at": "2026-11-14T04:48:16.646448Z"
     },
     "verifier": {
-        "started_at": "2026-11-14T04:19:21.327013Z",
-        "finished_at": "2026-11-14T04:24:53.566863Z"
+        "started_at": "2026-11-14T04:48:41.359449Z",
+        "finished_at": "2026-11-14T06:05:19.250744Z"
     },
     "step_results": null
 }

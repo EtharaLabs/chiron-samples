@@ -1,9 +1,9 @@
 {
     "task": {
-        "path": "50b177e0-3b23-5823-bb2b-f689f6de5909"
+        "path": "78f33146-cdab-57ce-83fd-5f2e030dd52c"
     },
-    "trial_name": "50b177e0-3b23-5823-bb2b-f689f6de__DcDzDUx",
-    "trials_dir": "50b177e0-3b23-5823-bb2b-f689f6de5909/rollouts/gpt-6.1-sol/run-1",
+    "trial_name": "78f33146-cdab-57ce-83fd-5f2e030d__z8oXFKT",
+    "trials_dir": "78f33146-codex-sol-run1",
     "agent_setup_timeout_multiplier": 5.0,
     "agent": {
         "name": "codex",
@@ -52,5 +52,5 @@
             "ANTHROPIC_API_KEY": "${P1_JUDGE_API_KEY}"
         }
     },
-    "job_id": "5697b3f2-3d00-4714-b8b1-4c8f96b8a3f4"
+    "job_id": "22796bdd-0bc9-4840-9c71-96812fefc30c"
 }

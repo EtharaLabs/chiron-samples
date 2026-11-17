@@ -1,16 +1,16 @@
 {
-    "id": "d0f108ec-371e-4ccb-9f73-ef9b3a52dc7a",
-    "task_name": "ethara/12b08204-4fec-591c-a697-d4d9922da167",
-    "trial_name": "12b08204-4fec-591c-a697-d4d9922d__3HLkvKU",
-    "trial_uri": "12b08204-4fec-591c-a697-d4d9922da167/rollouts/gpt-6.1-sol/run-1/12b08204-4fec-591c-a697-d4d9922d__3HLkvKU",
+    "id": "37f8ca6a-7760-409c-ab1f-d5db05144dd8",
+    "task_name": "ethara/cc04c7df-14cf-528f-bea7-d08b0d90e2ac",
+    "trial_name": "cc04c7df-14cf-528f-bea7-d08b0d90__ErJSoic",
+    "trial_uri": "cc04c7df-14cf-528f-bea7-d08b0d90__ErJSoic",
     "task_id": {
-        "path": "12b08204-4fec-591c-a697-d4d9922da167"
+        "path": "cc04c7df-14cf-528f-bea7-d08b0d90e2ac"
     },
     "source": null,
-    "task_checksum": "39e20f9a2404fb0fcb74440d11a5459851ba15a74dcbbd07cb3316d94ee39090",
+    "task_checksum": "a372b8637737fe3da00c172798c17848faf8568b43b5bde35b14619c08d3629a",
     "config": {
         "task": {
-            "path": "12b08204-4fec-591c-a697-d4d9922da167",
+            "path": "cc04c7df-14cf-528f-bea7-d08b0d90e2ac",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
@@ -19,8 +19,8 @@
             "download_dir": null,
             "source": null
         },
-        "trial_name": "12b08204-4fec-591c-a697-d4d9922d__3HLkvKU",
-        "trials_dir": "12b08204-4fec-591c-a697-d4d9922da167/rollouts/gpt-6.1-sol/run-1",
+        "trial_name": "cc04c7df-14cf-528f-bea7-d08b0d90__ErJSoic",
+        "trials_dir": "cc04c7df-codex-sol-run1",
         "install_only": false,
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
@@ -105,7 +105,7 @@
         "artifacts": [],
         "extra_instruction_paths": [],
         "extra_instructions": [],
-        "job_id": "82b3bca3-7121-4f84-8807-32540d061e84",
+        "job_id": "fc193460-9822-43ca-a057-d8357c52982e",
         "source_trial": null
     },
     "agent_info": {
@@ -117,16 +117,16 @@
         }
     },
     "agent_result": {
-        "n_input_tokens": 26602970,
-        "n_cache_tokens": 26281472,
-        "n_output_tokens": 122971,
-        "cost_usd": 4.5008531999999954,
+        "n_input_tokens": 7658837,
+        "n_cache_tokens": 7542784,
+        "n_output_tokens": 34961,
+        "cost_usd": 1.3359944000000004,
         "model_usage": {
             "openai/gpt-6.1-sol": {
-                "n_input_tokens": 26602970,
-                "n_cache_tokens": 26281472,
-                "n_output_tokens": 122971,
-                "cost_usd": 4.5008531999999954
+                "n_input_tokens": 7658837,
+                "n_cache_tokens": 7542784,
+                "n_output_tokens": 34961,
+                "cost_usd": 1.3359944000000004
             }
         },
         "rollout_details": null,
@@ -139,23 +139,23 @@
     },
     "verifier_environment_mode": "separate",
     "exception_info": null,
-    "started_at": "2026-11-14T03:50:26.573765Z",
-    "finished_at": "2026-11-14T05:15:31.452842Z",
+    "started_at": "2026-11-14T03:50:22.726305Z",
+    "finished_at": "2026-11-14T04:48:32.363473Z",
     "environment_setup": {
-        "started_at": "2026-11-14T03:50:26.906757Z",
-        "finished_at": "2026-11-14T03:57:06.853682Z"
+        "started_at": "2026-11-14T03:50:22.802943Z",
+        "finished_at": "2026-11-14T04:01:24.493467Z"
     },
     "agent_setup": {
-        "started_at": "2026-11-14T03:57:06.853733Z",
-        "finished_at": "2026-11-14T03:57:20.425315Z"
+        "started_at": "2026-11-14T04:01:24.493520Z",
+        "finished_at": "2026-11-14T04:01:44.298488Z"
     },
     "agent_execution": {
-        "started_at": "2026-11-14T03:57:20.425491Z",
-        "finished_at": "2026-11-14T05:07:47.610872Z"
+        "started_at": "2026-11-14T04:01:44.299118Z",
+        "finished_at": "2026-11-14T04:20:48.087344Z"
     },
     "verifier": {
-        "started_at": "2026-11-14T05:08:39.761038Z",
-        "finished_at": "2026-11-14T05:15:31.452817Z"
+        "started_at": "2026-11-14T04:21:10.045162Z",
+        "finished_at": "2026-11-14T04:48:32.363460Z"
     },
     "step_results": null
 }
