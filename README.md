@@ -80,6 +80,8 @@ Log files and caches are left out. datalab's collected `.git` is stored as `.git
 
 ## Coverage
 
+The table counts the keywords each task lists in its `task.toml`, as written, so a keyword can count fewer tasks than it describes. All five tasks are migrations and all five run offline (each lists `offline` in its `[metadata]` tags). The [Tasks](#tasks) table gives each task's language: Argus and datalab are both Python, though only Argus lists `python`, and Yosys's C++ has no keyword.
+
 | Keyword | Tasks |
 | --- | --- |
 | abi | 1 |
