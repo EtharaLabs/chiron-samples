@@ -60,7 +60,7 @@ Every trial failed at least one veto check, so none reached the judged rubric:
 
 | Task | Vetoed on | What differed |
 | --- | --- | --- |
-| [`12b08204`](12b08204-4fec-591c-a697-d4d9922da167/trials/gpt-6.1-sol/verifier/) | G03, G14, G15 | An anonymous `GET /admin/api/v1/users` answers "Authorization required" where the original answers "Forbidden"; `/alert_debug` sets no session cookie; `/release/by-id/{id}/planner` no longer redirects. |
+| [`12b08204`](12b08204-4fec-591c-a697-d4d9922da167/trials/gpt-6.1-sol/verifier/) | G03, G14, G15 | Stage I passed. An anonymous `GET /admin/api/v1/users` answers "Authorization required" where the original answers "Forbidden"; `/alert_debug` sets no session cookie; `/release/by-id/{id}/planner` no longer redirects. |
 | [`235c695a`](235c695a-89b4-50e4-96bd-ee0d2ae80c7a/trials/gpt-6.1-sol/verifier/) | S2-ci-test-build, S2-ci-test-compile, S2-ci-test-sanitizers | Stage I passed. The CI build and sanitizer jobs fail the `various` and `xprop` tests and the vanilla-test exit check, and the gcc-11 compile job fails its `banner` case. |
 | [`50b177e0`](50b177e0-3b23-5823-bb2b-f689f6de5909/trials/gpt-6.1-sol/verifier/) | 24 checks (T-02 to T-17, T-23, T-24, P-01 to P-06) | The agent stopped after 10 minutes with 19 of the 52 exported symbols in Rust and the C implementation still building the library. |
 | [`78f33146`](78f33146-cdab-57ce-83fd-5f2e030dd52c/trials/gpt-6.1-sol/verifier/) | S2-info, S2-errors | Stage I passed. 6 of the 295 cases in these two groups differ, among them `/info/blocks`, which gives `accepted_file_extensions: null` where the original gives `[]`. |
